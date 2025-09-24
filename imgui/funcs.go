@@ -80,7 +80,7 @@ func (self *Color) Destroy() {
 	selfFin()
 }
 
-// == (TexRef._TexData ? TexRef._TexData->TexID : TexRef._TexID
+// == (TexRef._TexData ? TexRef._TexData->TexID : TexRef._TexID)
 func (self *DrawCmd) TexID() TextureID {
 	selfArg, selfFin := self.Handle()
 
@@ -510,7 +510,7 @@ func (self *DrawList) ChannelsSplit(count int32) {
 	selfFin()
 }
 
-// Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
+// Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer. For multi-threaded rendering, consider using `imgui_threaded_rendering` from https://github.com/ocornut/imgui_club instead.
 func (self *DrawList) CloneOutput() *DrawList {
 	selfArg, selfFin := self.Handle()
 
@@ -1071,6 +1071,16 @@ func (self *FontAtlas) RemoveFont(font *Font) {
 	fontFin()
 }
 
+// Change font loader at runtime.
+func (self *FontAtlas) SetFontLoader(font_loader *FontLoader) {
+	selfArg, selfFin := self.Handle()
+	font_loaderArg, font_loaderFin := font_loader.Handle()
+	C.ImFontAtlas_SetFontLoader(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFontLoader](font_loaderArg))
+
+	selfFin()
+	font_loaderFin()
+}
+
 func (self *FontAtlas) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_destroy(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
@@ -1238,22 +1248,21 @@ func (self *Font) AddRemapChar(from_codepoint, to_codepoint Wchar) {
 	selfFin()
 }
 
-// utf8
 // CalcTextSizeAV parameter default value hint:
-// remaining: NULL
-func (self *Font) CalcTextSizeAV(size, max_width, wrap_width float32, text_begin string, remaining []string) Vec2 {
+// out_remaining: NULL
+func (self *Font) CalcTextSizeAV(size, max_width, wrap_width float32, text_begin string, out_remaining []string) Vec2 {
 	pOut := new(Vec2)
 	pOutArg, pOutFin := internal.Wrap(pOut)
 
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	remainingArg, remainingFin := internal.WrapStringList[C.char](remaining)
-	C.wrap_ImFont_CalcTextSizeAV(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, remainingArg)
+	out_remainingArg, out_remainingFin := internal.WrapStringList[C.char](out_remaining)
+	C.wrap_ImFont_CalcTextSizeAV(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, out_remainingArg)
 
 	pOutFin()
 	selfFin()
 	text_beginFin()
-	remainingFin()
+	out_remainingFin()
 
 	return *pOut
 }
@@ -1344,12 +1353,12 @@ func (self *Font) RenderCharV(draw_list *DrawList, size float32, pos Vec2, col u
 
 // RenderTextV parameter default value hint:
 // wrap_width: 0.0f
-// cpu_fine_clip: false
-func (self *Font) RenderTextV(draw_list *DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, cpu_fine_clip bool) {
+// flags: 0
+func (self *Font) RenderTextV(draw_list *DrawList, size float32, pos Vec2, col uint32, clip_rect Vec4, text_begin string, wrap_width float32, flags DrawTextFlags) {
 	selfArg, selfFin := self.Handle()
 	draw_listArg, draw_listFin := draw_list.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImFont_RenderTextV(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), internal.ReinterpretCast[C.ImVec4](clip_rect.ToC()), text_beginArg, C.float(wrap_width), C.bool(cpu_fine_clip))
+	C.wrap_ImFont_RenderTextV(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), internal.ReinterpretCast[C.ImVec4](clip_rect.ToC()), text_beginArg, C.float(wrap_width), C.ImDrawTextFlags(flags))
 
 	selfFin()
 	draw_listFin()
@@ -1851,6 +1860,15 @@ func (self *InputTextState) InternalCursorPos() int32 {
 	return int32(C.ImGuiInputTextState_GetCursorPos(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)))
 }
 
+func (self *InputTextState) InternalPreferredOffsetX() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.ImGuiInputTextState_GetPreferredOffsetX(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)))
+}
+
 func (self *InputTextState) InternalSelectionEnd() int32 {
 	selfArg, selfFin := self.Handle()
 
@@ -2279,6 +2297,22 @@ func (self *Payload) IsPreview() bool {
 func (self *Payload) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImGuiPayload_destroy(internal.ReinterpretCast[*C.ImGuiPayload](selfArg))
+
+	selfFin()
+}
+
+// Clear all Platform_XXX fields. Typically called on Platform Backend shutdown.
+func (self *PlatformIO) ClearPlatformHandlers() {
+	selfArg, selfFin := self.Handle()
+	C.ImGuiPlatformIO_ClearPlatformHandlers(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg))
+
+	selfFin()
+}
+
+// Clear all Renderer_XXX fields. Typically called on Renderer Backend shutdown.
+func (self *PlatformIO) ClearRendererHandlers() {
+	selfArg, selfFin := self.Handle()
+	C.ImGuiPlatformIO_ClearRendererHandlers(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg))
 
 	selfFin()
 }
@@ -3359,6 +3393,15 @@ func (self *Rect) InternalAddVec2(p Vec2) {
 	selfFin()
 }
 
+func (self *Rect) InternalAsVec4() *Vec4 {
+	selfArg, selfFin := internal.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return (&Vec4{}).FromC(unsafe.Pointer(C.ImRect_AsVec4(internal.ReinterpretCast[*C.ImRect](selfArg))))
+}
+
 // Simple version, may lead to an inverted rectangle, which is fine for Contains/Overlaps test but not for display.
 func (self *Rect) InternalClipWith(r Rect) {
 	selfArg, selfFin := internal.Wrap(self)
@@ -3792,7 +3835,7 @@ func AcceptDragDropPayloadV(typeArg string, flags DragDropFlags) *Payload {
 	return NewPayloadFromC(C.igAcceptDragDropPayload(typeArgArg, C.ImGuiDragDropFlags(flags)))
 }
 
-// Activate an item by ID (button, checkbox, tree node etc.). Activation is queued and processed on the next frame when the item is encountered again.
+// Activate an item by ID (button, checkbox, tree node etc.). Activation is queued and processed on the next frame when the item is encountered again. Was called 'ActivateItem()' before 1.89.7.
 func InternalActivateItemByID(id ID) {
 	idArg, idFin := id.C()
 	C.igActivateItemByID(internal.ReinterpretCast[C.ImGuiID](idArg))
@@ -4321,6 +4364,15 @@ func InternalButtonExV(label string, size_arg Vec2, flags ButtonFlags) bool {
 		labelFin()
 	}()
 	return C.igButtonEx(labelArg, internal.ReinterpretCast[C.ImVec2](size_arg.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
+}
+
+func InternalCalcClipRectVisibleItemsY(clip_rect Rect, pos Vec2, items_height float32, out_visible_start, out_visible_end *int32) {
+	out_visible_startArg, out_visible_startFin := internal.WrapNumberPtr[C.int, int32](out_visible_start)
+	out_visible_endArg, out_visible_endFin := internal.WrapNumberPtr[C.int, int32](out_visible_end)
+	C.igCalcClipRectVisibleItemsY(internal.ReinterpretCast[C.ImRect](clip_rect.ToC()), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.float(items_height), out_visible_startArg, out_visible_endArg)
+
+	out_visible_startFin()
+	out_visible_endFin()
 }
 
 func InternalCalcItemSize(size Vec2, default_w, default_h float32) Vec2 {
@@ -7098,6 +7150,17 @@ func InternalImFontAtlasBakedAddFontGlyph(atlas *FontAtlas, baked *FontBaked, sr
 	return NewFontGlyphFromC(C.igImFontAtlasBakedAddFontGlyph(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg), internal.ReinterpretCast[*C.ImFontGlyph](in_glyphArg)))
 }
 
+func InternalImFontAtlasBakedAddFontGlyphAdvancedX(atlas *FontAtlas, baked *FontBaked, src *FontConfig, codepoint Wchar, advance_x float32) {
+	atlasArg, atlasFin := atlas.Handle()
+	bakedArg, bakedFin := baked.Handle()
+	srcArg, srcFin := src.Handle()
+	C.igImFontAtlasBakedAddFontGlyphAdvancedX(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFontBaked](bakedArg), internal.ReinterpretCast[*C.ImFontConfig](srcArg), C.ImWchar(codepoint), C.float(advance_x))
+
+	atlasFin()
+	bakedFin()
+	srcFin()
+}
+
 func InternalImFontAtlasBakedDiscard(atlas *FontAtlas, font *Font, baked *FontBaked) {
 	atlasArg, atlasFin := atlas.Handle()
 	fontArg, fontFin := font.Handle()
@@ -7428,13 +7491,13 @@ func InternalImFontAtlasPackInit(atlas *FontAtlas) {
 	atlasFin()
 }
 
-func InternalImFontAtlasRectIdGetGeneration(id FontAtlasRectId) int32 {
+func InternalImFontAtlasRectIdGetGeneration(id FontAtlasRectId) uint32 {
 	idArg, idFin := id.C()
 
 	defer func() {
 		idFin()
 	}()
-	return int32(C.igImFontAtlasRectId_GetGeneration(internal.ReinterpretCast[C.ImFontAtlasRectId](idArg)))
+	return uint32(C.igImFontAtlasRectId_GetGeneration(internal.ReinterpretCast[C.ImFontAtlasRectId](idArg)))
 }
 
 func InternalImFontAtlasRectIdGetIndex(id FontAtlasRectId) int32 {
@@ -7588,6 +7651,40 @@ func InternalImFontAtlasUpdateNewFrame(atlas *FontAtlas, frame_count int32, rend
 	atlasFin()
 }
 
+func InternalImFontCalcTextSizeEx(font *Font, size, max_width, wrap_width float32, text_begin, text_end_display string, out_remaining []string, out_offset *Vec2, flags DrawTextFlags) Vec2 {
+	pOut := new(Vec2)
+	pOutArg, pOutFin := internal.Wrap(pOut)
+
+	fontArg, fontFin := font.Handle()
+	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
+	text_end_displayArg, text_end_displayFin := internal.WrapString[C.char](text_end_display)
+	out_remainingArg, out_remainingFin := internal.WrapStringList[C.char](out_remaining)
+	out_offsetArg, out_offsetFin := internal.Wrap(out_offset)
+	C.wrap_igImFontCalcTextSizeEx(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, text_end_displayArg, out_remainingArg, internal.ReinterpretCast[*C.ImVec2](out_offsetArg), C.ImDrawTextFlags(flags))
+
+	pOutFin()
+	fontFin()
+	text_beginFin()
+	text_end_displayFin()
+	out_remainingFin()
+	out_offsetFin()
+
+	return *pOut
+}
+
+// InternalImFontCalcWordWrapPositionExV parameter default value hint:
+// flags: 0
+func InternalImFontCalcWordWrapPositionExV(font *Font, size float32, text string, wrap_width float32, flags DrawTextFlags) string {
+	fontArg, fontFin := font.Handle()
+	textArg, textFin := internal.WrapString[C.char](text)
+
+	defer func() {
+		fontFin()
+		textFin()
+	}()
+	return C.GoString(C.wrap_igImFontCalcWordWrapPositionExV(internal.ReinterpretCast[*C.ImFont](fontArg), C.float(size), textArg, C.int(len(text)), C.float(wrap_width), C.ImDrawTextFlags(flags)))
+}
+
 func InternalImFormatString(buf string, buf_size uint64, fmt string) int32 {
 	bufArg, bufFin := internal.WrapString[C.char](buf)
 	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
@@ -7622,6 +7719,15 @@ func InternalImHashDataV(data uintptr, data_size uint64, seed ID) ID {
 		result := C.wrap_igImHashDataV(C.uintptr_t(data), C.xulong(data_size), internal.ReinterpretCast[C.ImGuiID](seedArg))
 		return &result
 	}())
+}
+
+func InternalImHashSkipUncontributingPrefix(label string) string {
+	labelArg, labelFin := internal.WrapString[C.char](label)
+
+	defer func() {
+		labelFin()
+	}()
+	return C.GoString(C.igImHashSkipUncontributingPrefix(labelArg))
 }
 
 // InternalImHashStrV parameter default value hint:
@@ -8015,6 +8121,18 @@ func InternalImStrnicmp(str1, str2 string, count uint64) int32 {
 	return int32(C.igImStrnicmp(str1Arg, str2Arg, C.xulong(count)))
 }
 
+// trim trailing space and find beginning of next line
+// InternalImTextCalcWordWrapNextLineStartV parameter default value hint:
+// flags: 0
+func InternalImTextCalcWordWrapNextLineStartV(text string, flags DrawTextFlags) string {
+	textArg, textFin := internal.WrapString[C.char](text)
+
+	defer func() {
+		textFin()
+	}()
+	return C.GoString(C.wrap_igImTextCalcWordWrapNextLineStartV(textArg, C.int(len(text)), C.ImDrawTextFlags(flags)))
+}
+
 // read one character. return input UTF-8 bytes count
 func InternalImTextCharFromUtf8(out_char *uint32, in_text, in_text_end string) int32 {
 	out_charArg, out_charFin := internal.WrapNumberPtr[C.uint, uint32](out_char)
@@ -8029,8 +8147,8 @@ func InternalImTextCharFromUtf8(out_char *uint32, in_text, in_text_end string) i
 	return int32(C.igImTextCharFromUtf8(out_charArg, in_textArg, in_text_endArg))
 }
 
-// return out_buf
-func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
+// return output UTF-8 bytes count
+func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) int32 {
 	out_bufArg := make([]C.char, len(out_buf))
 	for i, out_bufV := range out_buf {
 		out_bufArg[i] = C.char(out_bufV)
@@ -8041,7 +8159,7 @@ func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) string {
 			(*out_buf)[i] = rune(out_bufV)
 		}
 	}()
-	return C.GoString(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
+	return int32(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
 }
 
 // return number of UTF-8 code-points (NOT bytes count)
@@ -9561,7 +9679,7 @@ func InternalRegisterFontAtlas(atlas *FontAtlas) {
 	atlasFin()
 }
 
-// Register external texture
+// Register external texture. EXPERIMENTAL: DO NOT USE YET.
 func InternalRegisterUserTexture(tex *TextureData) {
 	texArg, texFin := tex.Handle()
 	C.igRegisterUserTexture(internal.ReinterpretCast[*C.ImTextureData](texArg))
@@ -10624,9 +10742,9 @@ func ShowUserGuide() {
 	C.igShowUserGuide()
 }
 
-func InternalShrinkWidths(items *ShrinkWidthItem, count int32, width_excess float32) {
+func InternalShrinkWidths(items *ShrinkWidthItem, count int32, width_excess, width_min float32) {
 	itemsArg, itemsFin := items.Handle()
-	C.igShrinkWidths(internal.ReinterpretCast[*C.ImGuiShrinkWidthItem](itemsArg), C.int(count), C.float(width_excess))
+	C.igShrinkWidths(internal.ReinterpretCast[*C.ImGuiShrinkWidthItem](itemsArg), C.int(count), C.float(width_excess), C.float(width_min))
 
 	itemsFin()
 }
@@ -10920,6 +11038,10 @@ func InternalStartMouseMovingWindowOrNode(window *Window, node *DockNode, undock
 	nodeFin()
 }
 
+func InternalStopMouseMovingWindow() {
+	C.igStopMouseMovingWindow()
+}
+
 // classic imgui style
 // StyleColorsClassicV parameter default value hint:
 // dst: NULL
@@ -10966,6 +11088,15 @@ func InternalTabBarCloseTab(tab_bar *TabBar, tab *TabItem) {
 
 	tab_barFin()
 	tabFin()
+}
+
+func InternalTabBarFindByID(id ID) *TabBar {
+	idArg, idFin := id.C()
+
+	defer func() {
+		idFin()
+	}()
+	return NewTabBarFromC(C.igTabBarFindByID(internal.ReinterpretCast[C.ImGuiID](idArg)))
 }
 
 func InternalTabBarFindMostRecentlySelectedTabForActiveWindow(tab_bar *TabBar) *TabItem {
@@ -11071,6 +11202,13 @@ func InternalTabBarQueueReorderFromMousePos(tab_bar *TabBar, tab *TabItem, mouse
 
 	tab_barFin()
 	tabFin()
+}
+
+func InternalTabBarRemove(tab_bar *TabBar) {
+	tab_barArg, tab_barFin := tab_bar.Handle()
+	C.igTabBarRemove(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg))
+
+	tab_barFin()
 }
 
 func InternalTabBarRemoveTab(tab_bar *TabBar, tab_id ID) {
@@ -11418,7 +11556,7 @@ func InternalTableGetInstanceID(table *Table, instance_no int32) ID {
 	}())
 }
 
-// return current row index.
+// return current row index (header rows are accounted for)
 func TableGetRowIndex() int32 {
 	return int32(C.igTableGetRowIndex())
 }
@@ -13248,6 +13386,17 @@ func InternalImFontAtlasTextureGrow(atlas *FontAtlas) {
 	atlasFin()
 }
 
+func InternalImFontCalcWordWrapPositionEx(font *Font, size float32, text string, wrap_width float32) string {
+	fontArg, fontFin := font.Handle()
+	textArg, textFin := internal.WrapString[C.char](text)
+
+	defer func() {
+		fontFin()
+		textFin()
+	}()
+	return C.GoString(C.wrap_igImFontCalcWordWrapPositionEx(internal.ReinterpretCast[*C.ImFont](fontArg), C.float(size), textArg, C.int(len(text)), C.float(wrap_width)))
+}
+
 func InternalImHashData(data uintptr, data_size uint64) ID {
 	return *NewIDFromC(func() *C.ImGuiID {
 		result := C.wrap_igImHashData(C.uintptr_t(data), C.xulong(data_size))
@@ -13262,6 +13411,15 @@ func InternalImHashStr(data string) ID {
 		dataFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID { result := C.wrap_igImHashStr(dataArg); return &result }())
+}
+
+func InternalImTextCalcWordWrapNextLineStart(text string) string {
+	textArg, textFin := internal.WrapString[C.char](text)
+
+	defer func() {
+		textFin()
+	}()
+	return C.GoString(C.wrap_igImTextCalcWordWrapNextLineStart(textArg, C.int(len(text))))
 }
 
 func InternalImTextStrFromUtf8(out_buf *Wchar, out_buf_size int32, in_text, in_text_end string) int32 {
@@ -15873,14 +16031,6 @@ func (self FontAtlas) SetBuilder(v *FontAtlasBuilder) {
 	C.wrap_ImFontAtlas_SetBuilder(selfArg, internal.ReinterpretCast[*C.ImFontAtlasBuilder](vArg))
 }
 
-func (self FontAtlas) SetFontLoader(v *FontLoader) {
-	vArg, _ := v.Handle()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlas_SetFontLoader(selfArg, internal.ReinterpretCast[*C.ImFontLoader](vArg))
-}
-
 func (self FontAtlas) SetFontLoaderName(v string) {
 	vArg, _ := internal.WrapString[C.char](v)
 
@@ -16761,10 +16911,10 @@ func (self FontAtlasRectEntry) SetTargetIndex(v int32) {
 	C.wrap_ImFontAtlasRectEntry_SetTargetIndex(selfArg, C.int(v))
 }
 
-func (self FontAtlasRectEntry) SetGeneration(v int32) {
+func (self FontAtlasRectEntry) SetGeneration(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasRectEntry_SetGeneration(selfArg, C.int(v))
+	C.wrap_ImFontAtlasRectEntry_SetGeneration(selfArg, C.uint(v))
 }
 
 func (self FontAtlasRectEntry) SetIsUsed(v uint32) {
@@ -16782,13 +16932,13 @@ func (self *FontAtlasRectEntry) TargetIndex() int32 {
 	return int32(C.wrap_ImFontAtlasRectEntry_GetTargetIndex(internal.ReinterpretCast[*C.ImFontAtlasRectEntry](selfArg)))
 }
 
-func (self *FontAtlasRectEntry) Generation() int32 {
+func (self *FontAtlasRectEntry) Generation() uint32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return int32(C.wrap_ImFontAtlasRectEntry_GetGeneration(internal.ReinterpretCast[*C.ImFontAtlasRectEntry](selfArg)))
+	return uint32(C.wrap_ImFontAtlasRectEntry_GetGeneration(internal.ReinterpretCast[*C.ImFontAtlasRectEntry](selfArg)))
 }
 
 func (self *FontAtlasRectEntry) IsUsed() uint32 {
@@ -16890,10 +17040,16 @@ func (self FontBaked) SetWantDestroy(v uint32) {
 	C.wrap_ImFontBaked_SetWantDestroy(selfArg, C.uint(v))
 }
 
-func (self FontBaked) SetLockLoadingFallback(v uint32) {
+func (self FontBaked) SetLoadNoFallback(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontBaked_SetLockLoadingFallback(selfArg, C.uint(v))
+	C.wrap_ImFontBaked_SetLoadNoFallback(selfArg, C.uint(v))
+}
+
+func (self FontBaked) SetLoadNoRenderOnLayout(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontBaked_SetLoadNoRenderOnLayout(selfArg, C.uint(v))
 }
 
 func (self FontBaked) SetLastUsedFrame(v int32) {
@@ -17023,13 +17179,22 @@ func (self *FontBaked) WantDestroy() uint32 {
 	return uint32(C.wrap_ImFontBaked_GetWantDestroy(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
 }
 
-func (self *FontBaked) LockLoadingFallback() uint32 {
+func (self *FontBaked) LoadNoFallback() uint32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return uint32(C.wrap_ImFontBaked_GetLockLoadingFallback(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+	return uint32(C.wrap_ImFontBaked_GetLoadNoFallback(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+}
+
+func (self *FontBaked) LoadNoRenderOnLayout() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uint32(C.wrap_ImFontBaked_GetLoadNoRenderOnLayout(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
 }
 
 func (self *FontBaked) LastUsedFrame() int32 {
@@ -17121,12 +17286,6 @@ func (self FontConfig) SetPixelSnapV(v bool) {
 	C.wrap_ImFontConfig_SetPixelSnapV(selfArg, C.bool(v))
 }
 
-func (self FontConfig) SetFontNo(v int) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontConfig_SetFontNo(selfArg, C.ImS8(v))
-}
-
 func (self FontConfig) SetOversampleH(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17137,6 +17296,12 @@ func (self FontConfig) SetOversampleV(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImFontConfig_SetOversampleV(selfArg, C.ImS8(v))
+}
+
+func (self FontConfig) SetEllipsisChar(v Wchar) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetEllipsisChar(selfArg, C.ImWchar(v))
 }
 
 func (self FontConfig) SetSizePixels(v float32) {
@@ -17181,6 +17346,12 @@ func (self FontConfig) SetGlyphExtraAdvanceX(v float32) {
 	C.wrap_ImFontConfig_SetGlyphExtraAdvanceX(selfArg, C.float(v))
 }
 
+func (self FontConfig) SetFontNo(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetFontNo(selfArg, C.ImU32(v))
+}
+
 func (self FontConfig) SetFontLoaderFlags(v uint32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17197,12 +17368,6 @@ func (self FontConfig) SetRasterizerDensity(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImFontConfig_SetRasterizerDensity(selfArg, C.float(v))
-}
-
-func (self FontConfig) SetEllipsisChar(v Wchar) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontConfig_SetEllipsisChar(selfArg, C.ImWchar(v))
 }
 
 func (self FontConfig) SetFlags(v FontFlags) {
@@ -17304,15 +17469,6 @@ func (self *FontConfig) PixelSnapV() bool {
 	return C.wrap_ImFontConfig_GetPixelSnapV(internal.ReinterpretCast[*C.ImFontConfig](selfArg)) == C.bool(true)
 }
 
-func (self *FontConfig) FontNo() int {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (int)(C.wrap_ImFontConfig_GetFontNo(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
-}
-
 func (self *FontConfig) OversampleH() int {
 	selfArg, selfFin := self.Handle()
 
@@ -17329,6 +17485,15 @@ func (self *FontConfig) OversampleV() int {
 		selfFin()
 	}()
 	return (int)(C.wrap_ImFontConfig_GetOversampleV(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self *FontConfig) EllipsisChar() Wchar {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (Wchar)(C.wrap_ImFontConfig_GetEllipsisChar(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self *FontConfig) SizePixels() float32 {
@@ -17397,6 +17562,15 @@ func (self *FontConfig) GlyphExtraAdvanceX() float32 {
 	return float32(C.wrap_ImFontConfig_GetGlyphExtraAdvanceX(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
+func (self *FontConfig) FontNo() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImFontConfig_GetFontNo(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
 func (self *FontConfig) FontLoaderFlags() uint32 {
 	selfArg, selfFin := self.Handle()
 
@@ -17422,15 +17596,6 @@ func (self *FontConfig) RasterizerDensity() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImFontConfig_GetRasterizerDensity(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
-}
-
-func (self *FontConfig) EllipsisChar() Wchar {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return (Wchar)(C.wrap_ImFontConfig_GetEllipsisChar(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self *FontConfig) Flags() FontFlags {
@@ -18514,20 +18679,20 @@ func (self Context) SetWheelingAxisAvg(v Vec2) {
 	C.wrap_ImGuiContext_SetWheelingAxisAvg(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
-func (self Context) SetDebugDrawIdConflicts(v ID) {
+func (self Context) SetDebugDrawIdConflictsId(v ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetDebugDrawIdConflicts(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+	C.wrap_ImGuiContext_SetDebugDrawIdConflictsId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
-func (self Context) SetDebugHookIdInfo(v ID) {
+func (self Context) SetDebugHookIdInfoId(v ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetDebugHookIdInfo(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+	C.wrap_ImGuiContext_SetDebugHookIdInfoId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
 func (self Context) SetHoveredId(v ID) {
@@ -18644,6 +18809,14 @@ func (self Context) SetActiveIdFromShortcut(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetActiveIdFromShortcut(selfArg, C.bool(v))
+}
+
+func (self Context) SetActiveIdDisabledId(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetActiveIdDisabledId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
 func (self Context) SetActiveIdMouseButton(v int32) {
@@ -19793,6 +19966,14 @@ func (self Context) SetInputTextState(v InputTextState) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetInputTextState(selfArg, internal.ReinterpretCast[C.ImGuiInputTextState](vArg))
+}
+
+func (self Context) SetInputTextLineIndex(v TextIndex) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetInputTextLineIndex(selfArg, internal.ReinterpretCast[C.ImGuiTextIndex](vArg))
 }
 
 func (self Context) SetInputTextDeactivatedState(v InputTextDeactivatedState) {
@@ -20945,10 +21126,10 @@ func (self *Context) WheelingAxisAvg() Vec2 {
 	}()
 }
 
-func (self *Context) DebugDrawIdConflicts() ID {
+func (self *Context) DebugDrawIdConflictsId() ID {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImGuiContext_GetDebugDrawIdConflicts(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+	result := C.wrap_ImGuiContext_GetDebugDrawIdConflictsId(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 
 	defer func() {
 		selfFin()
@@ -20956,10 +21137,10 @@ func (self *Context) DebugDrawIdConflicts() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
-func (self *Context) DebugHookIdInfo() ID {
+func (self *Context) DebugHookIdInfoId() ID {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImGuiContext_GetDebugHookIdInfo(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+	result := C.wrap_ImGuiContext_GetDebugHookIdInfoId(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 
 	defer func() {
 		selfFin()
@@ -21135,6 +21316,17 @@ func (self *Context) ActiveIdFromShortcut() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiContext_GetActiveIdFromShortcut(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) ActiveIdDisabledId() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiContext_GetActiveIdDisabledId(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
 func (self *Context) ActiveIdMouseButton() int32 {
@@ -22603,6 +22795,17 @@ func (self *Context) InputTextState() InputTextState {
 		selfFin()
 	}()
 	return *NewInputTextStateFromC(func() *C.ImGuiInputTextState { result := result; return &result }())
+}
+
+func (self *Context) InputTextLineIndex() TextIndex {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiContext_GetInputTextLineIndex(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextIndexFromC(func() *C.ImGuiTextIndex { result := result; return &result }())
 }
 
 func (self *Context) InputTextDeactivatedState() InputTextDeactivatedState {
@@ -25071,12 +25274,12 @@ func (self IDStackTool) SetStackLevel(v int32) {
 	C.wrap_ImGuiIDStackTool_SetStackLevel(selfArg, C.int(v))
 }
 
-func (self IDStackTool) SetQueryId(v ID) {
+func (self IDStackTool) SetQueryMainId(v ID) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetQueryId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+	C.wrap_ImGuiIDStackTool_SetQueryMainId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
 func (self IDStackTool) SetResults(v vectors.Vector[StackLevelInfo]) {
@@ -25093,10 +25296,22 @@ func (self IDStackTool) SetResults(v vectors.Vector[StackLevelInfo]) {
 	C.wrap_ImGuiIDStackTool_SetResults(selfArg, *vVecArg)
 }
 
-func (self IDStackTool) SetCopyToClipboardOnCtrlC(v bool) {
+func (self IDStackTool) SetQueryHookActive(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetCopyToClipboardOnCtrlC(selfArg, C.bool(v))
+	C.wrap_ImGuiIDStackTool_SetQueryHookActive(selfArg, C.bool(v))
+}
+
+func (self IDStackTool) SetOptHexEncodeNonAsciiChars(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIDStackTool_SetOptHexEncodeNonAsciiChars(selfArg, C.bool(v))
+}
+
+func (self IDStackTool) SetOptCopyToClipboardOnCtrlC(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIDStackTool_SetOptCopyToClipboardOnCtrlC(selfArg, C.bool(v))
 }
 
 func (self IDStackTool) SetCopyToClipboardLastTime(v float32) {
@@ -25105,12 +25320,20 @@ func (self IDStackTool) SetCopyToClipboardLastTime(v float32) {
 	C.wrap_ImGuiIDStackTool_SetCopyToClipboardLastTime(selfArg, C.float(v))
 }
 
-func (self IDStackTool) SetResultPathBuf(v TextBuffer) {
+func (self IDStackTool) SetResultPathsBuf(v TextBuffer) {
 	vArg, _ := v.C()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetResultPathBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
+	C.wrap_ImGuiIDStackTool_SetResultPathsBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
+}
+
+func (self IDStackTool) SetResultTempBuf(v TextBuffer) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIDStackTool_SetResultTempBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
 }
 
 func (self *IDStackTool) LastActiveFrame() int32 {
@@ -25131,10 +25354,10 @@ func (self *IDStackTool) StackLevel() int32 {
 	return int32(C.wrap_ImGuiIDStackTool_GetStackLevel(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)))
 }
 
-func (self *IDStackTool) QueryId() ID {
+func (self *IDStackTool) QueryMainId() ID {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImGuiIDStackTool_GetQueryId(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
+	result := C.wrap_ImGuiIDStackTool_GetQueryMainId(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
 
 	defer func() {
 		selfFin()
@@ -25151,13 +25374,31 @@ func (self *IDStackTool) Results() vectors.Vector[StackLevelInfo] {
 	return vectors.NewVectorFromC(C.wrap_ImGuiIDStackTool_GetResults(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)).Size, C.wrap_ImGuiIDStackTool_GetResults(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)).Capacity, NewStackLevelInfoFromC(C.wrap_ImGuiIDStackTool_GetResults(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)).Data))
 }
 
-func (self *IDStackTool) CopyToClipboardOnCtrlC() bool {
+func (self *IDStackTool) QueryHookActive() bool {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return C.wrap_ImGuiIDStackTool_GetCopyToClipboardOnCtrlC(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)) == C.bool(true)
+	return C.wrap_ImGuiIDStackTool_GetQueryHookActive(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)) == C.bool(true)
+}
+
+func (self *IDStackTool) OptHexEncodeNonAsciiChars() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIDStackTool_GetOptHexEncodeNonAsciiChars(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)) == C.bool(true)
+}
+
+func (self *IDStackTool) OptCopyToClipboardOnCtrlC() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIDStackTool_GetOptCopyToClipboardOnCtrlC(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)) == C.bool(true)
 }
 
 func (self *IDStackTool) CopyToClipboardLastTime() float32 {
@@ -25169,10 +25410,21 @@ func (self *IDStackTool) CopyToClipboardLastTime() float32 {
 	return float32(C.wrap_ImGuiIDStackTool_GetCopyToClipboardLastTime(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)))
 }
 
-func (self *IDStackTool) ResultPathBuf() TextBuffer {
+func (self *IDStackTool) ResultPathsBuf() TextBuffer {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImGuiIDStackTool_GetResultPathBuf(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
+	result := C.wrap_ImGuiIDStackTool_GetResultPathsBuf(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
+}
+
+func (self *IDStackTool) ResultTempBuf() TextBuffer {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiIDStackTool_GetResultTempBuf(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
 
 	defer func() {
 		selfFin()
@@ -25348,6 +25600,12 @@ func (self IO) SetConfigViewportsNoDefaultParent(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiIO_SetConfigViewportsNoDefaultParent(selfArg, C.bool(v))
+}
+
+func (self IO) SetConfigViewportsPlatformFocusSetsImGuiFocus(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetConfigViewportsPlatformFocusSetsImGuiFocus(selfArg, C.bool(v))
 }
 
 func (self IO) SetConfigDpiScaleFonts(v bool) {
@@ -26252,6 +26510,15 @@ func (self *IO) ConfigViewportsNoDefaultParent() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiIO_GetConfigViewportsNoDefaultParent(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
+}
+
+func (self *IO) ConfigViewportsPlatformFocusSetsImGuiFocus() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIO_GetConfigViewportsPlatformFocusSetsImGuiFocus(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
 }
 
 func (self *IO) ConfigDpiScaleFonts() bool {
@@ -27770,6 +28037,18 @@ func (self InputTextState) SetScroll(v Vec2) {
 	C.wrap_ImGuiInputTextState_SetScroll(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
 }
 
+func (self InputTextState) SetLineCount(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextState_SetLineCount(selfArg, C.int(v))
+}
+
+func (self InputTextState) SetWrapWidth(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextState_SetWrapWidth(selfArg, C.float(v))
+}
+
 func (self InputTextState) SetCursorAnim(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -27780,6 +28059,12 @@ func (self InputTextState) SetCursorFollow(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiInputTextState_SetCursorFollow(selfArg, C.bool(v))
+}
+
+func (self InputTextState) SetCursorCenterY(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextState_SetCursorCenterY(selfArg, C.bool(v))
 }
 
 func (self InputTextState) SetSelectedAllMouseLock(v bool) {
@@ -27798,6 +28083,12 @@ func (self InputTextState) SetWantReloadUserBuf(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiInputTextState_SetWantReloadUserBuf(selfArg, C.bool(v))
+}
+
+func (self InputTextState) SetLastMoveDirectionLR(v int) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextState_SetLastMoveDirectionLR(selfArg, C.ImS8(v))
 }
 
 func (self InputTextState) SetReloadSelectionStart(v int32) {
@@ -27907,6 +28198,24 @@ func (self *InputTextState) Scroll() Vec2 {
 	}()
 }
 
+func (self *InputTextState) LineCount() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiInputTextState_GetLineCount(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)))
+}
+
+func (self *InputTextState) WrapWidth() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiInputTextState_GetWrapWidth(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)))
+}
+
 func (self *InputTextState) CursorAnim() float32 {
 	selfArg, selfFin := self.Handle()
 
@@ -27923,6 +28232,15 @@ func (self *InputTextState) CursorFollow() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiInputTextState_GetCursorFollow(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)) == C.bool(true)
+}
+
+func (self *InputTextState) CursorCenterY() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiInputTextState_GetCursorCenterY(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)) == C.bool(true)
 }
 
 func (self *InputTextState) SelectedAllMouseLock() bool {
@@ -27950,6 +28268,15 @@ func (self *InputTextState) WantReloadUserBuf() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiInputTextState_GetWantReloadUserBuf(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)) == C.bool(true)
+}
+
+func (self *InputTextState) LastMoveDirectionLR() int {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (int)(C.wrap_ImGuiInputTextState_GetLastMoveDirectionLR(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg)))
 }
 
 func (self *InputTextState) ReloadSelectionStart() int32 {
@@ -28472,6 +28799,12 @@ func (self ListClipper) SetTempData(v uintptr) {
 	C.wrap_ImGuiListClipper_SetTempData(selfArg, C.uintptr_t(v))
 }
 
+func (self ListClipper) SetFlags(v ListClipperFlags) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiListClipper_SetFlags(selfArg, C.ImGuiListClipperFlags(v))
+}
+
 func (self *ListClipper) Ctx() *Context {
 	selfArg, selfFin := self.Handle()
 
@@ -28542,6 +28875,15 @@ func (self *ListClipper) TempData() uintptr {
 		selfFin()
 	}()
 	return uintptr(C.wrap_ImGuiListClipper_GetTempData(internal.ReinterpretCast[*C.ImGuiListClipper](selfArg)))
+}
+
+func (self *ListClipper) Flags() ListClipperFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return ListClipperFlags(C.wrap_ImGuiListClipper_GetFlags(internal.ReinterpretCast[*C.ImGuiListClipper](selfArg)))
 }
 
 func (self ListClipperData) SetListClipper(v *ListClipper) {
@@ -31692,25 +32034,16 @@ func (self StackLevelInfo) SetQuerySuccess(v bool) {
 	C.wrap_ImGuiStackLevelInfo_SetQuerySuccess(selfArg, C.bool(v))
 }
 
-func (self StackLevelInfo) SetDataType(v DataType) {
+func (self StackLevelInfo) SetDataType(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStackLevelInfo_SetDataType(selfArg, C.ImGuiDataType(v))
+	C.wrap_ImGuiStackLevelInfo_SetDataType(selfArg, C.ImS8(v))
 }
 
-func (self StackLevelInfo) SetDesc(v *[57]rune) {
-	vArg := make([]C.char, len(v))
-	for i, vV := range v {
-		vArg[i] = C.char(vV)
-	}
-
+func (self StackLevelInfo) SetDescOffset(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStackLevelInfo_SetDesc(selfArg, (*C.char)(&vArg[0]))
-
-	for i, vV := range vArg {
-		(*v)[i] = rune(vV)
-	}
+	C.wrap_ImGuiStackLevelInfo_SetDescOffset(selfArg, C.int(v))
 }
 
 func (self *StackLevelInfo) ID() ID {
@@ -31742,30 +32075,22 @@ func (self *StackLevelInfo) QuerySuccess() bool {
 	return C.wrap_ImGuiStackLevelInfo_GetQuerySuccess(internal.ReinterpretCast[*C.ImGuiStackLevelInfo](selfArg)) == C.bool(true)
 }
 
-func (self *StackLevelInfo) DataType() DataType {
+func (self *StackLevelInfo) DataType() int {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return DataType(C.wrap_ImGuiStackLevelInfo_GetDataType(internal.ReinterpretCast[*C.ImGuiStackLevelInfo](selfArg)))
+	return (int)(C.wrap_ImGuiStackLevelInfo_GetDataType(internal.ReinterpretCast[*C.ImGuiStackLevelInfo](selfArg)))
 }
 
-func (self *StackLevelInfo) Desc() [57]rune {
+func (self *StackLevelInfo) DescOffset() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [57]rune {
-		result := [57]rune{}
-		resultMirr := C.wrap_ImGuiStackLevelInfo_GetDesc(internal.ReinterpretCast[*C.ImGuiStackLevelInfo](selfArg))
-		for i := range result {
-			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
-		}
-
-		return result
-	}()
+	return int32(C.wrap_ImGuiStackLevelInfo_GetDescOffset(internal.ReinterpretCast[*C.ImGuiStackLevelInfo](selfArg)))
 }
 
 func (self Storage) SetData(v vectors.Vector[StoragePair]) {
@@ -31972,6 +32297,12 @@ func (self Style) SetScrollbarRounding(v float32) {
 	C.wrap_ImGuiStyle_SetScrollbarRounding(selfArg, C.float(v))
 }
 
+func (self Style) SetScrollbarPadding(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetScrollbarPadding(selfArg, C.float(v))
+}
+
 func (self Style) SetGrabMinSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -32006,6 +32337,18 @@ func (self Style) SetTabBorderSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiStyle_SetTabBorderSize(selfArg, C.float(v))
+}
+
+func (self Style) SetTabMinWidthBase(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetTabMinWidthBase(selfArg, C.float(v))
+}
+
+func (self Style) SetTabMinWidthShrink(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetTabMinWidthShrink(selfArg, C.float(v))
 }
 
 func (self Style) SetTabCloseButtonMinWidthSelected(v float32) {
@@ -32108,6 +32451,12 @@ func (self Style) SetDisplaySafeAreaPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiStyle_SetDisplaySafeAreaPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+}
+
+func (self Style) SetDockingNodeHasCloseButton(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetDockingNodeHasCloseButton(selfArg, C.bool(v))
 }
 
 func (self Style) SetDockingSeparatorSize(v float32) {
@@ -32476,6 +32825,15 @@ func (self *Style) ScrollbarRounding() float32 {
 	return float32(C.wrap_ImGuiStyle_GetScrollbarRounding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
+func (self *Style) ScrollbarPadding() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetScrollbarPadding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
 func (self *Style) GrabMinSize() float32 {
 	selfArg, selfFin := self.Handle()
 
@@ -32528,6 +32886,24 @@ func (self *Style) TabBorderSize() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiStyle_GetTabBorderSize(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self *Style) TabMinWidthBase() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetTabMinWidthBase(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self *Style) TabMinWidthShrink() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetTabMinWidthShrink(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
 func (self *Style) TabCloseButtonMinWidthSelected() float32 {
@@ -32702,6 +33078,15 @@ func (self *Style) DisplaySafeAreaPadding() Vec2 {
 		out := C.wrap_ImGuiStyle_GetDisplaySafeAreaPadding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg))
 		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
 	}()
+}
+
+func (self *Style) DockingNodeHasCloseButton() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiStyle_GetDockingNodeHasCloseButton(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)) == C.bool(true)
 }
 
 func (self *Style) DockingSeparatorSize() float32 {
@@ -32988,6 +33373,12 @@ func (self TabBar) SetBarRect(v Rect) {
 	C.wrap_ImGuiTabBar_SetBarRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
 }
 
+func (self TabBar) SetBarRectPrevWidth(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTabBar_SetBarRectPrevWidth(selfArg, C.float(v))
+}
+
 func (self TabBar) SetCurrTabsContentsHeight(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -33096,6 +33487,12 @@ func (self TabBar) SetTabsAddedNew(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTabBar_SetTabsAddedNew(selfArg, C.bool(v))
+}
+
+func (self TabBar) SetScrollButtonEnabled(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTabBar_SetScrollButtonEnabled(selfArg, C.bool(v))
 }
 
 func (self TabBar) SetTabsActiveCount(v int16) {
@@ -33235,6 +33632,15 @@ func (self *TabBar) BarRect() Rect {
 		out := C.wrap_ImGuiTabBar_GetBarRect(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg))
 		return *(&Rect{}).FromC(unsafe.Pointer(&out))
 	}()
+}
+
+func (self *TabBar) BarRectPrevWidth() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiTabBar_GetBarRectPrevWidth(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg)))
 }
 
 func (self *TabBar) CurrTabsContentsHeight() float32 {
@@ -33399,6 +33805,15 @@ func (self *TabBar) TabsAddedNew() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiTabBar_GetTabsAddedNew(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg)) == C.bool(true)
+}
+
+func (self *TabBar) ScrollButtonEnabled() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiTabBar_GetScrollButtonEnabled(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg)) == C.bool(true)
 }
 
 func (self *TabBar) TabsActiveCount() int16 {
@@ -37069,7 +37484,7 @@ func (self *TextFilter) CountGrep() int32 {
 	return int32(C.wrap_ImGuiTextFilter_GetCountGrep(internal.ReinterpretCast[*C.ImGuiTextFilter](selfArg)))
 }
 
-func (self TextIndex) SetLineOffsets(v vectors.Vector[int32]) {
+func (self TextIndex) SetOffsets(v vectors.Vector[int32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.int, int32](vData)
 	vVecArg := new(C.ImVector_int)
@@ -37080,7 +37495,7 @@ func (self TextIndex) SetLineOffsets(v vectors.Vector[int32]) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTextIndex_SetLineOffsets(selfArg, *vVecArg)
+	C.wrap_ImGuiTextIndex_SetOffsets(selfArg, *vVecArg)
 }
 
 func (self TextIndex) SetEndOffset(v int32) {
@@ -37089,13 +37504,13 @@ func (self TextIndex) SetEndOffset(v int32) {
 	C.wrap_ImGuiTextIndex_SetEndOffset(selfArg, C.int(v))
 }
 
-func (self *TextIndex) LineOffsets() vectors.Vector[int32] {
+func (self *TextIndex) Offsets() vectors.Vector[int32] {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImGuiTextIndex_GetLineOffsets(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg)).Size, C.wrap_ImGuiTextIndex_GetLineOffsets(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg)).Capacity, (*int32)(C.wrap_ImGuiTextIndex_GetLineOffsets(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg)).Data))
+	return vectors.NewVectorFromC(C.wrap_ImGuiTextIndex_GetOffsets(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg)).Size, C.wrap_ImGuiTextIndex_GetOffsets(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg)).Capacity, (*int32)(C.wrap_ImGuiTextIndex_GetOffsets(internal.ReinterpretCast[*C.ImGuiTextIndex](selfArg)).Data))
 }
 
 func (self *TextIndex) EndOffset() int32 {

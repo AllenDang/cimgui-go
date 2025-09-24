@@ -49,6 +49,18 @@ const (
 	DrawListFlagsAllowVtxOffset DrawListFlags = 8
 )
 
+// Helpers: High-level text functions (DO NOT USE!!! THIS IS A MINIMAL SUBSET OF LARGER UPCOMING CHANGES)
+// original name: ImDrawTextFlags_
+type DrawTextFlags int32
+
+const (
+	DrawTextFlagsNone DrawTextFlags = 0
+	// Must be == 1/true for legacy with 'bool cpu_fine_clip' arg to RenderText()
+	DrawTextFlagsCpuFineClip    DrawTextFlags = 1
+	DrawTextFlagsWrapKeepBlanks DrawTextFlags = 2
+	DrawTextFlagsStopOnNewLine  DrawTextFlags = 4
+)
+
 // Flags for ImFontAtlas build
 // original name: ImFontAtlasFlags_
 type FontAtlasFlags int32
@@ -89,10 +101,12 @@ const (
 	ActivateFlagsPreferTweak ActivateFlags = 2
 	// Request widget to preserve state if it can (e.g. InputText will try to preserve cursor/selection)
 	ActivateFlagsTryToPreserveState ActivateFlags = 4
-	// Activation requested by a tabbing request
+	// Activation requested by a tabbing request (ImGuiNavMoveFlags_IsTabbing)
 	ActivateFlagsFromTabbing ActivateFlags = 8
 	// Activation requested by an item shortcut via SetNextItemShortcut() function.
 	ActivateFlagsFromShortcut ActivateFlags = 16
+	// Activation requested by an api request (ImGuiNavMoveFlags_FocusApi)
+	ActivateFlagsFromFocusApi ActivateFlags = 32
 )
 
 // X/Y enums are fixed to 0/1 so they may be used to index ImVec2
@@ -119,7 +133,7 @@ const (
 	BackendFlagsHasSetMousePos BackendFlags = 4
 	// Backend Renderer supports ImDrawCmd::VtxOffset. This enables output of large meshes (64K+ vertices) while still using 16-bit indices.
 	BackendFlagsRendererHasVtxOffset BackendFlags = 8
-	// Backend Renderer supports ImTextureData requests to create/update/destroy textures. This enables incremental texture updates and texture reloads.
+	// Backend Renderer supports ImTextureData requests to create/update/destroy textures. This enables incremental texture updates and texture reloads. See https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md for instructions on how to upgrade your custom backend.
 	BackendFlagsRendererHasTextures BackendFlags = 16
 	// Backend Platform supports multiple viewports.
 	BackendFlagsPlatformHasViewports BackendFlags = 1024
@@ -189,7 +203,7 @@ const (
 )
 
 // Flags for ImGui::BeginChild()
-// (Legacy: bit 0 must always correspond to ImGuiChildFlags_Borders to be backward compatible with old API using 'bool border = false'.
+// (Legacy: bit 0 must always correspond to ImGuiChildFlags_Borders to be backward compatible with old API using 'bool border = false'.)
 // About using AutoResizeX/AutoResizeY flags:
 // - May be combined with SetNextWindowSizeConstraints() to set a min/max size for each axis (see "Demo->Child->Auto-resize with Constraints").
 // - Size measurement for a given axis is only performed when the child window is within visible boundaries, or is just appearing.
@@ -961,6 +975,8 @@ const (
 	InputTextFlagsCallbackResize InputTextFlags = 4194304
 	// Callback on any edit. Note that InputText() already returns true on edit + you can always use IsItemEdited(). The callback is useful to manipulate the underlying buffer while focus is active.
 	InputTextFlagsCallbackEdit InputTextFlags = 8388608
+	// InputTextMultine(): word-wrap lines that are too long.
+	InputTextFlagsWordWrap InputTextFlags = 16777216
 )
 
 // Extend ImGuiItemFlags
@@ -1279,6 +1295,16 @@ type LayoutType int32
 const (
 	LayoutTypeHorizontal LayoutType = 0
 	LayoutTypeVertical   LayoutType = 1
+)
+
+// Flags for ImGuiListClipper (currently not fully exposed in function calls: a future refactor will likely add this to ImGuiListClipper::Begin function equivalent)
+// original name: ImGuiListClipperFlags_
+type ListClipperFlags int32
+
+const (
+	ListClipperFlagsNone ListClipperFlags = 0
+	// [Internal] Disabled modifying table row counters. Avoid assumption that 1 clipper item == 1 table row.
+	ListClipperFlagsNoSetTableRowCounters ListClipperFlags = 1
 )
 
 // This is experimental and not officially supported, it'll probably fall short of features, if/when it does we may backtrack.
@@ -1609,8 +1635,6 @@ type SelectableFlagsPrivate int32
 
 const (
 	SelectableFlagsNoHoldingActiveID SelectableFlagsPrivate = 1048576
-	// (WIP) Auto-select when moved into. This is not exposed in public API as to handle multi-select and modifiers we will need user to explicitly control focus scope. May be replaced with a BeginSelection() API.
-	SelectableFlagsSelectOnNav SelectableFlagsPrivate = 2097152
 	// Override button behavior to react on Click (default is Click+Release)
 	SelectableFlagsSelectOnClick SelectableFlagsPrivate = 4194304
 	// Override button behavior to react on Release (default is Click+Release)
@@ -1643,6 +1667,8 @@ const (
 	SelectableFlagsAllowOverlap SelectableFlags = 16
 	// Make the item be displayed as if it is hovered
 	SelectableFlagsHighlight SelectableFlags = 32
+	// Auto-select when moved into, unless Ctrl is held. Automatic when in a BeginMultiSelect() block.
+	SelectableFlagsSelectOnNav SelectableFlags = 64
 )
 
 // Selection request type
@@ -1772,41 +1798,47 @@ const (
 	StyleVarScrollbarSize StyleVar = 18
 	// float     ScrollbarRounding
 	StyleVarScrollbarRounding StyleVar = 19
+	// float     ScrollbarPadding
+	StyleVarScrollbarPadding StyleVar = 20
 	// float     GrabMinSize
-	StyleVarGrabMinSize StyleVar = 20
+	StyleVarGrabMinSize StyleVar = 21
 	// float     GrabRounding
-	StyleVarGrabRounding StyleVar = 21
+	StyleVarGrabRounding StyleVar = 22
 	// float     ImageBorderSize
-	StyleVarImageBorderSize StyleVar = 22
+	StyleVarImageBorderSize StyleVar = 23
 	// float     TabRounding
-	StyleVarTabRounding StyleVar = 23
+	StyleVarTabRounding StyleVar = 24
 	// float     TabBorderSize
-	StyleVarTabBorderSize StyleVar = 24
+	StyleVarTabBorderSize StyleVar = 25
+	// float     TabMinWidthBase
+	StyleVarTabMinWidthBase StyleVar = 26
+	// float     TabMinWidthShrink
+	StyleVarTabMinWidthShrink StyleVar = 27
 	// float     TabBarBorderSize
-	StyleVarTabBarBorderSize StyleVar = 25
+	StyleVarTabBarBorderSize StyleVar = 28
 	// float     TabBarOverlineSize
-	StyleVarTabBarOverlineSize StyleVar = 26
+	StyleVarTabBarOverlineSize StyleVar = 29
 	// float     TableAngledHeadersAngle
-	StyleVarTableAngledHeadersAngle StyleVar = 27
+	StyleVarTableAngledHeadersAngle StyleVar = 30
 	// ImVec2  TableAngledHeadersTextAlign
-	StyleVarTableAngledHeadersTextAlign StyleVar = 28
+	StyleVarTableAngledHeadersTextAlign StyleVar = 31
 	// float     TreeLinesSize
-	StyleVarTreeLinesSize StyleVar = 29
+	StyleVarTreeLinesSize StyleVar = 32
 	// float     TreeLinesRounding
-	StyleVarTreeLinesRounding StyleVar = 30
+	StyleVarTreeLinesRounding StyleVar = 33
 	// ImVec2    ButtonTextAlign
-	StyleVarButtonTextAlign StyleVar = 31
+	StyleVarButtonTextAlign StyleVar = 34
 	// ImVec2    SelectableTextAlign
-	StyleVarSelectableTextAlign StyleVar = 32
+	StyleVarSelectableTextAlign StyleVar = 35
 	// float     SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize StyleVar = 33
+	StyleVarSeparatorTextBorderSize StyleVar = 36
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign StyleVar = 34
+	StyleVarSeparatorTextAlign StyleVar = 37
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding StyleVar = 35
+	StyleVarSeparatorTextPadding StyleVar = 38
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize StyleVar = 36
-	StyleVarCOUNT                StyleVar = 37
+	StyleVarDockingSeparatorSize StyleVar = 39
+	StyleVarCOUNT                StyleVar = 40
 )
 
 // Extend ImGuiTabBarFlags_
@@ -1841,11 +1873,13 @@ const (
 	TabBarFlagsNoTooltip TabBarFlags = 32
 	// Draw selected overline markers over selected tab
 	TabBarFlagsDrawSelectedOverline TabBarFlags = 64
-	// Resize tabs when they don't fit
-	TabBarFlagsFittingPolicyResizeDown TabBarFlags = 128
-	// Add scroll buttons when tabs don't fit
-	TabBarFlagsFittingPolicyScroll  TabBarFlags = 256
-	TabBarFlagsFittingPolicyMask    TabBarFlags = 384
+	// Shrink down tabs when they don't fit, until width is style.TabMinWidthShrink, then enable scrolling buttons.
+	TabBarFlagsFittingPolicyMixed TabBarFlags = 128
+	// Shrink down tabs when they don't fit
+	TabBarFlagsFittingPolicyShrink TabBarFlags = 256
+	// Enable scrolling buttons when tabs don't fit
+	TabBarFlagsFittingPolicyScroll  TabBarFlags = 512
+	TabBarFlagsFittingPolicyMask    TabBarFlags = 896
 	TabBarFlagsFittingPolicyDefault TabBarFlags = 128
 )
 
