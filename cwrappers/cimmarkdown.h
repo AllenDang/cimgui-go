@@ -72,6 +72,7 @@ typedef struct MarkdownHeadingFormat MarkdownHeadingFormat;
 struct MarkdownHeadingFormat
 {
         ImFont* font;
+        float fontSize;
         bool separator;
 };
 struct MarkdownConfig
