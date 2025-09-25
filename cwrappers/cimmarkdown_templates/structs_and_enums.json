@@ -74,20 +74,20 @@
   },
   "enumtypes": [],
   "locations": {
-    "Emphasis": "imgui_markdown:464",
-    "EmphasisState": "imgui_markdown:465",
-    "Line": "imgui_markdown:428",
-    "Link": "imgui_markdown:450",
-    "LinkState": "imgui_markdown:451",
-    "MarkdownConfig": "imgui_markdown:320",
+    "Emphasis": "imgui_markdown:465",
+    "EmphasisState": "imgui_markdown:466",
+    "Line": "imgui_markdown:429",
+    "Link": "imgui_markdown:451",
+    "LinkState": "imgui_markdown:452",
+    "MarkdownConfig": "imgui_markdown:321",
     "MarkdownFormatInfo": "imgui_markdown:280",
     "MarkdownFormatType": "imgui_markdown:271",
     "MarkdownHeadingFormat": "imgui_markdown:310",
     "MarkdownImageData": "imgui_markdown:258",
     "MarkdownLinkCallbackData": "imgui_markdown:242",
     "MarkdownTooltipCallbackData": "imgui_markdown:252",
-    "TextBlock": "imgui_markdown:441",
-    "TextRegion": "imgui_markdown:348"
+    "TextBlock": "imgui_markdown:442",
+    "TextRegion": "imgui_markdown:349"
   },
   "structs": {
     "Emphasis": [
@@ -229,6 +229,10 @@
       {
         "name": "font",
         "type": "ImFont*"
+      },
+      {
+        "name": "fontSize",
+        "type": "float"
       },
       {
         "name": "separator",

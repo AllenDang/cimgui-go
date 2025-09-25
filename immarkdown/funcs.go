@@ -690,6 +690,12 @@ func (self MarkdownHeadingFormat) SetFont(v *imgui.Font) {
 	C.wrap_MarkdownHeadingFormat_SetFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
 }
 
+func (self MarkdownHeadingFormat) SetFontSize(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_MarkdownHeadingFormat_SetFontSize(selfArg, C.float(v))
+}
+
 func (self MarkdownHeadingFormat) SetSeparator(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -703,6 +709,15 @@ func (self *MarkdownHeadingFormat) Font() *imgui.Font {
 		selfFin()
 	}()
 	return imgui.NewFontFromC(C.wrap_MarkdownHeadingFormat_GetFont(internal.ReinterpretCast[*C.MarkdownHeadingFormat](selfArg)))
+}
+
+func (self *MarkdownHeadingFormat) FontSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_MarkdownHeadingFormat_GetFontSize(internal.ReinterpretCast[*C.MarkdownHeadingFormat](selfArg)))
 }
 
 func (self *MarkdownHeadingFormat) Separator() bool {
