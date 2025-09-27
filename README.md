@@ -54,6 +54,9 @@ We support the following backends:
 > Remember that various solution use different C libraries that can conflict with each other.
 > It is recommended not to import e.g. GLFW and SDL backends at the same time as it may result in linker crash.
 
+> [!tip]
+> Because [glfw v3.4](https://github.com/glfw/glfw) defaults to wayland when possible and wayland does not support some of imgui features, there is a `glfwbackend.ForceX11()`. Call it before creating a `glfwbackend.GLFWBakend` instance.
+
 ## Naming convention
 
 - For functions, 'Im/ImGui/ig' is trimmed.
