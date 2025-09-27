@@ -156,6 +156,7 @@ enum GLFWWindowFlags_ {
   GLFWWindowFocused = GLFW_FOCUSED,
   GLFWWindowIconified = GLFW_ICONIFIED,
   GLFWWindowAutoIconify = GLFW_AUTO_ICONIFY,
+  GLFWWindowMousePassthrough = GLFW_MOUSE_PASSTHROUGH,
 };
 
 typedef struct CImage {
