@@ -144,6 +144,21 @@ enum GLFWModifierKey_ {
    GLFWModNumLock = GLFW_MOD_NUM_LOCK,
 };
 
+typedef int GLFWInitHint;
+enum GLFWInitHint_ {
+        GLFWInitHintNone = 0,
+        GLFWInitHintPlatform = GLFW_PLATFORM,
+};
+
+typedef int GLFWPlatform;
+enum GLFWPlatform_ {
+        GLFWPlatformNone = 0,
+        GLFWPlatformWindows = GLFW_PLATFORM_WIN32,
+        GLFWPlatformMacOS = GLFW_PLATFORM_COCOA,
+        GLFWPlatformX11 = GLFW_PLATFORM_X11,
+        GLFWPlatformWayland = GLFW_PLATFORM_WAYLAND,
+};
+
 typedef int GLFWWindowFlags;
 enum GLFWWindowFlags_ {
   GLFWWindowNone = 0,
@@ -156,6 +171,7 @@ enum GLFWWindowFlags_ {
   GLFWWindowFocused = GLFW_FOCUSED,
   GLFWWindowIconified = GLFW_ICONIFIED,
   GLFWWindowAutoIconify = GLFW_AUTO_ICONIFY,
+  GLFWWindowMousePassthrough = GLFW_MOUSE_PASSTHROUGH,
 };
 
 typedef struct CImage {
@@ -191,6 +207,7 @@ extern void igGLFWWindow_SetCloseCallback(GLFWwindow *window);
 extern void igGLFWWindow_SetKeyCallback(GLFWwindow *window);
 extern void igGLFWWindow_SetSizeCallback(GLFWwindow *window);
 extern void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage* images);
+extern void igGLFWInitHint(GLFWInitHint hint, int value);
 extern void igRefresh();
 extern ImTextureID igCreateTexture(unsigned char *pixels, int width, int height);
 extern void igDeleteTexture(ImTextureID id);

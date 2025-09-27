@@ -39,6 +39,7 @@ const (
 	GLFWWindowFlagsFocused     = GLFWWindowFlags(C.GLFWWindowFocused)
 	GLFWWindowFlagsIconified   = GLFWWindowFlags(C.GLFWWindowIconified)
 	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
+	GLFWWindowMousePassthrough = GLFWWindowFlags(C.GLFWWindowMousePassthrough)
 )
 
 // SwapInterval values
@@ -216,6 +217,12 @@ func NewGLFWBackend() *GLFWBackend {
 	}
 
 	return b
+}
+
+// ForceX11 is here, because some imgui features are not available on wayland.
+// Call this BEFORE creating glfw backend!
+func ForceX11() {
+	C.glfwInitHint(C.GLFWInitHintPlatform, C.int(C.GLFWPlatformX11))
 }
 
 func (b *GLFWBackend) handle() *C.GLFWwindow {

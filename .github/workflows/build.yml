@@ -18,7 +18,7 @@ jobs:
       - name: add libs for glfw
         run: |
           sudo apt-get -y update
-          sudo apt install xorg-dev
+          sudo apt install xorg-dev libxkbcommon-dev libwayland-dev
 
       # for GLFW
       - name: configure glfw
