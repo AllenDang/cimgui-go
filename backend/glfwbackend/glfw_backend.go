@@ -29,17 +29,17 @@ type GLFWWindowFlags int
 
 // Window flags
 const (
-	GLFWWindowFlagsNone        = GLFWWindowFlags(C.GLFWWindowNone)
-	GLFWWindowFlagsResizable   = GLFWWindowFlags(C.GLFWWindowResizable)
-	GLFWWindowFlagsMaximized   = GLFWWindowFlags(C.GLFWWindowMaximized)
-	GLFWWindowFlagsDecorated   = GLFWWindowFlags(C.GLFWWindowDecorated)
-	GLFWWindowFlagsTransparent = GLFWWindowFlags(C.GLFWWindowTransparentFramebuffer)
-	GLFWWindowFlagsVisible     = GLFWWindowFlags(C.GLFWWindowVisible)
-	GLFWWindowFlagsFloating    = GLFWWindowFlags(C.GLFWWindowFloating)
-	GLFWWindowFlagsFocused     = GLFWWindowFlags(C.GLFWWindowFocused)
-	GLFWWindowFlagsIconified   = GLFWWindowFlags(C.GLFWWindowIconified)
-	GLFWWindowFlagsAutoIconify = GLFWWindowFlags(C.GLFWWindowAutoIconify)
-	GLFWWindowMousePassthrough = GLFWWindowFlags(C.GLFWWindowMousePassthrough)
+	GLFWWindowFlagsNone             = GLFWWindowFlags(C.GLFWWindowNone)
+	GLFWWindowFlagsResizable        = GLFWWindowFlags(C.GLFWWindowResizable)
+	GLFWWindowFlagsMaximized        = GLFWWindowFlags(C.GLFWWindowMaximized)
+	GLFWWindowFlagsDecorated        = GLFWWindowFlags(C.GLFWWindowDecorated)
+	GLFWWindowFlagsTransparent      = GLFWWindowFlags(C.GLFWWindowTransparentFramebuffer)
+	GLFWWindowFlagsVisible          = GLFWWindowFlags(C.GLFWWindowVisible)
+	GLFWWindowFlagsFloating         = GLFWWindowFlags(C.GLFWWindowFloating)
+	GLFWWindowFlagsFocused          = GLFWWindowFlags(C.GLFWWindowFocused)
+	GLFWWindowFlagsIconified        = GLFWWindowFlags(C.GLFWWindowIconified)
+	GLFWWindowFlagsAutoIconify      = GLFWWindowFlags(C.GLFWWindowAutoIconify)
+	GLFWWindowFlagsMousePassthrough = GLFWWindowFlags(C.GLFWWindowMousePassthrough)
 )
 
 // SwapInterval values
