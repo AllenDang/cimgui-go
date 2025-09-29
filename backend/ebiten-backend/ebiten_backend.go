@@ -124,10 +124,10 @@ func (e *EbitenBackend) BeginFrame() {
 
 	io := imgui.CurrentIO()
 	// handle imgui modifiers (Ctrl,, Shift, Alt, Super) for e.g. Ctrl+V/Ctrl+Shift+Arrow e.t.c.
-	// NOTE: Key Super is not supported by ebiten for some reason
 	io.AddKeyEvent(imgui.ModCtrl, ebiten.IsKeyPressed(ebiten.KeyControlLeft) || ebiten.IsKeyPressed(ebiten.KeyControlRight))
 	io.AddKeyEvent(imgui.ModShift, ebiten.IsKeyPressed(ebiten.KeyShiftLeft) || ebiten.IsKeyPressed(ebiten.KeyShiftRight))
 	io.AddKeyEvent(imgui.ModAlt, ebiten.IsKeyPressed(ebiten.KeyAltLeft) || ebiten.IsKeyPressed(ebiten.KeyAltRight))
+	io.AddKeyEvent(imgui.ModSuper, ebiten.IsKeyPressed(ebiten.KeyMetaLeft) || ebiten.IsKeyPressed(ebiten.KeyMetaRight)) // This is linked to glfw.KeyLeftSuper/glfw.KeyRightSuper
 
 	io.SetDisplaySize(imgui.Vec2{X: float32(e.currentWidth), Y: float32(e.currentHeight)})
 
