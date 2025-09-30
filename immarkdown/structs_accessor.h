@@ -73,11 +73,11 @@ extern const MarkdownConfig* wrap_MarkdownFormatInfo_GetConfig(MarkdownFormatInf
 extern const char* wrap_MarkdownFormatInfo_GetText(MarkdownFormatInfo *self);
 extern int32_t wrap_MarkdownFormatInfo_GetTextLength(MarkdownFormatInfo *self);
 extern void wrap_MarkdownHeadingFormat_SetFont(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, ImFont* v);
-extern void wrap_MarkdownHeadingFormat_SetFontSize(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, float v);
 extern void wrap_MarkdownHeadingFormat_SetSeparator(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, bool v);
+extern void wrap_MarkdownHeadingFormat_SetFontSize(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, float v);
 extern ImFont* wrap_MarkdownHeadingFormat_GetFont(MarkdownHeadingFormat *self);
-extern float wrap_MarkdownHeadingFormat_GetFontSize(MarkdownHeadingFormat *self);
 extern bool wrap_MarkdownHeadingFormat_GetSeparator(MarkdownHeadingFormat *self);
+extern float wrap_MarkdownHeadingFormat_GetFontSize(MarkdownHeadingFormat *self);
 extern void wrap_MarkdownImageData_SetIsValid(MarkdownImageData *MarkdownImageDataPtr, bool v);
 extern void wrap_MarkdownImageData_SetUseLinkCallback(MarkdownImageData *MarkdownImageDataPtr, bool v);
 extern void wrap_MarkdownImageData_SetUser_texture_id(MarkdownImageData *MarkdownImageDataPtr, ImTextureID v);
