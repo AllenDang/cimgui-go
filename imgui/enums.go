@@ -135,12 +135,14 @@ const (
 	BackendFlagsRendererHasVtxOffset BackendFlags = 8
 	// Backend Renderer supports ImTextureData requests to create/update/destroy textures. This enables incremental texture updates and texture reloads. See https://github.com/ocornut/imgui/blob/master/docs/BACKENDS.md for instructions on how to upgrade your custom backend.
 	BackendFlagsRendererHasTextures BackendFlags = 16
-	// Backend Platform supports multiple viewports.
-	BackendFlagsPlatformHasViewports BackendFlags = 1024
-	// Backend Platform supports calling io.AddMouseViewportEvent() with the viewport under the mouse. IF POSSIBLE, ignore viewports with the ImGuiViewportFlags_NoInputs flag (Win32 backend, GLFW 3.30+ backend can do this, SDL backend cannot). If this cannot be done, Dear ImGui needs to use a flawed heuristic to find the viewport under.
-	BackendFlagsHasMouseHoveredViewport BackendFlags = 2048
 	// Backend Renderer supports multiple viewports.
-	BackendFlagsRendererHasViewports BackendFlags = 4096
+	BackendFlagsRendererHasViewports BackendFlags = 1024
+	// Backend Platform supports multiple viewports.
+	BackendFlagsPlatformHasViewports BackendFlags = 2048
+	// Backend Platform supports calling io.AddMouseViewportEvent() with the viewport under the mouse. IF POSSIBLE, ignore viewports with the ImGuiViewportFlags_NoInputs flag (Win32 backend, GLFW 3.30+ backend can do this, SDL backend cannot). If this cannot be done, Dear ImGui needs to use a flawed heuristic to find the viewport under.
+	BackendFlagsHasMouseHoveredViewport BackendFlags = 4096
+	// Backend Platform supports honoring viewport->ParentViewportId value, by applying the corresponding parent/child relation at the Platform level.
+	BackendFlagsHasParentViewportId BackendFlags = 8192
 )
 
 // Extend ImGuiButtonFlags_

@@ -2,6 +2,8 @@ Support development of imgui_markdown through [GitHub Sponsors](https://github.c
 
 [<img src="https://img.shields.io/static/v1?logo=github&label=Github&message=Sponsor&color=#ea4aaa" width="200"/>](https://github.com/sponsors/dougbinks)    [<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron" width="150"/>](https://www.patreon.com/enkisoftware)
 
+*Note:* development happens on the `dev` branch and is merged to the `main` branch when complete. Please check this branch prior to submitting PRs and issues, and preferably base PRs on `dev`.
+
 # imgui_markdown
 
 ## Markdown For Dear ImGui
@@ -23,7 +25,7 @@ imgui_markdown currently supports the following markdown functionality:
 
 ![imgui_markdown demo live editing](https://github.com/juliettef/Media/blob/main/imgui_markdown_demo_live_editing.gif?raw=true)
 
-*Note - the gif above is heavily compressed due to GitHub limitations. There's a [(slightly) better version of it on twitter](https://twitter.com/juulcat/status/1090996799266000898).*
+*Note - the gif above is heavily compressed due to GitHub limitations*
 
 ## Syntax
 
@@ -90,7 +92,7 @@ Non exhaustive
 ```Cpp
 
 #include "ImGui.h"                // https://github.com/ocornut/imgui
-#include "imgui_markdown.h"       // https://github.com/juliettef/imgui_markdown
+#include "imgui_markdown.h"       // https://github.com/enkisoftware/imgui_markdown
 #include "IconsFontAwesome5.h"    // https://github.com/juliettef/IconFontCppHeaders
 
 // Following includes for Windows LinkCallback
@@ -108,6 +110,7 @@ static ImFont* H3 = NULL;
 
 static ImGui::MarkdownConfig mdConfig; 
 
+static float fontSize = 12.0f;
 
 void LinkCallback( ImGui::MarkdownLinkCallbackData data_ )
 {
@@ -121,7 +124,11 @@ void LinkCallback( ImGui::MarkdownLinkCallbackData data_ )
 inline ImGui::MarkdownImageData ImageCallback( ImGui::MarkdownLinkCallbackData data_ )
 {
     // In your application you would load an image based on data_ input. Here we just use the imgui font texture.
-    ImTextureID image = ImGui::GetIO().Fonts->TexID;
+    #ifdef IMGUI_HAS_TEXTURES // used to detect dynamic font capability
+        ImTextureID image = ImGui::GetIO().Fonts->TexRef.GetTexID();
+    #else
+        ImTextureID image = ImGui::GetIO().Fonts->TexID;
+    #endif
     // > C++14 can use ImGui::MarkdownImageData imageData{ true, false, image, ImVec2( 40.0f, 20.0f ) };
     ImGui::MarkdownImageData imageData;
     imageData.isValid =         true;
@@ -141,18 +148,23 @@ inline ImGui::MarkdownImageData ImageCallback( ImGui::MarkdownLinkCallbackData d
     return imageData;
 }
 
-void LoadFonts( float fontSize_ = 12.0f )
+void LoadFonts()
 {
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Clear();
     // Base font
-    io.Fonts->AddFontFromFileTTF( "myfont.ttf", fontSize_ );
+    io.Fonts->AddFontFromFileTTF( "myfont.ttf", fontSize );
     // Bold headings H2 and H3
-    H2 = io.Fonts->AddFontFromFileTTF( "myfont-bold.ttf", fontSize_ );
-    H3 = mdConfig.headingFormats[ 1 ].font;
+    H2 = io.Fonts->AddFontFromFileTTF( "myfont-bold.ttf", fontSize );
+    H3 = H2;
     // bold heading H1
-    float fontSizeH1 = fontSize_ * 1.1f;
-    H1 = io.Fonts->AddFontFromFileTTF( "myfont-bold.ttf", fontSizeH1 );
+    #ifdef IMGUI_HAS_TEXTURES // used to detect dynamic font capability
+        H1 = H2; // size can be set in headingFormats
+    #else
+        float fontSizeH1 = fontSize * 1.1f;
+        H1 = io.Fonts->AddFontFromFileTTF( "myfont-bold.ttf", fontSizeH1 );
+    #endif
+
 }
 
 void ExampleMarkdownFormatCallback( const ImGui::MarkdownFormatInfo& markdownFormatInfo_, bool start_ )
@@ -195,9 +207,16 @@ void Markdown( const std::string& markdown_ )
     mdConfig.tooltipCallback =      NULL;
     mdConfig.imageCallback =        ImageCallback;
     mdConfig.linkIcon =             ICON_FA_LINK;
-    mdConfig.headingFormats[0] =    { H1, true };
-    mdConfig.headingFormats[1] =    { H2, true };
-    mdConfig.headingFormats[2] =    { H3, false };
+    #ifdef IMGUI_HAS_TEXTURES // used to detect dynamic font capability
+        mdConfig.headingFormats[0] =    { H1, true,  fontSize * 1.1f };
+        mdConfig.headingFormats[1] =    { H2, true,  fontSize };
+        mdConfig.headingFormats[2] =    { H3, false, fontSize };
+    #else
+        mdConfig.headingFormats[0] =    { H1, true };
+        mdConfig.headingFormats[1] =    { H2, true };
+        mdConfig.headingFormats[2] =    { H3, false };
+    #endif
+
     mdConfig.userData =             NULL;
     mdConfig.formatCallback =       ExampleMarkdownFormatCallback;
     ImGui::Markdown( markdown_.c_str(), markdown_.length(), mdConfig );

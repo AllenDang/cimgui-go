@@ -287,7 +287,7 @@ namespace ImGui
         int32_t                 textLength = 0;
     };
 
-    typedef void                MarkdownLinkCallback( MarkdownLinkCallbackData data );    
+    typedef void                MarkdownLinkCallback( MarkdownLinkCallbackData data );
     typedef void                MarkdownTooltipCallback( MarkdownTooltipCallbackData data );
 
     inline void defaultMarkdownTooltipCallback( MarkdownTooltipCallbackData data_ )
@@ -310,8 +310,10 @@ namespace ImGui
     struct MarkdownHeadingFormat
     {
         ImFont*                 font;                               // ImGui font
-        float                   fontSize;                           // if > 0, set this as a font size for this heading
         bool                    separator;                          // if true, an underlined separator is drawn after the header
+        #ifdef IMGUI_HAS_TEXTURES // used to detect dynamic font capability: https://github.com/ocornut/imgui/issues/8465#issuecomment-2701570771
+        float                   fontSize = 0.0f;                    // Font size if using dynamic fonts
+        #endif
     };
 
     // Configuration struct for Markdown
@@ -1005,17 +1007,12 @@ namespace ImGui
 			    {
 				    if( fmt.font )
 				    {
-#if IMGUI_VERSION_NUM < 19200
-					    ImGui::PushFont( fmt.font);
-#else
-					    ImGui::PushFont( fmt.font, 0.0f ); // change font and keep the size.
-#endif // IMGUI_VERSION_NUM >= 19200
-
+                        #ifdef IMGUI_HAS_TEXTURES // used to detect dynamic font capability: 
+					        ImGui::PushFont( fmt.font, 0.0f ); // Change font and keep current size
+                        #else
+					        ImGui::PushFont( fmt.font );
+                        #endif
 				    }
-
-                                    if (fmt.fontSize > 0.0f) {
-                                        ImGui::PushFont( NULL, fmt.fontSize );
-                                    }
 			    }
                 else
 			    {
@@ -1023,10 +1020,6 @@ namespace ImGui
 				    {
 					    ImGui::PopFont();
 				    }
-
-                                    if (fmt.fontSize > 0.0f) {
-                                        ImGui::PopFont();
-                                    }
 			    }
             }
             break;
@@ -1046,18 +1039,12 @@ namespace ImGui
             {
                 if( fmt.font  )
                 {
-#if IMGUI_VERSION_NUM < 19200
-                    ImGui::PushFont( fmt.font );
-#else
-                    ImGui::PushFont( fmt.font, 0.0f ); // change font and keep the size.
-#endif // IMGUI_VERSION_NUM < 19200
+                    #ifdef IMGUI_HAS_TEXTURES // used to detect dynamic font capability: https://github.com/ocornut/imgui/issues/8465#issuecomment-2701570771
+                        ImGui::PushFont( fmt.font, fmt.fontSize > 0.0f ? fmt.fontSize : fmt.font->LegacySize );
+                    #else
+                        ImGui::PushFont( fmt.font );
+                    #endif
                 }
-                
-                if( fmt.fontSize > 0.0f )
-                {
-                    ImGui::PushFont( NULL, fmt.fontSize );
-                }
-
                 ImGui::NewLine();
             }
             else
@@ -1072,11 +1059,6 @@ namespace ImGui
                     ImGui::NewLine();
                 }
                 if( fmt.font )
-                {
-                    ImGui::PopFont();
-                }
-
-                if( fmt.fontSize > 0.0f )
                 {
                     ImGui::PopFont();
                 }

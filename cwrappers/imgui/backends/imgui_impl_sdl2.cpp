@@ -13,7 +13,7 @@
 //  [X] Platform: Multi-viewport support (multiple windows). Enable with 'io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable'.
 // Missing features or Issues:
 //  [ ] Platform: Multi-viewport: Minimized windows seems to break mouse wheel events (at least under Windows).
-//  [ ] Platform: Multi-viewport: viewport->ParentViewportID is ignored, and therefore io.ConfigViewportsNoDefaultParent has no effect either.
+//  [ ] Platform: Multi-viewport: Missing ImGuiBackendFlags_HasParentViewportId support. The viewport->ParentViewportID field is ignored, and therefore io.ConfigViewportsNoDefaultParent has no effect either.
 
 // You can use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
 // Prefer including the entire imgui/ repository into your project (either as a copy or as a submodule), and only build the backends you need.
@@ -760,6 +760,7 @@ static void ImGui_ImplSDL2_UpdateMouseData()
         }
 
         // (Optional) Fallback to provide unclamped mouse position when focused but not hovered (SDL_MOUSEMOTION already provides this when hovered or captured)
+        // Note that SDL_GetGlobalMouseState() is in theory slow on X11, but this only runs on rather specific cases. If a problem we may provide a way to opt-out this feature.
         SDL_Window* hovered_window = SDL_GetMouseFocus();
         const bool is_relative_mouse_mode = SDL_GetRelativeMouseMode() != 0;
         if (hovered_window == NULL && bd->MouseCanUseGlobalState && bd->MouseButtonsDown == 0 && !is_relative_mouse_mode)

@@ -2057,7 +2057,7 @@ void TextEditor::HandleKeyboardInputs(bool aParentIsFocused)
 			EnterCharacter('\n', false);
 		else if (!mReadOnly && !alt && !ctrl && !super && ImGui::IsKeyPressed(ImGuiKey_Tab))
 			EnterCharacter('\t', shift);
-		if (!mReadOnly && !io.InputQueueCharacters.empty() && ctrl == alt && !super)
+		if (!mReadOnly && !io.InputQueueCharacters.empty() && !(ctrl && !alt) && !super) // See https://github.com/santaclose/ImGuiColorTextEdit/pull/34
 		{
 			for (int i = 0; i < io.InputQueueCharacters.Size; i++)
 			{

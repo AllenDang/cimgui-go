@@ -70,11 +70,11 @@ const MarkdownConfig* wrap_MarkdownFormatInfo_GetConfig(MarkdownFormatInfo *self
 const char* wrap_MarkdownFormatInfo_GetText(MarkdownFormatInfo *self) { return self->text; }
 int32_t wrap_MarkdownFormatInfo_GetTextLength(MarkdownFormatInfo *self) { return self->textLength; }
 void wrap_MarkdownHeadingFormat_SetFont(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, ImFont* v) { MarkdownHeadingFormatPtr->font = v; }
-void wrap_MarkdownHeadingFormat_SetFontSize(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, float v) { MarkdownHeadingFormatPtr->fontSize = v; }
 void wrap_MarkdownHeadingFormat_SetSeparator(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, bool v) { MarkdownHeadingFormatPtr->separator = v; }
+void wrap_MarkdownHeadingFormat_SetFontSize(MarkdownHeadingFormat *MarkdownHeadingFormatPtr, float v) { MarkdownHeadingFormatPtr->fontSize = v; }
 ImFont* wrap_MarkdownHeadingFormat_GetFont(MarkdownHeadingFormat *self) { return self->font; }
-float wrap_MarkdownHeadingFormat_GetFontSize(MarkdownHeadingFormat *self) { return self->fontSize; }
 bool wrap_MarkdownHeadingFormat_GetSeparator(MarkdownHeadingFormat *self) { return self->separator; }
+float wrap_MarkdownHeadingFormat_GetFontSize(MarkdownHeadingFormat *self) { return self->fontSize; }
 void wrap_MarkdownImageData_SetIsValid(MarkdownImageData *MarkdownImageDataPtr, bool v) { MarkdownImageDataPtr->isValid = v; }
 void wrap_MarkdownImageData_SetUseLinkCallback(MarkdownImageData *MarkdownImageDataPtr, bool v) { MarkdownImageDataPtr->useLinkCallback = v; }
 void wrap_MarkdownImageData_SetUser_texture_id(MarkdownImageData *MarkdownImageDataPtr, ImTextureID v) { MarkdownImageDataPtr->user_texture_id = v; }
