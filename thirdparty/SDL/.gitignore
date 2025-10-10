@@ -15,7 +15,8 @@ build
 gen
 Build
 buildbot
-/VERSION.txt
+/REVISION.txt
+dist
 
 *.so
 *.so.*
@@ -103,6 +104,7 @@ VisualC/visualtest/testsprite2_sample.actions
 VisualC/visualtest/testsprite2_sample.config
 VisualC/visualtest/testsprite2_sample.parameters
 VisualC-GDK/**/Layout
+VisualC-GDK/shaders/*.h
 
 # for Android
 android-project/local.properties

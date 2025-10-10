@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -20,7 +20,7 @@
 */
 #include "../../SDL_internal.h"
 
-#if SDL_AUDIO_DRIVER_OPENSLES
+#ifdef SDL_AUDIO_DRIVER_OPENSLES
 
 /* For more discussion of low latency audio on Android, see this:
    https://googlesamples.github.io/android-audio-high-performance/guides/opensl_es.html
@@ -320,7 +320,7 @@ static int openslES_CreatePCMRecorder(_THIS)
 
     /* Create the sound buffers */
     audiodata->mixbuff = (Uint8 *)SDL_malloc(NUM_BUFFERS * this->spec.size);
-    if (audiodata->mixbuff == NULL) {
+    if (!audiodata->mixbuff) {
         LOGE("mixbuffer allocate - out of memory");
         goto failed;
     }
@@ -413,27 +413,32 @@ static int openslES_CreatePCMPlayer(_THIS)
     SLresult result;
     int i;
 
-    /* If we want to add floating point audio support (requires API level 21)
-       it can be done as described here:
-        https://developer.android.com/ndk/guides/audio/opensl/android-extensions.html#floating-point
-    */
+    /* according to https://developer.android.com/ndk/guides/audio/opensl/opensl-for-android,
+       Android's OpenSL ES only supports Uint8 and _littleendian_ Sint16.
+       (and float32, with an extension we use, below.) */
     if (SDL_GetAndroidSDKVersion() >= 21) {
         SDL_AudioFormat test_format;
         for (test_format = SDL_FirstAudioFormat(this->spec.format); test_format; test_format = SDL_NextAudioFormat()) {
-            if (SDL_AUDIO_ISSIGNED(test_format)) {
+            switch (test_format) {
+            case AUDIO_U8:
+            case AUDIO_S16LSB:
+            case AUDIO_F32LSB:
                 break;
+            default:
+                continue;
             }
+            break;
         }
 
         if (!test_format) {
             /* Didn't find a compatible format : */
-            LOGI("No compatible audio format, using signed 16-bit audio");
-            test_format = AUDIO_S16SYS;
+            LOGI("No compatible audio format, using signed 16-bit LE audio");
+            test_format = AUDIO_S16LSB;
         }
         this->spec.format = test_format;
     } else {
         /* Just go with signed 16-bit audio as it's the most compatible */
-        this->spec.format = AUDIO_S16SYS;
+        this->spec.format = AUDIO_S16LSB;
     }
 
     /* Update the fragment size as size in bytes */
@@ -566,7 +571,7 @@ static int openslES_CreatePCMPlayer(_THIS)
 
     /* Create the sound buffers */
     audiodata->mixbuff = (Uint8 *)SDL_malloc(NUM_BUFFERS * this->spec.size);
-    if (audiodata->mixbuff == NULL) {
+    if (!audiodata->mixbuff) {
         LOGE("mixbuffer allocate - out of memory");
         goto failed;
     }
@@ -591,7 +596,7 @@ failed:
 static int openslES_OpenDevice(_THIS, const char *devname)
 {
     this->hidden = (struct SDL_PrivateAudioData *)SDL_calloc(1, sizeof(*this->hidden));
-    if (this->hidden == NULL) {
+    if (!this->hidden) {
         return SDL_OutOfMemory();
     }
 
