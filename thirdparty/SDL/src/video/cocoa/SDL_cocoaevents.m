@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -20,7 +20,7 @@
 */
 #include "../../SDL_internal.h"
 
-#if SDL_VIDEO_DRIVER_COCOA
+#ifdef SDL_VIDEO_DRIVER_COCOA
 
 #include "SDL_timer.h"
 
@@ -138,6 +138,7 @@ static void Cocoa_DispatchEvent(NSEvent *theEvent)
 
 - (id)init;
 - (void)localeDidChange:(NSNotification *)notification;
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app;
 @end
 
 @implementation SDLAppDelegate : NSObject
@@ -286,9 +287,19 @@ static void Cocoa_DispatchEvent(NSEvent *theEvent)
     /* The menu bar of SDL apps which don't have the typical .app bundle
      * structure fails to work the first time a window is created (until it's
      * de-focused and re-focused), if this call is in Cocoa_RegisterApp instead
-     * of here. https://bugzilla.libsdl.org/show_bug.cgi?id=3051
+     * of here. https://github.com/libsdl-org/SDL/issues/1913
      */
-    if (!SDL_GetHintBoolean(SDL_HINT_MAC_BACKGROUND_APP, SDL_FALSE)) {
+
+    /* this apparently became unnecessary on macOS 14.0, and will addition pop up a
+       hidden dock if you're moving the mouse during launch, so change the default
+       behaviour there.  https://github.com/libsdl-org/SDL/issues/10340
+       (13.6 still needs it, presumably 13.7 does, too.) */
+    SDL_bool background_app_default = SDL_FALSE;
+    if (@available(macOS 14.0, *)) {
+        background_app_default = SDL_TRUE;  /* by default, don't explicitly activate the dock and then us again to force to foreground */
+    }
+
+    if (!SDL_GetHintBoolean(SDL_HINT_MAC_BACKGROUND_APP, background_app_default)) {
         /* Get more aggressive for Catalina: activate the Dock first so we definitely reset all activation state. */
         for (NSRunningApplication *i in [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.dock"]) {
             [i activateWithOptions:NSApplicationActivateIgnoringOtherApps];
@@ -308,6 +319,22 @@ static void Cocoa_DispatchEvent(NSEvent *theEvent)
     NSString* path = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
     SDL_SendDropFile(NULL, [path UTF8String]);
     SDL_SendDropComplete(NULL);
+}
+
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app
+{
+    // This just tells Cocoa that we didn't do any custom save state magic for the app,
+    // so the system is safe to use NSSecureCoding internally, instead of using unencrypted
+    // save states for backwards compatibility. If we don't return YES here, we'll get a
+    // warning on the console at startup:
+    //
+    // ```
+    // WARNING: Secure coding is not enabled for restorable state! Enable secure coding by implementing NSApplicationDelegate.applicationSupportsSecureRestorableState: and returning YES.
+    // ```
+    //
+    // More-detailed explanation:
+    // https://stackoverflow.com/questions/77283578/sonoma-and-nsapplicationdelegate-applicationsupportssecurerestorablestate/77320845#77320845
+    return YES;
 }
 
 @end

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -20,7 +20,7 @@
 */
 #include "../../SDL_internal.h"
 
-#if SDL_AUDIO_DRIVER_ALSA
+#ifdef SDL_AUDIO_DRIVER_ALSA
 
 #ifndef SDL_ALSA_NON_BLOCKING
 #define SDL_ALSA_NON_BLOCKING 0
@@ -83,6 +83,12 @@ static int (*ALSA_snd_device_name_hint)(int, const char *, void ***);
 static char *(*ALSA_snd_device_name_get_hint)(const void *, const char *);
 static int (*ALSA_snd_device_name_free_hint)(void **);
 static snd_pcm_sframes_t (*ALSA_snd_pcm_avail)(snd_pcm_t *);
+static int (*ALSA_snd_pcm_info)(snd_pcm_t *, snd_pcm_info_t *);
+static const char *(*ALSA_snd_pcm_info_get_name)(const snd_pcm_info_t *);
+static int (*ALSA_snd_pcm_info_get_card)(const snd_pcm_info_t *);
+static int (*ALSA_snd_card_get_name)(int, char **);
+static int (*ALSA_snd_pcm_info_malloc)(snd_pcm_info_t **);
+static int (*ALSA_snd_pcm_info_free)(snd_pcm_info_t *);
 #ifdef SND_CHMAP_API_VERSION
 static snd_pcm_chmap_t *(*ALSA_snd_pcm_get_chmap)(snd_pcm_t *);
 static int (*ALSA_snd_pcm_chmap_print)(const snd_pcm_chmap_t *map, size_t maxlen, char *buf);
@@ -98,7 +104,7 @@ static void *alsa_handle = NULL;
 static int load_alsa_sym(const char *fn, void **addr)
 {
     *addr = SDL_LoadFunction(alsa_handle, fn);
-    if (*addr == NULL) {
+    if (!*addr) {
         /* Don't call SDL_SetError(): SDL_LoadFunction already did. */
         return 0;
     }
@@ -152,6 +158,12 @@ static int load_alsa_syms(void)
     SDL_ALSA_SYM(snd_device_name_get_hint);
     SDL_ALSA_SYM(snd_device_name_free_hint);
     SDL_ALSA_SYM(snd_pcm_avail);
+    SDL_ALSA_SYM(snd_pcm_info);
+    SDL_ALSA_SYM(snd_pcm_info_get_card);
+    SDL_ALSA_SYM(snd_pcm_info_get_name);
+    SDL_ALSA_SYM(snd_card_get_name);
+    SDL_ALSA_SYM(snd_pcm_info_malloc);
+    SDL_ALSA_SYM(snd_pcm_info_free);
 #ifdef SND_CHMAP_API_VERSION
     SDL_ALSA_SYM(snd_pcm_get_chmap);
     SDL_ALSA_SYM(snd_pcm_chmap_print);
@@ -166,7 +178,7 @@ static int load_alsa_syms(void)
 
 static void UnloadALSALibrary(void)
 {
-    if (alsa_handle != NULL) {
+    if (alsa_handle) {
         SDL_UnloadObject(alsa_handle);
         alsa_handle = NULL;
     }
@@ -175,9 +187,9 @@ static void UnloadALSALibrary(void)
 static int LoadALSALibrary(void)
 {
     int retval = 0;
-    if (alsa_handle == NULL) {
+    if (!alsa_handle) {
         alsa_handle = SDL_LoadObject(alsa_library);
-        if (alsa_handle == NULL) {
+        if (!alsa_handle) {
             retval = -1;
             /* Don't call SDL_SetError(): SDL_LoadObject already did. */
         } else {
@@ -208,13 +220,13 @@ static const char *get_audio_device(void *handle, const int channels)
 {
     const char *device;
 
-    if (handle != NULL) {
+    if (handle) {
         return (const char *)handle;
     }
 
     /* !!! FIXME: we also check "SDL_AUDIO_DEVICE_NAME" at the higher level. */
     device = SDL_getenv("AUDIODEV"); /* Is there a standard variable name? */
-    if (device != NULL) {
+    if (device) {
         return device;
     }
 
@@ -466,6 +478,58 @@ static void ALSA_CloseDevice(_THIS)
     SDL_free(this->hidden);
 }
 
+static int ALSA_GetDefaultAudioInfo(char **name, SDL_AudioSpec *spec, int iscapture)
+{
+    const char *device = "default";
+    snd_pcm_t *pcm_handle;
+    snd_pcm_info_t *pcm_info;
+    snd_pcm_stream_t stream;
+    int card_index;
+    const char *dev_name;
+    char *card_name = NULL;
+    char final_name[256];
+
+    SDL_zero(final_name);
+    stream = iscapture ? SND_PCM_STREAM_CAPTURE : SND_PCM_STREAM_PLAYBACK;
+
+    if (ALSA_snd_pcm_open(&pcm_handle, device, stream, SND_PCM_NONBLOCK) < 0) {
+        return SDL_SetError("ALSA: Couldn't open default device");
+    }
+
+    if (ALSA_snd_pcm_info_malloc(&pcm_info) < 0) {
+        ALSA_snd_pcm_close(pcm_handle);
+        return SDL_SetError("ALSA: Couldn't allocate pcm_info");
+    }
+
+    if (ALSA_snd_pcm_info(pcm_handle, pcm_info) < 0) {
+        ALSA_snd_pcm_info_free(pcm_info);
+        ALSA_snd_pcm_close(pcm_handle);
+        return SDL_SetError("ALSA: Couldn't get PCM info");
+    }
+
+    card_index = ALSA_snd_pcm_info_get_card(pcm_info);
+    dev_name = ALSA_snd_pcm_info_get_name(pcm_info);
+
+    if (card_index >= 0 && ALSA_snd_card_get_name(card_index, &card_name) >= 0) {
+        SDL_snprintf(final_name, sizeof(final_name), "%s, %s", card_name, dev_name);
+        *name = SDL_strdup(final_name);
+    } else {
+        *name = SDL_strdup(dev_name ? dev_name : "Unknown ALSA Device");
+    }
+
+    if (spec) {
+        SDL_zero(*spec);
+        spec->freq = 48000;
+        spec->format = AUDIO_S16SYS;
+        spec->channels = 2;
+        spec->samples = 512;
+    }
+
+    ALSA_snd_pcm_info_free(pcm_info);
+    ALSA_snd_pcm_close(pcm_handle);
+    return 0;
+}
+
 static int ALSA_set_buffer_size(_THIS, snd_pcm_hw_params_t *params)
 {
     int status;
@@ -539,7 +603,7 @@ static int ALSA_OpenDevice(_THIS, const char *devname)
 
     /* Initialize all variables that we clean on shutdown */
     this->hidden = (struct SDL_PrivateAudioData *)SDL_malloc(sizeof(*this->hidden));
-    if (this->hidden == NULL) {
+    if (!this->hidden) {
         return SDL_OutOfMemory();
     }
     SDL_zerop(this->hidden);
@@ -687,7 +751,7 @@ static int ALSA_OpenDevice(_THIS, const char *devname)
     if (!iscapture) {
         this->hidden->mixlen = this->spec.size;
         this->hidden->mixbuf = (Uint8 *)SDL_malloc(this->hidden->mixlen);
-        if (this->hidden->mixbuf == NULL) {
+        if (!this->hidden->mixbuf) {
             return SDL_OutOfMemory();
         }
         SDL_memset(this->hidden->mixbuf, this->spec.silence, this->hidden->mixlen);
@@ -717,7 +781,7 @@ static void add_device(const int iscapture, const char *name, void *hint, ALSA_D
     char *handle = NULL;
     char *ptr;
 
-    if (dev == NULL) {
+    if (!dev) {
         return;
     }
 
@@ -727,7 +791,7 @@ static void add_device(const int iscapture, const char *name, void *hint, ALSA_D
        Make sure not to free the storage associated with desc in this case */
     if (hint) {
         desc = ALSA_snd_device_name_get_hint(hint, "DESC");
-        if (desc == NULL) {
+        if (!desc) {
             SDL_free(dev);
             return;
         }
@@ -741,14 +805,14 @@ static void add_device(const int iscapture, const char *name, void *hint, ALSA_D
        just chop the extra lines off, this seems to get a reasonable device
        name without extra details. */
     ptr = SDL_strchr(desc, '\n');
-    if (ptr != NULL) {
+    if (ptr) {
         *ptr = '\0';
     }
 
     /*printf("ALSA: adding %s device '%s' (%s)\n", iscapture ? "capture" : "output", name, desc);*/
 
     handle = SDL_strdup(name);
-    if (handle == NULL) {
+    if (!handle) {
         if (hint) {
             free(desc);
         }
@@ -800,7 +864,7 @@ static void ALSA_HotplugIteration(void)
            if we can find a preferred prefix for the system. */
         for (i = 0; hints[i]; i++) {
             char *name = ALSA_snd_device_name_get_hint(hints[i], "NAME");
-            if (name == NULL) {
+            if (!name) {
                 continue;
             }
 
@@ -829,20 +893,20 @@ static void ALSA_HotplugIteration(void)
             char *name;
 
             /* if we didn't find a device name prefix we like at all... */
-            if ((match == NULL) && (defaultdev != i)) {
+            if ((!match) && (defaultdev != i)) {
                 continue; /* ...skip anything that isn't the default device. */
             }
 
             name = ALSA_snd_device_name_get_hint(hints[i], "NAME");
-            if (name == NULL) {
+            if (!name) {
                 continue;
             }
 
             /* only want physical hardware interfaces */
-            if (match == NULL || (SDL_strncmp(name, match, match_len) == 0)) {
+            if (!match || (SDL_strncmp(name, match, match_len) == 0)) {
                 char *ioid = ALSA_snd_device_name_get_hint(hints[i], "IOID");
-                const SDL_bool isoutput = (ioid == NULL) || (SDL_strcmp(ioid, "Output") == 0);
-                const SDL_bool isinput = (ioid == NULL) || (SDL_strcmp(ioid, "Input") == 0);
+                const SDL_bool isoutput = (!ioid) || (SDL_strcmp(ioid, "Output") == 0);
+                const SDL_bool isinput = (!ioid) || (SDL_strcmp(ioid, "Input") == 0);
                 SDL_bool have_output = SDL_FALSE;
                 SDL_bool have_input = SDL_FALSE;
 
@@ -940,7 +1004,7 @@ static void ALSA_Deinitialize(void)
     ALSA_Device *next;
 
 #if SDL_ALSA_HOTPLUG_THREAD
-    if (ALSA_hotplug_thread != NULL) {
+    if (ALSA_hotplug_thread) {
         SDL_AtomicSet(&ALSA_hotplug_shutdown, 1);
         SDL_WaitThread(ALSA_hotplug_thread, NULL);
         ALSA_hotplug_thread = NULL;
@@ -975,6 +1039,7 @@ static SDL_bool ALSA_Init(SDL_AudioDriverImpl *impl)
     impl->Deinitialize = ALSA_Deinitialize;
     impl->CaptureFromDevice = ALSA_CaptureFromDevice;
     impl->FlushCapture = ALSA_FlushCapture;
+    impl->GetDefaultAudioInfo = ALSA_GetDefaultAudioInfo;
 
     impl->HasCaptureSupport = SDL_TRUE;
     impl->SupportsNonPow2Samples = SDL_TRUE;
