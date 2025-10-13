@@ -18901,6 +18901,14 @@ func (self Context) SetLastKeyboardKeyPressTime(v float64) {
 	C.wrap_ImGuiContext_SetLastKeyboardKeyPressTime(selfArg, C.double(v))
 }
 
+func (self Context) SetKeysMayBeCharInput(v BitArrayForNamedKeys) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetKeysMayBeCharInput(selfArg, internal.ReinterpretCast[C.ImBitArrayForNamedKeys](vArg))
+}
+
 func (self Context) SetKeysOwnerData(v *[155]KeyOwnerData) {
 	vArg := make([]C.ImGuiKeyOwnerData, len(v))
 	for i, vV := range v {
@@ -21446,6 +21454,17 @@ func (self *Context) LastKeyboardKeyPressTime() float64 {
 		selfFin()
 	}()
 	return float64(C.wrap_ImGuiContext_GetLastKeyboardKeyPressTime(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) KeysMayBeCharInput() BitArrayForNamedKeys {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiContext_GetKeysMayBeCharInput(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewBitArrayForNamedKeysFromC(func() *C.ImBitArrayForNamedKeys { result := result; return &result }())
 }
 
 func (self *Context) KeysOwnerData() [155]KeyOwnerData {
