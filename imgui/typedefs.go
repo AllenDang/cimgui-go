@@ -11,6 +11,32 @@ package imgui
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 
+type BitArrayForNamedKeys struct {
+	CData *C.ImBitArrayForNamedKeys
+}
+
+// Handle returns C version of BitArrayForNamedKeys and its finalizer func.
+func (self *BitArrayForNamedKeys) Handle() (result *C.ImBitArrayForNamedKeys, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self BitArrayForNamedKeys) C() (C.ImBitArrayForNamedKeys, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyBitArrayForNamedKeys creates BitArrayForNamedKeys with its 0 value.
+func NewEmptyBitArrayForNamedKeys() *BitArrayForNamedKeys {
+	return &BitArrayForNamedKeys{CData: new(C.ImBitArrayForNamedKeys)}
+}
+
+// NewBitArrayForNamedKeysFromC creates BitArrayForNamedKeys from its C pointer.
+// SRC ~= *C.ImBitArrayForNamedKeys
+func NewBitArrayForNamedKeysFromC[SRC any](cvalue SRC) *BitArrayForNamedKeys {
+	return &BitArrayForNamedKeys{CData: internal.ReinterpretCast[*C.ImBitArrayForNamedKeys](cvalue)}
+}
+
 type BitArrayPtr struct {
 	Data *uint32
 }

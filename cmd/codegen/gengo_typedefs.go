@@ -85,13 +85,7 @@ func GenerateTypedefs(
 			continue
 		}
 
-		if IsTemplateTypedef(typedef) {
-			if ctx.flags.ShowNotGenerated {
-				glg.Warnf("typedef %s is a template. not implemented yet", k)
-			}
-
-			continue
-		}
+		isTemplate := IsTemplateTypedef(typedef)
 
 		isPtr := HasSuffix(typedef, "*")
 
@@ -130,10 +124,10 @@ func GenerateTypedefs(
 		case IsCallbackTypedef(typedefs.data[k]):
 			maxTypedefs--
 			callbacks = append(callbacks, k)
-		case HasPrefix(typedefs.data[k], "struct"):
-			isOpaque := !IsStructName(k, ctx)
+		case HasPrefix(typedefs.data[k], "struct") || isTemplate: // treat "template" typedefs as if they were structs
+			isOpaque := !IsStructName(k, ctx) && !isTemplate
 			if ctx.flags.ShowGenerated {
-				glg.Successf("typedef %s is a struct (is opaque? %v).", k, isOpaque)
+				glg.Successf("typedef %s is a struct (is opaque? %v) or a \"template\" (%v).", k, isOpaque, isTemplate)
 			}
 
 			generator.writeStruct(k, isOpaque)
