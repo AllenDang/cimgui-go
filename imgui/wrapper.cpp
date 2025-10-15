@@ -163,6 +163,7 @@ void wrap_igBeginColumns(const char* str_id,int count) { igBeginColumns(str_id,c
 bool wrap_igBeginCombo(const char* label,const char* preview_value) { return igBeginCombo(label,preview_value,0); }
 void wrap_igBeginDisabled() { igBeginDisabled(true); }
 bool wrap_igBeginDragDropSource() { return igBeginDragDropSource(0); }
+bool wrap_igBeginDragDropTargetViewport(ImGuiViewport* viewport) { return igBeginDragDropTargetViewport(viewport,0); }
 bool wrap_igBeginListBox(const char* label) { return igBeginListBox(label,(ImVec2){0,0}); }
 bool wrap_igBeginMenu(const char* label) { return igBeginMenu(label,true); }
 bool wrap_igBeginMenuEx(const char* label,const char* icon) { return igBeginMenuEx(label,icon,true); }

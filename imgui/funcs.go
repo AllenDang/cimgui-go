@@ -3713,7 +3713,6 @@ func NewTextureData() *TextureData {
 	return NewTextureDataFromC(C.ImTextureData_ImTextureData())
 }
 
-// Call after honoring a request. Never modify Status directly!
 func (self *TextureData) SetStatus(status TextureStatus) {
 	selfArg, selfFin := self.Handle()
 	C.ImTextureData_SetStatus(internal.ReinterpretCast[*C.ImTextureData](selfArg), C.ImTextureStatus(status))
@@ -3721,7 +3720,6 @@ func (self *TextureData) SetStatus(status TextureStatus) {
 	selfFin()
 }
 
-// Call after creating or destroying the texture. Never modify TexID directly!
 func (self *TextureData) SetTexID(tex_id TextureID) {
 	selfArg, selfFin := self.Handle()
 	tex_idArg, tex_idFin := tex_id.C()
@@ -4040,6 +4038,19 @@ func InternalBeginDragDropTargetCustom(bb Rect, id ID) bool {
 		idFin()
 	}()
 	return C.igBeginDragDropTargetCustom(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
+}
+
+// InternalBeginDragDropTargetViewportV parameter default value hint:
+// p_bb: NULL
+func InternalBeginDragDropTargetViewportV(viewport *Viewport, p_bb *Rect) bool {
+	viewportArg, viewportFin := viewport.Handle()
+	p_bbArg, p_bbFin := internal.Wrap(p_bb)
+
+	defer func() {
+		viewportFin()
+		p_bbFin()
+	}()
+	return C.igBeginDragDropTargetViewport(internal.ReinterpretCast[*C.ImGuiViewport](viewportArg), internal.ReinterpretCast[*C.ImRect](p_bbArg)) == C.bool(true)
 }
 
 func InternalBeginErrorTooltip() bool {
@@ -9755,8 +9766,15 @@ func InternalRenderColorRectWithAlphaCheckerboardV(draw_list *DrawList, p_min, p
 	draw_listFin()
 }
 
-func InternalRenderDragDropTargetRect(bb, item_clip_rect Rect) {
-	C.igRenderDragDropTargetRect(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImRect](item_clip_rect.ToC()))
+func InternalRenderDragDropTargetRectEx(draw_list *DrawList, bb Rect) {
+	draw_listArg, draw_listFin := draw_list.Handle()
+	C.igRenderDragDropTargetRectEx(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect](bb.ToC()))
+
+	draw_listFin()
+}
+
+func InternalRenderDragDropTargetRectForItem(bb Rect) {
+	C.igRenderDragDropTargetRectForItem(internal.ReinterpretCast[C.ImRect](bb.ToC()))
 }
 
 // InternalRenderFrameV parameter default value hint:
@@ -12775,6 +12793,15 @@ func BeginDisabled() {
 
 func BeginDragDropSource() bool {
 	return C.wrap_igBeginDragDropSource() == C.bool(true)
+}
+
+func InternalBeginDragDropTargetViewport(viewport *Viewport) bool {
+	viewportArg, viewportFin := viewport.Handle()
+
+	defer func() {
+		viewportFin()
+	}()
+	return C.wrap_igBeginDragDropTargetViewport(internal.ReinterpretCast[*C.ImGuiViewport](viewportArg)) == C.bool(true)
 }
 
 func BeginListBox(label string) bool {
@@ -19693,6 +19720,14 @@ func (self Context) SetDragDropTargetId(v ID) {
 	C.wrap_ImGuiContext_SetDragDropTargetId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
+func (self Context) SetDragDropTargetFullViewport(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetDragDropTargetFullViewport(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
 func (self Context) SetDragDropAcceptFlags(v DragDropFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -22490,6 +22525,17 @@ func (self *Context) DragDropTargetId() ID {
 	selfArg, selfFin := self.Handle()
 
 	result := C.wrap_ImGuiContext_GetDragDropTargetId(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self *Context) DragDropTargetFullViewport() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiContext_GetDragDropTargetFullViewport(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
 
 	defer func() {
 		selfFin()
@@ -28458,16 +28504,16 @@ func (self KeyRoutingData) SetMods(v uint16) {
 	C.wrap_ImGuiKeyRoutingData_SetMods(selfArg, C.ImU16(v))
 }
 
-func (self KeyRoutingData) SetRoutingCurrScore(v byte) {
+func (self KeyRoutingData) SetRoutingCurrScore(v uint16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiKeyRoutingData_SetRoutingCurrScore(selfArg, C.ImU8(v))
+	C.wrap_ImGuiKeyRoutingData_SetRoutingCurrScore(selfArg, C.ImU16(v))
 }
 
-func (self KeyRoutingData) SetRoutingNextScore(v byte) {
+func (self KeyRoutingData) SetRoutingNextScore(v uint16) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiKeyRoutingData_SetRoutingNextScore(selfArg, C.ImU8(v))
+	C.wrap_ImGuiKeyRoutingData_SetRoutingNextScore(selfArg, C.ImU16(v))
 }
 
 func (self KeyRoutingData) SetRoutingCurr(v ID) {
@@ -28506,22 +28552,22 @@ func (self *KeyRoutingData) Mods() uint16 {
 	return (uint16)(C.wrap_ImGuiKeyRoutingData_GetMods(internal.ReinterpretCast[*C.ImGuiKeyRoutingData](selfArg)))
 }
 
-func (self *KeyRoutingData) RoutingCurrScore() byte {
+func (self *KeyRoutingData) RoutingCurrScore() uint16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return (byte)(C.wrap_ImGuiKeyRoutingData_GetRoutingCurrScore(internal.ReinterpretCast[*C.ImGuiKeyRoutingData](selfArg)))
+	return (uint16)(C.wrap_ImGuiKeyRoutingData_GetRoutingCurrScore(internal.ReinterpretCast[*C.ImGuiKeyRoutingData](selfArg)))
 }
 
-func (self *KeyRoutingData) RoutingNextScore() byte {
+func (self *KeyRoutingData) RoutingNextScore() uint16 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return (byte)(C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(internal.ReinterpretCast[*C.ImGuiKeyRoutingData](selfArg)))
+	return (uint16)(C.wrap_ImGuiKeyRoutingData_GetRoutingNextScore(internal.ReinterpretCast[*C.ImGuiKeyRoutingData](selfArg)))
 }
 
 func (self *KeyRoutingData) RoutingCurr() ID {
@@ -32520,7 +32566,7 @@ func (self Style) SetCircleTessellationMaxError(v float32) {
 	C.wrap_ImGuiStyle_SetCircleTessellationMaxError(selfArg, C.float(v))
 }
 
-func (self Style) SetColors(v *[60]Vec4) {
+func (self Style) SetColors(v *[61]Vec4) {
 	vArg := make([]C.ImVec4, len(v))
 	for i, vV := range v {
 		vArg[i] = internal.ReinterpretCast[C.ImVec4](vV.ToC())
@@ -33171,14 +33217,14 @@ func (self *Style) CircleTessellationMaxError() float32 {
 	return float32(C.wrap_ImGuiStyle_GetCircleTessellationMaxError(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
-func (self *Style) Colors() [60]Vec4 {
+func (self *Style) Colors() [61]Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [60]Vec4 {
-		result := [60]Vec4{}
+	return func() [61]Vec4 {
+		result := [61]Vec4{}
 		resultMirr := C.wrap_ImGuiStyle_GetColors(internal.ReinterpretCast[*C.ImGuiStyle](selfArg))
 		for i := range result {
 			result[i] = func() Vec4 {
@@ -37956,6 +38002,14 @@ func (self Viewport) SetParentViewportId(v ID) {
 	C.wrap_ImGuiViewport_SetParentViewportId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
+func (self Viewport) SetParentViewport(v *Viewport) {
+	vArg, _ := v.Handle()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiViewport_SetParentViewport(selfArg, internal.ReinterpretCast[*C.ImGuiViewport](vArg))
+}
+
 func (self Viewport) SetDrawData(v *DrawData) {
 	vArg, _ := v.Handle()
 
@@ -38110,6 +38164,15 @@ func (self *Viewport) ParentViewportId() ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self *Viewport) ParentViewport() *Viewport {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewViewportFromC(C.wrap_ImGuiViewport_GetParentViewport(internal.ReinterpretCast[*C.ImGuiViewport](selfArg)))
 }
 
 func (self *Viewport) DrawData() *DrawData {

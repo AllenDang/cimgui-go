@@ -1,4 +1,4 @@
-// dear imgui, v1.92.4 WIP
+// dear imgui, v1.92.4
 // (headers)
 
 // Help:
@@ -28,8 +28,8 @@
 
 // Library Version
 // (Integer encoded as XYYZZ for use in #if preprocessor conditionals, e.g. '#if IMGUI_VERSION_NUM >= 12345')
-#define IMGUI_VERSION       "1.92.4 WIP"
-#define IMGUI_VERSION_NUM   19233
+#define IMGUI_VERSION       "1.92.4"
+#define IMGUI_VERSION_NUM   19240
 #define IMGUI_HAS_TABLE             // Added BeginTable() - from IMGUI_VERSION_NUM >= 18000
 #define IMGUI_HAS_TEXTURES          // Added ImGuiBackendFlags_RendererHasTextures - from IMGUI_VERSION_NUM >= 19198
 #define IMGUI_HAS_VIEWPORT          // In 'docking' WIP branch.
@@ -956,18 +956,24 @@ namespace ImGui
     IMGUI_API void          SetTabItemClosed(const char* tab_or_docked_window_label);           // notify TabBar or Docking system of a closed tab/window ahead (useful to reduce visual flicker on reorderable tab bars). For tab-bar: call after BeginTabBar() and before Tab submissions. Otherwise call with a window name.
 
     // Docking
-    // [BETA API] Enable with io.ConfigFlags |= ImGuiConfigFlags_DockingEnable.
-    // Note: You can use most Docking facilities without calling any API. You DO NOT need to call DockSpace() to use Docking!
-    // - Drag from window title bar or their tab to dock/undock. Hold SHIFT to disable docking.
-    // - Drag from window menu button (upper-left button) to undock an entire node (all windows).
-    // - When io.ConfigDockingWithShift == true, you instead need to hold SHIFT to enable docking.
-    // About dockspaces:
-    // - Use DockSpaceOverViewport() to create a window covering the screen or a specific viewport + a dockspace inside it.
-    //   This is often used with ImGuiDockNodeFlags_PassthruCentralNode to make it transparent.
-    // - Use DockSpace() to create an explicit dock node _within_ an existing window. See Docking demo for details.
-    // - Important: Dockspaces need to be submitted _before_ any window they can host. Submit it early in your frame!
-    // - Important: Dockspaces need to be kept alive if hidden, otherwise windows docked into it will be undocked.
-    //   e.g. if you have multiple tabs with a dockspace inside each tab: submit the non-visible dockspaces with ImGuiDockNodeFlags_KeepAliveOnly.
+    // - Read https://github.com/ocornut/imgui/wiki/Docking for details.
+    // - Enable with io.ConfigFlags |= ImGuiConfigFlags_DockingEnable.
+    // - You can use most Docking facilities without calling any API. You don't necessarily need to call a DockSpaceXXX function to use Docking!
+    //   - Drag from window title bar or their tab to dock/undock. Hold SHIFT to disable docking.
+    //   - Drag from window menu button (upper-left button) to undock an entire node (all windows).
+    //   - When io.ConfigDockingWithShift == true, you instead need to hold SHIFT to enable docking.
+    // - Dockspaces:
+    //   - If you want to dock windows into the edge of your screen, most application can simply call DockSpaceOverViewport():
+    //     e.g. ImGui::NewFrame(); then ImGui::DockSpaceOverViewport();  // Create a dockspace in main viewport.
+    //      or: ImGui::NewFrame(); then ImGui::DockSpaceOverViewport(0, nullptr, ImGuiDockNodeFlags_PassthruCentralNode);  // Create a dockspace in main viewport, where central node is transparent.
+    //   - A dockspace is an explicit dock node within an existing window.
+    //   - DockSpaceOverViewport() basically creates an invisible window covering a viewport, and submit a DockSpace() into it.
+    //   - IMPORTANT: Dockspaces need to be submitted _before_ any window they can host. Submit them early in your frame!
+    //   - IMPORTANT: Dockspaces need to be kept alive if hidden, otherwise windows docked into it will be undocked.
+    //     If you have e.g. multiple tabs with a dockspace inside each tab: submit the non-visible dockspaces with ImGuiDockNodeFlags_KeepAliveOnly.
+    // - Programmatic docking:
+    //   - There is no public API yet other than the very limited SetNextWindowDockID() function. Sorry for that!
+    //   - Read https://github.com/ocornut/imgui/wiki/Docking for examples of how to use current internal API.
     IMGUI_API ImGuiID       DockSpace(ImGuiID dockspace_id, const ImVec2& size = ImVec2(0, 0), ImGuiDockNodeFlags flags = 0, const ImGuiWindowClass* window_class = NULL);
     IMGUI_API ImGuiID       DockSpaceOverViewport(ImGuiID dockspace_id = 0, const ImGuiViewport* viewport = NULL, ImGuiDockNodeFlags flags = 0, const ImGuiWindowClass* window_class = NULL);
     IMGUI_API void          SetNextWindowDockID(ImGuiID dock_id, ImGuiCond cond = 0);           // set next window dock id
@@ -1350,7 +1356,7 @@ enum ImGuiTreeNodeFlags_
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
     ImGuiTreeNodeFlags_NavLeftJumpsBackHere = ImGuiTreeNodeFlags_NavLeftJumpsToParent,  // Renamed in 1.92.0
     ImGuiTreeNodeFlags_SpanTextWidth        = ImGuiTreeNodeFlags_SpanLabelWidth,        // Renamed in 1.90.7
-    ImGuiTreeNodeFlags_AllowItemOverlap     = ImGuiTreeNodeFlags_AllowOverlap,          // Renamed in 1.89.7
+    //ImGuiTreeNodeFlags_AllowItemOverlap   = ImGuiTreeNodeFlags_AllowOverlap,          // Renamed in 1.89.7
 #endif
 };
 
@@ -1393,7 +1399,7 @@ enum ImGuiSelectableFlags_
 
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
     ImGuiSelectableFlags_DontClosePopups    = ImGuiSelectableFlags_NoAutoClosePopups,   // Renamed in 1.91.0
-    ImGuiSelectableFlags_AllowItemOverlap   = ImGuiSelectableFlags_AllowOverlap,        // Renamed in 1.89.7
+    //ImGuiSelectableFlags_AllowItemOverlap = ImGuiSelectableFlags_AllowOverlap,        // Renamed in 1.89.7
 #endif
 };
 
@@ -1789,7 +1795,7 @@ enum ImGuiBackendFlags_
     ImGuiBackendFlags_RendererHasViewports  = 1 << 10,  // Backend Renderer supports multiple viewports.
     ImGuiBackendFlags_PlatformHasViewports  = 1 << 11,  // Backend Platform supports multiple viewports.
     ImGuiBackendFlags_HasMouseHoveredViewport=1 << 12,  // Backend Platform supports calling io.AddMouseViewportEvent() with the viewport under the mouse. IF POSSIBLE, ignore viewports with the ImGuiViewportFlags_NoInputs flag (Win32 backend, GLFW 3.30+ backend can do this, SDL backend cannot). If this cannot be done, Dear ImGui needs to use a flawed heuristic to find the viewport under.
-    ImGuiBackendFlags_HasParentViewportId   = 1 << 13,  // Backend Platform supports honoring viewport->ParentViewportId value, by applying the corresponding parent/child relation at the Platform level.
+    ImGuiBackendFlags_HasParentViewport     = 1 << 13,  // Backend Platform supports honoring viewport->ParentViewport/ParentViewportId value, by applying the corresponding parent/child relation at the Platform level.
 };
 
 // Enumeration for PushStyleColor() / PopStyleColor()
@@ -1851,6 +1857,7 @@ enum ImGuiCol_
     ImGuiCol_TextSelectedBg,        // Selected text inside an InputText
     ImGuiCol_TreeLines,             // Tree node hierarchy outlines when using ImGuiTreeNodeFlags_DrawLines
     ImGuiCol_DragDropTarget,        // Rectangle highlighting a drop target
+    ImGuiCol_UnsavedMarker,         // Unsaved Document marker (in window title and tabs)
     ImGuiCol_NavCursor,             // Color of keyboard/gamepad navigation cursor/rectangle, when visible
     ImGuiCol_NavWindowingHighlight, // Highlight window when using CTRL+TAB
     ImGuiCol_NavWindowingDimBg,     // Darken/colorize entire screen behind the CTRL+TAB window list, when active
@@ -2977,7 +2984,7 @@ struct ImGuiListClipper
     IMGUI_API void  SeekCursorForItem(int item_index);
 
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-    inline void IncludeRangeByIndices(int item_begin, int item_end)      { IncludeItemsByIndex(item_begin, item_end); } // [renamed in 1.89.9]
+    //inline void IncludeRangeByIndices(int item_begin, int item_end)      { IncludeItemsByIndex(item_begin, item_end); } // [renamed in 1.89.9]
     //inline void ForceDisplayRangeByIndices(int item_begin, int item_end) { IncludeItemsByIndex(item_begin, item_end); } // [renamed in 1.89.6]
     //inline ImGuiListClipper(int items_count, float items_height = -1.0f) { memset(this, 0, sizeof(*this)); ItemsCount = -1; Begin(items_count, items_height); } // [removed in 1.79]
 #endif
@@ -3614,8 +3621,10 @@ struct ImTextureData
     ImTextureID         GetTexID() const            { return TexID; }
 
     // Called by Renderer backend
-    void                SetTexID(ImTextureID tex_id)      { TexID = tex_id; }   // Call after creating or destroying the texture. Never modify TexID directly!
-    void                SetStatus(ImTextureStatus status) { Status = status; }  // Call after honoring a request. Never modify Status directly!
+    // - Call SetTexID() and SetStatus() after honoring texture requests. Never modify TexID and Status directly!
+    // - A backend may decide to destroy a texture that we did not request to destroy, which is fine (e.g. freeing resources), but we immediately set the texture back in _WantCreate mode.
+    void    SetTexID(ImTextureID tex_id)            { TexID = tex_id; }
+    void    SetStatus(ImTextureStatus status)       { Status = status; if (status == ImTextureStatus_Destroyed && !WantDestroyNextFrame) Status = ImTextureStatus_WantCreate; }
 };
 
 //-----------------------------------------------------------------------------
@@ -4044,6 +4053,7 @@ struct ImGuiViewport
     ImVec2              WorkSize;               // Work Area: Size of the viewport minus task bars, menu bars, status bars (<= Size)
     float               DpiScale;               // 1.0f = 96 DPI = No extra scale.
     ImGuiID             ParentViewportId;       // (Advanced) 0: no parent. Instruct the platform backend to setup a parent/child relationship between platform windows.
+    ImGuiViewport*      ParentViewport;         // (Advanced) Direct shortcut to ImGui::FindViewportByID(ParentViewportId). NULL: no parent.
     ImDrawData*         DrawData;               // The ImDrawData corresponding to this viewport. Valid after Render() and until the next call to NewFrame().
 
     // Platform/Backend Dependent Data

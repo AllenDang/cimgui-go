@@ -169,6 +169,7 @@ extern void wrap_igBeginColumns(const char* str_id,int count);
 extern bool wrap_igBeginCombo(const char* label,const char* preview_value);
 extern void wrap_igBeginDisabled();
 extern bool wrap_igBeginDragDropSource();
+extern bool wrap_igBeginDragDropTargetViewport(ImGuiViewport* viewport);
 extern bool wrap_igBeginListBox(const char* label);
 extern bool wrap_igBeginMenu(const char* label);
 extern bool wrap_igBeginMenuEx(const char* label,const char* icon);

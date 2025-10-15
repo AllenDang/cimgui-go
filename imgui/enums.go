@@ -141,8 +141,8 @@ const (
 	BackendFlagsPlatformHasViewports BackendFlags = 2048
 	// Backend Platform supports calling io.AddMouseViewportEvent() with the viewport under the mouse. IF POSSIBLE, ignore viewports with the ImGuiViewportFlags_NoInputs flag (Win32 backend, GLFW 3.30+ backend can do this, SDL backend cannot). If this cannot be done, Dear ImGui needs to use a flawed heuristic to find the viewport under.
 	BackendFlagsHasMouseHoveredViewport BackendFlags = 4096
-	// Backend Platform supports honoring viewport->ParentViewportId value, by applying the corresponding parent/child relation at the Platform level.
-	BackendFlagsHasParentViewportId BackendFlags = 8192
+	// Backend Platform supports honoring viewport->ParentViewport/ParentViewportId value, by applying the corresponding parent/child relation at the Platform level.
+	BackendFlagsHasParentViewport BackendFlags = 8192
 )
 
 // Extend ImGuiButtonFlags_
@@ -329,15 +329,17 @@ const (
 	ColTreeLines Col = 54
 	// Rectangle highlighting a drop target
 	ColDragDropTarget Col = 55
+	// Unsaved Document marker (in window title and tabs)
+	ColUnsavedMarker Col = 56
 	// Color of keyboard/gamepad navigation cursor/rectangle, when visible
-	ColNavCursor Col = 56
+	ColNavCursor Col = 57
 	// Highlight window when using CTRL+TAB
-	ColNavWindowingHighlight Col = 57
+	ColNavWindowingHighlight Col = 58
 	// Darken/colorize entire screen behind the CTRL+TAB window list, when active
-	ColNavWindowingDimBg Col = 58
+	ColNavWindowingDimBg Col = 59
 	// Darken/colorize entire screen behind a modal window, when one is active
-	ColModalWindowDimBg Col = 59
-	ColCOUNT            Col = 60
+	ColModalWindowDimBg Col = 60
+	ColCOUNT            Col = 61
 )
 
 // Flags for ColorEdit3() / ColorEdit4() / ColorPicker3() / ColorPicker4() / ColorButton()
