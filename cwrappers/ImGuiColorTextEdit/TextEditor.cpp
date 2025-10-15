@@ -1073,7 +1073,7 @@ void TextEditor::Backspace(bool aWordMode)
 				MoveRight();
 			return;
 		}
-			
+
 		OnCursorPositionChanged(); // might combine cursors
 		Delete(aWordMode, &stateBeforeDeleting);
 	}
@@ -2888,7 +2888,7 @@ const TextEditor::Palette& TextEditor::GetLightPalette()
 {
 	const static Palette p = { {
 			0x404040ff,	// None
-			0x060cffff,	// Keyword	
+			0x060cffff,	// Keyword
 			0x008000ff,	// Number
 			0xa02020ff,	// String
 			0x704030ff, // Char literal
@@ -2917,7 +2917,7 @@ const TextEditor::Palette& TextEditor::GetRetroBluePalette()
 {
 	const static Palette p = { {
 			0xffff00ff,	// None
-			0x00ffffff,	// Keyword	
+			0x00ffffff,	// Keyword
 			0x00ff00ff,	// Number
 			0x008080ff,	// String
 			0x008080ff, // Char literal
