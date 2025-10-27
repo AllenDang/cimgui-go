@@ -2,7 +2,7 @@ module github.com/AllenDang/cimgui-go
 
 go 1.24.0
 
-require github.com/hajimehoshi/ebiten/v2 v2.9.2
+require github.com/hajimehoshi/ebiten/v2 v2.9.3
 
 require (
 	github.com/ebitengine/gomobile v0.0.0-20250923094054-ea854a63cce1 // indirect
