@@ -141,7 +141,7 @@ func getReturnWrapper(
 		} else {
 			return returnWrapper{
 				returnType: GoIdentifier(fmt.Sprintf("vectors.Vector[%s]", Replace(rw.returnType, "*", "", 1))),
-				returnStmt: fmt.Sprintf("vectors.NewVectorFromC(%%[1]s.Size, %%[1]s.Capacity, %s)", fmt.Sprintf(rw.returnStmt, "%[1]s.Data")),
+				returnStmt: fmt.Sprintf("func() vectors.Vector[%s] {result := %%[1]s; return vectors.NewVectorFromC(result.Size, result.Capacity, %s)}()", Replace(rw.returnType, "*", "", 1), fmt.Sprintf(rw.returnStmt, "result.Data")),
 				CType:      GoIdentifier(fmt.Sprintf("*C.%s", pureType)),
 			}, nil
 		}
