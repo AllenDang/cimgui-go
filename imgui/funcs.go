@@ -14946,7 +14946,7 @@ func (self *DrawData) Textures() vectors.Vector[TextureData] {
 	}()
 	return func() vectors.Vector[TextureData] {
 		result := C.wrap_ImDrawData_GetTextures(internal.ReinterpretCast[*C.ImDrawData](selfArg))
-		vectors.NewVectorFromC(result.Size, result.Capacity, result.Data)
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTextureDataFromC(*result.Data))
 	}()
 }
 
@@ -14962,7 +14962,7 @@ func (self *DrawDataBuilder) Layers() [2]vectors.Vector[DrawList] {
 		for i := range result {
 			result[i] = func() vectors.Vector[DrawList] {
 				result := C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i))
-				vectors.NewVectorFromC(result.Size, result.Capacity, result.Data)
+				return vectors.NewVectorFromC(result.Size, result.Capacity, NewDrawListFromC(*result.Data))
 			}()
 		}
 
