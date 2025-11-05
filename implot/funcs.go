@@ -10669,7 +10669,10 @@ func (self *AnnotationCollection) Annotations() vectors.Vector[Annotation] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotAnnotationCollection_GetAnnotations(internal.ReinterpretCast[*C.ImPlotAnnotationCollection](selfArg)).Size, C.wrap_ImPlotAnnotationCollection_GetAnnotations(internal.ReinterpretCast[*C.ImPlotAnnotationCollection](selfArg)).Capacity, NewAnnotationFromC(C.wrap_ImPlotAnnotationCollection_GetAnnotations(internal.ReinterpretCast[*C.ImPlotAnnotationCollection](selfArg)).Data))
+	return func() vectors.Vector[Annotation] {
+		result := C.wrap_ImPlotAnnotationCollection_GetAnnotations(internal.ReinterpretCast[*C.ImPlotAnnotationCollection](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewAnnotationFromC(result.Data))
+	}()
 }
 
 func (self *AnnotationCollection) TextBuffer() imgui.TextBuffer {
@@ -11607,7 +11610,10 @@ func (self *ColormapData) KeyCounts() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetKeyCounts(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetKeyCounts(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetKeyCounts(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotColormapData_GetKeyCounts(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *ColormapData) KeyOffsets() vectors.Vector[int32] {
@@ -11616,7 +11622,10 @@ func (self *ColormapData) KeyOffsets() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetKeyOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetKeyOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetKeyOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotColormapData_GetKeyOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *ColormapData) Tables() vectors.Vector[uint32] {
@@ -11625,7 +11634,10 @@ func (self *ColormapData) Tables() vectors.Vector[uint32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetTables(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetTables(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*uint32)(C.wrap_ImPlotColormapData_GetTables(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[uint32] {
+		result := C.wrap_ImPlotColormapData_GetTables(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*uint32)(result.Data))
+	}()
 }
 
 func (self *ColormapData) TableSizes() vectors.Vector[int32] {
@@ -11634,7 +11646,10 @@ func (self *ColormapData) TableSizes() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetTableSizes(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetTableSizes(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetTableSizes(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotColormapData_GetTableSizes(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *ColormapData) TableOffsets() vectors.Vector[int32] {
@@ -11643,7 +11658,10 @@ func (self *ColormapData) TableOffsets() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetTableOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetTableOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetTableOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotColormapData_GetTableOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *ColormapData) Text() imgui.TextBuffer {
@@ -11664,7 +11682,10 @@ func (self *ColormapData) TextOffsets() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetTextOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetTextOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*int32)(C.wrap_ImPlotColormapData_GetTextOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotColormapData_GetTextOffsets(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *ColormapData) Quals() vectors.Vector[bool] {
@@ -11673,7 +11694,10 @@ func (self *ColormapData) Quals() vectors.Vector[bool] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotColormapData_GetQuals(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Size, C.wrap_ImPlotColormapData_GetQuals(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Capacity, (*bool)(C.wrap_ImPlotColormapData_GetQuals(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg)).Data))
+	return func() vectors.Vector[bool] {
+		result := C.wrap_ImPlotColormapData_GetQuals(internal.ReinterpretCast[*C.ImPlotColormapData](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*bool)(result.Data))
+	}()
 }
 
 func (self *ColormapData) Map() imgui.Storage {
@@ -12036,7 +12060,10 @@ func (self *Context) ColorModifiers() vectors.Vector[imgui.ColorMod] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotContext_GetColorModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetColorModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Capacity, imgui.NewColorModFromC(C.wrap_ImPlotContext_GetColorModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Data))
+	return func() vectors.Vector[imgui.ColorMod] {
+		result := C.wrap_ImPlotContext_GetColorModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, imgui.NewColorModFromC(result.Data))
+	}()
 }
 
 func (self *Context) StyleModifiers() vectors.Vector[imgui.StyleMod] {
@@ -12045,7 +12072,10 @@ func (self *Context) StyleModifiers() vectors.Vector[imgui.StyleMod] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotContext_GetStyleModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetStyleModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Capacity, imgui.NewStyleModFromC(C.wrap_ImPlotContext_GetStyleModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Data))
+	return func() vectors.Vector[imgui.StyleMod] {
+		result := C.wrap_ImPlotContext_GetStyleModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, imgui.NewStyleModFromC(result.Data))
+	}()
 }
 
 func (self *Context) ColormapData() ColormapData {
@@ -12065,7 +12095,10 @@ func (self *Context) ColormapModifiers() vectors.Vector[Colormap] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotContext_GetColormapModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetColormapModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Capacity, (*Colormap)(C.wrap_ImPlotContext_GetColormapModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Data))
+	return func() vectors.Vector[Colormap] {
+		result := C.wrap_ImPlotContext_GetColormapModifiers(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*Colormap)(result.Data))
+	}()
 }
 
 func (self *Context) Tm() Tm {
@@ -12086,7 +12119,10 @@ func (self *Context) TempDouble1() vectors.Vector[float64] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotContext_GetTempDouble1(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetTempDouble1(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Capacity, (*float64)(C.wrap_ImPlotContext_GetTempDouble1(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Data))
+	return func() vectors.Vector[float64] {
+		result := C.wrap_ImPlotContext_GetTempDouble1(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*float64)(result.Data))
+	}()
 }
 
 func (self *Context) TempDouble2() vectors.Vector[float64] {
@@ -12095,7 +12131,10 @@ func (self *Context) TempDouble2() vectors.Vector[float64] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotContext_GetTempDouble2(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetTempDouble2(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Capacity, (*float64)(C.wrap_ImPlotContext_GetTempDouble2(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Data))
+	return func() vectors.Vector[float64] {
+		result := C.wrap_ImPlotContext_GetTempDouble2(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*float64)(result.Data))
+	}()
 }
 
 func (self *Context) TempInt1() vectors.Vector[int32] {
@@ -12104,7 +12143,10 @@ func (self *Context) TempInt1() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotContext_GetTempInt1(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Size, C.wrap_ImPlotContext_GetTempInt1(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Capacity, (*int32)(C.wrap_ImPlotContext_GetTempInt1(internal.ReinterpretCast[*C.ImPlotContext](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotContext_GetTempInt1(internal.ReinterpretCast[*C.ImPlotContext](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *Context) DigitalPlotItemCnt() int32 {
@@ -12749,7 +12791,10 @@ func (self *Legend) Indices() vectors.Vector[int32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotLegend_GetIndices(internal.ReinterpretCast[*C.ImPlotLegend](selfArg)).Size, C.wrap_ImPlotLegend_GetIndices(internal.ReinterpretCast[*C.ImPlotLegend](selfArg)).Capacity, (*int32)(C.wrap_ImPlotLegend_GetIndices(internal.ReinterpretCast[*C.ImPlotLegend](selfArg)).Data))
+	return func() vectors.Vector[int32] {
+		result := C.wrap_ImPlotLegend_GetIndices(internal.ReinterpretCast[*C.ImPlotLegend](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*int32)(result.Data))
+	}()
 }
 
 func (self *Legend) Labels() imgui.TextBuffer {
@@ -14686,7 +14731,10 @@ func (self *Subplot) RowAlignmentData() vectors.Vector[AlignmentData] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotSubplot_GetRowAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Size, C.wrap_ImPlotSubplot_GetRowAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Capacity, NewAlignmentDataFromC(C.wrap_ImPlotSubplot_GetRowAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Data))
+	return func() vectors.Vector[AlignmentData] {
+		result := C.wrap_ImPlotSubplot_GetRowAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewAlignmentDataFromC(result.Data))
+	}()
 }
 
 func (self *Subplot) ColAlignmentData() vectors.Vector[AlignmentData] {
@@ -14695,7 +14743,10 @@ func (self *Subplot) ColAlignmentData() vectors.Vector[AlignmentData] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotSubplot_GetColAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Size, C.wrap_ImPlotSubplot_GetColAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Capacity, NewAlignmentDataFromC(C.wrap_ImPlotSubplot_GetColAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Data))
+	return func() vectors.Vector[AlignmentData] {
+		result := C.wrap_ImPlotSubplot_GetColAlignmentData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewAlignmentDataFromC(result.Data))
+	}()
 }
 
 func (self *Subplot) RowRatios() vectors.Vector[float32] {
@@ -14704,7 +14755,10 @@ func (self *Subplot) RowRatios() vectors.Vector[float32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotSubplot_GetRowRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Size, C.wrap_ImPlotSubplot_GetRowRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Capacity, (*float32)(C.wrap_ImPlotSubplot_GetRowRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Data))
+	return func() vectors.Vector[float32] {
+		result := C.wrap_ImPlotSubplot_GetRowRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*float32)(result.Data))
+	}()
 }
 
 func (self *Subplot) ColRatios() vectors.Vector[float32] {
@@ -14713,7 +14767,10 @@ func (self *Subplot) ColRatios() vectors.Vector[float32] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotSubplot_GetColRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Size, C.wrap_ImPlotSubplot_GetColRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Capacity, (*float32)(C.wrap_ImPlotSubplot_GetColRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Data))
+	return func() vectors.Vector[float32] {
+		result := C.wrap_ImPlotSubplot_GetColRatios(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, (*float32)(result.Data))
+	}()
 }
 
 func (self *Subplot) RowLinkData() vectors.Vector[Range] {
@@ -14722,7 +14779,10 @@ func (self *Subplot) RowLinkData() vectors.Vector[Range] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotSubplot_GetRowLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Size, C.wrap_ImPlotSubplot_GetRowLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Capacity, NewRangeFromC(C.wrap_ImPlotSubplot_GetRowLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Data))
+	return func() vectors.Vector[Range] {
+		result := C.wrap_ImPlotSubplot_GetRowLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewRangeFromC(result.Data))
+	}()
 }
 
 func (self *Subplot) ColLinkData() vectors.Vector[Range] {
@@ -14731,7 +14791,10 @@ func (self *Subplot) ColLinkData() vectors.Vector[Range] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotSubplot_GetColLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Size, C.wrap_ImPlotSubplot_GetColLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Capacity, NewRangeFromC(C.wrap_ImPlotSubplot_GetColLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg)).Data))
+	return func() vectors.Vector[Range] {
+		result := C.wrap_ImPlotSubplot_GetColLinkData(internal.ReinterpretCast[*C.ImPlotSubplot](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewRangeFromC(result.Data))
+	}()
 }
 
 func (self *Subplot) TempSizes() [2]float32 {
@@ -14878,7 +14941,10 @@ func (self *TagCollection) Tags() vectors.Vector[Tag] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotTagCollection_GetTags(internal.ReinterpretCast[*C.ImPlotTagCollection](selfArg)).Size, C.wrap_ImPlotTagCollection_GetTags(internal.ReinterpretCast[*C.ImPlotTagCollection](selfArg)).Capacity, NewTagFromC(C.wrap_ImPlotTagCollection_GetTags(internal.ReinterpretCast[*C.ImPlotTagCollection](selfArg)).Data))
+	return func() vectors.Vector[Tag] {
+		result := C.wrap_ImPlotTagCollection_GetTags(internal.ReinterpretCast[*C.ImPlotTagCollection](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTagFromC(result.Data))
+	}()
 }
 
 func (self *TagCollection) TextBuffer() imgui.TextBuffer {
@@ -15071,7 +15137,10 @@ func (self *Ticker) Ticks() vectors.Vector[Tick] {
 	defer func() {
 		selfFin()
 	}()
-	return vectors.NewVectorFromC(C.wrap_ImPlotTicker_GetTicks(internal.ReinterpretCast[*C.ImPlotTicker](selfArg)).Size, C.wrap_ImPlotTicker_GetTicks(internal.ReinterpretCast[*C.ImPlotTicker](selfArg)).Capacity, NewTickFromC(C.wrap_ImPlotTicker_GetTicks(internal.ReinterpretCast[*C.ImPlotTicker](selfArg)).Data))
+	return func() vectors.Vector[Tick] {
+		result := C.wrap_ImPlotTicker_GetTicks(internal.ReinterpretCast[*C.ImPlotTicker](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTickFromC(result.Data))
+	}()
 }
 
 func (self *Ticker) TextBuffer() imgui.TextBuffer {
