@@ -4,8 +4,8 @@ github.com/ebitengine/hideconsole v1.0.0 h1:5J4U0kXF+pv/DhiXt5/lTz0eO5ogJ1iXb8Yj
 github.com/ebitengine/hideconsole v1.0.0/go.mod h1:hTTBTvVYWKBuxPr7peweneWdkUwEuHuB3C1R/ielR1A=
 github.com/ebitengine/purego v0.9.0 h1:mh0zpKBIXDceC63hpvPuGLiJ8ZAa3DfrFTudmfi8A4k=
 github.com/ebitengine/purego v0.9.0/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
-github.com/hajimehoshi/ebiten/v2 v2.9.3 h1:i2xYZ7GUk7/Bwa4CUxI/cZq+zrDrYCHGgwHLO61/Dok=
-github.com/hajimehoshi/ebiten/v2 v2.9.3/go.mod h1:DAt4tnkYYpCvu3x9i1X/nK/vOruNXIlYq/tBXxnhrXM=
+github.com/hajimehoshi/ebiten/v2 v2.9.4 h1:IlPJpwtksylmmvNhQjv4W2bmCFWXtjY7Z10Esise1bk=
+github.com/hajimehoshi/ebiten/v2 v2.9.4/go.mod h1:DAt4tnkYYpCvu3x9i1X/nK/vOruNXIlYq/tBXxnhrXM=
 github.com/jezek/xgb v1.1.1 h1:bE/r8ZZtSv7l9gk6nU0mYx51aXrvnyb44892TwSaqS4=
 github.com/jezek/xgb v1.1.1/go.mod h1:nrhwO0FX/enq75I7Y7G8iN1ubpSGZEiA3v9e9GyRFlk=
 golang.org/x/image v0.31.0 h1:mLChjE2MV6g1S7oqbXC0/UcKijjm5fnJLUYKIYrLESA=
