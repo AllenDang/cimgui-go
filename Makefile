@@ -122,9 +122,10 @@ generate: imgui implot imnodes immarkdown imguizmo imcte impl
 # update updates sub-repos (like cimplot or cimgui)
 # $1 - subrepo directory
 # $2 - repository URL
-# $3 - $1/<c++ repo>/
-# $4 - branch in $3 (cd tmp/$1/$3 && git checkout $4)
-# $5 - additional generator options
+# $3 - repository branch
+# $4 - $1/<c++ repo>/
+# $5 - submodule branch in $3 (cd tmp/$1/$3 && git checkout $4)
+# $6 - additional generator options
 define update
 	@echo "updating $1 from $2"
 	mkdir -p tmp/
@@ -132,40 +133,42 @@ define update
 		rm -rf tmp/*; \
 	fi
 	git clone --recurse-submodules $2 tmp/$1
-	cd tmp/$1/$3; \
-		git checkout $4
+	cd tmp/$1; \
+		git checkout $3
+	cd tmp/$1/$4; \
+		git checkout $5
 	cd tmp/$1/generator; \
-		bash generator.sh --target "internal noimstrv comments" $5
+		bash generator.sh --target "internal noimstrv comments" $6
 	cp -f tmp/$1/$1* cwrappers/
 	if test -e tmp/$1/generator/output/$1*; then \
 		cp -f tmp/$1/generator/output/$1* cwrappers/; \
 	fi
 	mkdir cwrappers/$1_templates
 	cp -f tmp/$1/generator/output/*json cwrappers/$1_templates
-	mkdir -p cwrappers/$3
-	cp -rf tmp/$1/$3/* cwrappers/$3
+	mkdir -p cwrappers/$4
+	cp -rf tmp/$1/$4/* cwrappers/$4
 	cd tmp/$1; \
 		echo "$1 ($2) HEAD is on: `git rev-parse HEAD`" >> ../../cwrappers/VERSION.txt
-	cd tmp/$1/$3; \
-		echo "$1/$3 HEAD is on: `git rev-parse HEAD`" >> ../../../cwrappers/VERSION.txt
+	cd tmp/$1/$4; \
+		echo "$1/$4 HEAD is on: `git rev-parse HEAD`" >> ../../../cwrappers/VERSION.txt
 endef
 
 .PHONY: update
 update: setup
 	rm -rf cwrappers/*
-	$(call update,cimgui,https://github.com/cimgui/cimgui,imgui,docking, --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32")
+	$(call update,cimgui,https://github.com/cimgui/cimgui,,imgui,docking, --cflags "glfw opengl3 opengl2 sdl2 -DIMGUI_USE_WCHAR32")
 	cat templates/assert.h >> cwrappers/imgui/imconfig.h
 	$(call imgui)
 	$(call impl)
-	$(call update,cimplot,https://github.com/cimgui/cimplot,implot,master)
+	$(call update,cimplot,https://github.com/cimgui/cimplot,,implot,master)
 	$(call implot)
-	$(call update,cimnodes,https://github.com/cimgui/cimnodes,imnodes,master)
+	$(call update,cimnodes,https://github.com/cimgui/cimnodes,,imnodes,master)
 	$(call imnodes)
-	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,imgui_markdown,main)
+	$(call update,cimmarkdown,https://github.com/gucio321/cimmarkdown,,imgui_markdown,main)
 	$(call immarkdown)
-	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,ImGuizmo,master)
+	$(call update,cimguizmo,https://github.com/cimgui/cimguizmo,,ImGuizmo,master)
 	$(call imguizmo)
-	$(call update,cimCTE,https://github.com/cimgui/cimcte,ImGuiColorTextEdit,master)
+	$(call update,cimCTE,https://github.com/cimgui/cimcte,,ImGuiColorTextEdit,master)
 	$(call imcte)
 	$(call vendor-eliminate)
 	$(call dummy)
