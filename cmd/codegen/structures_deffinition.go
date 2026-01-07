@@ -10,6 +10,7 @@ import (
 type StructSection struct {
 	StructComments json.RawMessage `json:"struct_comments"`
 	Structs        json.RawMessage `json:"structs"`
+	NonPODUsed     json.RawMessage `json:"nonPOD_used"`
 }
 
 // StructDef represents a definition of an ImGui struct.
@@ -17,6 +18,7 @@ type StructDef struct {
 	Name         CIdentifier `json:"name"`
 	CommentAbove string
 	Members      []StructMemberDef `json:"members"`
+	NonPODUsed   bool
 }
 
 // StructMemberDef represents a definition of an ImGui struct member.
@@ -43,6 +45,7 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		structs           []StructDef
 		structJson        map[string]json.RawMessage
 		structCommentJson map[string]json.RawMessage = make(map[string]json.RawMessage)
+		nonPODJson        map[string]bool
 	)
 
 	err = json.Unmarshal(structSectionJson.Structs, &structJson)
@@ -54,6 +57,13 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		err = json.Unmarshal(structSectionJson.StructComments, &structCommentJson)
 		if err != nil {
 			return nil, fmt.Errorf("cannot unmarshal struct's comments section: %w", err)
+		}
+	}
+
+	if structSectionJson.NonPODUsed != nil && string(structSectionJson.NonPODUsed) != "[]" {
+		err = json.Unmarshal(structSectionJson.NonPODUsed, &nonPODJson)
+		if err != nil {
+			return nil, fmt.Errorf("cannot unmarshal struct's NonPODUsed section: %w", err)
 		}
 	}
 
@@ -77,9 +87,15 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 			}
 		}
 
+		isNonPODUsed, ok := nonPODJson[k]
+		if !ok {
+			isNonPODUsed = false // this is theoritically defined by default (null value of a boolean), but being explicit here
+		}
+
 		str := StructDef{
-			Name:    CIdentifier(k),
-			Members: memberDefs,
+			Name:       CIdentifier(k),
+			Members:    memberDefs,
+			NonPODUsed: isNonPODUsed,
 		}
 
 		if commentData, ok := structCommentJson[k]; ok {
