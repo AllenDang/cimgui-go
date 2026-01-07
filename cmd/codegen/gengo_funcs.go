@@ -266,6 +266,8 @@ result := C.%s(%s)
 
 	// write non-return function calls (finalizers called normally)
 	switch {
+	case returnTypeType.Is(returnTypeVoid):
+		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeType.Is(returnTypeStructSetter):
 		g.sb.WriteString(fmt.Sprintf(`
 selfArg, selfFin := self.Handle()
