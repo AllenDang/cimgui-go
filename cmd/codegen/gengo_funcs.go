@@ -28,8 +28,6 @@ const (
 	returnTypeStruct
 	// the method is a constructor
 	returnTypeConstructor
-	// function with first arugment as pointer of return value
-	returnTypeNonUDT
 	// will be treated as struct fieldd getter
 	// TODO: This is convirmed to work only with returnTypeKnown.
 	returnTypeCustomFin
@@ -162,9 +160,7 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 
 	// attention! order is _probably_ important here so consider that
 	// before changing anything here
-	if f.NonUDT == 1 {
-		returnTypeType = returnTypeNonUDT
-	} else if f.Ret == "void" {
+	if f.Ret == "void" {
 		if f.StructSetter {
 			returnTypeType = returnTypeStructSetter
 		} else {
@@ -186,16 +182,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 	switch {
 	case returnTypeType.Is(returnTypeVoid):
 		// noop
-	case returnTypeType.Is(returnTypeNonUDT):
-		outArg := argWrappers[0]
-		returnType = TrimPrefix(outArg.ArgType, "*")
-
-		cfuncCall = fmt.Sprintf("*%s", f.ArgsT[0].Name)
-
-		argWrappers[0].ArgDef = fmt.Sprintf(`%s := new(%s)
-%s
-		`, f.ArgsT[0].Name, returnType, outArg.ArgDef)
-		args = args[1:]
 	case returnTypeType.Is(returnTypeStructSetter):
 		funcParts := Split(f.FuncName, "_")
 		funcName = TrimPrefix(f.FuncName, string(funcParts[0]+"_"))
@@ -280,8 +266,6 @@ result := C.%s(%s)
 
 	// write non-return function calls (finalizers called normally)
 	switch {
-	case returnTypeType.Is(returnTypeVoid | returnTypeNonUDT):
-		g.sb.WriteString(fmt.Sprintf("C.%s(%s)\n", f.CWrapperFuncName, argInvokeStmt))
 	case returnTypeType.Is(returnTypeStructSetter):
 		g.sb.WriteString(fmt.Sprintf(`
 selfArg, selfFin := self.Handle()
@@ -295,8 +279,6 @@ C.%s(selfArg, %s)
 	}
 
 	switch {
-	case returnTypeType.Is(returnTypeNonUDT):
-		g.sb.WriteString(fmt.Sprintf("return %s", cfuncCall))
 	case returnTypeType.Is(returnTypeKnown | returnTypeStructPtr | returnTypeConstructor | returnTypeStruct):
 		g.sb.WriteString("return " + fmt.Sprintf(rw.returnStmt, cfuncCall))
 	}
