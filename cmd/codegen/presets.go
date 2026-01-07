@@ -117,6 +117,9 @@ type Preset struct {
 	//   return CToGo(x)
 	// In other words, CToGo is supposed to copy the value of x.
 	CustomFInalizer map[CIdentifier]CIdentifier
+	// NonPODUsedSuffixes refers to https://github.com/cimgui/cimgui/issues/309#issuecomment-3548459079
+	// it allows to determine whether the special suffix was added in C layer.
+	NonPODUsedSuffixes []string
 }
 
 func (p *Preset) MergeCGoPreamble() string {

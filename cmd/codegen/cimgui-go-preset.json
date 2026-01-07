@@ -63,6 +63,7 @@
                 "igGetStyle":              "CurrentStyle",
                 "igGetMouseCursor":        "CurrentMouseCursor",
                 "igGetFontBaked":          "GetFontBaked",
+                "igGetItemFlags":          "LastItemFlags",
                 "Get_TexID":               "GetTexID",
                 "ImAxis":                  "AxisEnum",
                 "GetItem_ID":              "ItemByID"
@@ -132,5 +133,8 @@
                 "ImPlotPoint": ["PlotPoint", "C.ImPlotPoint", "implot"],
                 "ImPlotTime":  ["PlotTime", "C.ImPlotTime", "implot"]
 
-        }
+        },
+        "NonPODUsedSuffixes": [
+                "_c"
+        ]
 }
