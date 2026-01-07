@@ -96,7 +96,9 @@ func GenerateGoFuncs(
 		}
 
 		if noErrors := generator.GenerateFunction(f, args, argWrappers); !noErrors {
-			continue
+			if context.flags.ShowNotGenerated {
+				glg.Warnf("not generated (errors): %s%s", f.FuncName, f.Args)
+			}
 		}
 	}
 
