@@ -6,6 +6,14 @@ import (
 	"sort"
 )
 
+type NonPODUsedType byte
+
+const (
+	POD NonPODUsedType = iota
+	NonPOD
+	PODInherited
+)
+
 // StructSection appears in json file on top of structs definition section.
 type StructSection struct {
 	StructComments json.RawMessage `json:"struct_comments"`
@@ -18,7 +26,15 @@ type StructDef struct {
 	Name         CIdentifier `json:"name"`
 	CommentAbove string
 	Members      []StructMemberDef `json:"members"`
-	NonPODUsed   bool
+	NonPODUsed   NonPODUsedType
+}
+
+func (s *StructDef) podName(ctx *Context) CIdentifier {
+	if s.NonPODUsed == NonPOD {
+		return s.Name + CIdentifier(ctx.preset.NonPODUsedSuffix)
+	}
+
+	return s.Name
 }
 
 // StructMemberDef represents a definition of an ImGui struct member.
@@ -45,7 +61,7 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		structs           []StructDef
 		structJson        map[string]json.RawMessage
 		structCommentJson map[string]json.RawMessage = make(map[string]json.RawMessage)
-		nonPODJson        map[string]bool
+		nonPODJson        map[string]any
 	)
 
 	err = json.Unmarshal(structSectionJson.Structs, &structJson)
@@ -87,15 +103,35 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 			}
 		}
 
-		isNonPODUsed, ok := nonPODJson[k]
+		isNonPODUsedVal, ok := nonPODJson[k]
+		var nonPODUsed NonPODUsedType
+
 		if !ok {
-			isNonPODUsed = false // this is theoritically defined by default (null value of a boolean), but being explicit here
+			nonPODUsed = POD
+		} else {
+			switch v := isNonPODUsedVal.(type) {
+			case string:
+				switch v {
+				case "inherited":
+					nonPODUsed = PODInherited
+				default:
+					nonPODUsed = NonPOD
+				}
+			case bool:
+				if v {
+					nonPODUsed = NonPOD
+				} else {
+					nonPODUsed = POD
+				}
+			default:
+				return nil, fmt.Errorf("unexpected type for NonPODUsed value %T for struct %s", v, k)
+			}
 		}
 
 		str := StructDef{
 			Name:       CIdentifier(k),
 			Members:    memberDefs,
-			NonPODUsed: isNonPODUsed,
+			NonPODUsed: nonPODUsed,
 		}
 
 		if commentData, ok := structCommentJson[k]; ok {
