@@ -119,7 +119,7 @@ type Preset struct {
 	CustomFInalizer map[CIdentifier]CIdentifier
 	// NonPODUsedSuffixes refers to https://github.com/cimgui/cimgui/issues/309#issuecomment-3548459079
 	// it allows to determine whether the special suffix was added in C layer.
-	NonPODUsedSuffixes []string
+	NonPODUsedSuffix string
 }
 
 func (p *Preset) MergeCGoPreamble() string {

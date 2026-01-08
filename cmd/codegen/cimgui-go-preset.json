@@ -134,7 +134,5 @@
                 "ImPlotTime":  ["PlotTime", "C.ImPlotTime", "implot"]
 
         },
-        "NonPODUsedSuffixes": [
-                "_c"
-        ]
+        "NonPODUsedSuffix": "_c"
 }
