@@ -89,16 +89,18 @@ func GenerateGoFuncs(
 			}
 
 			continue
-		} else {
-			if context.flags.ShowGenerated {
-				glg.Successf("generated: %s%s", f.FuncName, f.Args)
-			}
 		}
 
 		if noErrors := generator.GenerateFunction(f, args, argWrappers); !noErrors {
 			if context.flags.ShowNotGenerated {
 				glg.Warnf("not generated (errors): %s%s", f.FuncName, f.Args)
 			}
+
+			continue
+		}
+
+		if context.flags.ShowGenerated {
+			glg.Successf("generated: %s%s", f.FuncName, f.Args)
 		}
 	}
 
