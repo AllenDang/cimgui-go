@@ -75,8 +75,7 @@ func getReturnWrapper(
 	shouldSkipRefTypedef := context.ShouldSkipTypedef(pureType)
 	_, isStruct := context.typedefsNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isRefEnum)) && !shouldSkipRefTypedef)
-	// w, known := returnWrapperMap[TrimPrefix(t, "const ")] // TODO - this might have had some reason here (?)
-	w, known := returnWrapperMap[pureType]
+	w, known := returnWrapperMap[TrimPrefix(TrimSuffix(t, context.preset.NonPODUsedSuffix), "const ")]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
 	if err != nil {
