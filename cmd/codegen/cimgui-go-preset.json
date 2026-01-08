@@ -126,9 +126,9 @@
 
         },
         "WrappableTypes": {
-                "ImVec2":      ["Vec2", "C.ImVec2", "imgui"],
-                "ImVec4":      ["Vec4", "C.ImVec4", "imgui"],
-                "ImColor":     ["Color", "C.ImColor", "imgui"],
+                "ImVec2":      ["Vec2", "C.ImVec2_c", "imgui"],
+                "ImVec4":      ["Vec4", "C.ImVec4_c", "imgui"],
+                "ImColor":     ["Color", "C.ImColor_c", "imgui"],
                 "ImRect":      ["Rect", "C.ImRect", "imgui"],
                 "ImPlotPoint": ["PlotPoint", "C.ImPlotPoint", "implot"],
                 "ImPlotTime":  ["PlotTime", "C.ImPlotTime", "implot"]

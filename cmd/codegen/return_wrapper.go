@@ -65,6 +65,8 @@ func getReturnWrapper(
 
 	isPointer := HasSuffix(t, "*")
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
+	// isNonPODUsed := HasSuffix(pureType, context.preset.NonPODUsedSuffix) // FIXME
+	pureType = TrimSuffix(pureType, context.preset.NonPODUsedSuffix)
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := context.refStructNames[pureType]
 	_, isRefTypedef := context.refTypedefs[pureType]
@@ -73,12 +75,21 @@ func getReturnWrapper(
 	shouldSkipRefTypedef := context.ShouldSkipTypedef(pureType)
 	_, isStruct := context.typedefsNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isRefEnum)) && !shouldSkipRefTypedef)
-	w, known := returnWrapperMap[TrimPrefix(t, "const ")]
+	// w, known := returnWrapperMap[TrimPrefix(t, "const ")] // TODO - this might have had some reason here (?)
+	w, known := returnWrapperMap[pureType]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
 	if err != nil {
 		glg.Fatalf("Error in regex: %s", err)
 	}
+
+	/*
+		if isNonPODUsed {
+			fmt.Println(returnWrapperMap[pureType])
+			fmt.Println(pureType, known)
+			panic("")
+		}
+	*/
 
 	srcPackage := GoIdentifier(context.flags.PackageName)
 	if isRefTypedef {
