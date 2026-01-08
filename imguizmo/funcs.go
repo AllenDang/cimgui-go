@@ -249,7 +249,7 @@ func SetRect(x, y, width, height float32) {
 
 func ViewManipulateFloat(view *float32, length float32, position, size imgui.Vec2, backgroundColor uint32) {
 	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
-	C.ImGuizmo_ViewManipulate_Float(viewArg, C.float(length), internal.ReinterpretCast[C.ImVec2](position.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
+	C.ImGuizmo_ViewManipulate_Float(viewArg, C.float(length), internal.ReinterpretCast[C.ImVec2_c](position.ToC()), internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImU32(backgroundColor))
 
 	viewFin()
 }
@@ -258,7 +258,7 @@ func ViewManipulateFloatPtr(view, projection *float32, operation OPERATION, mode
 	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
 	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
 	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
-	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), internal.ReinterpretCast[C.ImVec2](position.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImU32(backgroundColor))
+	C.ImGuizmo_ViewManipulate_FloatPtr(viewArg, projectionArg, C.OPERATION(operation), C.MODE(mode), matrixArg, C.float(length), internal.ReinterpretCast[C.ImVec2_c](position.ToC()), internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImU32(backgroundColor))
 
 	viewFin()
 	projectionFin()
@@ -342,14 +342,14 @@ func (self Style) SetCenterCircleSize(v float32) {
 }
 
 func (self Style) SetColors(v *[15]imgui.Vec4) {
-	vArg := make([]C.ImVec4, len(v))
+	vArg := make([]C.ImVec4_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec4](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec4_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_Style_SetColors(selfArg, (*C.ImVec4)(&vArg[0]))
+	C.wrap_Style_SetColors(selfArg, (*C.ImVec4_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() imgui.Vec4 { out := vV; return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out)) }()

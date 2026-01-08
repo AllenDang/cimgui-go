@@ -118,7 +118,7 @@ func (self *TextRegion) Destroy() {
 }
 
 func UnderLine(col_ imgui.Color) {
-	C.UnderLine(internal.ReinterpretCast[C.ImColor](col_.ToC()))
+	C.UnderLine(internal.ReinterpretCast[C.ImColor_c](col_.ToC()))
 }
 
 func DefaultMarkdownFormatCallback(markdownFormatInfo_ MarkdownFormatInfo, start_ bool) {
@@ -752,37 +752,37 @@ func (self MarkdownImageData) SetUsertextureid(v imgui.TextureID) {
 func (self MarkdownImageData) SetSize(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_MarkdownImageData_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self MarkdownImageData) SetUv0(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv0(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_MarkdownImageData_SetUv0(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self MarkdownImageData) SetUv1(v imgui.Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetUv1(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_MarkdownImageData_SetUv1(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self MarkdownImageData) SetTintcol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetTint_col(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_MarkdownImageData_SetTint_col(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self MarkdownImageData) SetBordercol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetBorder_col(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_MarkdownImageData_SetBorder_col(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self MarkdownImageData) SetBgcol(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_MarkdownImageData_SetBg_col(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_MarkdownImageData_SetBg_col(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self *MarkdownImageData) IsValid() bool {
