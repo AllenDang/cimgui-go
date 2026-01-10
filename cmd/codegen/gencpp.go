@@ -549,9 +549,10 @@ extern "C" {
 			}
 
 			// find if the member is a structure, and if so, change its type to podName()
+			pureType := TrimPrefix(TrimSuffix(memberType, "*"), "const ")
 			for _, st := range structs {
-				if st.Name == m.Type {
-					memberType = st.podName(context)
+				if st.Name == pureType {
+					memberType = ReplaceAll(memberType, pureType, st.podName(context))
 				}
 			}
 
