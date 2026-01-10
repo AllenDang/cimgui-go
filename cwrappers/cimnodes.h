@@ -8,7 +8,7 @@
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 
 typedef struct ImGuiContext ImGuiContext;
-typedef struct ImVec2 ImVec2;
+typedef struct ImVec2_c ImVec2_c;
 typedef struct ImNodesContext ImNodesContext;
 typedef struct ImNodesEditorContext ImNodesEditorContext;
 typedef int ImNodesCol;
@@ -122,7 +122,7 @@ struct ImNodesStyle
 {
     float GridSpacing;
     float NodeCornerRounding;
-    ImVec2 NodePadding;
+    ImVec2_c NodePadding;
     float NodeBorderThickness;
     float LinkThickness;
     float LinkLineSegmentsPerLength;
@@ -133,8 +133,8 @@ struct ImNodesStyle
     float PinLineThickness;
     float PinHoverRadius;
     float PinOffset;
-    ImVec2 MiniMapPadding;
-    ImVec2 MiniMapOffset;
+    ImVec2_c MiniMapPadding;
+    ImVec2_c MiniMapOffset;
     ImNodesStyleFlags Flags;
     unsigned int Colors[ImNodesCol_COUNT];
 };
@@ -145,13 +145,17 @@ typedef enum {
     ImNodesMiniMapLocation_TopRight,
 }ImNodesMiniMapLocation_;
 struct ImGuiContext;
-struct ImVec2;
+struct ImVec2_c;
 struct ImNodesContext;
 struct ImNodesEditorContext;
 typedef void (*ImNodesMiniMapNodeHoveringCallback)(int, void*);
 typedef void* ImNodesMiniMapNodeHoveringCallbackUserData;
 #else
 #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+
+
+
+
 
 #ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct ImNodesIO::EmulateThreeButtonMouse EmulateThreeButtonMouse;
@@ -176,8 +180,8 @@ CIMGUI_API void imnodes_SetCurrentContext(ImNodesContext* ctx);
 CIMGUI_API ImNodesEditorContext* imnodes_EditorContextCreate(void);
 CIMGUI_API void imnodes_EditorContextFree(ImNodesEditorContext* noname1);
 CIMGUI_API void imnodes_EditorContextSet(ImNodesEditorContext* noname1);
-CIMGUI_API void imnodes_EditorContextGetPanning(ImVec2 *pOut);
-CIMGUI_API void imnodes_EditorContextResetPanning(const ImVec2 pos);
+CIMGUI_API ImVec2_c imnodes_EditorContextGetPanning(void);
+CIMGUI_API void imnodes_EditorContextResetPanning(const ImVec2_c pos);
 CIMGUI_API void imnodes_EditorContextMoveToNode(const int node_id);
 CIMGUI_API ImNodesIO* imnodes_GetIO(void);
 CIMGUI_API ImNodesStyle* imnodes_GetStyle(void);
@@ -190,11 +194,11 @@ CIMGUI_API void imnodes_MiniMap(const float minimap_size_fraction,const ImNodesM
 CIMGUI_API void imnodes_PushColorStyle(ImNodesCol item,unsigned int color);
 CIMGUI_API void imnodes_PopColorStyle(void);
 CIMGUI_API void imnodes_PushStyleVar_Float(ImNodesStyleVar style_item,float value);
-CIMGUI_API void imnodes_PushStyleVar_Vec2(ImNodesStyleVar style_item,const ImVec2 value);
+CIMGUI_API void imnodes_PushStyleVar_Vec2(ImNodesStyleVar style_item,const ImVec2_c value);
 CIMGUI_API void imnodes_PopStyleVar(int count);
 CIMGUI_API void imnodes_BeginNode(int id);
 CIMGUI_API void imnodes_EndNode(void);
-CIMGUI_API void imnodes_GetNodeDimensions(ImVec2 *pOut,int id);
+CIMGUI_API ImVec2_c imnodes_GetNodeDimensions(int id);
 CIMGUI_API void imnodes_BeginNodeTitleBar(void);
 CIMGUI_API void imnodes_EndNodeTitleBar(void);
 CIMGUI_API void imnodes_BeginInputAttribute(int id,ImNodesPinShape shape);
@@ -207,12 +211,12 @@ CIMGUI_API void imnodes_PushAttributeFlag(ImNodesAttributeFlags flag);
 CIMGUI_API void imnodes_PopAttributeFlag(void);
 CIMGUI_API void imnodes_Link(int id,int start_attribute_id,int end_attribute_id);
 CIMGUI_API void imnodes_SetNodeDraggable(int node_id,const bool draggable);
-CIMGUI_API void imnodes_SetNodeScreenSpacePos(int node_id,const ImVec2 screen_space_pos);
-CIMGUI_API void imnodes_SetNodeEditorSpacePos(int node_id,const ImVec2 editor_space_pos);
-CIMGUI_API void imnodes_SetNodeGridSpacePos(int node_id,const ImVec2 grid_pos);
-CIMGUI_API void imnodes_GetNodeScreenSpacePos(ImVec2 *pOut,const int node_id);
-CIMGUI_API void imnodes_GetNodeEditorSpacePos(ImVec2 *pOut,const int node_id);
-CIMGUI_API void imnodes_GetNodeGridSpacePos(ImVec2 *pOut,const int node_id);
+CIMGUI_API void imnodes_SetNodeScreenSpacePos(int node_id,const ImVec2_c screen_space_pos);
+CIMGUI_API void imnodes_SetNodeEditorSpacePos(int node_id,const ImVec2_c editor_space_pos);
+CIMGUI_API void imnodes_SetNodeGridSpacePos(int node_id,const ImVec2_c grid_pos);
+CIMGUI_API ImVec2_c imnodes_GetNodeScreenSpacePos(const int node_id);
+CIMGUI_API ImVec2_c imnodes_GetNodeEditorSpacePos(const int node_id);
+CIMGUI_API ImVec2_c imnodes_GetNodeGridSpacePos(const int node_id);
 CIMGUI_API void imnodes_SnapNodeToGrid(int node_id);
 CIMGUI_API bool imnodes_IsEditorHovered(void);
 CIMGUI_API bool imnodes_IsNodeHovered(int* node_id);

@@ -7,7 +7,20 @@
 #include <cstring>
 
 
-CIMGUI_API TextEditor* TextEditor_TextEditor(void)
+static inline ImVec2 ConvertToCPP_ImVec2(const ImVec2_c& src)
+{
+    ImVec2 dest;
+    dest.x = src.x;
+    dest.y = src.y;
+    return dest;
+}
+static inline ImVec2_c ConvertFromCPP_ImVec2(const ImVec2& src)
+{
+    ImVec2_c dest;
+    dest.x = src.x;
+    dest.y = src.y;
+    return dest;
+}CIMGUI_API TextEditor* TextEditor_TextEditor(void)
 {
     return IM_NEW(TextEditor)();
 }
@@ -191,9 +204,9 @@ CIMGUI_API int TextEditor_GetUndoIndex(TextEditor* self)
 {
     return self->GetUndoIndex();
 }
-CIMGUI_API bool TextEditor_Render(TextEditor* self,const char* aTitle,bool aParentIsFocused,const ImVec2 aSize,bool aBorder)
+CIMGUI_API bool TextEditor_Render(TextEditor* self,const char* aTitle,bool aParentIsFocused,const ImVec2_c aSize,bool aBorder)
 {
-    return self->Render(aTitle,aParentIsFocused,aSize,aBorder);
+    return self->Render(aTitle,aParentIsFocused,ConvertToCPP_ImVec2(aSize),aBorder);
 }
 CIMGUI_API void TextEditor_UnitTests(TextEditor* self)
 {

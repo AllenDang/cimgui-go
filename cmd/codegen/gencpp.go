@@ -462,13 +462,20 @@ extern "C" {
 				memberType = "uintptr_t"
 			}
 
+			// find if the member is a structure, and if so, change its type to podName()
+			for _, st := range structs {
+				if st.Name == m.Type {
+					memberType = st.podName(context)
+				}
+			}
+
 			// Generate setter function
 			setterFuncDef := FuncDef{
 				Args: fmt.Sprintf("(%[1]s *%[2]s, %[3]s v)", s.Name, s.Name+"Ptr", m.Type),
 				ArgsT: []ArgDef{
 					{
 						Name: s.Name + "Ptr",
-						Type: s.Name,
+						Type: s.podName(context),
 					},
 					{
 						Name:            "v",
@@ -541,12 +548,20 @@ extern "C" {
 				memberType = "uintptr_t"
 			}
 
+			// find if the member is a structure, and if so, change its type to podName()
+			pureType := TrimPrefix(TrimSuffix(memberType, "*"), "const ")
+			for _, st := range structs {
+				if st.Name == pureType {
+					memberType = ReplaceAll(memberType, pureType, st.podName(context))
+				}
+			}
+
 			getterFuncDef := FuncDef{
 				Args: fmt.Sprintf("(%[1]s *%[2]s)", s.Name, "self"),
 				ArgsT: []ArgDef{
 					{
 						Name: "self",
-						Type: s.Name + "*",
+						Type: s.podName(context) + "*",
 					},
 				},
 				FuncName:         getterFuncName,
