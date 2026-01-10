@@ -116,7 +116,7 @@ extern void wrap_ImDrawListSharedData_SetArcFastVtx(ImDrawListSharedData *ImDraw
 extern void wrap_ImDrawListSharedData_SetArcFastRadiusCutoff(ImDrawListSharedData *ImDrawListSharedDataPtr, float v);
 extern void wrap_ImDrawListSharedData_SetCircleSegmentCounts(ImDrawListSharedData *ImDrawListSharedDataPtr, ImU8* v);
 extern ImVec2_c wrap_ImDrawListSharedData_GetTexUvWhitePixel(ImDrawListSharedData *self);
-extern const ImVec4* wrap_ImDrawListSharedData_GetTexUvLines(ImDrawListSharedData *self);
+extern const ImVec4_c* wrap_ImDrawListSharedData_GetTexUvLines(ImDrawListSharedData *self);
 extern ImFontAtlas* wrap_ImDrawListSharedData_GetFontAtlas(ImDrawListSharedData *self);
 extern ImFont* wrap_ImDrawListSharedData_GetFont(ImDrawListSharedData *self);
 extern float wrap_ImDrawListSharedData_GetFontSize(ImDrawListSharedData *self);

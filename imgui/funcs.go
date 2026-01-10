@@ -3415,6 +3415,15 @@ func (self *Rect) InternalAddVec2(p Vec2) {
 	selfFin()
 }
 
+func (self *Rect) InternalAsVec4() *Vec4 {
+	selfArg, selfFin := internal.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return (&Vec4{}).FromC(unsafe.Pointer(C.ImRect_AsVec4(internal.ReinterpretCast[*C.ImRect_c](selfArg))))
+}
+
 // Simple version, may lead to an inverted rectangle, which is fine for Contains/Overlaps test but not for display.
 func (self *Rect) InternalClipWith(r Rect) {
 	selfArg, selfFin := internal.Wrap(self)
@@ -6693,6 +6702,11 @@ func CurrentStyle() *Style {
 // get a string corresponding to the enum value (for display, saving, etc.).
 func StyleColorName(idx Col) string {
 	return C.GoString(C.igGetStyleColorName(C.ImGuiCol(idx)))
+}
+
+// retrieve style color as stored in ImGuiStyle structure. use to feed back into PushStyleColor(), otherwise use GetColorU32() to get style color with style alpha baked in.
+func StyleColorVec4(idx Col) *Vec4 {
+	return (&Vec4{}).FromC(unsafe.Pointer(C.igGetStyleColorVec4(C.ImGuiCol(idx))))
 }
 
 func InternalStyleVarInfo(idx StyleVar) *StyleVarInfo {

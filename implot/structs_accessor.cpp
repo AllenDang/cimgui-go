@@ -97,7 +97,7 @@ ImPlotRange_c wrap_ImPlotAxis_GetRange(ImPlotAxis *self) { return self->Range; }
 ImPlotCond wrap_ImPlotAxis_GetRangeCond(ImPlotAxis *self) { return self->RangeCond; }
 ImPlotScale wrap_ImPlotAxis_GetScale(ImPlotAxis *self) { return self->Scale; }
 ImPlotRange_c wrap_ImPlotAxis_GetFitExtents(ImPlotAxis *self) { return self->FitExtents; }
-ImPlotAxis* wrap_ImPlotAxis_GetOrthoAxis(ImPlotAxis *self) { return self->OrthoAxis; }
+ImPlotAxis_c* wrap_ImPlotAxis_GetOrthoAxis(ImPlotAxis *self) { return self->OrthoAxis; }
 ImPlotRange_c wrap_ImPlotAxis_GetConstraintRange(ImPlotAxis *self) { return self->ConstraintRange; }
 ImPlotRange_c wrap_ImPlotAxis_GetConstraintZoom(ImPlotAxis *self) { return self->ConstraintZoom; }
 ImPlotTicker wrap_ImPlotAxis_GetTicker(ImPlotAxis *self) { return self->Ticker; }

@@ -100,7 +100,7 @@ extern ImPlotRange_c wrap_ImPlotAxis_GetRange(ImPlotAxis *self);
 extern ImPlotCond wrap_ImPlotAxis_GetRangeCond(ImPlotAxis *self);
 extern ImPlotScale wrap_ImPlotAxis_GetScale(ImPlotAxis *self);
 extern ImPlotRange_c wrap_ImPlotAxis_GetFitExtents(ImPlotAxis *self);
-extern ImPlotAxis* wrap_ImPlotAxis_GetOrthoAxis(ImPlotAxis *self);
+extern ImPlotAxis_c* wrap_ImPlotAxis_GetOrthoAxis(ImPlotAxis *self);
 extern ImPlotRange_c wrap_ImPlotAxis_GetConstraintRange(ImPlotAxis *self);
 extern ImPlotRange_c wrap_ImPlotAxis_GetConstraintZoom(ImPlotAxis *self);
 extern ImPlotTicker wrap_ImPlotAxis_GetTicker(ImPlotAxis *self);
