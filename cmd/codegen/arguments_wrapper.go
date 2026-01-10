@@ -114,7 +114,7 @@ func getArgWrapper(
 		return
 	}
 
-	pureType := TrimPrefix(TrimSuffix(a.Type, context.preset.NonPODUsedSuffix), "const ")
+	pureType := TrimPrefix(ReplaceAll(a.Type, context.preset.NonPODUsedSuffix, ""), "const ")
 
 	if v, ok := argWrapperMap[pureType]; ok {
 		arg := v(*a)

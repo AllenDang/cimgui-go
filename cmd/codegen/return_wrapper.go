@@ -45,7 +45,7 @@ func getReturnWrapper(
 		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context), "C.tm"),
 
 		// TODO: this should be generalized and loaded from preset
-		"ImVec4_c*": imVec4PtrReturnW(context),
+		"ImVec4*": imVec4PtrReturnW(context),
 	}
 
 	// import preset
@@ -75,20 +75,12 @@ func getReturnWrapper(
 	shouldSkipRefTypedef := context.ShouldSkipTypedef(pureType)
 	_, isStruct := context.typedefsNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isRefEnum)) && !shouldSkipRefTypedef)
-	w, known := returnWrapperMap[TrimPrefix(TrimSuffix(t, context.preset.NonPODUsedSuffix), "const ")]
+	w, known := returnWrapperMap[TrimPrefix(ReplaceAll(t, context.preset.NonPODUsedSuffix, ""), "const ")]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
 	if err != nil {
 		glg.Fatalf("Error in regex: %s", err)
 	}
-
-	/*
-		if isNonPODUsed {
-			fmt.Println(returnWrapperMap[pureType])
-			fmt.Println(pureType, known)
-			panic("")
-		}
-	*/
 
 	srcPackage := GoIdentifier(context.flags.PackageName)
 	if isRefTypedef {

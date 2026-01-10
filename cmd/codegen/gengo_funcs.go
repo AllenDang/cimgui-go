@@ -211,12 +211,6 @@ func (g *goFuncsGenerator) GenerateFunction(f FuncDef, args []GoIdentifier, argW
 		shouldDefer = true
 		parts := Split(f.FuncName, "_")
 		cReturnType = parts[0]
-		// check if nonPOD struct
-		for _, st := range g.context.structs {
-			if CIdentifier(parts[0]) == st.Name {
-				cReturnType = st.podName(g.context)
-			}
-		}
 
 		cReturnType += "*"
 
