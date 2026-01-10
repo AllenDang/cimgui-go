@@ -10559,6 +10559,14 @@ func (self Axis) SetPreviousFlags(v AxisFlags) {
 	C.wrap_ImPlotAxis_SetPreviousFlags(selfArg, C.ImPlotAxisFlags(v))
 }
 
+func (self Axis) SetRange(v Range) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetRange(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
+}
+
 func (self Axis) SetRangeCond(v Cond) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -10571,12 +10579,36 @@ func (self Axis) SetScale(v Scale) {
 	C.wrap_ImPlotAxis_SetScale(selfArg, C.ImPlotScale(v))
 }
 
+func (self Axis) SetFitExtents(v Range) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetFitExtents(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
+}
+
 func (self Axis) SetOrthoAxis(v *Axis) {
 	vArg, _ := v.Handle()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetOrthoAxis(selfArg, internal.ReinterpretCast[*C.ImPlotAxis](vArg))
+}
+
+func (self Axis) SetConstraintRange(v Range) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetConstraintRange(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
+}
+
+func (self Axis) SetConstraintZoom(v Range) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetConstraintZoom(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
 }
 
 func (self Axis) SetTicker(v Ticker) {
@@ -10636,6 +10668,18 @@ func (self Axis) SetPickerLevel(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotAxis_SetPickerLevel(selfArg, C.int(v))
+}
+
+func (self Axis) SetPickerTimeMin(v PlotTime) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetPickerTimeMin(selfArg, internal.ReinterpretCast[C.ImPlotTime](v.ToC()))
+}
+
+func (self Axis) SetPickerTimeMax(v PlotTime) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotAxis_SetPickerTimeMax(selfArg, internal.ReinterpretCast[C.ImPlotTime](v.ToC()))
 }
 
 func (self Axis) SetTransformForward(v Transform) {
@@ -12454,6 +12498,22 @@ func (self NextPlotData) SetRangeCond(v *[6]Cond) {
 	}
 }
 
+func (self NextPlotData) SetRange(v *[6]Range) {
+	vArg := make([]C.ImPlotRange, len(v))
+	for i, vV := range v {
+		vVArg, _ := vV.C()
+		vArg[i] = internal.ReinterpretCast[C.ImPlotRange](vVArg)
+	}
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotNextPlotData_SetRange(selfArg, (*C.ImPlotRange)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *NewRangeFromC(func() *C.ImPlotRange { result := vV; return &result }())
+	}
+}
+
 func (self NextPlotData) SetHasRange(v *[6]bool) {
 	vArg := make([]C.bool, len(v))
 	for i, vV := range v {
@@ -12631,6 +12691,22 @@ func (self Plot) SetMouseTextFlags(v MouseTextFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotPlot_SetMouseTextFlags(selfArg, C.ImPlotMouseTextFlags(v))
+}
+
+func (self Plot) SetAxes(v *[6]Axis) {
+	vArg := make([]C.ImPlotAxis, len(v))
+	for i, vV := range v {
+		vVArg, _ := vV.C()
+		vArg[i] = internal.ReinterpretCast[C.ImPlotAxis](vVArg)
+	}
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotPlot_SetAxes(selfArg, (*C.ImPlotAxis)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = *NewAxisFromC(func() *C.ImPlotAxis { result := vV; return &result }())
+	}
 }
 
 func (self Plot) SetTextBuffer(v imgui.TextBuffer) {
@@ -13078,6 +13154,22 @@ func (self Range) SetMax(v float64) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotRange_SetMax(selfArg, C.double(v))
+}
+
+func (self Rect) SetX(v Range) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotRect_SetX(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
+}
+
+func (self Rect) SetY(v Range) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotRect_SetY(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
 }
 
 func (self Style) SetLineWeight(v float32) {
