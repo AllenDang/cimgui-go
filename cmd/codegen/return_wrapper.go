@@ -45,7 +45,7 @@ func getReturnWrapper(
 		"tm":              wrappableR(prefixGoPackage("Tm", "implot", context), "C.tm"),
 
 		// TODO: this should be generalized and loaded from preset
-		"ImVec4*": imVec4PtrReturnW(context),
+		"ImVec4_c*": imVec4PtrReturnW(context),
 	}
 
 	// import preset
@@ -128,6 +128,13 @@ func getReturnWrapper(
 		pureType := CIdentifier(TrimSuffix(TrimPrefix(t, "ImVector_"), "*"))
 		if HasSuffix(pureType, "Ptr") {
 			pureType = TrimSuffix(pureType, "Ptr")
+		}
+
+		for _, st := range context.structs {
+			if st.Name == pureType {
+				pureType = st.podName(context)
+				break
+			}
 		}
 
 		pureType += "*"
