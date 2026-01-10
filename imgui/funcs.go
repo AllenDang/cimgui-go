@@ -14512,6 +14512,18 @@ func (self *BitVector) Storage() vectors.Vector[uint32] {
 	}()
 }
 
+func (self *Color) Value() Vec4 {
+	selfArg, selfFin := internal.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec4 {
+		out := C.wrap_ImColor_GetValue(internal.ReinterpretCast[*C.ImColor_c](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
 func (self DrawChannel) SetCmdBuffer(v vectors.Vector[DrawCmd]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
@@ -16330,14 +16342,6 @@ func (self *FontAtlas) OwnerContext() *Context {
 		selfFin()
 	}()
 	return NewContextFromC(C.wrap_ImFontAtlas_GetOwnerContext(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
-}
-
-func (self FontAtlasBuilder) SetPackContext(v stbrpcontextopaque) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlasBuilder_SetPackContext(selfArg, internal.ReinterpretCast[C.stbrp_context_opaque](vArg))
 }
 
 func (self FontAtlasBuilder) SetRects(v vectors.Vector[TextureRect]) {
@@ -39662,19 +39666,18 @@ func (self Window) SetNavRectRel(v *[2]Rect) {
 	}
 }
 
-func (self Window) SetNavPreferredScoringPosRel(v *[2]Vec2) {
-	vArg := make([]C.ImVec2_c, len(v))
+func (self Window) SetNavPreferredScoringPosRel(v [2]*Vec2) {
+	vArg := make([]C.ImVec2, len(v))
+	vFin := make([]func(), len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec2_c](vV.ToC())
+		var tmp *C.ImVec2
+		tmp, vFin[i] = internal.Wrap(vV)
+		vArg[i] = *tmp
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetNavPreferredScoringPosRel(selfArg, (*C.ImVec2_c)(&vArg[0]))
-
-	for i, vV := range vArg {
-		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
-	}
+	C.wrap_ImGuiWindow_SetNavPreferredScoringPosRel(selfArg, (*C.ImVec2)(&vArg[0]))
 }
 
 func (self Window) SetNavRootFocusScopeId(v ID) {
@@ -42375,6 +42378,26 @@ func (self TextureRef) SetTexID(v TextureID) {
 	C.wrap_ImTextureRef_Set_TexID(selfArg, internal.ReinterpretCast[C.ImTextureID](vArg))
 }
 
+func (self *TextureRef) TexData() *TextureData {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewTextureDataFromC(C.wrap_ImTextureRef_Get_TexData(internal.ReinterpretCast[*C.ImTextureRef](selfArg)))
+}
+
+func (self *TextureRef) GetTexID() TextureID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImTextureRef_Get_TexID(internal.ReinterpretCast[*C.ImTextureRef](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureIDFromC(func() *C.ImTextureID { result := result; return &result }())
+}
+
 func (self Vec2i) SetX(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -42387,19 +42410,20 @@ func (self Vec2i) SetY(v int32) {
 	C.wrap_ImVec2i_SetY(selfArg, C.int(v))
 }
 
-func (self *stbrpcontextopaque) ContextopaqueGetData() [80]rune {
+func (self *Vec2i) X() int32 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [80]rune {
-		result := [80]rune{}
-		resultMirr := C.wrap_stbrp_context_opaque_GetData(internal.ReinterpretCast[*C.stbrp_context_opaque](selfArg))
-		for i := range result {
-			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
-		}
+	return int32(C.wrap_ImVec2i_GetX(internal.ReinterpretCast[*C.ImVec2i](selfArg)))
+}
 
-		return result
+func (self *Vec2i) Y() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
 	}()
+	return int32(C.wrap_ImVec2i_GetY(internal.ReinterpretCast[*C.ImVec2i](selfArg)))
 }
