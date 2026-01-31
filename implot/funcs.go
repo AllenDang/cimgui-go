@@ -10854,6 +10854,469 @@ func (self Axis) SetHeld(v bool) {
 	C.wrap_ImPlotAxis_SetHeld(selfArg, C.bool(v))
 }
 
+func (self *Axis) ID() imgui.ID {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *imgui.NewIDFromC(func() *C.ImGuiID {
+		result := C.wrap_ImPlotAxis_GetID(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
+func (self *Axis) Flags() AxisFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return AxisFlags(C.wrap_ImPlotAxis_GetFlags(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) PreviousFlags() AxisFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return AxisFlags(C.wrap_ImPlotAxis_GetPreviousFlags(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) Range() Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewRangeFromC(func() *C.ImPlotRange {
+		result := C.wrap_ImPlotAxis_GetRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
+func (self *Axis) RangeCond() Cond {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return Cond(C.wrap_ImPlotAxis_GetRangeCond(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) Scale() Scale {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return Scale(C.wrap_ImPlotAxis_GetScale(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) FitExtents() Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewRangeFromC(func() *C.ImPlotRange {
+		result := C.wrap_ImPlotAxis_GetFitExtents(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
+func (self *Axis) OrthoAxis() *Axis {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewAxisFromC(C.wrap_ImPlotAxis_GetOrthoAxis(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ConstraintRange() Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewRangeFromC(func() *C.ImPlotRange {
+		result := C.wrap_ImPlotAxis_GetConstraintRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
+func (self *Axis) ConstraintZoom() Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewRangeFromC(func() *C.ImPlotRange {
+		result := C.wrap_ImPlotAxis_GetConstraintZoom(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return &result
+	}())
+}
+
+func (self *Axis) Ticker() Ticker {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImPlotAxis_GetTicker(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTickerFromC(func() *C.ImPlotTicker { result := result; return &result }())
+}
+
+func (self *Axis) Formatter() Formatter {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImPlotAxis_GetFormatter(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewFormatterFromC(func() *C.ImPlotFormatter { result := result; return &result }())
+}
+
+func (self *Axis) FormatterData() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImPlotAxis_GetFormatterData(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) FormatSpec() [16]rune {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [16]rune {
+		result := [16]rune{}
+		resultMirr := C.wrap_ImPlotAxis_GetFormatSpec(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		for i := range result {
+			result[i] = rune(C.implot_char_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
+func (self *Axis) LinkedMin() *float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float64)(C.wrap_ImPlotAxis_GetLinkedMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) LinkedMax() *float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float64)(C.wrap_ImPlotAxis_GetLinkedMax(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) PickerLevel() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotAxis_GetPickerLevel(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) PickerTimeMin() PlotTime {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() PlotTime {
+		out := C.wrap_ImPlotAxis_GetPickerTimeMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return *(&PlotTime{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Axis) PickerTimeMax() PlotTime {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() PlotTime {
+		out := C.wrap_ImPlotAxis_GetPickerTimeMax(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return *(&PlotTime{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Axis) TransformForward() Transform {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImPlotAxis_GetTransformForward(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTransformFromC(func() *C.ImPlotTransform { result := result; return &result }())
+}
+
+func (self *Axis) TransformInverse() Transform {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImPlotAxis_GetTransformInverse(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTransformFromC(func() *C.ImPlotTransform { result := result; return &result }())
+}
+
+func (self *Axis) TransformData() uintptr {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return uintptr(C.wrap_ImPlotAxis_GetTransformData(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) PixelMin() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImPlotAxis_GetPixelMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) PixelMax() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImPlotAxis_GetPixelMax(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ScaleMin() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotAxis_GetScaleMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ScaleMax() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotAxis_GetScaleMax(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ScaleToPixel() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotAxis_GetScaleToPixel(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) Datum1() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImPlotAxis_GetDatum1(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) Datum2() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImPlotAxis_GetDatum2(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) HoverRect() imgui.Rect {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() imgui.Rect {
+		out := C.wrap_ImPlotAxis_GetHoverRect(internal.ReinterpretCast[*C.ImPlotAxis](selfArg))
+		return *(&imgui.Rect{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Axis) LabelOffset() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotAxis_GetLabelOffset(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorMaj() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorMaj(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorMin() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorMin(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorTick() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorTick(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorTxt() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorTxt(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorBg() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorBg(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorHov() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorHov(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorAct() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorAct(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) ColorHiLi() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImPlotAxis_GetColorHiLi(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)))
+}
+
+func (self *Axis) Enabled() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetEnabled(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) Vertical() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetVertical(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) FitThisFrame() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetFitThisFrame(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) HasRange() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetHasRange(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) HasFormatSpec() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetHasFormatSpec(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) ShowDefaultTicks() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetShowDefaultTicks(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) Hovered() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetHovered(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
+func (self *Axis) Held() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotAxis_GetHeld(internal.ReinterpretCast[*C.ImPlotAxis](selfArg)) == C.bool(true)
+}
+
 func (self ColormapData) SetKeys(v vectors.Vector[uint32]) {
 	vData := v.Data
 	vDataArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](vData)
@@ -11654,6 +12117,42 @@ func (self DateTimeSpec) SetUse24HourClock(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotDateTimeSpec_SetUse24HourClock(selfArg, C.bool(v))
+}
+
+func (self *DateTimeSpec) Date() DateFmt {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return DateFmt(C.wrap_ImPlotDateTimeSpec_GetDate(internal.ReinterpretCast[*C.ImPlotDateTimeSpec](selfArg)))
+}
+
+func (self *DateTimeSpec) Time() TimeFmt {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return TimeFmt(C.wrap_ImPlotDateTimeSpec_GetTime(internal.ReinterpretCast[*C.ImPlotDateTimeSpec](selfArg)))
+}
+
+func (self *DateTimeSpec) UseISO8601() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotDateTimeSpec_GetUseISO8601(internal.ReinterpretCast[*C.ImPlotDateTimeSpec](selfArg)) == C.bool(true)
+}
+
+func (self *DateTimeSpec) Use24HourClock() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotDateTimeSpec_GetUse24HourClock(internal.ReinterpretCast[*C.ImPlotDateTimeSpec](selfArg)) == C.bool(true)
 }
 
 func (self InputMap) SetPan(v imgui.MouseButton) {
@@ -13156,6 +13655,24 @@ func (self Range) SetMax(v float64) {
 	C.wrap_ImPlotRange_SetMax(selfArg, C.double(v))
 }
 
+func (self *Range) Min() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotRange_GetMin(internal.ReinterpretCast[*C.ImPlotRange](selfArg)))
+}
+
+func (self *Range) Max() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotRange_GetMax(internal.ReinterpretCast[*C.ImPlotRange](selfArg)))
+}
+
 func (self Rect) SetX(v Range) {
 	vArg, _ := v.C()
 
@@ -13170,6 +13687,30 @@ func (self Rect) SetY(v Range) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotRect_SetY(selfArg, internal.ReinterpretCast[C.ImPlotRange](vArg))
+}
+
+func (self *Rect) X() Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewRangeFromC(func() *C.ImPlotRange {
+		result := C.wrap_ImPlotRect_GetX(internal.ReinterpretCast[*C.ImPlotRect](selfArg))
+		return &result
+	}())
+}
+
+func (self *Rect) Y() Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewRangeFromC(func() *C.ImPlotRange {
+		result := C.wrap_ImPlotRect_GetY(internal.ReinterpretCast[*C.ImPlotRect](selfArg))
+		return &result
+	}())
 }
 
 func (self Style) SetLineWeight(v float32) {
@@ -14290,6 +14831,81 @@ func (self Tick) SetIdx(v int32) {
 	C.wrap_ImPlotTick_SetIdx(selfArg, C.int(v))
 }
 
+func (self *Tick) PlotPos() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImPlotTick_GetPlotPos(internal.ReinterpretCast[*C.ImPlotTick](selfArg)))
+}
+
+func (self *Tick) PixelPos() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImPlotTick_GetPixelPos(internal.ReinterpretCast[*C.ImPlotTick](selfArg)))
+}
+
+func (self *Tick) LabelSize() imgui.Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() imgui.Vec2 {
+		out := C.wrap_ImPlotTick_GetLabelSize(internal.ReinterpretCast[*C.ImPlotTick](selfArg))
+		return *(&imgui.Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
+}
+
+func (self *Tick) TextOffset() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotTick_GetTextOffset(internal.ReinterpretCast[*C.ImPlotTick](selfArg)))
+}
+
+func (self *Tick) Major() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotTick_GetMajor(internal.ReinterpretCast[*C.ImPlotTick](selfArg)) == C.bool(true)
+}
+
+func (self *Tick) ShowLabel() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImPlotTick_GetShowLabel(internal.ReinterpretCast[*C.ImPlotTick](selfArg)) == C.bool(true)
+}
+
+func (self *Tick) Level() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotTick_GetLevel(internal.ReinterpretCast[*C.ImPlotTick](selfArg)))
+}
+
+func (self *Tick) Idx() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotTick_GetIdx(internal.ReinterpretCast[*C.ImPlotTick](selfArg)))
+}
+
 func (self Ticker) SetTicks(v vectors.Vector[Tick]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
@@ -14385,4 +15001,22 @@ func (self *Ticker) Levels() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImPlotTicker_GetLevels(internal.ReinterpretCast[*C.ImPlotTicker](selfArg)))
+}
+
+func (self *PlotTime) S() uint64 {
+	selfArg, selfFin := internal.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return uint64(C.wrap_ImPlotTime_GetS(internal.ReinterpretCast[*C.ImPlotTime](selfArg)))
+}
+
+func (self *PlotTime) Us() int32 {
+	selfArg, selfFin := internal.Wrap(self)
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImPlotTime_GetUs(internal.ReinterpretCast[*C.ImPlotTime](selfArg)))
 }
