@@ -6,10 +6,19 @@ import (
 	"sort"
 )
 
+type NonPODUsedType byte
+
+const (
+	POD NonPODUsedType = iota
+	NonPOD
+	PODInherited
+)
+
 // StructSection appears in json file on top of structs definition section.
 type StructSection struct {
 	StructComments json.RawMessage `json:"struct_comments"`
 	Structs        json.RawMessage `json:"structs"`
+	NonPODUsed     json.RawMessage `json:"nonPOD_used"`
 }
 
 // StructDef represents a definition of an ImGui struct.
@@ -17,6 +26,15 @@ type StructDef struct {
 	Name         CIdentifier `json:"name"`
 	CommentAbove string
 	Members      []StructMemberDef `json:"members"`
+	NonPODUsed   NonPODUsedType
+}
+
+func (s *StructDef) podName(ctx *Context) CIdentifier {
+	if s.NonPODUsed == NonPOD {
+		return s.Name + CIdentifier(ctx.preset.NonPODUsedSuffix)
+	}
+
+	return s.Name
 }
 
 // StructMemberDef represents a definition of an ImGui struct member.
@@ -43,6 +61,7 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		structs           []StructDef
 		structJson        map[string]json.RawMessage
 		structCommentJson map[string]json.RawMessage = make(map[string]json.RawMessage)
+		nonPODJson        map[string]any
 	)
 
 	err = json.Unmarshal(structSectionJson.Structs, &structJson)
@@ -54,6 +73,13 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 		err = json.Unmarshal(structSectionJson.StructComments, &structCommentJson)
 		if err != nil {
 			return nil, fmt.Errorf("cannot unmarshal struct's comments section: %w", err)
+		}
+	}
+
+	if structSectionJson.NonPODUsed != nil && string(structSectionJson.NonPODUsed) != "[]" {
+		err = json.Unmarshal(structSectionJson.NonPODUsed, &nonPODJson)
+		if err != nil {
+			return nil, fmt.Errorf("cannot unmarshal struct's NonPODUsed section: %w", err)
 		}
 	}
 
@@ -77,9 +103,35 @@ func getStructDefs(enumJsonBytes []byte) ([]StructDef, error) {
 			}
 		}
 
+		isNonPODUsedVal, ok := nonPODJson[k]
+		var nonPODUsed NonPODUsedType
+
+		if !ok {
+			nonPODUsed = POD
+		} else {
+			switch v := isNonPODUsedVal.(type) {
+			case string:
+				switch v {
+				case "inherited":
+					nonPODUsed = PODInherited
+				default:
+					nonPODUsed = NonPOD
+				}
+			case bool:
+				if v {
+					nonPODUsed = NonPOD
+				} else {
+					nonPODUsed = POD
+				}
+			default:
+				return nil, fmt.Errorf("unexpected type for NonPODUsed value %T for struct %s", v, k)
+			}
+		}
+
 		str := StructDef{
-			Name:    CIdentifier(k),
-			Members: memberDefs,
+			Name:       CIdentifier(k),
+			Members:    memberDefs,
+			NonPODUsed: nonPODUsed,
 		}
 
 		if commentData, ok := structCommentJson[k]; ok {

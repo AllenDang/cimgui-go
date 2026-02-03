@@ -933,6 +933,32 @@ func NewDebugAllocInfoFromC[SRC any](cvalue SRC) *DebugAllocInfo {
 	return &DebugAllocInfo{CData: internal.ReinterpretCast[*C.ImGuiDebugAllocInfo](cvalue)}
 }
 
+type DebugItemPathQuery struct {
+	CData *C.ImGuiDebugItemPathQuery
+}
+
+// Handle returns C version of DebugItemPathQuery and its finalizer func.
+func (self *DebugItemPathQuery) Handle() (result *C.ImGuiDebugItemPathQuery, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self DebugItemPathQuery) C() (C.ImGuiDebugItemPathQuery, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyDebugItemPathQuery creates DebugItemPathQuery with its 0 value.
+func NewEmptyDebugItemPathQuery() *DebugItemPathQuery {
+	return &DebugItemPathQuery{CData: new(C.ImGuiDebugItemPathQuery)}
+}
+
+// NewDebugItemPathQueryFromC creates DebugItemPathQuery from its C pointer.
+// SRC ~= *C.ImGuiDebugItemPathQuery
+func NewDebugItemPathQueryFromC[SRC any](cvalue SRC) *DebugItemPathQuery {
+	return &DebugItemPathQuery{CData: internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](cvalue)}
+}
+
 type DockContext struct {
 	CData *C.ImGuiDockContext
 }

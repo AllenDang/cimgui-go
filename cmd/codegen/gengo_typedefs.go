@@ -19,7 +19,6 @@ type typedefsGenerator struct {
 // GenerateTypedefs will proceed all typedefs from typedefs_dict.json
 func GenerateTypedefs(
 	typedefs *Typedefs,
-	structs []StructDef,
 	ctx *Context,
 ) (validTypeNames, callbacks []CIdentifier, err error) {
 	// quick counter for coverage control

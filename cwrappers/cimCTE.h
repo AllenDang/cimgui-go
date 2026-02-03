@@ -23,6 +23,10 @@ typedef enum {
 #else
 #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 
+
+
+
+
 #ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef TextEditor::LanguageDefinitionId LanguageDefinitionId;
 typedef TextEditor::PaletteId PaletteId;
@@ -75,7 +79,7 @@ CIMGUI_API void TextEditor_Redo(TextEditor* self,int aSteps);
 CIMGUI_API bool TextEditor_CanUndo(TextEditor* self);
 CIMGUI_API bool TextEditor_CanRedo(TextEditor* self);
 CIMGUI_API int TextEditor_GetUndoIndex(TextEditor* self);
-CIMGUI_API bool TextEditor_Render(TextEditor* self,const char* aTitle,bool aParentIsFocused,const ImVec2 aSize,bool aBorder);
+CIMGUI_API bool TextEditor_Render(TextEditor* self,const char* aTitle,bool aParentIsFocused,const ImVec2_c aSize,bool aBorder);
 CIMGUI_API void TextEditor_UnitTests(TextEditor* self);
 
 

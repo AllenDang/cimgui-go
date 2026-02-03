@@ -270,7 +270,7 @@ func main() {
 
 	// 1.2. Generate Go typedefs
 	glg.Info("Generating Go Typedefs...")
-	typedefsNames, callbacksToGenerate, err := GenerateTypedefs(context.typedefs, context.structs, context)
+	typedefsNames, callbacksToGenerate, err := GenerateTypedefs(context.typedefs, context)
 	if err != nil {
 		glg.Fatalf("Cannot generate typedefs: %v", err)
 	}

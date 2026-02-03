@@ -327,19 +327,21 @@ const (
 	ColTextSelectedBg Col = 53
 	// Tree node hierarchy outlines when using ImGuiTreeNodeFlags_DrawLines
 	ColTreeLines Col = 54
-	// Rectangle highlighting a drop target
+	// Rectangle border highlighting a drop target
 	ColDragDropTarget Col = 55
+	// Rectangle background highlighting a drop target
+	ColDragDropTargetBg Col = 56
 	// Unsaved Document marker (in window title and tabs)
-	ColUnsavedMarker Col = 56
+	ColUnsavedMarker Col = 57
 	// Color of keyboard/gamepad navigation cursor/rectangle, when visible
-	ColNavCursor Col = 57
-	// Highlight window when using CTRL+TAB
-	ColNavWindowingHighlight Col = 58
-	// Darken/colorize entire screen behind the CTRL+TAB window list, when active
-	ColNavWindowingDimBg Col = 59
+	ColNavCursor Col = 58
+	// Highlight window when using Ctrl+Tab
+	ColNavWindowingHighlight Col = 59
+	// Darken/colorize entire screen behind the Ctrl+Tab window list, when active
+	ColNavWindowingDimBg Col = 60
 	// Darken/colorize entire screen behind a modal window, when one is active
-	ColModalWindowDimBg Col = 60
-	ColCOUNT            Col = 61
+	ColModalWindowDimBg Col = 61
+	ColCOUNT            Col = 62
 )
 
 // Flags for ColorEdit3() / ColorEdit4() / ColorPicker3() / ColorPicker4() / ColorButton()
@@ -368,14 +370,16 @@ const (
 	ColorEditFlagsNoDragDrop ColorEditFlags = 512
 	//              // ColorButton: disable border (which is enforced by default)
 	ColorEditFlagsNoBorder ColorEditFlags = 1024
+	//              // ColorEdit: disable rendering R/G/B/A color marker. May also be disabled globally by setting style.ColorMarkerSize = 0.
+	ColorEditFlagsNoColorMarkers ColorEditFlags = 2048
 	//              // ColorEdit, ColorPicker, ColorButton: disable alpha in the preview,. Contrary to _NoAlpha it may still be edited when calling ColorEdit4()/ColorPicker4(). For ColorButton() this does the same as _NoAlpha.
-	ColorEditFlagsAlphaOpaque ColorEditFlags = 2048
+	ColorEditFlagsAlphaOpaque ColorEditFlags = 4096
 	//              // ColorEdit, ColorPicker, ColorButton: disable rendering a checkerboard background behind transparent color.
-	ColorEditFlagsAlphaNoBg ColorEditFlags = 4096
+	ColorEditFlagsAlphaNoBg ColorEditFlags = 8192
 	//              // ColorEdit, ColorPicker, ColorButton: display half opaque / half transparent preview.
-	ColorEditFlagsAlphaPreviewHalf ColorEditFlags = 8192
+	ColorEditFlagsAlphaPreviewHalf ColorEditFlags = 16384
 	//              // ColorEdit, ColorPicker: show vertical alpha bar/gradient in picker.
-	ColorEditFlagsAlphaBar ColorEditFlags = 65536
+	ColorEditFlagsAlphaBar ColorEditFlags = 262144
 	//              // (WIP) ColorEdit: Currently only disable 0.0f..1.0f limits in RGBA edition (note: you probably want to use ImGuiColorEditFlags_Float flag as well).
 	ColorEditFlagsHDR ColorEditFlags = 524288
 	// [Display]    // ColorEdit: override _display_ type among RGB/HSV/Hex. ColorPicker: select any combination using one or more of RGB/HSV/Hex.
@@ -397,7 +401,7 @@ const (
 	// [Input]      // ColorEdit, ColorPicker: input and output data in HSV format.
 	ColorEditFlagsInputHSV       ColorEditFlags = 268435456
 	ColorEditFlagsDefaultOptions ColorEditFlags = 177209344
-	ColorEditFlagsAlphaMask      ColorEditFlags = 14338
+	ColorEditFlagsAlphaMask      ColorEditFlags = 28674
 	ColorEditFlagsDisplayMask    ColorEditFlags = 7340032
 	ColorEditFlagsDataTypeMask   ColorEditFlags = 25165824
 	ColorEditFlagsPickerMask     ColorEditFlags = 100663296
@@ -570,8 +574,10 @@ const (
 	DebugLogFlagsEventMask         DebugLogFlags = 4095
 	// Also send output to TTY
 	DebugLogFlagsOutputToTTY DebugLogFlags = 1048576
-	// Also send output to Test Engine
-	DebugLogFlagsOutputToTestEngine DebugLogFlags = 2097152
+	// Also send output to Debugger Console [Windows only]
+	DebugLogFlagsOutputToDebugger DebugLogFlags = 2097152
+	// Also send output to Dear ImGui Test Engine
+	DebugLogFlagsOutputToTestEngine DebugLogFlags = 4194304
 )
 
 // A cardinal direction
@@ -687,6 +693,8 @@ const (
 	DragDropFlagsAcceptNoDrawDefaultRect DragDropFlags = 2048
 	// Request hiding the BeginDragDropSource tooltip from the BeginDragDropTarget site.
 	DragDropFlagsAcceptNoPreviewTooltip DragDropFlags = 4096
+	// Accepting item will render as if hovered. Useful for e.g. a Button() used as a drop target.
+	DragDropFlagsAcceptDrawAsHovered DragDropFlags = 8192
 	// For peeking ahead and inspecting the payload before delivery.
 	DragDropFlagsAcceptPeekOnly DragDropFlags = 3072
 )
@@ -889,7 +897,7 @@ const (
 	InputFlagsRouteAlways InputFlags = 8192
 	// Option: global route: higher priority than focused route (unless active item in focused route).
 	InputFlagsRouteOverFocused InputFlags = 16384
-	// Option: global route: higher priority than active item. Unlikely you need to use that: will interfere with every active items, e.g. CTRL+A registered by InputText will be overridden by this. May not be fully honored as user/internal code is likely to always assume they can access keys when active.
+	// Option: global route: higher priority than active item. Unlikely you need to use that: will interfere with every active items, e.g. Ctrl+A registered by InputText will be overridden by this. May not be fully honored as user/internal code is likely to always assume they can access keys when active.
 	InputFlagsRouteOverActive InputFlags = 32768
 	// Option: global route: will not be applied if underlying background/void is focused (== no Dear ImGui windows are focused). Useful for overlay applications.
 	InputFlagsRouteUnlessBgFocused InputFlags = 65536
@@ -979,7 +987,7 @@ const (
 	InputTextFlagsCallbackResize InputTextFlags = 4194304
 	// Callback on any edit. Note that InputText() already returns true on edit + you can always use IsItemEdited(). The callback is useful to manipulate the underlying buffer while focus is active.
 	InputTextFlagsCallbackEdit InputTextFlags = 8388608
-	// InputTextMultine(): word-wrap lines that are too long.
+	// InputTextMultiline(): word-wrap lines that are too long.
 	InputTextFlagsWordWrap InputTextFlags = 16777216
 )
 
@@ -990,8 +998,6 @@ const (
 type ItemFlagsPrivate int32
 
 const (
-	// false     // Disable interactions (DOES NOT affect visuals. DO NOT mix direct use of this with BeginDisabled(). See BeginDisabled()/EndDisabled() for full disable feature, and github #211).
-	ItemFlagsDisabled ItemFlagsPrivate = 1024
 	// false     // [ALPHA] Allow hovering interactions but underlying value is not changed.
 	ItemFlagsReadOnly ItemFlagsPrivate = 2048
 	// false     // [BETA] Represent a mixed/indeterminate value, generally multi-selection where values differ. Currently only supported by Checkbox() (later should support all sorts of widgets)
@@ -1017,7 +1023,7 @@ const (
 )
 
 // Flags for ImGui::PushItemFlag()
-// (Those are shared by all items)
+// (Those are shared by all submitted items)
 // original name: ImGuiItemFlags_
 type ItemFlags int32
 
@@ -1036,6 +1042,8 @@ const (
 	ItemFlagsAutoClosePopups ItemFlags = 16
 	// false    // Allow submitting an item with the same identifier as an item already submitted this frame without triggering a warning tooltip if io.ConfigDebugHighlightIdConflicts is set.
 	ItemFlagsAllowDuplicateId ItemFlags = 32
+	// false    // [Internal] Disable interactions. DOES NOT affect visuals. This is used by BeginDisabled()/EndDisabled() and only provided here so you can read back via GetItemFlags().
+	ItemFlagsDisabled ItemFlags = 64
 )
 
 // Status flags for an already submitted item
@@ -1413,7 +1421,7 @@ const (
 	MultiSelectFlagsNone MultiSelectFlags = 0
 	// Disable selecting more than one item. This is available to allow single-selection code to share same code/logic if desired. It essentially disables the main purpose of BeginMultiSelect() tho!
 	MultiSelectFlagsSingleSelect MultiSelectFlags = 1
-	// Disable CTRL+A shortcut to select all.
+	// Disable Ctrl+A shortcut to select all.
 	MultiSelectFlagsNoSelectAll MultiSelectFlags = 2
 	// Disable Shift+selection mouse/keyboard support (useful for unordered 2D selection). With BoxSelect is also ensure contiguous SetRange requests are not combined into one. This allows not handling interpolation in SetRange requests.
 	MultiSelectFlagsNoRangeSelect MultiSelectFlags = 4
@@ -1443,6 +1451,8 @@ const (
 	MultiSelectFlagsSelectOnClickRelease MultiSelectFlags = 16384
 	// [Temporary] Enable navigation wrapping on X axis. Provided as a convenience because we don't have a design for the general Nav API for this yet. When the more general feature be public we may obsolete this flag in favor of new one.
 	MultiSelectFlagsNavWrapX MultiSelectFlags = 65536
+	// Disable default right-click processing, which selects item on mouse down, and is designed for context-menus.
+	MultiSelectFlagsNoSelectOnRightClick MultiSelectFlags = 131072
 )
 
 // original name: ImGuiNavLayer
@@ -1473,7 +1483,7 @@ const (
 	NavMoveFlagsAllowCurrentNavId NavMoveFlags = 16
 	// Store alternate result in NavMoveResultLocalVisible that only comprise elements that are already fully visible (used by PageUp/PageDown)
 	NavMoveFlagsAlsoScoreVisibleSet NavMoveFlags = 32
-	// Force scrolling to min/max (used by Home/End) // FIXME-NAV: Aim to remove or reword, probably unnecessary
+	// Force scrolling to min/max (used by Home/End) // FIXME-NAV: Aim to remove or reword as ImGuiScrollFlags
 	NavMoveFlagsScrollToEdgeY NavMoveFlags = 64
 	NavMoveFlagsForwarded     NavMoveFlags = 128
 	// Dummy scoring for debug purpose, don't apply result
@@ -1510,12 +1520,13 @@ const (
 type NextItemDataFlags int32
 
 const (
-	NextItemDataFlagsNone         NextItemDataFlags = 0
-	NextItemDataFlagsHasWidth     NextItemDataFlags = 1
-	NextItemDataFlagsHasOpen      NextItemDataFlags = 2
-	NextItemDataFlagsHasShortcut  NextItemDataFlags = 4
-	NextItemDataFlagsHasRefVal    NextItemDataFlags = 8
-	NextItemDataFlagsHasStorageID NextItemDataFlags = 16
+	NextItemDataFlagsNone           NextItemDataFlags = 0
+	NextItemDataFlagsHasWidth       NextItemDataFlags = 1
+	NextItemDataFlagsHasOpen        NextItemDataFlags = 2
+	NextItemDataFlagsHasShortcut    NextItemDataFlags = 4
+	NextItemDataFlagsHasRefVal      NextItemDataFlags = 8
+	NextItemDataFlagsHasStorageID   NextItemDataFlags = 16
+	NextItemDataFlagsHasColorMarker NextItemDataFlags = 32
 )
 
 // original name: ImGuiNextWindowDataFlags_
@@ -1566,27 +1577,19 @@ const (
 )
 
 // Flags for OpenPopup*(), BeginPopupContext*(), IsPopupOpen() functions.
-//   - To be backward compatible with older API which took an 'int mouse_button = 1' argument instead of 'ImGuiPopupFlags flags',
-//     we need to treat small flags values as a mouse button index, so we encode the mouse button in the first few bits of the flags.
-//     It is therefore guaranteed to be legal to pass a mouse button index in ImGuiPopupFlags.
-//   - For the same reason, we exceptionally default the ImGuiPopupFlags argument of BeginPopupContextXXX functions to 1 instead of 0.
-//     IMPORTANT: because the default parameter is 1 (==ImGuiPopupFlags_MouseButtonRight), if you rely on the default parameter
-//     and want to use another flag, you need to pass in the ImGuiPopupFlags_MouseButtonRight flag explicitly.
-//   - Multiple buttons currently cannot be combined/or-ed in those functions (we could allow it later).
-//
+// - IMPORTANT: If you ever used the left mouse button with BeginPopupContextXXX() helpers before 1.92.6: Read "API BREAKING CHANGES" 2026/01/07 (1.92.6) entry in imgui.cpp or GitHub topic #9157.
+// - Multiple buttons currently cannot be combined/or-ed in those functions (we could allow it later).
 // original name: ImGuiPopupFlags_
 type PopupFlags int32
 
 const (
 	PopupFlagsNone PopupFlags = 0
-	// For BeginPopupContext*(): open on Left Mouse release. Guaranteed to always be == 0 (same as ImGuiMouseButton_Left)
-	PopupFlagsMouseButtonLeft PopupFlags = 0
-	// For BeginPopupContext*(): open on Right Mouse release. Guaranteed to always be == 1 (same as ImGuiMouseButton_Right)
-	PopupFlagsMouseButtonRight PopupFlags = 1
-	// For BeginPopupContext*(): open on Middle Mouse release. Guaranteed to always be == 2 (same as ImGuiMouseButton_Middle)
-	PopupFlagsMouseButtonMiddle  PopupFlags = 2
-	PopupFlagsMouseButtonMask    PopupFlags = 31
-	PopupFlagsMouseButtonDefault PopupFlags = 1
+	// For BeginPopupContext*(): open on Left Mouse release. Only one button allowed!
+	PopupFlagsMouseButtonLeft PopupFlags = 4
+	// For BeginPopupContext*(): open on Right Mouse release. Only one button allowed! (default)
+	PopupFlagsMouseButtonRight PopupFlags = 8
+	// For BeginPopupContext*(): open on Middle Mouse release. Only one button allowed!
+	PopupFlagsMouseButtonMiddle PopupFlags = 12
 	// For OpenPopup*(), BeginPopupContext*(): don't reopen same popup if already open (won't reposition, won't reinitialize navigation)
 	PopupFlagsNoReopen PopupFlags = 32
 	// For OpenPopup*(), BeginPopupContext*(): don't open if there's already a popup at the same level of the popup stack
@@ -1598,6 +1601,12 @@ const (
 	// For IsPopupOpen(): search/test at any level of the popup stack (default test in the current level)
 	PopupFlagsAnyPopupLevel PopupFlags = 2048
 	PopupFlagsAnyPopup      PopupFlags = 3072
+	// [Internal]
+	PopupFlagsMouseButtonShift PopupFlags = 2
+	// [Internal]
+	PopupFlagsMouseButtonMask PopupFlags = 12
+	// [Internal] Reserve legacy bits 0-1 to detect incorrectly passing 1 or 2 to the function.
+	PopupFlagsInvalidMask PopupFlags = 3
 )
 
 // original name: ImGuiPopupPositionPolicy
@@ -1722,18 +1731,20 @@ const (
 	SliderFlagsLogarithmic SliderFlags = 32
 	// Disable rounding underlying value to match precision of the display format string (e.g. %.3f values are rounded to those 3 digits).
 	SliderFlagsNoRoundToFormat SliderFlags = 64
-	// Disable CTRL+Click or Enter key allowing to input text directly into the widget.
+	// Disable Ctrl+Click or Enter key allowing to input text directly into the widget.
 	SliderFlagsNoInput SliderFlags = 128
 	// Enable wrapping around from max to min and from min to max. Only supported by DragXXX() functions for now.
 	SliderFlagsWrapAround SliderFlags = 256
-	// Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
+	// Clamp value to min/max bounds when input manually with Ctrl+Click. By default Ctrl+Click allows going out of bounds.
 	SliderFlagsClampOnInput SliderFlags = 512
 	// Clamp even if min==max==0.0f. Otherwise due to legacy reason DragXXX functions don't clamp with those values. When your clamping limits are dynamic you almost always want to use it.
 	SliderFlagsClampZeroRange SliderFlags = 1024
 	// Disable keyboard modifiers altering tweak speed. Useful if you want to alter tweak speed yourself based on your own logic.
 	SliderFlagsNoSpeedTweaks SliderFlags = 2048
-	SliderFlagsAlwaysClamp   SliderFlags = 1536
-	// [Internal] We treat using those bits as being potentially a 'float power' argument from the previous API that has got miscast to this enum, and will trigger an assert if needed.
+	// DragScalarN(), SliderScalarN(): Draw R/G/B/A color markers on each component.
+	SliderFlagsColorMarkers SliderFlags = 4096
+	SliderFlagsAlwaysClamp  SliderFlags = 1536
+	// [Internal] We treat using those bits as being potentially a 'float power' argument from legacy API (obsoleted 2020-08) that has got miscast to this enum, and will trigger an assert if needed.
 	SliderFlagsInvalidMask SliderFlags = 1879048207
 )
 
@@ -1753,9 +1764,9 @@ const (
 //   - The enum only refers to fields of ImGuiStyle which makes sense to be pushed/popped inside UI code.
 //     During initialization or between frames, feel free to just poke into ImGuiStyle directly.
 //   - Tip: Use your programming IDE navigation facilities on the names in the _second column_ below to find the actual members and their description.
-//   - In Visual Studio: CTRL+comma ("Edit.GoToAll") can follow symbols inside comments, whereas CTRL+F12 ("Edit.GoToImplementation") cannot.
-//   - In Visual Studio w/ Visual Assist installed: ALT+G ("VAssistX.GoToImplementation") can also follow symbols inside comments.
-//   - In VS Code, CLion, etc.: CTRL+click can follow symbols inside comments.
+//   - In Visual Studio: Ctrl+Comma ("Edit.GoToAll") can follow symbols inside comments, whereas Ctrl+F12 ("Edit.GoToImplementation") cannot.
+//   - In Visual Studio w/ Visual Assist installed: Alt+G ("VAssistX.GoToImplementation") can also follow symbols inside comments.
+//   - In VS Code, CLion, etc.: Ctrl+Click can follow symbols inside comments.
 //   - When changing this enum, you need to update the associated internal table GStyleVarInfo[] accordingly. This is where we link enum values to members offset/type.
 //
 // original name: ImGuiStyleVar_
@@ -2047,7 +2058,7 @@ const (
 	TableFlagsHideable TableFlags = 4
 	// Enable sorting. Call TableGetSortSpecs() to obtain sort specs. Also see ImGuiTableFlags_SortMulti and ImGuiTableFlags_SortTristate.
 	TableFlagsSortable TableFlags = 8
-	// Disable persisting columns order, width and sort settings in the .ini file.
+	// Disable persisting columns order, width, visibility and sort settings in the .ini file.
 	TableFlagsNoSavedSettings TableFlags = 16
 	// Right-click on columns body/contents will display table context menu. By default it is available in TableHeadersRow().
 	TableFlagsContextMenuInBody TableFlags = 32
@@ -2192,7 +2203,7 @@ const (
 	TreeNodeFlagsSpanAllColumns TreeNodeFlags = 16384
 	// Label will span all columns of its container table
 	TreeNodeFlagsLabelSpanAllColumns TreeNodeFlags = 32768
-	// Nav: left arrow moves back to parent. This is processed in TreePop() when there's an unfullfilled Left nav request remaining.
+	// Nav: left arrow moves back to parent. This is processed in TreePop() when there's an unfulfilled Left nav request remaining.
 	TreeNodeFlagsNavLeftJumpsToParent TreeNodeFlags = 131072
 	TreeNodeFlagsCollapsingHeader     TreeNodeFlags = 26
 	// No lines drawn
@@ -2251,6 +2262,15 @@ const (
 	ViewportFlagsIsFocused ViewportFlags = 8192
 )
 
+// original name: ImGuiWindowBgClickFlags_
+type WindowBgClickFlags int32
+
+const (
+	WindowBgClickFlagsNone WindowBgClickFlags = 0
+	// Click on bg/void + drag to move window. Cleared by default when using io.ConfigWindowsMoveFromTitleBarOnly.
+	WindowBgClickFlagsMove WindowBgClickFlags = 1
+)
+
 // List of colors that are stored at the time of Begin() into Docked Windows.
 // We currently store the packed colors in a simple array window->DockStyle.Colors[].
 // A better solution may involve appending into a log of colors in ImGuiContext + store offsets into those arrays in ImGuiWindow,
@@ -2267,7 +2287,8 @@ const (
 	WindowDockStyleColTabDimmed                 WindowDockStyleCol = 5
 	WindowDockStyleColTabDimmedSelected         WindowDockStyleCol = 6
 	WindowDockStyleColTabDimmedSelectedOverline WindowDockStyleCol = 7
-	WindowDockStyleColCOUNT                     WindowDockStyleCol = 8
+	WindowDockStyleColUnsavedMarker             WindowDockStyleCol = 8
+	WindowDockStyleColCOUNT                     WindowDockStyleCol = 9
 )
 
 // Flags for ImGui::Begin()
@@ -2311,7 +2332,7 @@ const (
 	WindowFlagsAlwaysHorizontalScrollbar WindowFlags = 32768
 	// No keyboard/gamepad navigation within the window
 	WindowFlagsNoNavInputs WindowFlags = 65536
-	// No focusing toward this window with keyboard/gamepad navigation (e.g. skipped by CTRL+TAB)
+	// No focusing toward this window with keyboard/gamepad navigation (e.g. skipped by Ctrl+Tab)
 	WindowFlagsNoNavFocus WindowFlags = 131072
 	// Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
 	WindowFlagsUnsavedDocument WindowFlags = 262144
@@ -2373,4 +2394,14 @@ const (
 	TextureStatusWantUpdates TextureStatus = 3
 	// Requesting backend to destroy the texture. Set status to Destroyed when done.
 	TextureStatusWantDestroy TextureStatus = 4
+)
+
+// Character classification for word-wrapping logic
+// original name: ImWcharClass
+type WcharClass int32
+
+const (
+	WcharClassBlank WcharClass = 0
+	WcharClassPunct WcharClass = 1
+	WcharClassOther WcharClass = 2
 )

@@ -256,6 +256,7 @@ const (
 	LegendFlagsOutside         LegendFlags = 16
 	LegendFlagsHorizontal      LegendFlags = 32
 	LegendFlagsSort            LegendFlags = 64
+	LegendFlagsReverse         LegendFlags = 128
 )
 
 // original name: ImPlotLineFlags_
