@@ -54,28 +54,24 @@ func (self *BitVector) InternalTestBit(n int32) bool {
 // ColorHSVV parameter default value hint:
 // a: 1.0f
 func ColorHSVV(h, s, v, a float32) Color {
-	pOut := new(Color)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.ImColor_HSV(internal.ReinterpretCast[*C.ImColor](pOutArg), C.float(h), C.float(s), C.float(v), C.float(a))
-
-	pOutFin()
-
-	return *pOut
+	return func() Color {
+		out := C.ImColor_HSV(C.float(h), C.float(s), C.float(v), C.float(a))
+		return *(&Color{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // SetHSVV parameter default value hint:
 // a: 1.0f
 func (self *Color) SetHSVV(h, s, v, a float32) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImColor_SetHSV(internal.ReinterpretCast[*C.ImColor](selfArg), C.float(h), C.float(s), C.float(v), C.float(a))
+	C.ImColor_SetHSV(internal.ReinterpretCast[*C.ImColor_c](selfArg), C.float(h), C.float(s), C.float(v), C.float(a))
 
 	selfFin()
 }
 
 func (self *Color) Destroy() {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImColor_destroy(internal.ReinterpretCast[*C.ImColor](selfArg))
+	C.ImColor_destroy(internal.ReinterpretCast[*C.ImColor_c](selfArg))
 
 	selfFin()
 }
@@ -148,7 +144,7 @@ func NewDrawData() *DrawData {
 // Helper to scale the ClipRect field of each ImDrawCmd. Use if your final output buffer is at a different scale than Dear ImGui expects, or if there is a difference between your window resolution and framebuffer resolution.
 func (self *DrawData) ScaleClipRects(fb_scale Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawData_ScaleClipRects(internal.ReinterpretCast[*C.ImDrawData](selfArg), internal.ReinterpretCast[C.ImVec2](fb_scale.ToC()))
+	C.ImDrawData_ScaleClipRects(internal.ReinterpretCast[*C.ImDrawData](selfArg), internal.ReinterpretCast[C.ImVec2_c](fb_scale.ToC()))
 
 	selfFin()
 }
@@ -236,7 +232,7 @@ func (self *DrawListSplitter) Destroy() {
 // num_segments: 0
 func (self *DrawList) AddBezierCubicV(p1, p2, p3, p4 Vec2, col uint32, thickness float32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddBezierCubic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.ImU32(col), C.float(thickness), C.int(num_segments))
+	C.ImDrawList_AddBezierCubic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.ImU32(col), C.float(thickness), C.int(num_segments))
 
 	selfFin()
 }
@@ -246,7 +242,7 @@ func (self *DrawList) AddBezierCubicV(p1, p2, p3, p4 Vec2, col uint32, thickness
 // num_segments: 0
 func (self *DrawList) AddBezierQuadraticV(p1, p2, p3 Vec2, col uint32, thickness float32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddBezierQuadratic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.ImU32(col), C.float(thickness), C.int(num_segments))
+	C.ImDrawList_AddBezierQuadratic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.ImU32(col), C.float(thickness), C.int(num_segments))
 
 	selfFin()
 }
@@ -267,7 +263,7 @@ func (self *DrawList) AddCallbackV(callback DrawCallback, userdata uintptr, user
 // thickness: 1.0f
 func (self *DrawList) AddCircleV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddCircle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
+	C.ImDrawList_AddCircle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 
 	selfFin()
 }
@@ -276,7 +272,7 @@ func (self *DrawList) AddCircleV(center Vec2, radius float32, col uint32, num_se
 // num_segments: 0
 func (self *DrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddCircleFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments))
+	C.ImDrawList_AddCircleFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments))
 
 	selfFin()
 }
@@ -284,7 +280,7 @@ func (self *DrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, 
 func (self *DrawList) AddConcavePolyFilled(points *Vec2, num_points int32, col uint32) {
 	selfArg, selfFin := self.Handle()
 	pointsArg, pointsFin := internal.Wrap(points)
-	C.ImDrawList_AddConcavePolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2](pointsArg), C.int(num_points), C.ImU32(col))
+	C.ImDrawList_AddConcavePolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2_c](pointsArg), C.int(num_points), C.ImU32(col))
 
 	selfFin()
 	pointsFin()
@@ -293,7 +289,7 @@ func (self *DrawList) AddConcavePolyFilled(points *Vec2, num_points int32, col u
 func (self *DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uint32) {
 	selfArg, selfFin := self.Handle()
 	pointsArg, pointsFin := internal.Wrap(points)
-	C.ImDrawList_AddConvexPolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2](pointsArg), C.int(num_points), C.ImU32(col))
+	C.ImDrawList_AddConvexPolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2_c](pointsArg), C.int(num_points), C.ImU32(col))
 
 	selfFin()
 	pointsFin()
@@ -313,7 +309,7 @@ func (self *DrawList) AddDrawCmd() {
 // thickness: 1.0f
 func (self *DrawList) AddEllipseV(center, radius Vec2, col uint32, rot float32, num_segments int32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddEllipse(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), internal.ReinterpretCast[C.ImVec2](radius.ToC()), C.ImU32(col), C.float(rot), C.int(num_segments), C.float(thickness))
+	C.ImDrawList_AddEllipse(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), internal.ReinterpretCast[C.ImVec2_c](radius.ToC()), C.ImU32(col), C.float(rot), C.int(num_segments), C.float(thickness))
 
 	selfFin()
 }
@@ -323,7 +319,7 @@ func (self *DrawList) AddEllipseV(center, radius Vec2, col uint32, rot float32, 
 // num_segments: 0
 func (self *DrawList) AddEllipseFilledV(center, radius Vec2, col uint32, rot float32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddEllipseFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), internal.ReinterpretCast[C.ImVec2](radius.ToC()), C.ImU32(col), C.float(rot), C.int(num_segments))
+	C.ImDrawList_AddEllipseFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), internal.ReinterpretCast[C.ImVec2_c](radius.ToC()), C.ImU32(col), C.float(rot), C.int(num_segments))
 
 	selfFin()
 }
@@ -335,7 +331,7 @@ func (self *DrawList) AddEllipseFilledV(center, radius Vec2, col uint32, rot flo
 func (self *DrawList) AddImageV(tex_ref TextureRef, p_min, p_max, uv_min, uv_max Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col))
+	C.ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_max.ToC()), C.ImU32(col))
 
 	selfFin()
 	tex_refFin()
@@ -350,7 +346,7 @@ func (self *DrawList) AddImageV(tex_ref TextureRef, p_min, p_max, uv_min, uv_max
 func (self *DrawList) AddImageQuadV(tex_ref TextureRef, p1, p2, p3, p4, uv1, uv2, uv3, uv4 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec2](uv2.ToC()), internal.ReinterpretCast[C.ImVec2](uv3.ToC()), internal.ReinterpretCast[C.ImVec2](uv4.ToC()), C.ImU32(col))
+	C.ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv1.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv2.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv3.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv4.ToC()), C.ImU32(col))
 
 	selfFin()
 	tex_refFin()
@@ -361,7 +357,7 @@ func (self *DrawList) AddImageQuadV(tex_ref TextureRef, p1, p2, p3, p4, uv1, uv2
 func (self *DrawList) AddImageRoundedV(tex_ref TextureRef, p_min, p_max, uv_min, uv_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	selfArg, selfFin := self.Handle()
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
+	C.ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 
 	selfFin()
 	tex_refFin()
@@ -371,7 +367,7 @@ func (self *DrawList) AddImageRoundedV(tex_ref TextureRef, p_min, p_max, uv_min,
 // thickness: 1.0f
 func (self *DrawList) AddLineV(p1, p2 Vec2, col uint32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddLine(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), C.ImU32(col), C.float(thickness))
+	C.ImDrawList_AddLine(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), C.ImU32(col), C.float(thickness))
 
 	selfFin()
 }
@@ -380,14 +376,14 @@ func (self *DrawList) AddLineV(p1, p2 Vec2, col uint32, thickness float32) {
 // thickness: 1.0f
 func (self *DrawList) AddNgonV(center Vec2, radius float32, col uint32, num_segments int32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddNgon(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
+	C.ImDrawList_AddNgon(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments), C.float(thickness))
 
 	selfFin()
 }
 
 func (self *DrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddNgonFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments))
+	C.ImDrawList_AddNgonFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments))
 
 	selfFin()
 }
@@ -395,7 +391,7 @@ func (self *DrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num
 func (self *DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
 	selfArg, selfFin := self.Handle()
 	pointsArg, pointsFin := internal.Wrap(points)
-	C.ImDrawList_AddPolyline(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2](pointsArg), C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
+	C.ImDrawList_AddPolyline(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2_c](pointsArg), C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 
 	selfFin()
 	pointsFin()
@@ -405,14 +401,14 @@ func (self *DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, fl
 // thickness: 1.0f
 func (self *DrawList) AddQuadV(p1, p2, p3, p4 Vec2, col uint32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.ImU32(col), C.float(thickness))
+	C.ImDrawList_AddQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.ImU32(col), C.float(thickness))
 
 	selfFin()
 }
 
 func (self *DrawList) AddQuadFilled(p1, p2, p3, p4 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddQuadFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.ImU32(col))
+	C.ImDrawList_AddQuadFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -424,7 +420,7 @@ func (self *DrawList) AddQuadFilled(p1, p2, p3, p4 Vec2, col uint32) {
 // thickness: 1.0f
 func (self *DrawList) AddRectV(p_min, p_max Vec2, col uint32, rounding float32, flags DrawFlags, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
+	C.ImDrawList_AddRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags), C.float(thickness))
 
 	selfFin()
 }
@@ -435,14 +431,14 @@ func (self *DrawList) AddRectV(p_min, p_max Vec2, col uint32, rounding float32, 
 // flags: 0
 func (self *DrawList) AddRectFilledV(p_min, p_max Vec2, col uint32, rounding float32, flags DrawFlags) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddRectFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
+	C.ImDrawList_AddRectFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(col), C.float(rounding), C.ImDrawFlags(flags))
 
 	selfFin()
 }
 
 func (self *DrawList) AddRectFilledMultiColor(p_min, p_max Vec2, col_upr_left, col_upr_right, col_bot_right, col_bot_left uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddRectFilledMultiColor(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(col_upr_left), C.ImU32(col_upr_right), C.ImU32(col_bot_right), C.ImU32(col_bot_left))
+	C.ImDrawList_AddRectFilledMultiColor(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(col_upr_left), C.ImU32(col_upr_right), C.ImU32(col_bot_right), C.ImU32(col_bot_left))
 
 	selfFin()
 }
@@ -455,7 +451,7 @@ func (self *DrawList) AddTextFontPtrV(font *Font, font_size float32, pos Vec2, c
 	fontArg, fontFin := font.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
 	cpu_fine_clip_rectArg, cpu_fine_clip_rectFin := internal.Wrap(cpu_fine_clip_rect)
-	C.wrap_ImDrawList_AddText_FontPtrV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), text_beginArg, C.float(wrap_width), internal.ReinterpretCast[*C.ImVec4](cpu_fine_clip_rectArg))
+	C.wrap_ImDrawList_AddText_FontPtrV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), text_beginArg, C.float(wrap_width), internal.ReinterpretCast[*C.ImVec4_c](cpu_fine_clip_rectArg))
 
 	selfFin()
 	fontFin()
@@ -467,7 +463,7 @@ func (self *DrawList) AddTextFontPtrV(font *Font, font_size float32, pos Vec2, c
 func (self *DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImDrawList_AddText_Vec2V(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), text_beginArg)
+	C.wrap_ImDrawList_AddText_Vec2V(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), text_beginArg)
 
 	selfFin()
 	text_beginFin()
@@ -477,14 +473,14 @@ func (self *DrawList) AddTextVec2V(pos Vec2, col uint32, text_begin string) {
 // thickness: 1.0f
 func (self *DrawList) AddTriangleV(p1, p2, p3 Vec2, col uint32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddTriangle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.ImU32(col), C.float(thickness))
+	C.ImDrawList_AddTriangle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.ImU32(col), C.float(thickness))
 
 	selfFin()
 }
 
 func (self *DrawList) AddTriangleFilled(p1, p2, p3 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_AddTriangleFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.ImU32(col))
+	C.ImDrawList_AddTriangleFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -521,29 +517,27 @@ func (self *DrawList) CloneOutput() *DrawList {
 }
 
 func (self *DrawList) ClipRectMax() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_GetClipRectMax(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImDrawList](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImDrawList_GetClipRectMax(internal.ReinterpretCast[*C.ImDrawList](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *DrawList) ClipRectMin() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_GetClipRectMin(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImDrawList](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImDrawList_GetClipRectMin(internal.ReinterpretCast[*C.ImDrawList](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func NewDrawList(shared_data *DrawListSharedData) *DrawList {
@@ -559,7 +553,7 @@ func NewDrawList(shared_data *DrawListSharedData) *DrawList {
 // num_segments: 0
 func (self *DrawList) PathArcToV(center Vec2, radius, a_min, a_max float32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
+	C.ImDrawList_PathArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
 
 	selfFin()
 }
@@ -567,7 +561,7 @@ func (self *DrawList) PathArcToV(center Vec2, radius, a_min, a_max float32, num_
 // Use precomputed angles for a 12 steps circle
 func (self *DrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12, a_max_of_12 int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathArcToFast(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
+	C.ImDrawList_PathArcToFast(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.int(a_min_of_12), C.int(a_max_of_12))
 
 	selfFin()
 }
@@ -577,7 +571,7 @@ func (self *DrawList) PathArcToFast(center Vec2, radius float32, a_min_of_12, a_
 // num_segments: 0
 func (self *DrawList) PathBezierCubicCurveToV(p2, p3, p4 Vec2, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathBezierCubicCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.int(num_segments))
+	C.ImDrawList_PathBezierCubicCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.int(num_segments))
 
 	selfFin()
 }
@@ -587,7 +581,7 @@ func (self *DrawList) PathBezierCubicCurveToV(p2, p3, p4 Vec2, num_segments int3
 // num_segments: 0
 func (self *DrawList) PathBezierQuadraticCurveToV(p2, p3 Vec2, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathBezierQuadraticCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.int(num_segments))
+	C.ImDrawList_PathBezierQuadraticCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.int(num_segments))
 
 	selfFin()
 }
@@ -604,7 +598,7 @@ func (self *DrawList) PathClear() {
 // num_segments: 0
 func (self *DrawList) PathEllipticalArcToV(center, radius Vec2, rot, a_min, a_max float32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathEllipticalArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), internal.ReinterpretCast[C.ImVec2](radius.ToC()), C.float(rot), C.float(a_min), C.float(a_max), C.int(num_segments))
+	C.ImDrawList_PathEllipticalArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), internal.ReinterpretCast[C.ImVec2_c](radius.ToC()), C.float(rot), C.float(a_min), C.float(a_max), C.int(num_segments))
 
 	selfFin()
 }
@@ -625,14 +619,14 @@ func (self *DrawList) PathFillConvex(col uint32) {
 
 func (self *DrawList) PathLineTo(pos Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathLineTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.ImDrawList_PathLineTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 
 	selfFin()
 }
 
 func (self *DrawList) PathLineToMergeDuplicate(pos Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathLineToMergeDuplicate(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.ImDrawList_PathLineToMergeDuplicate(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 
 	selfFin()
 }
@@ -642,7 +636,7 @@ func (self *DrawList) PathLineToMergeDuplicate(pos Vec2) {
 // flags: 0
 func (self *DrawList) PathRectV(rect_min, rect_max Vec2, rounding float32, flags DrawFlags) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PathRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](rect_min.ToC()), internal.ReinterpretCast[C.ImVec2](rect_max.ToC()), C.float(rounding), C.ImDrawFlags(flags))
+	C.ImDrawList_PathRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](rect_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](rect_max.ToC()), C.float(rounding), C.ImDrawFlags(flags))
 
 	selfFin()
 }
@@ -673,7 +667,7 @@ func (self *DrawList) PopTexture() {
 
 func (self *DrawList) PrimQuadUV(a, b, c, d, uv_a, uv_b, uv_c, uv_d Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PrimQuadUV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC()), internal.ReinterpretCast[C.ImVec2](d.ToC()), internal.ReinterpretCast[C.ImVec2](uv_a.ToC()), internal.ReinterpretCast[C.ImVec2](uv_b.ToC()), internal.ReinterpretCast[C.ImVec2](uv_c.ToC()), internal.ReinterpretCast[C.ImVec2](uv_d.ToC()), C.ImU32(col))
+	C.ImDrawList_PrimQuadUV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](c.ToC()), internal.ReinterpretCast[C.ImVec2_c](d.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_a.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_b.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_c.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_d.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -681,14 +675,14 @@ func (self *DrawList) PrimQuadUV(a, b, c, d, uv_a, uv_b, uv_c, uv_d Vec2, col ui
 // Axis aligned rectangle (composed of two triangles)
 func (self *DrawList) PrimRect(a, b Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PrimRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), C.ImU32(col))
+	C.ImDrawList_PrimRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) PrimRectUV(a, b, uv_a, uv_b Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PrimRectUV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](uv_a.ToC()), internal.ReinterpretCast[C.ImVec2](uv_b.ToC()), C.ImU32(col))
+	C.ImDrawList_PrimRectUV(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_a.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_b.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -710,7 +704,7 @@ func (self *DrawList) PrimUnreserve(idx_count, vtx_count int32) {
 // Write vertex with unique index
 func (self *DrawList) PrimVtx(pos, uv Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PrimVtx(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), internal.ReinterpretCast[C.ImVec2](uv.ToC()), C.ImU32(col))
+	C.ImDrawList_PrimVtx(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -726,7 +720,7 @@ func (self *DrawList) PrimWriteIdx(idx DrawIdx) {
 
 func (self *DrawList) PrimWriteVtx(pos, uv Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PrimWriteVtx(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), internal.ReinterpretCast[C.ImVec2](uv.ToC()), C.ImU32(col))
+	C.ImDrawList_PrimWriteVtx(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -736,7 +730,7 @@ func (self *DrawList) PrimWriteVtx(pos, uv Vec2, col uint32) {
 // intersect_with_current_clip_rect: false
 func (self *DrawList) PushClipRectV(clip_rect_min, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList_PushClipRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](clip_rect_min.ToC()), internal.ReinterpretCast[C.ImVec2](clip_rect_max.ToC()), C.bool(intersect_with_current_clip_rect))
+	C.ImDrawList_PushClipRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](clip_rect_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](clip_rect_max.ToC()), C.bool(intersect_with_current_clip_rect))
 
 	selfFin()
 }
@@ -796,14 +790,14 @@ func (self *DrawList) OnChangedVtxOffset() {
 
 func (self *DrawList) PathArcToFastEx(center Vec2, radius float32, a_min_sample, a_max_sample, a_step int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList__PathArcToFastEx(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.int(a_min_sample), C.int(a_max_sample), C.int(a_step))
+	C.ImDrawList__PathArcToFastEx(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.int(a_min_sample), C.int(a_max_sample), C.int(a_step))
 
 	selfFin()
 }
 
 func (self *DrawList) PathArcToN(center Vec2, radius, a_min, a_max float32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.ImDrawList__PathArcToN(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
+	C.ImDrawList__PathArcToN(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.float(a_min), C.float(a_max), C.int(num_segments))
 
 	selfFin()
 }
@@ -904,6 +898,7 @@ func (self *FontAtlas) AddFont(font_cfg *FontConfig) *Font {
 	return NewFontFromC(C.ImFontAtlas_AddFont(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFontConfig](font_cfgArg)))
 }
 
+// Selects between AddFontDefaultVector() and AddFontDefaultBitmap().
 // AddFontDefaultV parameter default value hint:
 // font_cfg: NULL
 func (self *FontAtlas) AddFontDefaultV(font_cfg *FontConfig) *Font {
@@ -915,6 +910,34 @@ func (self *FontAtlas) AddFontDefaultV(font_cfg *FontConfig) *Font {
 		font_cfgFin()
 	}()
 	return NewFontFromC(C.ImFontAtlas_AddFontDefault(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFontConfig](font_cfgArg)))
+}
+
+// Embedded classic pixel-clean font. Recommended at Size 13px with no scaling.
+// AddFontDefaultBitmapV parameter default value hint:
+// font_cfg: NULL
+func (self *FontAtlas) AddFontDefaultBitmapV(font_cfg *FontConfig) *Font {
+	selfArg, selfFin := self.Handle()
+	font_cfgArg, font_cfgFin := font_cfg.Handle()
+
+	defer func() {
+		selfFin()
+		font_cfgFin()
+	}()
+	return NewFontFromC(C.ImFontAtlas_AddFontDefaultBitmap(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFontConfig](font_cfgArg)))
+}
+
+// Embedded scalable font. Recommended at any higher size.
+// AddFontDefaultVectorV parameter default value hint:
+// font_cfg: NULL
+func (self *FontAtlas) AddFontDefaultVectorV(font_cfg *FontConfig) *Font {
+	selfArg, selfFin := self.Handle()
+	font_cfgArg, font_cfgFin := font_cfg.Handle()
+
+	defer func() {
+		selfFin()
+		font_cfgFin()
+	}()
+	return NewFontFromC(C.ImFontAtlas_AddFontDefaultVector(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), internal.ReinterpretCast[*C.ImFontConfig](font_cfgArg)))
 }
 
 // AddFontFromFileTTFV parameter default value hint:
@@ -984,7 +1007,7 @@ func (self *FontAtlas) AddFontFromMemoryTTFV(font_data uintptr, font_data_size i
 	return NewFontFromC(C.wrap_ImFontAtlas_AddFontFromMemoryTTFV(internal.ReinterpretCast[*C.ImFontAtlas](selfArg), C.uintptr_t(font_data), C.int(font_data_size), C.float(size_pixels), internal.ReinterpretCast[*C.ImFontConfig](font_cfgArg), (*C.ImWchar)(glyph_ranges)))
 }
 
-// Clear everything (input fonts, output glyphs/textures)
+// Clear everything (input fonts, output glyphs/textures).
 func (self *FontAtlas) Clear() {
 	selfArg, selfFin := self.Handle()
 	C.ImFontAtlas_Clear(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
@@ -1251,20 +1274,19 @@ func (self *Font) AddRemapChar(from_codepoint, to_codepoint Wchar) {
 // CalcTextSizeAV parameter default value hint:
 // out_remaining: NULL
 func (self *Font) CalcTextSizeAV(size, max_width, wrap_width float32, text_begin string, out_remaining []string) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
 	out_remainingArg, out_remainingFin := internal.WrapStringList[C.char](out_remaining)
-	C.wrap_ImFont_CalcTextSizeAV(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, out_remainingArg)
 
-	pOutFin()
-	selfFin()
-	text_beginFin()
-	out_remainingFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+		text_beginFin()
+		out_remainingFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_ImFont_CalcTextSizeAV(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, out_remainingArg)
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Font) CalcWordWrapPosition(size float32, text string, wrap_width float32) string {
@@ -1344,7 +1366,7 @@ func (self *Font) RenderCharV(draw_list *DrawList, size float32, pos Vec2, col u
 	selfArg, selfFin := self.Handle()
 	draw_listArg, draw_listFin := draw_list.Handle()
 	cpu_fine_clipArg, cpu_fine_clipFin := internal.Wrap(cpu_fine_clip)
-	C.ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImWchar(c), internal.ReinterpretCast[*C.ImVec4](cpu_fine_clipArg))
+	C.ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), C.ImWchar(c), internal.ReinterpretCast[*C.ImVec4_c](cpu_fine_clipArg))
 
 	selfFin()
 	draw_listFin()
@@ -1358,7 +1380,7 @@ func (self *Font) RenderTextV(draw_list *DrawList, size float32, pos Vec2, col u
 	selfArg, selfFin := self.Handle()
 	draw_listArg, draw_listFin := draw_list.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImFont_RenderTextV(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), internal.ReinterpretCast[C.ImVec4](clip_rect.ToC()), text_beginArg, C.float(wrap_width), C.ImDrawTextFlags(flags))
+	C.wrap_ImFont_RenderTextV(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), internal.ReinterpretCast[C.ImVec4_c](clip_rect.ToC()), text_beginArg, C.float(wrap_width), C.ImDrawTextFlags(flags))
 
 	selfFin()
 	draw_listFin()
@@ -1428,6 +1450,17 @@ func InternalNewDebugAllocInfo() *DebugAllocInfo {
 func (self *DebugAllocInfo) InternalDestroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImGuiDebugAllocInfo_destroy(internal.ReinterpretCast[*C.ImGuiDebugAllocInfo](selfArg))
+
+	selfFin()
+}
+
+func InternalNewDebugItemPathQuery() *DebugItemPathQuery {
+	return NewDebugItemPathQueryFromC(C.ImGuiDebugItemPathQuery_ImGuiDebugItemPathQuery())
+}
+
+func (self *DebugItemPathQuery) InternalDestroy() {
+	selfArg, selfFin := self.Handle()
+	C.ImGuiDebugItemPathQuery_destroy(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg))
 
 	selfFin()
 }
@@ -1536,16 +1569,15 @@ func (self *DockNode) InternalIsSplitNode() bool {
 }
 
 func (self *DockNode) InternalRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiDockNode_Rect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiDockNode](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiDockNode_Rect(internal.ReinterpretCast[*C.ImGuiDockNode](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *DockNode) InternalSetLocalFlags(flags DockNodeFlags) {
@@ -2683,7 +2715,7 @@ func InternalNewStyleModInt(idx StyleVar, v int32) *StyleMod {
 }
 
 func InternalNewStyleModVec2(idx StyleVar, v Vec2) *StyleMod {
-	return NewStyleModFromC(C.ImGuiStyleMod_ImGuiStyleMod_Vec2(C.ImGuiStyleVar(idx), internal.ReinterpretCast[C.ImVec2](v.ToC())))
+	return NewStyleModFromC(C.ImGuiStyleMod_ImGuiStyleMod_Vec2(C.ImGuiStyleVar(idx), internal.ReinterpretCast[C.ImVec2_c](v.ToC())))
 }
 
 func (self *StyleMod) InternalDestroy() {
@@ -3098,29 +3130,27 @@ func (self *TypingSelectState) InternalDestroy() {
 }
 
 func (self *ViewportP) InternalCalcWorkRectPos(inset_min Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_CalcWorkRectPos(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiViewportP](selfArg), internal.ReinterpretCast[C.ImVec2](inset_min.ToC()))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImGuiViewportP_CalcWorkRectPos(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg), internal.ReinterpretCast[C.ImVec2_c](inset_min.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *ViewportP) InternalCalcWorkRectSize(inset_min, inset_max Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_CalcWorkRectSize(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiViewportP](selfArg), internal.ReinterpretCast[C.ImVec2](inset_min.ToC()), internal.ReinterpretCast[C.ImVec2](inset_max.ToC()))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImGuiViewportP_CalcWorkRectSize(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg), internal.ReinterpretCast[C.ImVec2_c](inset_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](inset_max.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *ViewportP) InternalClearRequestFlags() {
@@ -3131,42 +3161,39 @@ func (self *ViewportP) InternalClearRequestFlags() {
 }
 
 func (self *ViewportP) InternalBuildWorkRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_GetBuildWorkRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiViewportP_GetBuildWorkRect(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *ViewportP) InternalMainRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_GetMainRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiViewportP_GetMainRect(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *ViewportP) InternalWorkRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewportP_GetWorkRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiViewportP_GetWorkRect(internal.ReinterpretCast[*C.ImGuiViewportP](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalNewViewportP() *ViewportP {
@@ -3189,29 +3216,27 @@ func (self *ViewportP) InternalDestroy() {
 }
 
 func (self *Viewport) Center() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewport_GetCenter(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiViewport](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImGuiViewport_GetCenter(internal.ReinterpretCast[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Viewport) WorkCenter() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiViewport_GetWorkCenter(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiViewport](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImGuiViewport_GetWorkCenter(internal.ReinterpretCast[*C.ImGuiViewport](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func NewViewport() *Viewport {
@@ -3263,7 +3288,7 @@ func (self *Window) InternalIDFromPos(p_abs Vec2) ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID {
-		result := C.ImGuiWindow_GetIDFromPos(internal.ReinterpretCast[*C.ImGuiWindow](selfArg), internal.ReinterpretCast[C.ImVec2](p_abs.ToC()))
+		result := C.ImGuiWindow_GetIDFromPos(internal.ReinterpretCast[*C.ImGuiWindow](selfArg), internal.ReinterpretCast[C.ImVec2_c](p_abs.ToC()))
 		return &result
 	}())
 }
@@ -3275,7 +3300,7 @@ func (self *Window) InternalIDFromRectangle(r_abs Rect) ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID {
-		result := C.ImGuiWindow_GetIDFromRectangle(internal.ReinterpretCast[*C.ImGuiWindow](selfArg), internal.ReinterpretCast[C.ImRect](r_abs.ToC()))
+		result := C.ImGuiWindow_GetIDFromRectangle(internal.ReinterpretCast[*C.ImGuiWindow](selfArg), internal.ReinterpretCast[C.ImRect_c](r_abs.ToC()))
 		return &result
 	}())
 }
@@ -3334,42 +3359,39 @@ func InternalNewWindow(context *Context, name string) *Window {
 }
 
 func (self *Window) InternalMenuBarRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiWindow_MenuBarRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiWindow_MenuBarRect(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Window) InternalRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiWindow_Rect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiWindow_Rect(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Window) InternalTitleBarRect() Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
-	C.ImGuiWindow_TitleBarRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Rect {
+		out := C.ImGuiWindow_TitleBarRect(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Window) InternalDestroy() {
@@ -3381,14 +3403,14 @@ func (self *Window) InternalDestroy() {
 
 func (self *Rect) InternalAddRect(r Rect) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_Add_Rect(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImRect](r.ToC()))
+	C.ImRect_Add_Rect(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImRect_c](r.ToC()))
 
 	selfFin()
 }
 
 func (self *Rect) InternalAddVec2(p Vec2) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_Add_Vec2(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImVec2](p.ToC()))
+	C.ImRect_Add_Vec2(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImVec2_c](p.ToC()))
 
 	selfFin()
 }
@@ -3399,13 +3421,13 @@ func (self *Rect) InternalAsVec4() *Vec4 {
 	defer func() {
 		selfFin()
 	}()
-	return (&Vec4{}).FromC(unsafe.Pointer(C.ImRect_AsVec4(internal.ReinterpretCast[*C.ImRect](selfArg))))
+	return (&Vec4{}).FromC(unsafe.Pointer(C.ImRect_AsVec4(internal.ReinterpretCast[*C.ImRect_c](selfArg))))
 }
 
 // Simple version, may lead to an inverted rectangle, which is fine for Contains/Overlaps test but not for display.
 func (self *Rect) InternalClipWith(r Rect) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_ClipWith(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImRect](r.ToC()))
+	C.ImRect_ClipWith(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImRect_c](r.ToC()))
 
 	selfFin()
 }
@@ -3413,7 +3435,7 @@ func (self *Rect) InternalClipWith(r Rect) {
 // Full version, ensure both points are fully clipped.
 func (self *Rect) InternalClipWithFull(r Rect) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_ClipWithFull(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImRect](r.ToC()))
+	C.ImRect_ClipWithFull(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImRect_c](r.ToC()))
 
 	selfFin()
 }
@@ -3424,7 +3446,7 @@ func (self *Rect) InternalContainsWithPad(p, pad Vec2) bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_ContainsWithPad(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImVec2](p.ToC()), internal.ReinterpretCast[C.ImVec2](pad.ToC())) == C.bool(true)
+	return C.ImRect_ContainsWithPad(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImVec2_c](p.ToC()), internal.ReinterpretCast[C.ImVec2_c](pad.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalContainsRect(r Rect) bool {
@@ -3433,7 +3455,7 @@ func (self *Rect) InternalContainsRect(r Rect) bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_Contains_Rect(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImRect](r.ToC())) == C.bool(true)
+	return C.ImRect_Contains_Rect(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImRect_c](r.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalContainsVec2(p Vec2) bool {
@@ -3442,26 +3464,19 @@ func (self *Rect) InternalContainsVec2(p Vec2) bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_Contains_Vec2(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImVec2](p.ToC())) == C.bool(true)
+	return C.ImRect_Contains_Vec2(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImVec2_c](p.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalExpandFloat(amount float32) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_Expand_Float(internal.ReinterpretCast[*C.ImRect](selfArg), C.float(amount))
+	C.ImRect_Expand_Float(internal.ReinterpretCast[*C.ImRect_c](selfArg), C.float(amount))
 
 	selfFin()
 }
 
 func (self *Rect) InternalExpandVec2(amount Vec2) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_Expand_Vec2(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImVec2](amount.ToC()))
-
-	selfFin()
-}
-
-func (self *Rect) InternalFloor() {
-	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_Floor(internal.ReinterpretCast[*C.ImRect](selfArg))
+	C.ImRect_Expand_Vec2(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImVec2_c](amount.ToC()))
 
 	selfFin()
 }
@@ -3472,48 +3487,45 @@ func (self *Rect) InternalArea() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.ImRect_GetArea(internal.ReinterpretCast[*C.ImRect](selfArg)))
+	return float32(C.ImRect_GetArea(internal.ReinterpretCast[*C.ImRect_c](selfArg)))
 }
 
 // Bottom-left
 func (self *Rect) InternalBL() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_GetBL(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImRect_GetBL(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // Bottom-right
 func (self *Rect) InternalBR() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_GetBR(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImRect_GetBR(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Rect) InternalCenter() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_GetCenter(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImRect_GetCenter(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Rect) InternalHeight() float32 {
@@ -3522,48 +3534,45 @@ func (self *Rect) InternalHeight() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.ImRect_GetHeight(internal.ReinterpretCast[*C.ImRect](selfArg)))
+	return float32(C.ImRect_GetHeight(internal.ReinterpretCast[*C.ImRect_c](selfArg)))
 }
 
 func (self *Rect) InternalSize() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_GetSize(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImRect_GetSize(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // Top-left
 func (self *Rect) InternalTL() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_GetTL(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImRect_GetTL(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // Top-right
 func (self *Rect) InternalTR() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_GetTR(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec2 {
+		out := C.ImRect_GetTR(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Rect) InternalWidth() float32 {
@@ -3572,7 +3581,7 @@ func (self *Rect) InternalWidth() float32 {
 	defer func() {
 		selfFin()
 	}()
-	return float32(C.ImRect_GetWidth(internal.ReinterpretCast[*C.ImRect](selfArg)))
+	return float32(C.ImRect_GetWidth(internal.ReinterpretCast[*C.ImRect_c](selfArg)))
 }
 
 func (self *Rect) InternalIsInverted() bool {
@@ -3581,7 +3590,7 @@ func (self *Rect) InternalIsInverted() bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_IsInverted(internal.ReinterpretCast[*C.ImRect](selfArg)) == C.bool(true)
+	return C.ImRect_IsInverted(internal.ReinterpretCast[*C.ImRect_c](selfArg)) == C.bool(true)
 }
 
 func (self *Rect) InternalOverlaps(r Rect) bool {
@@ -3590,46 +3599,45 @@ func (self *Rect) InternalOverlaps(r Rect) bool {
 	defer func() {
 		selfFin()
 	}()
-	return C.ImRect_Overlaps(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImRect](r.ToC())) == C.bool(true)
+	return C.ImRect_Overlaps(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImRect_c](r.ToC())) == C.bool(true)
 }
 
 func (self *Rect) InternalToVec4() Vec4 {
-	pOut := new(Vec4)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_ToVec4(internal.ReinterpretCast[*C.ImVec4](pOutArg), internal.ReinterpretCast[*C.ImRect](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return func() Vec4 {
+		out := C.ImRect_ToVec4(internal.ReinterpretCast[*C.ImRect_c](selfArg))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Rect) InternalTranslate(d Vec2) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_Translate(internal.ReinterpretCast[*C.ImRect](selfArg), internal.ReinterpretCast[C.ImVec2](d.ToC()))
+	C.ImRect_Translate(internal.ReinterpretCast[*C.ImRect_c](selfArg), internal.ReinterpretCast[C.ImVec2_c](d.ToC()))
 
 	selfFin()
 }
 
 func (self *Rect) InternalTranslateX(dx float32) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_TranslateX(internal.ReinterpretCast[*C.ImRect](selfArg), C.float(dx))
+	C.ImRect_TranslateX(internal.ReinterpretCast[*C.ImRect_c](selfArg), C.float(dx))
 
 	selfFin()
 }
 
 func (self *Rect) InternalTranslateY(dy float32) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_TranslateY(internal.ReinterpretCast[*C.ImRect](selfArg), C.float(dy))
+	C.ImRect_TranslateY(internal.ReinterpretCast[*C.ImRect_c](selfArg), C.float(dy))
 
 	selfFin()
 }
 
 func (self *Rect) InternalDestroy() {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImRect_destroy(internal.ReinterpretCast[*C.ImRect](selfArg))
+	C.ImRect_destroy(internal.ReinterpretCast[*C.ImRect_c](selfArg))
 
 	selfFin()
 }
@@ -3697,16 +3705,15 @@ func (self *TextureData) TexID() TextureID {
 }
 
 func (self *TextureData) TexRef() TextureRef {
-	pOut := new(TextureRef)
-	pOutArg, pOutFin := pOut.Handle()
-
 	selfArg, selfFin := self.Handle()
-	C.ImTextureData_GetTexRef(internal.ReinterpretCast[*C.ImTextureRef](pOutArg), internal.ReinterpretCast[*C.ImTextureData](selfArg))
 
-	pOutFin()
-	selfFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextureRefFromC(func() *C.ImTextureRef {
+		result := C.ImTextureData_GetTexRef(internal.ReinterpretCast[*C.ImTextureData](selfArg))
+		return &result
+	}())
 }
 
 func NewTextureData() *TextureData {
@@ -3786,7 +3793,7 @@ func (self *Vec1) InternalDestroy() {
 
 func (self *Vec2) Destroy() {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImVec2_destroy(internal.ReinterpretCast[*C.ImVec2](selfArg))
+	C.ImVec2_destroy(internal.ReinterpretCast[*C.ImVec2_c](selfArg))
 
 	selfFin()
 }
@@ -3816,7 +3823,7 @@ func NewVec4Nil() *Vec4 {
 
 func (self *Vec4) Destroy() {
 	selfArg, selfFin := internal.Wrap(self)
-	C.ImVec4_destroy(internal.ReinterpretCast[*C.ImVec4](selfArg))
+	C.ImVec4_destroy(internal.ReinterpretCast[*C.ImVec4_c](selfArg))
 
 	selfFin()
 }
@@ -3841,16 +3848,16 @@ func InternalActivateItemByID(id ID) {
 	idFin()
 }
 
-func InternalAddContextHook(context *Context, hook *ContextHook) ID {
-	contextArg, contextFin := context.Handle()
+func InternalAddContextHook(ctx *Context, hook *ContextHook) ID {
+	ctxArg, ctxFin := ctx.Handle()
 	hookArg, hookFin := hook.Handle()
 
 	defer func() {
-		contextFin()
+		ctxFin()
 		hookFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID {
-		result := C.igAddContextHook(internal.ReinterpretCast[*C.ImGuiContext](contextArg), internal.ReinterpretCast[*C.ImGuiContextHook](hookArg))
+		result := C.igAddContextHook(internal.ReinterpretCast[*C.ImGuiContext](ctxArg), internal.ReinterpretCast[*C.ImGuiContextHook](hookArg))
 		return &result
 	}())
 }
@@ -3885,7 +3892,7 @@ func InternalArrowButtonExV(str_id string, dir Dir, size_arg Vec2, flags ButtonF
 	defer func() {
 		str_idFin()
 	}()
-	return C.igArrowButtonEx(str_idArg, C.ImGuiDir(dir), internal.ReinterpretCast[C.ImVec2](size_arg.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igArrowButtonEx(str_idArg, C.ImGuiDir(dir), internal.ReinterpretCast[C.ImVec2_c](size_arg.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 // BeginV parameter default value hint:
@@ -3910,7 +3917,7 @@ func InternalBeginBoxSelect(scope_rect Rect, window *Window, box_select_id ID, m
 		windowFin()
 		box_select_idFin()
 	}()
-	return C.igBeginBoxSelect(internal.ReinterpretCast[C.ImRect](scope_rect.ToC()), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImGuiID](box_select_idArg), C.ImGuiMultiSelectFlags(ms_flags)) == C.bool(true)
+	return C.igBeginBoxSelect(internal.ReinterpretCast[C.ImRect_c](scope_rect.ToC()), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImGuiID](box_select_idArg), C.ImGuiMultiSelectFlags(ms_flags)) == C.bool(true)
 }
 
 func InternalBeginChildEx(name string, id ID, size_arg Vec2, child_flags ChildFlags, window_flags WindowFlags) bool {
@@ -3921,7 +3928,7 @@ func InternalBeginChildEx(name string, id ID, size_arg Vec2, child_flags ChildFl
 		nameFin()
 		idFin()
 	}()
-	return C.igBeginChildEx(nameArg, internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2](size_arg.ToC()), C.ImGuiChildFlags(child_flags), C.ImGuiWindowFlags(window_flags)) == C.bool(true)
+	return C.igBeginChildEx(nameArg, internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2_c](size_arg.ToC()), C.ImGuiChildFlags(child_flags), C.ImGuiWindowFlags(window_flags)) == C.bool(true)
 }
 
 // BeginChildIDV parameter default value hint:
@@ -3934,7 +3941,7 @@ func BeginChildIDV(id ID, size Vec2, child_flags ChildFlags, window_flags Window
 	defer func() {
 		idFin()
 	}()
-	return C.igBeginChild_ID(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiChildFlags(child_flags), C.ImGuiWindowFlags(window_flags)) == C.bool(true)
+	return C.igBeginChild_ID(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiChildFlags(child_flags), C.ImGuiWindowFlags(window_flags)) == C.bool(true)
 }
 
 // BeginChildStrV parameter default value hint:
@@ -3947,7 +3954,7 @@ func BeginChildStrV(str_id string, size Vec2, child_flags ChildFlags, window_fla
 	defer func() {
 		str_idFin()
 	}()
-	return C.igBeginChild_Str(str_idArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiChildFlags(child_flags), C.ImGuiWindowFlags(window_flags)) == C.bool(true)
+	return C.igBeginChild_Str(str_idArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiChildFlags(child_flags), C.ImGuiWindowFlags(window_flags)) == C.bool(true)
 }
 
 // setup number of columns. use an identifier to distinguish multiple column sets. close with EndColumns().
@@ -3979,7 +3986,7 @@ func InternalBeginComboPopup(popup_id ID, bb Rect, flags ComboFlags) bool {
 	defer func() {
 		popup_idFin()
 	}()
-	return C.igBeginComboPopup(internal.ReinterpretCast[C.ImGuiID](popup_idArg), internal.ReinterpretCast[C.ImRect](bb.ToC()), C.ImGuiComboFlags(flags)) == C.bool(true)
+	return C.igBeginComboPopup(internal.ReinterpretCast[C.ImGuiID](popup_idArg), internal.ReinterpretCast[C.ImRect_c](bb.ToC()), C.ImGuiComboFlags(flags)) == C.bool(true)
 }
 
 func InternalBeginComboPreview() bool {
@@ -4037,7 +4044,7 @@ func InternalBeginDragDropTargetCustom(bb Rect, id ID) bool {
 	defer func() {
 		idFin()
 	}()
-	return C.igBeginDragDropTargetCustom(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
+	return C.igBeginDragDropTargetCustom(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
 }
 
 // InternalBeginDragDropTargetViewportV parameter default value hint:
@@ -4050,7 +4057,7 @@ func InternalBeginDragDropTargetViewportV(viewport *Viewport, p_bb *Rect) bool {
 		viewportFin()
 		p_bbFin()
 	}()
-	return C.igBeginDragDropTargetViewport(internal.ReinterpretCast[*C.ImGuiViewport](viewportArg), internal.ReinterpretCast[*C.ImRect](p_bbArg)) == C.bool(true)
+	return C.igBeginDragDropTargetViewport(internal.ReinterpretCast[*C.ImGuiViewport](viewportArg), internal.ReinterpretCast[*C.ImRect_c](p_bbArg)) == C.bool(true)
 }
 
 func InternalBeginErrorTooltip() bool {
@@ -4076,7 +4083,7 @@ func BeginListBoxV(label string, size Vec2) bool {
 	defer func() {
 		labelFin()
 	}()
-	return C.igBeginListBox(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.igBeginListBox(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 // create and append to a full screen menu-bar.
@@ -4136,7 +4143,7 @@ func BeginPopupV(str_id string, flags WindowFlags) bool {
 // open+begin popup when clicked on last item. Use str_id==NULL to associate the popup to previous item. If you want to use that on a non-interactive item such as Text() you need to pass in an explicit ID here. read comments in .cpp!
 // BeginPopupContextItemV parameter default value hint:
 // str_id: NULL
-// popup_flags: 1
+// popup_flags: 0
 func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 
@@ -4149,7 +4156,7 @@ func BeginPopupContextItemV(str_id string, popup_flags PopupFlags) bool {
 // open+begin popup when clicked in void (where there are no windows).
 // BeginPopupContextVoidV parameter default value hint:
 // str_id: NULL
-// popup_flags: 1
+// popup_flags: 0
 func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 
@@ -4162,7 +4169,7 @@ func BeginPopupContextVoidV(str_id string, popup_flags PopupFlags) bool {
 // open+begin popup when clicked on current window.
 // BeginPopupContextWindowV parameter default value hint:
 // str_id: NULL
-// popup_flags: 1
+// popup_flags: 0
 func BeginPopupContextWindowV(str_id string, popup_flags PopupFlags) bool {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 
@@ -4225,7 +4232,7 @@ func InternalBeginTabBarEx(tab_bar *TabBar, bb Rect, flags TabBarFlags) bool {
 	defer func() {
 		tab_barFin()
 	}()
-	return C.igBeginTabBarEx(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg), internal.ReinterpretCast[C.ImRect](bb.ToC()), C.ImGuiTabBarFlags(flags)) == C.bool(true)
+	return C.igBeginTabBarEx(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg), internal.ReinterpretCast[C.ImRect_c](bb.ToC()), C.ImGuiTabBarFlags(flags)) == C.bool(true)
 }
 
 // create a Tab. Returns true if the Tab is selected.
@@ -4253,7 +4260,7 @@ func BeginTableV(str_id string, columns int32, flags TableFlags, outer_size Vec2
 	defer func() {
 		str_idFin()
 	}()
-	return C.igBeginTable(str_idArg, C.int(columns), C.ImGuiTableFlags(flags), internal.ReinterpretCast[C.ImVec2](outer_size.ToC()), C.float(inner_width)) == C.bool(true)
+	return C.igBeginTable(str_idArg, C.int(columns), C.ImGuiTableFlags(flags), internal.ReinterpretCast[C.ImVec2_c](outer_size.ToC()), C.float(inner_width)) == C.bool(true)
 }
 
 // InternalBeginTableExV parameter default value hint:
@@ -4268,7 +4275,7 @@ func InternalBeginTableExV(name string, id ID, columns_count int32, flags TableF
 		nameFin()
 		idFin()
 	}()
-	return C.igBeginTableEx(nameArg, internal.ReinterpretCast[C.ImGuiID](idArg), C.int(columns_count), C.ImGuiTableFlags(flags), internal.ReinterpretCast[C.ImVec2](outer_size.ToC()), C.float(inner_width)) == C.bool(true)
+	return C.igBeginTableEx(nameArg, internal.ReinterpretCast[C.ImGuiID](idArg), C.int(columns_count), C.ImGuiTableFlags(flags), internal.ReinterpretCast[C.ImVec2_c](outer_size.ToC()), C.float(inner_width)) == C.bool(true)
 }
 
 // begin/append a tooltip window.
@@ -4347,7 +4354,7 @@ func ButtonV(label string, size Vec2) bool {
 	defer func() {
 		labelFin()
 	}()
-	return C.igButton(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.igButton(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 // InternalButtonBehaviorV parameter default value hint:
@@ -4362,7 +4369,7 @@ func InternalButtonBehaviorV(bb Rect, id ID, out_hovered, out_held *bool, flags 
 		out_hoveredFin()
 		out_heldFin()
 	}()
-	return C.igButtonBehavior(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), out_hoveredArg, out_heldArg, C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igButtonBehavior(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), out_hoveredArg, out_heldArg, C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 // InternalButtonExV parameter default value hint:
@@ -4374,27 +4381,23 @@ func InternalButtonExV(label string, size_arg Vec2, flags ButtonFlags) bool {
 	defer func() {
 		labelFin()
 	}()
-	return C.igButtonEx(labelArg, internal.ReinterpretCast[C.ImVec2](size_arg.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igButtonEx(labelArg, internal.ReinterpretCast[C.ImVec2_c](size_arg.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 func InternalCalcClipRectVisibleItemsY(clip_rect Rect, pos Vec2, items_height float32, out_visible_start, out_visible_end *int32) {
 	out_visible_startArg, out_visible_startFin := internal.WrapNumberPtr[C.int, int32](out_visible_start)
 	out_visible_endArg, out_visible_endFin := internal.WrapNumberPtr[C.int, int32](out_visible_end)
-	C.igCalcClipRectVisibleItemsY(internal.ReinterpretCast[C.ImRect](clip_rect.ToC()), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.float(items_height), out_visible_startArg, out_visible_endArg)
+	C.igCalcClipRectVisibleItemsY(internal.ReinterpretCast[C.ImRect_c](clip_rect.ToC()), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.float(items_height), out_visible_startArg, out_visible_endArg)
 
 	out_visible_startFin()
 	out_visible_endFin()
 }
 
 func InternalCalcItemSize(size Vec2, default_w, default_h float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igCalcItemSize(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.float(default_w), C.float(default_h))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igCalcItemSize(internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.float(default_w), C.float(default_h))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // width of item given pushed settings and current cursor position. NOT necessarily the width of last item unlike most 'Item' functions.
@@ -4403,23 +4406,22 @@ func CalcItemWidth() float32 {
 }
 
 func InternalCalcRoundingFlagsForRectInRect(r_in, r_outer Rect, threshold float32) DrawFlags {
-	return DrawFlags(C.igCalcRoundingFlagsForRectInRect(internal.ReinterpretCast[C.ImRect](r_in.ToC()), internal.ReinterpretCast[C.ImRect](r_outer.ToC()), C.float(threshold)))
+	return DrawFlags(C.igCalcRoundingFlagsForRectInRect(internal.ReinterpretCast[C.ImRect_c](r_in.ToC()), internal.ReinterpretCast[C.ImRect_c](r_outer.ToC()), C.float(threshold)))
 }
 
 // CalcTextSizeV parameter default value hint:
 // hide_text_after_double_hash: false
 // wrap_width: -1.0f
 func CalcTextSizeV(text string, hide_text_after_double_hash bool, wrap_width float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igCalcTextSizeV(internal.ReinterpretCast[*C.ImVec2](pOutArg), textArg, C.int(len(text)), C.bool(hide_text_after_double_hash), C.float(wrap_width))
 
-	pOutFin()
-	textFin()
-
-	return *pOut
+	defer func() {
+		textFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_igCalcTextSizeV(textArg, C.int(len(text)), C.bool(hide_text_after_double_hash), C.float(wrap_width))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalCalcTypematicRepeatAmount(t0, t1, repeat_delay, repeat_rate float32) int32 {
@@ -4427,27 +4429,26 @@ func InternalCalcTypematicRepeatAmount(t0, t1, repeat_delay, repeat_rate float32
 }
 
 func InternalCalcWindowNextAutoFitSize(window *Window) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igCalcWindowNextAutoFitSize(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.igCalcWindowNextAutoFitSize(internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalCalcWrapWidthForPos(pos Vec2, wrap_pos_x float32) float32 {
-	return float32(C.igCalcWrapWidthForPos(internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.float(wrap_pos_x)))
+	return float32(C.igCalcWrapWidthForPos(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.float(wrap_pos_x)))
 }
 
-func InternalCallContextHooks(context *Context, typeArg ContextHookType) {
-	contextArg, contextFin := context.Handle()
-	C.igCallContextHooks(internal.ReinterpretCast[*C.ImGuiContext](contextArg), C.ImGuiContextHookType(typeArg))
+func InternalCallContextHooks(ctx *Context, typeArg ContextHookType) {
+	ctxArg, ctxFin := ctx.Handle()
+	C.igCallContextHooks(internal.ReinterpretCast[*C.ImGuiContext](ctxArg), C.ImGuiContextHookType(typeArg))
 
-	contextFin()
+	ctxFin()
 }
 
 func Checkbox(label string, v *bool) bool {
@@ -4530,7 +4531,7 @@ func InternalCloseButton(id ID, pos Vec2) bool {
 	defer func() {
 		idFin()
 	}()
-	return C.igCloseButton(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2](pos.ToC())) == C.bool(true)
+	return C.igCloseButton(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC())) == C.bool(true)
 }
 
 // manually close the popup we have begin-ed into.
@@ -4561,7 +4562,7 @@ func InternalCollapseButton(id ID, pos Vec2, dock_node *DockNode) bool {
 		idFin()
 		dock_nodeFin()
 	}()
-	return C.igCollapseButton(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), internal.ReinterpretCast[*C.ImGuiDockNode](dock_nodeArg)) == C.bool(true)
+	return C.igCollapseButton(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), internal.ReinterpretCast[*C.ImGuiDockNode](dock_nodeArg)) == C.bool(true)
 }
 
 // when 'p_visible != NULL': if '*p_visible==true' display an additional small close button on upper right of the header which will set the bool to false when clicked, if '*p_visible==false' don't display the header.
@@ -4600,11 +4601,11 @@ func ColorButtonV(desc_id string, col Vec4, flags ColorEditFlags, size Vec2) boo
 	defer func() {
 		desc_idFin()
 	}()
-	return C.igColorButton(desc_idArg, internal.ReinterpretCast[C.ImVec4](col.ToC()), C.ImGuiColorEditFlags(flags), internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.igColorButton(desc_idArg, internal.ReinterpretCast[C.ImVec4_c](col.ToC()), C.ImGuiColorEditFlags(flags), internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 func ColorConvertFloat4ToU32(in Vec4) uint32 {
-	return (uint32)(C.igColorConvertFloat4ToU32(internal.ReinterpretCast[C.ImVec4](in.ToC())))
+	return (uint32)(C.igColorConvertFloat4ToU32(internal.ReinterpretCast[C.ImVec4_c](in.ToC())))
 }
 
 func ColorConvertHSVtoRGB(h, s, v float32, out_r, out_g, out_b *float32) {
@@ -4630,14 +4631,10 @@ func ColorConvertRGBtoHSV(r, g, b float32, out_h, out_s, out_v *float32) {
 }
 
 func ColorConvertU32ToFloat4(in uint32) Vec4 {
-	pOut := new(Vec4)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igColorConvertU32ToFloat4(internal.ReinterpretCast[*C.ImVec4](pOutArg), C.ImU32(in))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec4 {
+		out := C.igColorConvertU32ToFloat4(C.ImU32(in))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // ColorEdit3V parameter default value hint:
@@ -5126,7 +5123,7 @@ func InternalDebugRenderKeyboardPreview(draw_list *DrawList) {
 func InternalDebugRenderViewportThumbnail(draw_list *DrawList, viewport *ViewportP, bb Rect) {
 	draw_listArg, draw_listFin := draw_list.Handle()
 	viewportArg, viewportFin := viewport.Handle()
-	C.igDebugRenderViewportThumbnail(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[*C.ImGuiViewportP](viewportArg), internal.ReinterpretCast[C.ImRect](bb.ToC()))
+	C.igDebugRenderViewportThumbnail(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[*C.ImGuiViewportP](viewportArg), internal.ReinterpretCast[C.ImRect_c](bb.ToC()))
 
 	draw_listFin()
 	viewportFin()
@@ -5150,6 +5147,15 @@ func InternalDebugTextUnformattedWithLocateItem(line_begin, line_end string) {
 
 	line_beginFin()
 	line_endFin()
+}
+
+func InternalDebugTextureIDToU64(tex_id TextureID) uint64 {
+	tex_idArg, tex_idFin := tex_id.C()
+
+	defer func() {
+		tex_idFin()
+	}()
+	return (uint64)(C.igDebugTextureIDToU64(internal.ReinterpretCast[C.ImTextureID](tex_idArg)))
 }
 
 // NULL = destroy current context
@@ -5259,14 +5265,14 @@ func InternalDockBuilderRemoveNodeDockedWindowsV(node_id ID, clear_settings_refs
 
 func InternalDockBuilderSetNodePos(node_id ID, pos Vec2) {
 	node_idArg, node_idFin := node_id.C()
-	C.igDockBuilderSetNodePos(internal.ReinterpretCast[C.ImGuiID](node_idArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.igDockBuilderSetNodePos(internal.ReinterpretCast[C.ImGuiID](node_idArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 
 	node_idFin()
 }
 
 func InternalDockBuilderSetNodeSize(node_id ID, size Vec2) {
 	node_idArg, node_idFin := node_id.C()
-	C.igDockBuilderSetNodeSize(internal.ReinterpretCast[C.ImGuiID](node_idArg), internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.igDockBuilderSetNodeSize(internal.ReinterpretCast[C.ImGuiID](node_idArg), internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 
 	node_idFin()
 }
@@ -5302,7 +5308,7 @@ func InternalDockContextCalcDropPosForDocking(target *Window, target_node *DockN
 		payload_nodeFin()
 		out_posFin()
 	}()
-	return C.igDockContextCalcDropPosForDocking(internal.ReinterpretCast[*C.ImGuiWindow](targetArg), internal.ReinterpretCast[*C.ImGuiDockNode](target_nodeArg), internal.ReinterpretCast[*C.ImGuiWindow](payload_windowArg), internal.ReinterpretCast[*C.ImGuiDockNode](payload_nodeArg), C.ImGuiDir(split_dir), C.bool(split_outer), internal.ReinterpretCast[*C.ImVec2](out_posArg)) == C.bool(true)
+	return C.igDockContextCalcDropPosForDocking(internal.ReinterpretCast[*C.ImGuiWindow](targetArg), internal.ReinterpretCast[*C.ImGuiDockNode](target_nodeArg), internal.ReinterpretCast[*C.ImGuiWindow](payload_windowArg), internal.ReinterpretCast[*C.ImGuiDockNode](payload_nodeArg), C.ImGuiDir(split_dir), C.bool(split_outer), internal.ReinterpretCast[*C.ImVec2_c](out_posArg)) == C.bool(true)
 }
 
 // Use root_id==0 to clear all
@@ -5509,7 +5515,7 @@ func DockSpaceV(dockspace_id ID, size Vec2, flags DockNodeFlags, window_class *W
 		window_classFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID {
-		result := C.igDockSpace(internal.ReinterpretCast[C.ImGuiID](dockspace_idArg), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiDockNodeFlags(flags), internal.ReinterpretCast[*C.ImGuiWindowClass](window_classArg))
+		result := C.igDockSpace(internal.ReinterpretCast[C.ImGuiID](dockspace_idArg), internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiDockNodeFlags(flags), internal.ReinterpretCast[*C.ImGuiWindowClass](window_classArg))
 		return &result
 	}())
 }
@@ -5832,7 +5838,7 @@ func DragScalarNV(label string, data_type DataType, p_data uintptr, components i
 
 // add a dummy item of given size. unlike InvisibleButton(), Dummy() won't take the mouse click or be navigable into.
 func Dummy(size Vec2) {
-	C.igDummy(internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.igDummy(internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 }
 
 func End() {
@@ -5840,7 +5846,7 @@ func End() {
 }
 
 func InternalEndBoxSelect(scope_rect Rect, ms_flags MultiSelectFlags) {
-	C.igEndBoxSelect(internal.ReinterpretCast[C.ImRect](scope_rect.ToC()), C.ImGuiMultiSelectFlags(ms_flags))
+	C.igEndBoxSelect(internal.ReinterpretCast[C.ImRect_c](scope_rect.ToC()), C.ImGuiMultiSelectFlags(ms_flags))
 }
 
 func EndChild() {
@@ -5981,27 +5987,22 @@ func InternalErrorRecoveryTryToRecoverWindowState(state_in *ErrorRecoveryState) 
 }
 
 func InternalFindBestWindowPosForPopup(window *Window) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igFindBestWindowPosForPopup(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.igFindBestWindowPosForPopup(internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalFindBestWindowPosForPopupEx(ref_pos, size Vec2, last_dir *Dir, r_outer, r_avoid Rect, policy PopupPositionPolicy) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igFindBestWindowPosForPopupEx(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](ref_pos.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()), (*C.ImGuiDir)(last_dir), internal.ReinterpretCast[C.ImRect](r_outer.ToC()), internal.ReinterpretCast[C.ImRect](r_avoid.ToC()), C.ImGuiPopupPositionPolicy(policy))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igFindBestWindowPosForPopupEx(internal.ReinterpretCast[C.ImVec2_c](ref_pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](size.ToC()), (*C.ImGuiDir)(last_dir), internal.ReinterpretCast[C.ImRect_c](r_outer.ToC()), internal.ReinterpretCast[C.ImRect_c](r_avoid.ToC()), C.ImGuiPopupPositionPolicy(policy))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalFindBlockingModal(window *Window) *Window {
@@ -6023,7 +6024,7 @@ func InternalFindBottomMostVisibleWindowWithinBeginStack(window *Window) *Window
 }
 
 func InternalFindHoveredViewportFromPlatformWindowStack(mouse_platform_pos Vec2) *ViewportP {
-	return NewViewportPFromC(C.igFindHoveredViewportFromPlatformWindowStack(internal.ReinterpretCast[C.ImVec2](mouse_platform_pos.ToC())))
+	return NewViewportPFromC(C.igFindHoveredViewportFromPlatformWindowStack(internal.ReinterpretCast[C.ImVec2_c](mouse_platform_pos.ToC())))
 }
 
 func InternalFindOrCreateColumns(window *Window, id ID) *OldColumns {
@@ -6058,13 +6059,13 @@ func InternalFindSettingsHandler(type_name string) *SettingsHandler {
 }
 
 // this is a helper for backends.
-func FindViewportByID(id ID) *Viewport {
-	idArg, idFin := id.C()
+func FindViewportByID(viewport_id ID) *Viewport {
+	viewport_idArg, viewport_idFin := viewport_id.C()
 
 	defer func() {
-		idFin()
+		viewport_idFin()
 	}()
-	return NewViewportFromC(C.igFindViewportByID(internal.ReinterpretCast[C.ImGuiID](idArg)))
+	return NewViewportFromC(C.igFindViewportByID(internal.ReinterpretCast[C.ImGuiID](viewport_idArg)))
 }
 
 // this is a helper for backends. the type platform_handle is decided by the backend (e.g. HWND, MyWindow*, GLFWwindow* etc.)
@@ -6217,7 +6218,7 @@ func ColorU32U32V(col uint32, alpha_mul float32) uint32 {
 
 // retrieve given color with style alpha applied, packed as a 32-bit value suitable for ImDrawList
 func ColorU32Vec4(col Vec4) uint32 {
-	return (uint32)(C.igGetColorU32_Vec4(internal.ReinterpretCast[C.ImVec4](col.ToC())))
+	return (uint32)(C.igGetColorU32_Vec4(internal.ReinterpretCast[C.ImVec4_c](col.ToC())))
 }
 
 // get current column index
@@ -6272,14 +6273,7 @@ func InternalColumnsID(str_id string, count int32) ID {
 
 // available space from current position. THIS IS YOUR BEST FRIEND.
 func ContentRegionAvail() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetContentRegionAvail(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetContentRegionAvail(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 func CurrentContext() *Context {
@@ -6309,14 +6303,7 @@ func InternalCurrentWindowRead() *Window {
 
 // [window-local] cursor position in window-local coordinates. This is not your best friend.
 func CursorPos() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetCursorPos(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetCursorPos(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // [window-local] "
@@ -6331,26 +6318,12 @@ func CursorPosY() float32 {
 
 // cursor position, absolute coordinates. THIS IS YOUR BEST FRIEND (prefer using this rather than GetCursorPos(), also more useful to work with ImDrawList API).
 func CursorScreenPos() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetCursorScreenPos(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetCursorScreenPos(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // [window-local] initial cursor position, in window-local coordinates. Call GetCursorScreenPos() after Begin() to get the absolute coordinates version.
 func CursorStartPos() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetCursorStartPos(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetCursorStartPos(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 func InternalDefaultFont() *Font {
@@ -6397,14 +6370,7 @@ func FontSize() float32 {
 
 // get UV coordinate for a white pixel, useful to draw custom shapes via the ImDrawList API
 func FontTexUvWhitePixel() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetFontTexUvWhitePixel(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetFontTexUvWhitePixel(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // get foreground draw list for the given viewport or viewport associated to the current window. this draw list will be the top-most rendered one. Useful to quickly draw shapes/text over dear imgui contents.
@@ -6528,7 +6494,8 @@ func InternalInputTextState(id ID) *InputTextState {
 	return NewInputTextStateFromC(C.igGetInputTextState(internal.ReinterpretCast[C.ImGuiID](idArg)))
 }
 
-func InternalItemFlags() ItemFlags {
+// get generic flags of last item
+func LastItemFlags() ItemFlags {
 	return ItemFlags(C.igGetItemFlags())
 }
 
@@ -6539,38 +6506,17 @@ func ItemID() ID {
 
 // get lower-right bounding rectangle of the last item (screen space)
 func ItemRectMax() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetItemRectMax(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetItemRectMax(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // get upper-left bounding rectangle of the last item (screen space)
 func ItemRectMin() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetItemRectMin(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetItemRectMin(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // get size of last item
 func ItemRectSize() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetItemRectSize(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetItemRectSize(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 func InternalItemStatusFlags() ItemStatusFlags {
@@ -6600,14 +6546,10 @@ func InternalKeyDataKey(key Key) *KeyData {
 }
 
 func InternalKeyMagnitude2d(key_left, key_right, key_up, key_down Key) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetKeyMagnitude2d(internal.ReinterpretCast[*C.ImVec2](pOutArg), C.ImGuiKey(key_left), C.ImGuiKey(key_right), C.ImGuiKey(key_up), C.ImGuiKey(key_down))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igGetKeyMagnitude2d(C.ImGuiKey(key_left), C.ImGuiKey(key_right), C.ImGuiKey(key_up), C.ImGuiKey(key_down))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // [DEBUG] returns English name of the key. Those names are provided for debugging purpose and are not meant to be saved persistently nor compared.
@@ -6638,6 +6580,10 @@ func MainViewport() *Viewport {
 	return NewViewportFromC(C.igGetMainViewport())
 }
 
+func InternalMouseButtonFromPopupFlags(flags PopupFlags) MouseButton {
+	return MouseButton(C.igGetMouseButtonFromPopupFlags(C.ImGuiPopupFlags(flags)))
+}
+
 // return the number of successive mouse-clicks at the time where a click happen (otherwise 0).
 func MouseClickedCount(button MouseButton) int32 {
 	return int32(C.igGetMouseClickedCount(C.ImGuiMouseButton(button)))
@@ -6653,38 +6599,23 @@ func CurrentMouseCursor() MouseCursor {
 // button: 0
 // lock_threshold: -1.0f
 func MouseDragDeltaV(button MouseButton, lock_threshold float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetMouseDragDelta(internal.ReinterpretCast[*C.ImVec2](pOutArg), C.ImGuiMouseButton(button), C.float(lock_threshold))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igGetMouseDragDelta(C.ImGuiMouseButton(button), C.float(lock_threshold))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // shortcut to ImGui::GetIO().MousePos provided by user, to be consistent with other calls
 func MousePos() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetMousePos(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetMousePos(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // retrieve mouse position at the time of opening popup we have BeginPopup() into (helper to avoid user backing that value themselves)
 func MousePosOnOpeningCurrentPopup() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetMousePosOnOpeningCurrentPopup(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igGetMousePosOnOpeningCurrentPopup()
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalMultiSelectState(id ID) *MultiSelectState {
@@ -6715,16 +6646,15 @@ func CurrentPlatformIO() *PlatformIO {
 }
 
 func InternalPopupAllowedExtentRect(window *Window) Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igGetPopupAllowedExtentRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Rect {
+		out := C.igGetPopupAllowedExtentRect(internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalRoundedFontSize(size float32) float32 {
@@ -6874,14 +6804,7 @@ func WindowHeight() float32 {
 
 // get current window position in screen space (IT IS UNLIKELY YOU EVER NEED TO USE THIS. Consider always using GetCursorScreenPos() and GetContentRegionAvail() instead)
 func WindowPos() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetWindowPos(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetWindowPos(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 func InternalWindowResizeBorderID(window *Window, dir Dir) ID {
@@ -6922,28 +6845,20 @@ func InternalWindowScrollbarID(window *Window, axis Axis) ID {
 }
 
 func InternalWindowScrollbarRect(window *Window, axis Axis) Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igGetWindowScrollbarRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), C.ImGuiAxis(axis))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Rect {
+		out := C.igGetWindowScrollbarRect(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), C.ImGuiAxis(axis))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // get current window size (IT IS UNLIKELY YOU EVER NEED TO USE THIS. Consider always using GetCursorScreenPos() and GetContentRegionAvail() instead)
 func WindowSize() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igGetWindowSize(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.igGetWindowSize(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 // get viewport currently associated to the current window.
@@ -6973,49 +6888,33 @@ func InternalImAlphaBlendColors(col_a, col_b uint32) uint32 {
 }
 
 func InternalImBezierCubicCalc(p1, p2, p3, p4 Vec2, t float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImBezierCubicCalc(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.float(t))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImBezierCubicCalc(internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.float(t))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // For curves with explicit number of segments
 func InternalImBezierCubicClosestPoint(p1, p2, p3, p4, p Vec2, num_segments int32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImBezierCubicClosestPoint(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), internal.ReinterpretCast[C.ImVec2](p.ToC()), C.int(num_segments))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImBezierCubicClosestPoint(internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), internal.ReinterpretCast[C.ImVec2_c](p.ToC()), C.int(num_segments))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // For auto-tessellated curves you can use tess_tol = style.CurveTessellationTol
 func InternalImBezierCubicClosestPointCasteljau(p1, p2, p3, p4, p Vec2, tess_tol float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImBezierCubicClosestPointCasteljau(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), internal.ReinterpretCast[C.ImVec2](p.ToC()), C.float(tess_tol))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImBezierCubicClosestPointCasteljau(internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), internal.ReinterpretCast[C.ImVec2_c](p.ToC()), C.float(tess_tol))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImBezierQuadraticCalc(p1, p2, p3 Vec2, t float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImBezierQuadraticCalc(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.float(t))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImBezierQuadraticCalc(internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.float(t))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImBitArrayClearAllBits(arr *uint32, bitcount int32) {
@@ -7072,14 +6971,10 @@ func InternalImCharIsXdigitA(c rune) bool {
 }
 
 func InternalImClamp(v, mn, mx Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImClamp(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](v.ToC()), internal.ReinterpretCast[C.ImVec2](mn.ToC()), internal.ReinterpretCast[C.ImVec2](mx.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImClamp(internal.ReinterpretCast[C.ImVec2_c](v.ToC()), internal.ReinterpretCast[C.ImVec2_c](mn.ToC()), internal.ReinterpretCast[C.ImVec2_c](mx.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImCountSetBits(v uint32) uint32 {
@@ -7087,7 +6982,7 @@ func InternalImCountSetBits(v uint32) uint32 {
 }
 
 func InternalImDot(a, b Vec2) float32 {
-	return float32(C.igImDot(internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC())))
+	return float32(C.igImDot(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC())))
 }
 
 func InternalImExponentialMovingAverage(avg, sample float32, n int32) float32 {
@@ -7114,14 +7009,10 @@ func InternalImFloorFloat(f float32) float32 {
 }
 
 func InternalImFloorVec2(v Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImFloor_Vec2(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](v.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImFloor_Vec2(internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImFontAtlasAddDrawListSharedData(atlas *FontAtlas, data *DrawListSharedData) {
@@ -7304,6 +7195,17 @@ func InternalImFontAtlasBuildMain(atlas *FontAtlas) {
 	atlasFin()
 }
 
+func InternalImFontAtlasBuildNotifySetFont(atlas *FontAtlas, old_font, new_font *Font) {
+	atlasArg, atlasFin := atlas.Handle()
+	old_fontArg, old_fontFin := old_font.Handle()
+	new_fontArg, new_fontFin := new_font.Handle()
+	C.igImFontAtlasBuildNotifySetFont(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](old_fontArg), internal.ReinterpretCast[*C.ImFont](new_fontArg))
+
+	atlasFin()
+	old_fontFin()
+	new_fontFin()
+}
+
 func InternalImFontAtlasBuildRenderBitmapFromString(atlas *FontAtlas, x, y, w, h int32, in_str string, in_marker_char rune) {
 	atlasArg, atlasFin := atlas.Handle()
 	in_strArg, in_strFin := internal.WrapString[C.char](in_str)
@@ -7386,6 +7288,15 @@ func InternalImFontAtlasFontInitOutput(atlas *FontAtlas, font *Font) bool {
 	return C.igImFontAtlasFontInitOutput(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg)) == C.bool(true)
 }
 
+func InternalImFontAtlasFontRebuildOutput(atlas *FontAtlas, font *Font) {
+	atlasArg, atlasFin := atlas.Handle()
+	fontArg, fontFin := font.Handle()
+	C.igImFontAtlasFontRebuildOutput(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), internal.ReinterpretCast[*C.ImFont](fontArg))
+
+	atlasFin()
+	fontFin()
+}
+
 func InternalImFontAtlasFontSourceAddToFont(atlas *FontAtlas, font *Font, src *FontConfig) {
 	atlasArg, atlasFin := atlas.Handle()
 	fontArg, fontFin := font.Handle()
@@ -7445,7 +7356,7 @@ func InternalImFontAtlasGetMouseCursorTexData(atlas *FontAtlas, cursor_type Mous
 			out_uv_fillV()
 		}
 	}()
-	return C.igImFontAtlasGetMouseCursorTexData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.ImGuiMouseCursor(cursor_type), internal.ReinterpretCast[*C.ImVec2](out_offsetArg), internal.ReinterpretCast[*C.ImVec2](out_sizeArg), (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
+	return C.igImFontAtlasGetMouseCursorTexData(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg), C.ImGuiMouseCursor(cursor_type), internal.ReinterpretCast[*C.ImVec2_c](out_offsetArg), internal.ReinterpretCast[*C.ImVec2_c](out_sizeArg), (*C.ImVec2)(&out_uv_borderArg[0]), (*C.ImVec2)(&out_uv_fillArg[0])) == C.bool(true)
 }
 
 // InternalImFontAtlasPackAddRectV parameter default value hint:
@@ -7601,16 +7512,15 @@ func InternalImFontAtlasTextureCompact(atlas *FontAtlas) {
 }
 
 func InternalImFontAtlasTextureGetSizeEstimate(atlas *FontAtlas) Vec2i {
-	pOut := new(Vec2i)
-	pOutArg, pOutFin := pOut.Handle()
-
 	atlasArg, atlasFin := atlas.Handle()
-	C.igImFontAtlasTextureGetSizeEstimate(internal.ReinterpretCast[*C.ImVec2i](pOutArg), internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
 
-	pOutFin()
-	atlasFin()
-
-	return *pOut
+	defer func() {
+		atlasFin()
+	}()
+	return *NewVec2iFromC(func() *C.ImVec2i {
+		result := C.igImFontAtlasTextureGetSizeEstimate(internal.ReinterpretCast[*C.ImFontAtlas](atlasArg))
+		return &result
+	}())
 }
 
 // InternalImFontAtlasTextureGrowV parameter default value hint:
@@ -7663,24 +7573,23 @@ func InternalImFontAtlasUpdateNewFrame(atlas *FontAtlas, frame_count int32, rend
 }
 
 func InternalImFontCalcTextSizeEx(font *Font, size, max_width, wrap_width float32, text_begin, text_end_display string, out_remaining []string, out_offset *Vec2, flags DrawTextFlags) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	fontArg, fontFin := font.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
 	text_end_displayArg, text_end_displayFin := internal.WrapString[C.char](text_end_display)
 	out_remainingArg, out_remainingFin := internal.WrapStringList[C.char](out_remaining)
 	out_offsetArg, out_offsetFin := internal.Wrap(out_offset)
-	C.wrap_igImFontCalcTextSizeEx(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, text_end_displayArg, out_remainingArg, internal.ReinterpretCast[*C.ImVec2](out_offsetArg), C.ImDrawTextFlags(flags))
 
-	pOutFin()
-	fontFin()
-	text_beginFin()
-	text_end_displayFin()
-	out_remainingFin()
-	out_offsetFin()
-
-	return *pOut
+	defer func() {
+		fontFin()
+		text_beginFin()
+		text_end_displayFin()
+		out_remainingFin()
+		out_offsetFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_igImFontCalcTextSizeEx(internal.ReinterpretCast[*C.ImFont](fontArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg, text_end_displayArg, out_remainingArg, internal.ReinterpretCast[*C.ImVec2_c](out_offsetArg), C.ImDrawTextFlags(flags))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // InternalImFontCalcWordWrapPositionExV parameter default value hint:
@@ -7759,7 +7668,7 @@ func InternalImHashStrV(data string, data_size uint64, seed ID) ID {
 }
 
 func InternalImInvLength(lhs Vec2, fail_value float32) float32 {
-	return float32(C.igImInvLength(internal.ReinterpretCast[C.ImVec2](lhs.ToC()), C.float(fail_value)))
+	return float32(C.igImInvLength(internal.ReinterpretCast[C.ImVec2_c](lhs.ToC()), C.float(fail_value)))
 }
 
 func InternalImIsFloatAboveGuaranteedIntegerPrecision(f float32) bool {
@@ -7775,55 +7684,39 @@ func InternalImIsPowerOfTwoU64(v uint64) bool {
 }
 
 func InternalImLengthSqrVec2(lhs Vec2) float32 {
-	return float32(C.igImLengthSqr_Vec2(internal.ReinterpretCast[C.ImVec2](lhs.ToC())))
+	return float32(C.igImLengthSqr_Vec2(internal.ReinterpretCast[C.ImVec2_c](lhs.ToC())))
 }
 
 func InternalImLengthSqrVec4(lhs Vec4) float32 {
-	return float32(C.igImLengthSqr_Vec4(internal.ReinterpretCast[C.ImVec4](lhs.ToC())))
+	return float32(C.igImLengthSqr_Vec4(internal.ReinterpretCast[C.ImVec4_c](lhs.ToC())))
 }
 
 func InternalImLerpVec2Float(a, b Vec2, t float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImLerp_Vec2Float(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), C.float(t))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImLerp_Vec2Float(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), C.float(t))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImLerpVec2Vec2(a, b, t Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImLerp_Vec2Vec2(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](t.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImLerp_Vec2Vec2(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](t.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImLerpVec4(a, b Vec4, t float32) Vec4 {
-	pOut := new(Vec4)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImLerp_Vec4(internal.ReinterpretCast[*C.ImVec4](pOutArg), internal.ReinterpretCast[C.ImVec4](a.ToC()), internal.ReinterpretCast[C.ImVec4](b.ToC()), C.float(t))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec4 {
+		out := C.igImLerp_Vec4(internal.ReinterpretCast[C.ImVec4_c](a.ToC()), internal.ReinterpretCast[C.ImVec4_c](b.ToC()), C.float(t))
+		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImLineClosestPoint(a, b, p Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImLineClosestPoint(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](p.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImLineClosestPoint(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](p.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImLinearRemapClamp(s0, s1, d0, d1, x float32) float32 {
@@ -7857,14 +7750,10 @@ func InternalImLowerBound(in_begin, in_end *StoragePair, key ID) *StoragePair {
 }
 
 func InternalImMax(lhs, rhs Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImMax(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](lhs.ToC()), internal.ReinterpretCast[C.ImVec2](rhs.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImMax(internal.ReinterpretCast[C.ImVec2_c](lhs.ToC()), internal.ReinterpretCast[C.ImVec2_c](rhs.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // Duplicate a chunk of memory.
@@ -7873,14 +7762,10 @@ func InternalImMemdup(src uintptr, size uint64) uintptr {
 }
 
 func InternalImMin(lhs, rhs Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImMin(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](lhs.ToC()), internal.ReinterpretCast[C.ImVec2](rhs.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImMin(internal.ReinterpretCast[C.ImVec2_c](lhs.ToC()), internal.ReinterpretCast[C.ImVec2_c](rhs.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImModPositive(a, b int32) int32 {
@@ -7888,14 +7773,10 @@ func InternalImModPositive(a, b int32) int32 {
 }
 
 func InternalImMul(lhs, rhs Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImMul(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](lhs.ToC()), internal.ReinterpretCast[C.ImVec2](rhs.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImMul(internal.ReinterpretCast[C.ImVec2_c](lhs.ToC()), internal.ReinterpretCast[C.ImVec2_c](rhs.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImParseFormatFindEnd(format string) string {
@@ -7966,16 +7847,13 @@ func InternalImPowDouble(x, y float64) float64 {
 }
 
 func InternalImRotate(v Vec2, cos_a, sin_a float32) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImRotate(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](v.ToC()), C.float(cos_a), C.float(sin_a))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImRotate(internal.ReinterpretCast[C.ImVec2_c](v.ToC()), C.float(cos_a), C.float(sin_a))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
+// FIXME: Positive values only.
 func InternalImRound64(f float32) float32 {
 	return float32(C.igImRound64(C.float(f)))
 }
@@ -8173,6 +8051,29 @@ func InternalImTextCharToUtf8(out_buf *[5]rune, c uint32) int32 {
 	return int32(C.igImTextCharToUtf8((*C.char)(&out_bufArg[0]), C.uint(c)))
 }
 
+func InternalImTextClassifierClear(bits *uint32, codepoint_min, codepoint_end uint32, char_class WcharClass) {
+	bitsArg, bitsFin := internal.WrapNumberPtr[C.ImU32, uint32](bits)
+	C.igImTextClassifierClear(bitsArg, C.uint(codepoint_min), C.uint(codepoint_end), C.ImWcharClass(char_class))
+
+	bitsFin()
+}
+
+func InternalImTextClassifierSetCharClass(bits *uint32, codepoint_min, codepoint_end uint32, char_class WcharClass, c uint32) {
+	bitsArg, bitsFin := internal.WrapNumberPtr[C.ImU32, uint32](bits)
+	C.igImTextClassifierSetCharClass(bitsArg, C.uint(codepoint_min), C.uint(codepoint_end), C.ImWcharClass(char_class), C.uint(c))
+
+	bitsFin()
+}
+
+func InternalImTextClassifierSetCharClassFromStr(bits *uint32, codepoint_min, codepoint_end uint32, char_class WcharClass, s string) {
+	bitsArg, bitsFin := internal.WrapNumberPtr[C.ImU32, uint32](bits)
+	sArg, sFin := internal.WrapString[C.char](s)
+	C.igImTextClassifierSetCharClassFromStr(bitsArg, C.uint(codepoint_min), C.uint(codepoint_end), C.ImWcharClass(char_class), sArg)
+
+	bitsFin()
+	sFin()
+}
+
 // return number of UTF-8 code-points (NOT bytes count)
 func InternalImTextCountCharsFromUtf8(in_text, in_text_end string) int32 {
 	in_textArg, in_textFin := internal.WrapString[C.char](in_text)
@@ -8215,15 +8116,33 @@ func InternalImTextCountUtf8BytesFromStr(in_text, in_text_end *Wchar) int32 {
 }
 
 // return previous UTF-8 code-point.
-func InternalImTextFindPreviousUtf8Codepoint(in_text_start, in_text_curr string) string {
+func InternalImTextFindPreviousUtf8Codepoint(in_text_start, in_p string) string {
 	in_text_startArg, in_text_startFin := internal.WrapString[C.char](in_text_start)
-	in_text_currArg, in_text_currFin := internal.WrapString[C.char](in_text_curr)
+	in_pArg, in_pFin := internal.WrapString[C.char](in_p)
 
 	defer func() {
 		in_text_startFin()
-		in_text_currFin()
+		in_pFin()
 	}()
-	return C.GoString(C.igImTextFindPreviousUtf8Codepoint(in_text_startArg, in_text_currArg))
+	return C.GoString(C.igImTextFindPreviousUtf8Codepoint(in_text_startArg, in_pArg))
+}
+
+// return previous UTF-8 code-point if 'in_p' is not the end of a valid one.
+func InternalImTextFindValidUtf8CodepointEnd(in_text_start, in_text_end, in_p string) string {
+	in_text_startArg, in_text_startFin := internal.WrapString[C.char](in_text_start)
+	in_text_endArg, in_text_endFin := internal.WrapString[C.char](in_text_end)
+	in_pArg, in_pFin := internal.WrapString[C.char](in_p)
+
+	defer func() {
+		in_text_startFin()
+		in_text_endFin()
+		in_pFin()
+	}()
+	return C.GoString(C.igImTextFindValidUtf8CodepointEnd(in_text_startArg, in_text_endArg, in_pArg))
+}
+
+func InternalImTextInitClassifiers() {
+	C.igImTextInitClassifiers()
 }
 
 // return input UTF-8 bytes count
@@ -8269,14 +8188,14 @@ func InternalImToUpper(c rune) rune {
 }
 
 func InternalImTriangleArea(a, b, c Vec2) float32 {
-	return float32(C.igImTriangleArea(internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC())))
+	return float32(C.igImTriangleArea(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](c.ToC())))
 }
 
 func InternalImTriangleBarycentricCoords(a, b, c, p Vec2, out_u, out_v, out_w *float32) {
 	out_uArg, out_uFin := internal.WrapNumberPtr[C.float, float32](out_u)
 	out_vArg, out_vFin := internal.WrapNumberPtr[C.float, float32](out_v)
 	out_wArg, out_wFin := internal.WrapNumberPtr[C.float, float32](out_w)
-	C.igImTriangleBarycentricCoords(internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC()), internal.ReinterpretCast[C.ImVec2](p.ToC()), out_uArg, out_vArg, out_wArg)
+	C.igImTriangleBarycentricCoords(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](c.ToC()), internal.ReinterpretCast[C.ImVec2_c](p.ToC()), out_uArg, out_vArg, out_wArg)
 
 	out_uFin()
 	out_vFin()
@@ -8284,22 +8203,18 @@ func InternalImTriangleBarycentricCoords(a, b, c, p Vec2, out_u, out_v, out_w *f
 }
 
 func InternalImTriangleClosestPoint(a, b, c, p Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImTriangleClosestPoint(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC()), internal.ReinterpretCast[C.ImVec2](p.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImTriangleClosestPoint(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](c.ToC()), internal.ReinterpretCast[C.ImVec2_c](p.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImTriangleContainsPoint(a, b, c, p Vec2) bool {
-	return C.igImTriangleContainsPoint(internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC()), internal.ReinterpretCast[C.ImVec2](p.ToC())) == C.bool(true)
+	return C.igImTriangleContainsPoint(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](c.ToC()), internal.ReinterpretCast[C.ImVec2_c](p.ToC())) == C.bool(true)
 }
 
 func InternalImTriangleIsClockwise(a, b, c Vec2) bool {
-	return C.igImTriangleIsClockwise(internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](c.ToC())) == C.bool(true)
+	return C.igImTriangleIsClockwise(internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](c.ToC())) == C.bool(true)
 }
 
 func InternalImTrunc64(f float32) float32 {
@@ -8311,14 +8226,10 @@ func InternalImTruncFloat(f float32) float32 {
 }
 
 func InternalImTruncVec2(v Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.igImTrunc_Vec2(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[C.ImVec2](v.ToC()))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 {
+		out := C.igImTrunc_Vec2(internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalImUpperPowerOfTwo(v int32) int32 {
@@ -8330,7 +8241,7 @@ func InternalImUpperPowerOfTwo(v int32) int32 {
 // uv1: ImVec2(1,1)
 func ImageV(tex_ref TextureRef, image_size, uv0, uv1 Vec2) {
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.igImage(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()))
+	C.igImage(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv0.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv1.ToC()))
 
 	tex_refFin()
 }
@@ -8348,7 +8259,7 @@ func ImageButtonV(str_id string, tex_ref TextureRef, image_size, uv0, uv1 Vec2, 
 		str_idFin()
 		tex_refFin()
 	}()
-	return C.igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC())) == C.bool(true)
+	return C.igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv0.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv1.ToC()), internal.ReinterpretCast[C.ImVec4_c](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4_c](tint_col.ToC())) == C.bool(true)
 }
 
 // InternalImageButtonExV parameter default value hint:
@@ -8361,7 +8272,7 @@ func InternalImageButtonExV(id ID, tex_ref TextureRef, image_size, uv0, uv1 Vec2
 		idFin()
 		tex_refFin()
 	}()
-	return C.igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv0.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv1.ToC()), internal.ReinterpretCast[C.ImVec4_c](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4_c](tint_col.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 // ImageWithBgV parameter default value hint:
@@ -8371,7 +8282,7 @@ func InternalImageButtonExV(id ID, tex_ref TextureRef, image_size, uv0, uv1 Vec2
 // tint_col: ImVec4(1,1,1,1)
 func ImageWithBgV(tex_ref TextureRef, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) {
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.igImageWithBg(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC()))
+	C.igImageWithBg(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv0.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv1.ToC()), internal.ReinterpretCast[C.ImVec4_c](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4_c](tint_col.ToC()))
 
 	tex_refFin()
 }
@@ -8618,7 +8529,7 @@ func InvisibleButtonV(str_id string, size Vec2, flags ButtonFlags) bool {
 	defer func() {
 		str_idFin()
 	}()
-	return C.igInvisibleButton(str_idArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
+	return C.igInvisibleButton(str_idArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiButtonFlags(flags)) == C.bool(true)
 }
 
 func InternalIsActiveIdUsingNavDir(dir Dir) bool {
@@ -8655,7 +8566,7 @@ func InternalIsClippedEx(bb Rect, id ID) bool {
 	defer func() {
 		idFin()
 	}()
-	return C.igIsClippedEx(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
+	return C.igIsClippedEx(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
 }
 
 func InternalIsDragDropActive() bool {
@@ -8778,7 +8689,7 @@ func IsKeyPressedBoolV(key Key, repeat bool) bool {
 	return C.igIsKeyPressed_Bool(C.ImGuiKey(key), C.bool(repeat)) == C.bool(true)
 }
 
-// Important: when transitioning from old to new IsKeyPressed(): old API has "bool repeat = true", so would default to repeat. New API requiress explicit ImGuiInputFlags_Repeat.
+// Important: when transitioning from old to new IsKeyPressed(): old API has "bool repeat = true", so would default to repeat. New API requires explicit ImGuiInputFlags_Repeat.
 // InternalIsKeyPressedInputFlagsV parameter default value hint:
 // owner_id: 0
 func InternalIsKeyPressedInputFlagsV(key Key, flags InputFlags, owner_id ID) bool {
@@ -8879,7 +8790,7 @@ func IsMouseDraggingV(button MouseButton, lock_threshold float32) bool {
 // IsMouseHoveringRectV parameter default value hint:
 // clip: true
 func IsMouseHoveringRectV(r_min, r_max Vec2, clip bool) bool {
-	return C.igIsMouseHoveringRect(internal.ReinterpretCast[C.ImVec2](r_min.ToC()), internal.ReinterpretCast[C.ImVec2](r_max.ToC()), C.bool(clip)) == C.bool(true)
+	return C.igIsMouseHoveringRect(internal.ReinterpretCast[C.ImVec2_c](r_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](r_max.ToC()), C.bool(clip)) == C.bool(true)
 }
 
 func InternalIsMouseKey(key Key) bool {
@@ -8895,7 +8806,7 @@ func IsMousePosValidV(mouse_pos *Vec2) bool {
 	defer func() {
 		mouse_posFin()
 	}()
-	return C.igIsMousePosValid(internal.ReinterpretCast[*C.ImVec2](mouse_posArg)) == C.bool(true)
+	return C.igIsMousePosValid(internal.ReinterpretCast[*C.ImVec2_c](mouse_posArg)) == C.bool(true)
 }
 
 // delayed mouse release (use very sparingly!). Generally used with 'delay >= io.MouseDoubleClickTime' + combined with a 'io.MouseClickedLastCount==1' test. This is a very rarely used UI idiom, but some apps use this: e.g. MS Explorer single click on an icon to rename.
@@ -8948,12 +8859,12 @@ func IsPopupOpenStrV(str_id string, flags PopupFlags) bool {
 
 // test if rectangle (of given size, starting from cursor position) is visible / not clipped.
 func IsRectVisible(size Vec2) bool {
-	return C.igIsRectVisible_Nil(internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.igIsRectVisible_Nil(internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 // test if rectangle (in screen space) is visible / not clipped. to perform coarse clipping on user's side.
 func IsRectVisibleVec2(rect_min, rect_max Vec2) bool {
-	return C.igIsRectVisible_Vec2(internal.ReinterpretCast[C.ImVec2](rect_min.ToC()), internal.ReinterpretCast[C.ImVec2](rect_max.ToC())) == C.bool(true)
+	return C.igIsRectVisible_Vec2(internal.ReinterpretCast[C.ImVec2_c](rect_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](rect_max.ToC())) == C.bool(true)
 }
 
 func InternalIsWindowAbove(potential_above, potential_below *Window) bool {
@@ -9016,6 +8927,15 @@ func IsWindowHoveredV(flags HoveredFlags) bool {
 	return C.igIsWindowHovered(C.ImGuiHoveredFlags(flags)) == C.bool(true)
 }
 
+func InternalIsWindowInBeginStack(window *Window) bool {
+	windowArg, windowFin := window.Handle()
+
+	defer func() {
+		windowFin()
+	}()
+	return C.igIsWindowInBeginStack(internal.ReinterpretCast[*C.ImGuiWindow](windowArg)) == C.bool(true)
+}
+
 func InternalIsWindowNavFocusable(window *Window) bool {
 	windowArg, windowFin := window.Handle()
 
@@ -9047,7 +8967,7 @@ func InternalItemAddV(bb Rect, id ID, nav_bb *Rect, extra_flags ItemFlags) bool 
 		idFin()
 		nav_bbFin()
 	}()
-	return C.igItemAdd(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[*C.ImRect](nav_bbArg), C.ImGuiItemFlags(extra_flags)) == C.bool(true)
+	return C.igItemAdd(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[*C.ImRect_c](nav_bbArg), C.ImGuiItemFlags(extra_flags)) == C.bool(true)
 }
 
 func InternalItemHoverable(bb Rect, id ID, item_flags ItemFlags) bool {
@@ -9056,20 +8976,20 @@ func InternalItemHoverable(bb Rect, id ID, item_flags ItemFlags) bool {
 	defer func() {
 		idFin()
 	}()
-	return C.igItemHoverable(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiItemFlags(item_flags)) == C.bool(true)
+	return C.igItemHoverable(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiItemFlags(item_flags)) == C.bool(true)
 }
 
 // FIXME: This is a misleading API since we expect CursorPos to be bb.Min.
 // InternalItemSizeRectV parameter default value hint:
 // text_baseline_y: -1.0f
 func InternalItemSizeRectV(bb Rect, text_baseline_y float32) {
-	C.igItemSize_Rect(internal.ReinterpretCast[C.ImRect](bb.ToC()), C.float(text_baseline_y))
+	C.igItemSize_Rect(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), C.float(text_baseline_y))
 }
 
 // InternalItemSizeVec2V parameter default value hint:
 // text_baseline_y: -1.0f
 func InternalItemSizeVec2V(size Vec2, text_baseline_y float32) {
-	C.igItemSize_Vec2(internal.ReinterpretCast[C.ImVec2](size.ToC()), C.float(text_baseline_y))
+	C.igItemSize_Vec2(internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.float(text_baseline_y))
 }
 
 func InternalKeepAliveID(id ID) {
@@ -9152,7 +9072,7 @@ func LogFinish() {
 func InternalLogRenderedTextV(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := internal.Wrap(ref_pos)
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igLogRenderedTextV(internal.ReinterpretCast[*C.ImVec2](ref_posArg), textArg, C.int(len(text)))
+	C.wrap_igLogRenderedTextV(internal.ReinterpretCast[*C.ImVec2_c](ref_posArg), textArg, C.int(len(text)))
 
 	ref_posFin()
 	textFin()
@@ -9421,7 +9341,7 @@ func InternalOpenPopupExV(id ID, popup_flags PopupFlags) {
 // helper to open popup when clicked on last item. Default to ImGuiPopupFlags_MouseButtonRight == 1. (note: actually triggers on the mouse _released_ event to be consistent with popup behaviors)
 // OpenPopupOnItemClickV parameter default value hint:
 // str_id: NULL
-// popup_flags: 1
+// popup_flags: 0
 func OpenPopupOnItemClickV(str_id string, popup_flags PopupFlags) {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 	C.igOpenPopupOnItemClick(str_idArg, C.ImGuiPopupFlags(popup_flags))
@@ -9460,7 +9380,7 @@ func PlotHistogramFloatPtrV(label string, values *float32, values_count, values_
 	labelArg, labelFin := internal.WrapString[C.char](label)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.float, float32](values)
 	overlay_textArg, overlay_textFin := internal.WrapString[C.char](overlay_text)
-	C.igPlotHistogram_FloatPtr(labelArg, valuesArg, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), internal.ReinterpretCast[C.ImVec2](graph_size.ToC()), C.int(stride))
+	C.igPlotHistogram_FloatPtr(labelArg, valuesArg, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), internal.ReinterpretCast[C.ImVec2_c](graph_size.ToC()), C.int(stride))
 
 	labelFin()
 	valuesFin()
@@ -9478,7 +9398,7 @@ func PlotLinesFloatPtrV(label string, values *float32, values_count, values_offs
 	labelArg, labelFin := internal.WrapString[C.char](label)
 	valuesArg, valuesFin := internal.WrapNumberPtr[C.float, float32](values)
 	overlay_textArg, overlay_textFin := internal.WrapString[C.char](overlay_text)
-	C.igPlotLines_FloatPtr(labelArg, valuesArg, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), internal.ReinterpretCast[C.ImVec2](graph_size.ToC()), C.int(stride))
+	C.igPlotLines_FloatPtr(labelArg, valuesArg, C.int(values_count), C.int(values_offset), overlay_textArg, C.float(scale_min), C.float(scale_max), internal.ReinterpretCast[C.ImVec2_c](graph_size.ToC()), C.int(stride))
 
 	labelFin()
 	valuesFin()
@@ -9539,13 +9459,13 @@ func PopTextWrapPos() {
 // overlay: NULL
 func ProgressBarV(fraction float32, size_arg Vec2, overlay string) {
 	overlayArg, overlayFin := internal.WrapString[C.char](overlay)
-	C.igProgressBar(C.float(fraction), internal.ReinterpretCast[C.ImVec2](size_arg.ToC()), overlayArg)
+	C.igProgressBar(C.float(fraction), internal.ReinterpretCast[C.ImVec2_c](size_arg.ToC()), overlayArg)
 
 	overlayFin()
 }
 
 func PushClipRect(clip_rect_min, clip_rect_max Vec2, intersect_with_current_clip_rect bool) {
-	C.igPushClipRect(internal.ReinterpretCast[C.ImVec2](clip_rect_min.ToC()), internal.ReinterpretCast[C.ImVec2](clip_rect_max.ToC()), C.bool(intersect_with_current_clip_rect))
+	C.igPushClipRect(internal.ReinterpretCast[C.ImVec2_c](clip_rect_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](clip_rect_max.ToC()), C.bool(intersect_with_current_clip_rect))
 }
 
 func InternalPushColumnClipRect(column_index int32) {
@@ -9631,7 +9551,7 @@ func PushStyleColorU32(idx Col, col uint32) {
 }
 
 func PushStyleColorVec4(idx Col, col Vec4) {
-	C.igPushStyleColor_Vec4(C.ImGuiCol(idx), internal.ReinterpretCast[C.ImVec4](col.ToC()))
+	C.igPushStyleColor_Vec4(C.ImGuiCol(idx), internal.ReinterpretCast[C.ImVec4_c](col.ToC()))
 }
 
 // modify X component of a style ImVec2 variable. "
@@ -9651,7 +9571,7 @@ func PushStyleVarFloat(idx StyleVar, val float32) {
 
 // modify a style ImVec2 variable. "
 func PushStyleVarVec2(idx StyleVar, val Vec2) {
-	C.igPushStyleVar_Vec2(C.ImGuiStyleVar(idx), internal.ReinterpretCast[C.ImVec2](val.ToC()))
+	C.igPushStyleVar_Vec2(C.ImGuiStyleVar(idx), internal.ReinterpretCast[C.ImVec2_c](val.ToC()))
 }
 
 // push word-wrapping position for Text*() commands. < 0.0f: no wrapping; 0.0f: wrap to end of window (or column); > 0.0f: wrap at 'wrap_pos_x' position in window local space
@@ -9698,12 +9618,12 @@ func InternalRegisterUserTexture(tex *TextureData) {
 	texFin()
 }
 
-func InternalRemoveContextHook(context *Context, hook_to_remove ID) {
-	contextArg, contextFin := context.Handle()
+func InternalRemoveContextHook(ctx *Context, hook_to_remove ID) {
+	ctxArg, ctxFin := ctx.Handle()
 	hook_to_removeArg, hook_to_removeFin := hook_to_remove.C()
-	C.igRemoveContextHook(internal.ReinterpretCast[*C.ImGuiContext](contextArg), internal.ReinterpretCast[C.ImGuiID](hook_to_removeArg))
+	C.igRemoveContextHook(internal.ReinterpretCast[*C.ImGuiContext](ctxArg), internal.ReinterpretCast[C.ImGuiID](hook_to_removeArg))
 
-	contextFin()
+	ctxFin()
 	hook_to_removeFin()
 }
 
@@ -9723,37 +9643,41 @@ func Render() {
 // scale: 1.0f
 func InternalRenderArrowV(draw_list *DrawList, pos Vec2, col uint32, dir Dir, scale float32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderArrow(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImGuiDir(dir), C.float(scale))
+	C.igRenderArrow(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), C.ImGuiDir(dir), C.float(scale))
 
 	draw_listFin()
 }
 
 func InternalRenderArrowDockMenu(draw_list *DrawList, p_min Vec2, sz float32, col uint32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderArrowDockMenu(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), C.float(sz), C.ImU32(col))
+	C.igRenderArrowDockMenu(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), C.float(sz), C.ImU32(col))
 
 	draw_listFin()
 }
 
 func InternalRenderArrowPointingAt(draw_list *DrawList, pos, half_sz Vec2, direction Dir, col uint32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderArrowPointingAt(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), internal.ReinterpretCast[C.ImVec2](half_sz.ToC()), C.ImGuiDir(direction), C.ImU32(col))
+	C.igRenderArrowPointingAt(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](half_sz.ToC()), C.ImGuiDir(direction), C.ImU32(col))
 
 	draw_listFin()
 }
 
 func InternalRenderBullet(draw_list *DrawList, pos Vec2, col uint32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderBullet(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col))
+	C.igRenderBullet(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col))
 
 	draw_listFin()
 }
 
 func InternalRenderCheckMark(draw_list *DrawList, pos Vec2, col uint32, sz float32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderCheckMark(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.float(sz))
+	C.igRenderCheckMark(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), C.float(sz))
 
 	draw_listFin()
+}
+
+func InternalRenderColorComponentMarker(bb Rect, col uint32, rounding float32) {
+	C.igRenderColorComponentMarker(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), C.ImU32(col), C.float(rounding))
 }
 
 // InternalRenderColorRectWithAlphaCheckerboardV parameter default value hint:
@@ -9761,37 +9685,37 @@ func InternalRenderCheckMark(draw_list *DrawList, pos Vec2, col uint32, sz float
 // flags: 0
 func InternalRenderColorRectWithAlphaCheckerboardV(draw_list *DrawList, p_min, p_max Vec2, fill_col uint32, grid_step float32, grid_off Vec2, rounding float32, flags DrawFlags) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderColorRectWithAlphaCheckerboard(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(fill_col), C.float(grid_step), internal.ReinterpretCast[C.ImVec2](grid_off.ToC()), C.float(rounding), C.ImDrawFlags(flags))
+	C.igRenderColorRectWithAlphaCheckerboard(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(fill_col), C.float(grid_step), internal.ReinterpretCast[C.ImVec2_c](grid_off.ToC()), C.float(rounding), C.ImDrawFlags(flags))
 
 	draw_listFin()
 }
 
 func InternalRenderDragDropTargetRectEx(draw_list *DrawList, bb Rect) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderDragDropTargetRectEx(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect](bb.ToC()))
+	C.igRenderDragDropTargetRectEx(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect_c](bb.ToC()))
 
 	draw_listFin()
 }
 
 func InternalRenderDragDropTargetRectForItem(bb Rect) {
-	C.igRenderDragDropTargetRectForItem(internal.ReinterpretCast[C.ImRect](bb.ToC()))
+	C.igRenderDragDropTargetRectForItem(internal.ReinterpretCast[C.ImRect_c](bb.ToC()))
 }
 
 // InternalRenderFrameV parameter default value hint:
 // borders: true
 // rounding: 0.0f
 func InternalRenderFrameV(p_min, p_max Vec2, fill_col uint32, borders bool, rounding float32) {
-	C.igRenderFrame(internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(fill_col), C.bool(borders), C.float(rounding))
+	C.igRenderFrame(internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(fill_col), C.bool(borders), C.float(rounding))
 }
 
 // InternalRenderFrameBorderV parameter default value hint:
 // rounding: 0.0f
 func InternalRenderFrameBorderV(p_min, p_max Vec2, rounding float32) {
-	C.igRenderFrameBorder(internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.float(rounding))
+	C.igRenderFrameBorder(internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.float(rounding))
 }
 
 func InternalRenderMouseCursor(pos Vec2, scale float32, mouse_cursor MouseCursor, col_fill, col_border, col_shadow uint32) {
-	C.igRenderMouseCursor(internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.float(scale), C.ImGuiMouseCursor(mouse_cursor), C.ImU32(col_fill), C.ImU32(col_border), C.ImU32(col_shadow))
+	C.igRenderMouseCursor(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.float(scale), C.ImGuiMouseCursor(mouse_cursor), C.ImU32(col_fill), C.ImU32(col_border), C.ImU32(col_shadow))
 }
 
 // Navigation highlight
@@ -9799,7 +9723,7 @@ func InternalRenderMouseCursor(pos Vec2, scale float32, mouse_cursor MouseCursor
 // flags: ImGuiNavRenderCursorFlags_None
 func InternalRenderNavCursorV(bb Rect, id ID, flags NavRenderCursorFlags) {
 	idArg, idFin := id.C()
-	C.igRenderNavCursor(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiNavRenderCursorFlags(flags))
+	C.igRenderNavCursor(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiNavRenderCursorFlags(flags))
 
 	idFin()
 }
@@ -9812,16 +9736,16 @@ func RenderPlatformWindowsDefaultV(platform_render_arg, renderer_render_arg uint
 	C.wrap_igRenderPlatformWindowsDefaultV(C.uintptr_t(platform_render_arg), C.uintptr_t(renderer_render_arg))
 }
 
-func InternalRenderRectFilledRangeH(draw_list *DrawList, rect Rect, col uint32, x_start_norm, x_end_norm, rounding float32) {
+func InternalRenderRectFilledInRangeH(draw_list *DrawList, rect Rect, col uint32, fill_x0, fill_x1, rounding float32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderRectFilledRangeH(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect](rect.ToC()), C.ImU32(col), C.float(x_start_norm), C.float(x_end_norm), C.float(rounding))
+	C.igRenderRectFilledInRangeH(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect_c](rect.ToC()), C.ImU32(col), C.float(fill_x0), C.float(fill_x1), C.float(rounding))
 
 	draw_listFin()
 }
 
 func InternalRenderRectFilledWithHole(draw_list *DrawList, outer, inner Rect, col uint32, rounding float32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igRenderRectFilledWithHole(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect](outer.ToC()), internal.ReinterpretCast[C.ImRect](inner.ToC()), C.ImU32(col), C.float(rounding))
+	C.igRenderRectFilledWithHole(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect_c](outer.ToC()), internal.ReinterpretCast[C.ImRect_c](inner.ToC()), C.ImU32(col), C.float(rounding))
 
 	draw_listFin()
 }
@@ -9830,7 +9754,7 @@ func InternalRenderRectFilledWithHole(draw_list *DrawList, outer, inner Rect, co
 // hide_text_after_hash: true
 func InternalRenderTextV(pos Vec2, text string, hide_text_after_hash bool) {
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igRenderTextV(internal.ReinterpretCast[C.ImVec2](pos.ToC()), textArg, C.int(len(text)), C.bool(hide_text_after_hash))
+	C.wrap_igRenderTextV(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), textArg, C.int(len(text)), C.bool(hide_text_after_hash))
 
 	textFin()
 }
@@ -9842,7 +9766,7 @@ func InternalRenderTextClippedV(pos_min, pos_max Vec2, text string, text_size_if
 	textArg, textFin := internal.WrapString[C.char](text)
 	text_size_if_knownArg, text_size_if_knownFin := internal.Wrap(text_size_if_known)
 	clip_rectArg, clip_rectFin := internal.Wrap(clip_rect)
-	C.wrap_igRenderTextClippedV(internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg), internal.ReinterpretCast[C.ImVec2](align.ToC()), internal.ReinterpretCast[*C.ImRect](clip_rectArg))
+	C.wrap_igRenderTextClippedV(internal.ReinterpretCast[C.ImVec2_c](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2_c](text_size_if_knownArg), internal.ReinterpretCast[C.ImVec2_c](align.ToC()), internal.ReinterpretCast[*C.ImRect_c](clip_rectArg))
 
 	textFin()
 	text_size_if_knownFin()
@@ -9857,7 +9781,7 @@ func InternalRenderTextClippedExV(draw_list *DrawList, pos_min, pos_max Vec2, te
 	textArg, textFin := internal.WrapString[C.char](text)
 	text_size_if_knownArg, text_size_if_knownFin := internal.Wrap(text_size_if_known)
 	clip_rectArg, clip_rectFin := internal.Wrap(clip_rect)
-	C.wrap_igRenderTextClippedExV(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg), internal.ReinterpretCast[C.ImVec2](align.ToC()), internal.ReinterpretCast[*C.ImRect](clip_rectArg))
+	C.wrap_igRenderTextClippedExV(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2_c](text_size_if_knownArg), internal.ReinterpretCast[C.ImVec2_c](align.ToC()), internal.ReinterpretCast[*C.ImRect_c](clip_rectArg))
 
 	draw_listFin()
 	textFin()
@@ -9869,7 +9793,7 @@ func InternalRenderTextEllipsis(draw_list *DrawList, pos_min, pos_max Vec2, elli
 	draw_listArg, draw_listFin := draw_list.Handle()
 	textArg, textFin := internal.WrapString[C.char](text)
 	text_size_if_knownArg, text_size_if_knownFin := internal.Wrap(text_size_if_known)
-	C.wrap_igRenderTextEllipsis(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), C.float(ellipsis_max_x), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg))
+	C.wrap_igRenderTextEllipsis(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](pos_max.ToC()), C.float(ellipsis_max_x), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2_c](text_size_if_knownArg))
 
 	draw_listFin()
 	textFin()
@@ -9878,7 +9802,7 @@ func InternalRenderTextEllipsis(draw_list *DrawList, pos_min, pos_max Vec2, elli
 
 func InternalRenderTextWrapped(pos Vec2, text string, wrap_width float32) {
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igRenderTextWrapped(internal.ReinterpretCast[C.ImVec2](pos.ToC()), textArg, C.int(len(text)), C.float(wrap_width))
+	C.wrap_igRenderTextWrapped(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), textArg, C.int(len(text)), C.float(wrap_width))
 
 	textFin()
 }
@@ -9921,7 +9845,7 @@ func InternalScaleWindowsInViewport(viewport *ViewportP, scale float32) {
 
 func InternalScrollToBringRectIntoView(window *Window, rect Rect) {
 	windowArg, windowFin := window.Handle()
-	C.igScrollToBringRectIntoView(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](rect.ToC()))
+	C.igScrollToBringRectIntoView(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](rect.ToC()))
 
 	windowFin()
 }
@@ -9936,7 +9860,7 @@ func InternalScrollToItemV(flags ScrollFlags) {
 // flags: 0
 func InternalScrollToRectV(window *Window, rect Rect, flags ScrollFlags) {
 	windowArg, windowFin := window.Handle()
-	C.igScrollToRect(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](rect.ToC()), C.ImGuiScrollFlags(flags))
+	C.igScrollToRect(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](rect.ToC()), C.ImGuiScrollFlags(flags))
 
 	windowFin()
 }
@@ -9944,16 +9868,15 @@ func InternalScrollToRectV(window *Window, rect Rect, flags ScrollFlags) {
 // InternalScrollToRectExV parameter default value hint:
 // flags: 0
 func InternalScrollToRectExV(window *Window, rect Rect, flags ScrollFlags) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igScrollToRectEx(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](rect.ToC()), C.ImGuiScrollFlags(flags))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.igScrollToRectEx(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](rect.ToC()), C.ImGuiScrollFlags(flags))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalScrollbar(axis Axis) {
@@ -9970,7 +9893,7 @@ func InternalScrollbarExV(bb Rect, id ID, axis Axis, p_scroll_v *int64, avail_v,
 		idFin()
 		p_scroll_vFin()
 	}()
-	return C.igScrollbarEx(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), p_scroll_vArg, C.ImS64(avail_v), C.ImS64(contents_v), C.ImDrawFlags(draw_rounding_flags)) == C.bool(true)
+	return C.igScrollbarEx(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), p_scroll_vArg, C.ImS64(avail_v), C.ImS64(contents_v), C.ImDrawFlags(draw_rounding_flags)) == C.bool(true)
 }
 
 // "bool selected" carry the selection state (read-only). Selectable() is clicked is returns true so you can modify your selection state. size.x==0.0: use remaining width, size.x>0.0: specify width. size.y==0.0: use label height, size.y>0.0: specify height
@@ -9984,7 +9907,7 @@ func SelectableBoolV(label string, selected bool, flags SelectableFlags, size Ve
 	defer func() {
 		labelFin()
 	}()
-	return C.igSelectable_Bool(labelArg, C.bool(selected), C.ImGuiSelectableFlags(flags), internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.igSelectable_Bool(labelArg, C.bool(selected), C.ImGuiSelectableFlags(flags), internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 // "bool* p_selected" point to the selection state (read-write), as a convenient helper.
@@ -9999,7 +9922,7 @@ func SelectableBoolPtrV(label string, p_selected *bool, flags SelectableFlags, s
 		labelFin()
 		p_selectedFin()
 	}()
-	return C.igSelectable_BoolPtr(labelArg, p_selectedArg, C.ImGuiSelectableFlags(flags), internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.igSelectable_BoolPtr(labelArg, p_selectedArg, C.ImGuiSelectableFlags(flags), internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 // separator, generally horizontal. inside a menu bar or in horizontal layout mode, this becomes a vertical separator.
@@ -10078,6 +10001,15 @@ func SetColumnWidth(column_index int32, width float32) {
 	C.igSetColumnWidth(C.int(column_index), C.float(width))
 }
 
+func InternalSetContextName(ctx *Context, name string) {
+	ctxArg, ctxFin := ctx.Handle()
+	nameArg, nameFin := internal.WrapString[C.char](name)
+	C.igSetContextName(internal.ReinterpretCast[*C.ImGuiContext](ctxArg), nameArg)
+
+	ctxFin()
+	nameFin()
+}
+
 func SetCurrentContext(ctx *Context) {
 	ctxArg, ctxFin := ctx.Handle()
 	C.igSetCurrentContext(internal.ReinterpretCast[*C.ImGuiContext](ctxArg))
@@ -10103,7 +10035,7 @@ func InternalSetCurrentViewport(window *Window, viewport *ViewportP) {
 
 // [window-local] "
 func SetCursorPos(local_pos Vec2) {
-	C.igSetCursorPos(internal.ReinterpretCast[C.ImVec2](local_pos.ToC()))
+	C.igSetCursorPos(internal.ReinterpretCast[C.ImVec2_c](local_pos.ToC()))
 }
 
 // [window-local] "
@@ -10118,7 +10050,7 @@ func SetCursorPosY(local_y float32) {
 
 // cursor position, absolute coordinates. THIS IS YOUR BEST FRIEND.
 func SetCursorScreenPos(pos Vec2) {
-	C.igSetCursorScreenPos(internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.igSetCursorScreenPos(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 }
 
 // type is a user defined string of maximum 32 characters. Strings starting with '_' are reserved for dear imgui internal types. Data is copied and held by imgui. Return true when payload has been accepted.
@@ -10205,7 +10137,7 @@ func SetKeyboardFocusHereV(offset int32) {
 
 func InternalSetLastItemData(item_id ID, item_flags ItemFlags, status_flags ItemStatusFlags, item_rect Rect) {
 	item_idArg, item_idFin := item_id.C()
-	C.igSetLastItemData(internal.ReinterpretCast[C.ImGuiID](item_idArg), C.ImGuiItemFlags(item_flags), C.ImGuiItemStatusFlags(status_flags), internal.ReinterpretCast[C.ImRect](item_rect.ToC()))
+	C.igSetLastItemData(internal.ReinterpretCast[C.ImGuiID](item_idArg), C.ImGuiItemFlags(item_flags), C.ImGuiItemStatusFlags(status_flags), internal.ReinterpretCast[C.ImRect_c](item_rect.ToC()))
 
 	item_idFin()
 }
@@ -10234,7 +10166,7 @@ func InternalSetNavFocusScope(focus_scope_id ID) {
 func InternalSetNavID(id ID, nav_layer NavLayer, focus_scope_id ID, rect_rel Rect) {
 	idArg, idFin := id.C()
 	focus_scope_idArg, focus_scope_idFin := focus_scope_id.C()
-	C.igSetNavID(internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiNavLayer(nav_layer), internal.ReinterpretCast[C.ImGuiID](focus_scope_idArg), internal.ReinterpretCast[C.ImRect](rect_rel.ToC()))
+	C.igSetNavID(internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiNavLayer(nav_layer), internal.ReinterpretCast[C.ImGuiID](focus_scope_idArg), internal.ReinterpretCast[C.ImRect_c](rect_rel.ToC()))
 
 	idFin()
 	focus_scope_idFin()
@@ -10260,6 +10192,10 @@ func SetNextFrameWantCaptureMouse(want_capture_mouse bool) {
 // allow next item to be overlapped by a subsequent item. Useful with invisible buttons, selectable, treenode covering an area where subsequent items may need to be added. Note that both Selectable() and TreeNode() have dedicated flags doing this.
 func SetNextItemAllowOverlap() {
 	C.igSetNextItemAllowOverlap()
+}
+
+func InternalSetNextItemColorMarker(col uint32) {
+	C.igSetNextItemColorMarker(C.ImU32(col))
 }
 
 // set next TreeNode/CollapsingHeader open state.
@@ -10324,7 +10260,7 @@ func SetNextWindowCollapsedV(collapsed bool, cond Cond) {
 
 // set next window content size (~ scrollable client area, which enforce the range of scrollbars). Not including window decorations (title bar, menu bar, etc.) nor WindowPadding. set an axis to 0.0f to leave it automatic. call before Begin()
 func SetNextWindowContentSize(size Vec2) {
-	C.igSetNextWindowContentSize(internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.igSetNextWindowContentSize(internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 }
 
 // set next window dock id
@@ -10347,7 +10283,7 @@ func SetNextWindowFocus() {
 // cond: 0
 // pivot: ImVec2(0,0)
 func SetNextWindowPosV(pos Vec2, cond Cond, pivot Vec2) {
-	C.igSetNextWindowPos(internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImGuiCond(cond), internal.ReinterpretCast[C.ImVec2](pivot.ToC()))
+	C.igSetNextWindowPos(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImGuiCond(cond), internal.ReinterpretCast[C.ImVec2_c](pivot.ToC()))
 }
 
 func InternalSetNextWindowRefreshPolicy(flags WindowRefreshFlags) {
@@ -10356,14 +10292,14 @@ func InternalSetNextWindowRefreshPolicy(flags WindowRefreshFlags) {
 
 // set next window scrolling value (use < 0.0f to not affect a given axis).
 func SetNextWindowScroll(scroll Vec2) {
-	C.igSetNextWindowScroll(internal.ReinterpretCast[C.ImVec2](scroll.ToC()))
+	C.igSetNextWindowScroll(internal.ReinterpretCast[C.ImVec2_c](scroll.ToC()))
 }
 
 // set next window size. set axis to 0.0f to force an auto-fit on this axis. call before Begin()
 // SetNextWindowSizeV parameter default value hint:
 // cond: 0
 func SetNextWindowSizeV(size Vec2, cond Cond) {
-	C.igSetNextWindowSize(internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiCond(cond))
+	C.igSetNextWindowSize(internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiCond(cond))
 }
 
 // set next window size limits. use 0.0f or FLT_MAX if you don't want limits. Use -1 for both min and max of same axis to preserve current size (which itself is a constraint). Use callback to apply non-trivial programmatic constraints.
@@ -10372,7 +10308,7 @@ func SetNextWindowSizeV(size Vec2, cond Cond) {
 // custom_callback_data: NULL
 func SetNextWindowSizeConstraintsV(size_min, size_max Vec2, custom_callback SizeCallback, custom_callback_data uintptr) {
 	custom_callbackArg, custom_callbackFin := custom_callback.C()
-	C.wrap_igSetNextWindowSizeConstraintsV(internal.ReinterpretCast[C.ImVec2](size_min.ToC()), internal.ReinterpretCast[C.ImVec2](size_max.ToC()), internal.ReinterpretCast[C.ImGuiSizeCallback](custom_callbackArg), C.uintptr_t(custom_callback_data))
+	C.wrap_igSetNextWindowSizeConstraintsV(internal.ReinterpretCast[C.ImVec2_c](size_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](size_max.ToC()), internal.ReinterpretCast[C.ImGuiSizeCallback](custom_callbackArg), C.uintptr_t(custom_callback_data))
 
 	custom_callbackFin()
 }
@@ -10489,7 +10425,7 @@ func SetTooltip(fmt string) {
 
 func InternalSetWindowClipRectBeforeSetChannel(window *Window, clip_rect Rect) {
 	windowArg, windowFin := window.Handle()
-	C.igSetWindowClipRectBeforeSetChannel(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](clip_rect.ToC()))
+	C.igSetWindowClipRectBeforeSetChannel(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](clip_rect.ToC()))
 
 	windowFin()
 }
@@ -10551,7 +10487,7 @@ func InternalSetWindowHiddenAndSkipItemsForCurrentFrame(window *Window) {
 
 func InternalSetWindowHitTestHole(window *Window, pos, size Vec2) {
 	windowArg, windowFin := window.Handle()
-	C.igSetWindowHitTestHole(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.igSetWindowHitTestHole(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 
 	windowFin()
 }
@@ -10571,7 +10507,7 @@ func InternalSetWindowParentWindowForFocusRoute(window, parent_window *Window) {
 // cond: 0
 func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
 	nameArg, nameFin := internal.WrapString[C.char](name)
-	C.igSetWindowPos_Str(nameArg, internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImGuiCond(cond))
+	C.igSetWindowPos_Str(nameArg, internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImGuiCond(cond))
 
 	nameFin()
 }
@@ -10580,14 +10516,14 @@ func SetWindowPosStrV(name string, pos Vec2, cond Cond) {
 // SetWindowPosVec2V parameter default value hint:
 // cond: 0
 func SetWindowPosVec2V(pos Vec2, cond Cond) {
-	C.igSetWindowPos_Vec2(internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImGuiCond(cond))
+	C.igSetWindowPos_Vec2(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImGuiCond(cond))
 }
 
 // InternalSetWindowPosWindowPtrV parameter default value hint:
 // cond: 0
 func InternalSetWindowPosWindowPtrV(window *Window, pos Vec2, cond Cond) {
 	windowArg, windowFin := window.Handle()
-	C.igSetWindowPos_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImGuiCond(cond))
+	C.igSetWindowPos_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImGuiCond(cond))
 
 	windowFin()
 }
@@ -10597,7 +10533,7 @@ func InternalSetWindowPosWindowPtrV(window *Window, pos Vec2, cond Cond) {
 // cond: 0
 func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
 	nameArg, nameFin := internal.WrapString[C.char](name)
-	C.igSetWindowSize_Str(nameArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiCond(cond))
+	C.igSetWindowSize_Str(nameArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiCond(cond))
 
 	nameFin()
 }
@@ -10606,14 +10542,14 @@ func SetWindowSizeStrV(name string, size Vec2, cond Cond) {
 // SetWindowSizeVec2V parameter default value hint:
 // cond: 0
 func SetWindowSizeVec2V(size Vec2, cond Cond) {
-	C.igSetWindowSize_Vec2(internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiCond(cond))
+	C.igSetWindowSize_Vec2(internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiCond(cond))
 }
 
 // InternalSetWindowSizeWindowPtrV parameter default value hint:
 // cond: 0
 func InternalSetWindowSizeWindowPtrV(window *Window, size Vec2, cond Cond) {
 	windowArg, windowFin := window.Handle()
-	C.igSetWindowSize_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiCond(cond))
+	C.igSetWindowSize_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiCond(cond))
 
 	windowFin()
 }
@@ -10629,21 +10565,21 @@ func InternalSetWindowViewport(window *Window, viewport *ViewportP) {
 
 func InternalShadeVertsLinearColorGradientKeepAlpha(draw_list *DrawList, vert_start_idx, vert_end_idx int32, gradient_p0, gradient_p1 Vec2, col0, col1 uint32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igShadeVertsLinearColorGradientKeepAlpha(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.int(vert_start_idx), C.int(vert_end_idx), internal.ReinterpretCast[C.ImVec2](gradient_p0.ToC()), internal.ReinterpretCast[C.ImVec2](gradient_p1.ToC()), C.ImU32(col0), C.ImU32(col1))
+	C.igShadeVertsLinearColorGradientKeepAlpha(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.int(vert_start_idx), C.int(vert_end_idx), internal.ReinterpretCast[C.ImVec2_c](gradient_p0.ToC()), internal.ReinterpretCast[C.ImVec2_c](gradient_p1.ToC()), C.ImU32(col0), C.ImU32(col1))
 
 	draw_listFin()
 }
 
 func InternalShadeVertsLinearUV(draw_list *DrawList, vert_start_idx, vert_end_idx int32, a, b, uv_a, uv_b Vec2, clamp bool) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igShadeVertsLinearUV(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.int(vert_start_idx), C.int(vert_end_idx), internal.ReinterpretCast[C.ImVec2](a.ToC()), internal.ReinterpretCast[C.ImVec2](b.ToC()), internal.ReinterpretCast[C.ImVec2](uv_a.ToC()), internal.ReinterpretCast[C.ImVec2](uv_b.ToC()), C.bool(clamp))
+	C.igShadeVertsLinearUV(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.int(vert_start_idx), C.int(vert_end_idx), internal.ReinterpretCast[C.ImVec2_c](a.ToC()), internal.ReinterpretCast[C.ImVec2_c](b.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_a.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_b.ToC()), C.bool(clamp))
 
 	draw_listFin()
 }
 
 func InternalShadeVertsTransformPos(draw_list *DrawList, vert_start_idx, vert_end_idx int32, pivot_in Vec2, cos_a, sin_a float32, pivot_out Vec2) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igShadeVertsTransformPos(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.int(vert_start_idx), C.int(vert_end_idx), internal.ReinterpretCast[C.ImVec2](pivot_in.ToC()), C.float(cos_a), C.float(sin_a), internal.ReinterpretCast[C.ImVec2](pivot_out.ToC()))
+	C.igShadeVertsTransformPos(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.int(vert_start_idx), C.int(vert_end_idx), internal.ReinterpretCast[C.ImVec2_c](pivot_in.ToC()), C.float(cos_a), C.float(sin_a), internal.ReinterpretCast[C.ImVec2_c](pivot_out.ToC()))
 
 	draw_listFin()
 }
@@ -10800,7 +10736,7 @@ func InternalSliderBehavior(bb Rect, id ID, data_type DataType, p_v, p_min, p_ma
 		formatFin()
 		out_grab_bbFin()
 	}()
-	return C.wrap_igSliderBehavior(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiDataType(data_type), C.uintptr_t(p_v), C.uintptr_t(p_min), C.uintptr_t(p_max), formatArg, C.ImGuiSliderFlags(flags), internal.ReinterpretCast[*C.ImRect](out_grab_bbArg)) == C.bool(true)
+	return C.wrap_igSliderBehavior(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiDataType(data_type), C.uintptr_t(p_v), C.uintptr_t(p_min), C.uintptr_t(p_max), formatArg, C.ImGuiSliderFlags(flags), internal.ReinterpretCast[*C.ImRect_c](out_grab_bbArg)) == C.bool(true)
 }
 
 // adjust format to decorate the value with a prefix or a suffix for in-slider labels or unit display.
@@ -11037,7 +10973,7 @@ func InternalSplitterBehaviorV(bb Rect, id ID, axis Axis, size1, size2 *float32,
 		size1Fin()
 		size2Fin()
 	}()
-	return C.igSplitterBehavior(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), size1Arg, size2Arg, C.float(min_size1), C.float(min_size2), C.float(hover_extend), C.float(hover_visibility_delay), C.ImU32(bg_col)) == C.bool(true)
+	return C.igSplitterBehavior(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), size1Arg, size2Arg, C.float(min_size1), C.float(min_size2), C.float(hover_extend), C.float(hover_visibility_delay), C.ImU32(bg_col)) == C.bool(true)
 }
 
 func InternalStartMouseMovingWindow(window *Window) {
@@ -11216,7 +11152,7 @@ func InternalTabBarQueueReorder(tab_bar *TabBar, tab *TabItem, offset int32) {
 func InternalTabBarQueueReorderFromMousePos(tab_bar *TabBar, tab *TabItem, mouse_pos Vec2) {
 	tab_barArg, tab_barFin := tab_bar.Handle()
 	tabArg, tabFin := tab.Handle()
-	C.igTabBarQueueReorderFromMousePos(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg), internal.ReinterpretCast[*C.ImGuiTabItem](tabArg), internal.ReinterpretCast[C.ImVec2](mouse_pos.ToC()))
+	C.igTabBarQueueReorderFromMousePos(internal.ReinterpretCast[*C.ImGuiTabBar](tab_barArg), internal.ReinterpretCast[*C.ImGuiTabItem](tabArg), internal.ReinterpretCast[C.ImVec2_c](mouse_pos.ToC()))
 
 	tab_barFin()
 	tabFin()
@@ -11240,7 +11176,7 @@ func InternalTabBarRemoveTab(tab_bar *TabBar, tab_id ID) {
 
 func InternalTabItemBackground(draw_list *DrawList, bb Rect, flags TabItemFlags, col uint32) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.igTabItemBackground(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect](bb.ToC()), C.ImGuiTabItemFlags(flags), C.ImU32(col))
+	C.igTabItemBackground(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect_c](bb.ToC()), C.ImGuiTabItemFlags(flags), C.ImU32(col))
 
 	draw_listFin()
 }
@@ -11258,29 +11194,27 @@ func TabItemButtonV(label string, flags TabItemFlags) bool {
 }
 
 func InternalTabItemCalcSizeStr(label string, has_close_button_or_unsaved_marker bool) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	labelArg, labelFin := internal.WrapString[C.char](label)
-	C.igTabItemCalcSize_Str(internal.ReinterpretCast[*C.ImVec2](pOutArg), labelArg, C.bool(has_close_button_or_unsaved_marker))
 
-	pOutFin()
-	labelFin()
-
-	return *pOut
+	defer func() {
+		labelFin()
+	}()
+	return func() Vec2 {
+		out := C.igTabItemCalcSize_Str(labelArg, C.bool(has_close_button_or_unsaved_marker))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalTabItemCalcSizeWindowPtr(window *Window) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igTabItemCalcSize_WindowPtr(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.igTabItemCalcSize_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalTabItemEx(tab_bar *TabBar, label string, p_open *bool, flags TabItemFlags, docked_window *Window) bool {
@@ -11305,7 +11239,7 @@ func InternalTabItemLabelAndCloseButton(draw_list *DrawList, bb Rect, flags TabI
 	close_button_idArg, close_button_idFin := close_button_id.C()
 	out_just_closedArg, out_just_closedFin := internal.WrapNumberPtr[C.bool, bool](out_just_closed)
 	out_text_clippedArg, out_text_clippedFin := internal.WrapNumberPtr[C.bool, bool](out_text_clipped)
-	C.igTabItemLabelAndCloseButton(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect](bb.ToC()), C.ImGuiTabItemFlags(flags), internal.ReinterpretCast[C.ImVec2](frame_padding.ToC()), labelArg, internal.ReinterpretCast[C.ImGuiID](tab_idArg), internal.ReinterpretCast[C.ImGuiID](close_button_idArg), C.bool(is_contents_visible), out_just_closedArg, out_text_clippedArg)
+	C.igTabItemLabelAndCloseButton(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImRect_c](bb.ToC()), C.ImGuiTabItemFlags(flags), internal.ReinterpretCast[C.ImVec2_c](frame_padding.ToC()), labelArg, internal.ReinterpretCast[C.ImGuiID](tab_idArg), internal.ReinterpretCast[C.ImGuiID](close_button_idArg), C.bool(is_contents_visible), out_just_closedArg, out_text_clippedArg)
 
 	draw_listFin()
 	labelFin()
@@ -11428,6 +11362,13 @@ func InternalTableFixColumnSortDirection(table *Table, column *TableColumn) {
 	columnFin()
 }
 
+func InternalTableFixDisplayOrder(table *Table) {
+	tableArg, tableFin := table.Handle()
+	C.igTableFixDisplayOrder(internal.ReinterpretCast[*C.ImGuiTable](tableArg))
+
+	tableFin()
+}
+
 func InternalTableGcCompactSettings() {
 	C.igTableGcCompactSettings()
 }
@@ -11456,16 +11397,15 @@ func InternalTableGetBoundSettings(table *Table) *TableSettings {
 }
 
 func InternalTableGetCellBgRect(table *Table, column_n int32) Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	tableArg, tableFin := table.Handle()
-	C.igTableGetCellBgRect(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiTable](tableArg), C.int(column_n))
 
-	pOutFin()
-	tableFin()
-
-	return *pOut
+	defer func() {
+		tableFin()
+	}()
+	return func() Rect {
+		out := C.igTableGetCellBgRect(internal.ReinterpretCast[*C.ImGuiTable](tableArg), C.int(column_n))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 // return number of columns (value passed to BeginTable)
@@ -11616,7 +11556,7 @@ func TableNextColumn() bool {
 	return C.igTableNextColumn() == C.bool(true)
 }
 
-// append into the first cell of a new row.
+// append into the first cell of a new row. 'min_row_height' include the minimum top and bottom padding aka CellPadding.y * 2.0f.
 // TableNextRowV parameter default value hint:
 // row_flags: 0
 // min_row_height: 0.0f
@@ -11789,7 +11729,7 @@ func InternalTableUpdateLayout(table *Table) {
 }
 
 func InternalTeleportMousePos(pos Vec2) {
-	C.igTeleportMousePos(internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.igTeleportMousePos(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 }
 
 func InternalTempInputIsActive(id ID) bool {
@@ -11814,7 +11754,7 @@ func InternalTempInputScalarV(bb Rect, id ID, label string, data_type DataType, 
 		labelFin()
 		formatFin()
 	}()
-	return C.wrap_igTempInputScalarV(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), labelArg, C.ImGuiDataType(data_type), C.uintptr_t(p_data), formatArg, C.uintptr_t(p_clamp_min), C.uintptr_t(p_clamp_max)) == C.bool(true)
+	return C.wrap_igTempInputScalarV(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), labelArg, C.ImGuiDataType(data_type), C.uintptr_t(p_data), formatArg, C.uintptr_t(p_clamp_min), C.uintptr_t(p_clamp_max)) == C.bool(true)
 }
 
 func InternalTempInputText(bb Rect, id ID, label, buf string, buf_size int32, flags InputTextFlags) bool {
@@ -11827,7 +11767,7 @@ func InternalTempInputText(bb Rect, id ID, label, buf string, buf_size int32, fl
 		labelFin()
 		bufFin()
 	}()
-	return C.igTempInputText(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), labelArg, bufArg, C.int(buf_size), C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.igTempInputText(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), labelArg, bufArg, C.int(buf_size), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 // Test that key is either not owned, either owned by 'owner_id'
@@ -11870,7 +11810,7 @@ func InternalTextAligned(align_x, size_x float32, fmt string) {
 // shortcut for PushStyleColor(ImGuiCol_Text, col); Text(fmt, ...); PopStyleColor();
 func TextColored(col Vec4, fmt string) {
 	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
-	C.wrap_igTextColored(internal.ReinterpretCast[C.ImVec4](col.ToC()), fmtArg)
+	C.wrap_igTextColored(internal.ReinterpretCast[C.ImVec4_c](col.ToC()), fmtArg)
 
 	fmtFin()
 }
@@ -11935,7 +11875,7 @@ func TextWrapped(fmt string) {
 
 func InternalTranslateWindowsInViewport(viewport *ViewportP, old_pos, new_pos, old_size, new_size Vec2) {
 	viewportArg, viewportFin := viewport.Handle()
-	C.igTranslateWindowsInViewport(internal.ReinterpretCast[*C.ImGuiViewportP](viewportArg), internal.ReinterpretCast[C.ImVec2](old_pos.ToC()), internal.ReinterpretCast[C.ImVec2](new_pos.ToC()), internal.ReinterpretCast[C.ImVec2](old_size.ToC()), internal.ReinterpretCast[C.ImVec2](new_size.ToC()))
+	C.igTranslateWindowsInViewport(internal.ReinterpretCast[*C.ImGuiViewportP](viewportArg), internal.ReinterpretCast[C.ImVec2_c](old_pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](new_pos.ToC()), internal.ReinterpretCast[C.ImVec2_c](old_size.ToC()), internal.ReinterpretCast[C.ImVec2_c](new_size.ToC()))
 
 	viewportFin()
 }
@@ -11956,7 +11896,7 @@ func InternalTreeNodeBehaviorV(id ID, flags TreeNodeFlags, label, label_end stri
 }
 
 func InternalTreeNodeDrawLineToChildNode(target_pos Vec2) {
-	C.igTreeNodeDrawLineToChildNode(internal.ReinterpretCast[C.ImVec2](target_pos.ToC()))
+	C.igTreeNodeDrawLineToChildNode(internal.ReinterpretCast[C.ImVec2_c](target_pos.ToC()))
 }
 
 func InternalTreeNodeDrawLineToTreePop(data *TreeNodeStackData) {
@@ -12042,7 +11982,7 @@ func TreeNodeStr(label string) bool {
 	return C.igTreeNode_Str(labelArg) == C.bool(true)
 }
 
-// helper variation to easily decorelate the id from the displayed string. Read the FAQ about why and how to use ID. to align arbitrary text at the same level as a TreeNode() you can use Bullet().
+// helper variation to easily decorrelate the id from the displayed string. Read the FAQ about why and how to use ID. to align arbitrary text at the same level as a TreeNode() you can use Bullet().
 func TreeNodeStrStr(str_id, fmt string) bool {
 	str_idArg, str_idFin := internal.WrapString[C.char](str_id)
 	fmtArg, fmtFin := internal.WrapString[C.char](fmt)
@@ -12105,7 +12045,7 @@ func InternalUpdateCurrentFontSize(restore_font_size_after_scaling float32) {
 }
 
 func InternalUpdateHoveredWindowAndCaptureFlags(mouse_pos Vec2) {
-	C.igUpdateHoveredWindowAndCaptureFlags(internal.ReinterpretCast[C.ImVec2](mouse_pos.ToC()))
+	C.igUpdateHoveredWindowAndCaptureFlags(internal.ReinterpretCast[C.ImVec2_c](mouse_pos.ToC()))
 }
 
 func InternalUpdateInputEvents(trickle_fast_inputs bool) {
@@ -12154,7 +12094,7 @@ func VSliderFloatV(label string, size Vec2, v *float32, v_min, v_max float32, fo
 		vFin()
 		formatFin()
 	}()
-	return C.igVSliderFloat(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderFloat(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), vArg, C.float(v_min), C.float(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // VSliderIntV parameter default value hint:
@@ -12170,7 +12110,7 @@ func VSliderIntV(label string, size Vec2, v *int32, v_min, v_max int32, format s
 		vFin()
 		formatFin()
 	}()
-	return C.igVSliderInt(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.igVSliderInt(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), vArg, C.int(v_min), C.int(v_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 // VSliderScalarV parameter default value hint:
@@ -12184,7 +12124,7 @@ func VSliderScalarV(label string, size Vec2, data_type DataType, p_data, p_min, 
 		labelFin()
 		formatFin()
 	}()
-	return C.wrap_igVSliderScalarV(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiDataType(data_type), C.uintptr_t(p_data), C.uintptr_t(p_min), C.uintptr_t(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
+	return C.wrap_igVSliderScalarV(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiDataType(data_type), C.uintptr_t(p_data), C.uintptr_t(p_min), C.uintptr_t(p_max), formatArg, C.ImGuiSliderFlags(flags)) == C.bool(true)
 }
 
 func ValueBool(prefix string, b bool) {
@@ -12220,85 +12160,77 @@ func ValueUint(prefix string, v uint32) {
 }
 
 func InternalWindowPosAbsToRel(window *Window, p Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igWindowPosAbsToRel(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](p.ToC()))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.igWindowPosAbsToRel(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](p.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalWindowPosRelToAbs(window *Window, p Vec2) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igWindowPosRelToAbs(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](p.ToC()))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.igWindowPosRelToAbs(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](p.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalWindowRectAbsToRel(window *Window, r Rect) Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igWindowRectAbsToRel(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](r.ToC()))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Rect {
+		out := C.igWindowRectAbsToRel(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](r.ToC()))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalWindowRectRelToAbs(window *Window, r Rect) Rect {
-	pOut := new(Rect)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.igWindowRectRelToAbs(internal.ReinterpretCast[*C.ImRect](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](r.ToC()))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Rect {
+		out := C.igWindowRectRelToAbs(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](r.ToC()))
+		return *(&Rect{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func ColorHSV(h, s, v float32) Color {
-	pOut := new(Color)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.wrap_ImColor_HSV(internal.ReinterpretCast[*C.ImColor](pOutArg), C.float(h), C.float(s), C.float(v))
-
-	pOutFin()
-
-	return *pOut
+	return func() Color {
+		out := C.wrap_ImColor_HSV(C.float(h), C.float(s), C.float(v))
+		return *(&Color{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Color) SetHSV(h, s, v float32) {
 	selfArg, selfFin := internal.Wrap(self)
-	C.wrap_ImColor_SetHSV(internal.ReinterpretCast[*C.ImColor](selfArg), C.float(h), C.float(s), C.float(v))
+	C.wrap_ImColor_SetHSV(internal.ReinterpretCast[*C.ImColor_c](selfArg), C.float(h), C.float(s), C.float(v))
 
 	selfFin()
 }
 
 func (self *DrawList) AddBezierCubic(p1, p2, p3, p4 Vec2, col uint32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddBezierCubic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.ImU32(col), C.float(thickness))
+	C.wrap_ImDrawList_AddBezierCubic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.ImU32(col), C.float(thickness))
 
 	selfFin()
 }
 
 func (self *DrawList) AddBezierQuadratic(p1, p2, p3 Vec2, col uint32, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddBezierQuadratic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.ImU32(col), C.float(thickness))
+	C.wrap_ImDrawList_AddBezierQuadratic(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.ImU32(col), C.float(thickness))
 
 	selfFin()
 }
@@ -12314,28 +12246,28 @@ func (self *DrawList) AddCallback(callback DrawCallback, userdata uintptr) {
 
 func (self *DrawList) AddCircle(center Vec2, radius float32, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddCircle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col))
+	C.wrap_ImDrawList_AddCircle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) AddCircleFilled(center Vec2, radius float32, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddCircleFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col))
+	C.wrap_ImDrawList_AddCircleFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) AddEllipse(center, radius Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddEllipse(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), internal.ReinterpretCast[C.ImVec2](radius.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddEllipse(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), internal.ReinterpretCast[C.ImVec2_c](radius.ToC()), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) AddEllipseFilled(center, radius Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddEllipseFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), internal.ReinterpretCast[C.ImVec2](radius.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddEllipseFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), internal.ReinterpretCast[C.ImVec2_c](radius.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -12343,7 +12275,7 @@ func (self *DrawList) AddEllipseFilled(center, radius Vec2, col uint32) {
 func (self *DrawList) AddImage(tex_ref TextureRef, p_min, p_max Vec2) {
 	selfArg, selfFin := self.Handle()
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.wrap_ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()))
+	C.wrap_ImDrawList_AddImage(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()))
 
 	selfFin()
 	tex_refFin()
@@ -12352,7 +12284,7 @@ func (self *DrawList) AddImage(tex_ref TextureRef, p_min, p_max Vec2) {
 func (self *DrawList) AddImageQuad(tex_ref TextureRef, p1, p2, p3, p4 Vec2) {
 	selfArg, selfFin := self.Handle()
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.wrap_ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()))
+	C.wrap_ImDrawList_AddImageQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()))
 
 	selfFin()
 	tex_refFin()
@@ -12361,7 +12293,7 @@ func (self *DrawList) AddImageQuad(tex_ref TextureRef, p1, p2, p3, p4 Vec2) {
 func (self *DrawList) AddImageRounded(tex_ref TextureRef, p_min, p_max, uv_min, uv_max Vec2, col uint32, rounding float32) {
 	selfArg, selfFin := self.Handle()
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.wrap_ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), internal.ReinterpretCast[C.ImVec2](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2](uv_max.ToC()), C.ImU32(col), C.float(rounding))
+	C.wrap_ImDrawList_AddImageRounded(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv_max.ToC()), C.ImU32(col), C.float(rounding))
 
 	selfFin()
 	tex_refFin()
@@ -12369,35 +12301,35 @@ func (self *DrawList) AddImageRounded(tex_ref TextureRef, p_min, p_max, uv_min, 
 
 func (self *DrawList) AddLine(p1, p2 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddLine(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddLine(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) AddNgon(center Vec2, radius float32, col uint32, num_segments int32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddNgon(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments))
+	C.wrap_ImDrawList_AddNgon(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.ImU32(col), C.int(num_segments))
 
 	selfFin()
 }
 
 func (self *DrawList) AddQuad(p1, p2, p3, p4 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddQuad(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) AddRect(p_min, p_max Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) AddRectFilled(p_min, p_max Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddRectFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddRectFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(col))
 
 	selfFin()
 }
@@ -12406,7 +12338,7 @@ func (self *DrawList) AddTextFontPtr(font *Font, font_size float32, pos Vec2, co
 	selfArg, selfFin := self.Handle()
 	fontArg, fontFin := font.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImDrawList_AddText_FontPtr(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), text_beginArg)
+	C.wrap_ImDrawList_AddText_FontPtr(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImFont](fontArg), C.float(font_size), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), text_beginArg)
 
 	selfFin()
 	fontFin()
@@ -12416,7 +12348,7 @@ func (self *DrawList) AddTextFontPtr(font *Font, font_size float32, pos Vec2, co
 func (self *DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImDrawList_AddText_Vec2(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), text_beginArg)
+	C.wrap_ImDrawList_AddText_Vec2(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), text_beginArg)
 
 	selfFin()
 	text_beginFin()
@@ -12424,42 +12356,42 @@ func (self *DrawList) AddTextVec2(pos Vec2, col uint32, text_begin string) {
 
 func (self *DrawList) AddTriangle(p1, p2, p3 Vec2, col uint32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_AddTriangle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p1.ToC()), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), C.ImU32(col))
+	C.wrap_ImDrawList_AddTriangle(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p1.ToC()), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), C.ImU32(col))
 
 	selfFin()
 }
 
 func (self *DrawList) PathArcTo(center Vec2, radius, a_min, a_max float32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_PathArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), C.float(radius), C.float(a_min), C.float(a_max))
+	C.wrap_ImDrawList_PathArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), C.float(radius), C.float(a_min), C.float(a_max))
 
 	selfFin()
 }
 
 func (self *DrawList) PathBezierCubicCurveTo(p2, p3, p4 Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_PathBezierCubicCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()), internal.ReinterpretCast[C.ImVec2](p4.ToC()))
+	C.wrap_ImDrawList_PathBezierCubicCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()), internal.ReinterpretCast[C.ImVec2_c](p4.ToC()))
 
 	selfFin()
 }
 
 func (self *DrawList) PathBezierQuadraticCurveTo(p2, p3 Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_PathBezierQuadraticCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](p2.ToC()), internal.ReinterpretCast[C.ImVec2](p3.ToC()))
+	C.wrap_ImDrawList_PathBezierQuadraticCurveTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](p2.ToC()), internal.ReinterpretCast[C.ImVec2_c](p3.ToC()))
 
 	selfFin()
 }
 
 func (self *DrawList) PathEllipticalArcTo(center, radius Vec2, rot, a_min, a_max float32) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_PathEllipticalArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](center.ToC()), internal.ReinterpretCast[C.ImVec2](radius.ToC()), C.float(rot), C.float(a_min), C.float(a_max))
+	C.wrap_ImDrawList_PathEllipticalArcTo(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](center.ToC()), internal.ReinterpretCast[C.ImVec2_c](radius.ToC()), C.float(rot), C.float(a_min), C.float(a_max))
 
 	selfFin()
 }
 
 func (self *DrawList) PathRect(rect_min, rect_max Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_PathRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](rect_min.ToC()), internal.ReinterpretCast[C.ImVec2](rect_max.ToC()))
+	C.wrap_ImDrawList_PathRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](rect_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](rect_max.ToC()))
 
 	selfFin()
 }
@@ -12473,7 +12405,7 @@ func (self *DrawList) PathStroke(col uint32) {
 
 func (self *DrawList) PushClipRect(clip_rect_min, clip_rect_max Vec2) {
 	selfArg, selfFin := self.Handle()
-	C.wrap_ImDrawList_PushClipRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2](clip_rect_min.ToC()), internal.ReinterpretCast[C.ImVec2](clip_rect_max.ToC()))
+	C.wrap_ImDrawList_PushClipRect(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[C.ImVec2_c](clip_rect_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](clip_rect_max.ToC()))
 
 	selfFin()
 }
@@ -12497,6 +12429,24 @@ func (self *FontAtlas) AddFontDefault() *Font {
 		selfFin()
 	}()
 	return NewFontFromC(C.wrap_ImFontAtlas_AddFontDefault(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self *FontAtlas) AddFontDefaultBitmap() *Font {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontFromC(C.wrap_ImFontAtlas_AddFontDefaultBitmap(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
+}
+
+func (self *FontAtlas) AddFontDefaultVector() *Font {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewFontFromC(C.wrap_ImFontAtlas_AddFontDefaultVector(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
 func (self *FontAtlas) AddFontFromFileTTF(filename string) *Font {
@@ -12549,18 +12499,17 @@ func (self *FontGlyphRangesBuilder) AddText(text string) {
 }
 
 func (self *Font) CalcTextSizeA(size, max_width, wrap_width float32, text_begin string) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	selfArg, selfFin := self.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImFont_CalcTextSizeA(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
 
-	pOutFin()
-	selfFin()
-	text_beginFin()
-
-	return *pOut
+	defer func() {
+		selfFin()
+		text_beginFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_ImFont_CalcTextSizeA(internal.ReinterpretCast[*C.ImFont](selfArg), C.float(size), C.float(max_width), C.float(wrap_width), text_beginArg)
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func (self *Font) FontBaked(font_size float32) *FontBaked {
@@ -12575,7 +12524,7 @@ func (self *Font) FontBaked(font_size float32) *FontBaked {
 func (self *Font) RenderChar(draw_list *DrawList, size float32, pos Vec2, col uint32, c Wchar) {
 	selfArg, selfFin := self.Handle()
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.wrap_ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImWchar(c))
+	C.wrap_ImFont_RenderChar(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), C.ImWchar(c))
 
 	selfFin()
 	draw_listFin()
@@ -12585,7 +12534,7 @@ func (self *Font) RenderText(draw_list *DrawList, size float32, pos Vec2, col ui
 	selfArg, selfFin := self.Handle()
 	draw_listArg, draw_listFin := draw_list.Handle()
 	text_beginArg, text_beginFin := internal.WrapString[C.char](text_begin)
-	C.wrap_ImFont_RenderText(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), internal.ReinterpretCast[C.ImVec4](clip_rect.ToC()), text_beginArg)
+	C.wrap_ImFont_RenderText(internal.ReinterpretCast[*C.ImFont](selfArg), internal.ReinterpretCast[*C.ImDrawList](draw_listArg), C.float(size), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), internal.ReinterpretCast[C.ImVec4_c](clip_rect.ToC()), text_beginArg)
 
 	selfFin()
 	draw_listFin()
@@ -12739,7 +12688,7 @@ func InternalArrowButtonEx(str_id string, dir Dir, size_arg Vec2) bool {
 	defer func() {
 		str_idFin()
 	}()
-	return C.wrap_igArrowButtonEx(str_idArg, C.ImGuiDir(dir), internal.ReinterpretCast[C.ImVec2](size_arg.ToC())) == C.bool(true)
+	return C.wrap_igArrowButtonEx(str_idArg, C.ImGuiDir(dir), internal.ReinterpretCast[C.ImVec2_c](size_arg.ToC())) == C.bool(true)
 }
 
 func Begin(name string) bool {
@@ -12924,7 +12873,7 @@ func InternalButtonBehavior(bb Rect, id ID, out_hovered, out_held *bool) bool {
 		out_hoveredFin()
 		out_heldFin()
 	}()
-	return C.wrap_igButtonBehavior(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), out_hoveredArg, out_heldArg) == C.bool(true)
+	return C.wrap_igButtonBehavior(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), out_hoveredArg, out_heldArg) == C.bool(true)
 }
 
 func InternalButtonEx(label string) bool {
@@ -12937,16 +12886,15 @@ func InternalButtonEx(label string) bool {
 }
 
 func CalcTextSize(text string) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igCalcTextSize(internal.ReinterpretCast[*C.ImVec2](pOutArg), textArg, C.int(len(text)))
 
-	pOutFin()
-	textFin()
-
-	return *pOut
+	defer func() {
+		textFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_igCalcTextSize(textArg, C.int(len(text)))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func CollapsingHeaderBoolPtr(label string, p_visible *bool) bool {
@@ -12975,7 +12923,7 @@ func ColorButton(desc_id string, col Vec4) bool {
 	defer func() {
 		desc_idFin()
 	}()
-	return C.wrap_igColorButton(desc_idArg, internal.ReinterpretCast[C.ImVec4](col.ToC())) == C.bool(true)
+	return C.wrap_igColorButton(desc_idArg, internal.ReinterpretCast[C.ImVec4_c](col.ToC())) == C.bool(true)
 }
 
 func ColorEdit3(label string, col *[3]float32) bool {
@@ -13369,14 +13317,7 @@ func ForegroundDrawListViewportPtr() *DrawList {
 }
 
 func MouseDragDelta() Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
-	C.wrap_igGetMouseDragDelta(internal.ReinterpretCast[*C.ImVec2](pOutArg))
-
-	pOutFin()
-
-	return *pOut
+	return func() Vec2 { out := C.wrap_igGetMouseDragDelta(); return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
 }
 
 func InternalTypingSelectRequest() *TypingSelectRequest {
@@ -13462,7 +13403,7 @@ func InternalImTextStrFromUtf8(out_buf *Wchar, out_buf_size int32, in_text, in_t
 
 func Image(tex_ref TextureRef, image_size Vec2) {
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.wrap_igImage(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()))
+	C.wrap_igImage(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()))
 
 	tex_refFin()
 }
@@ -13475,7 +13416,7 @@ func ImageButton(str_id string, tex_ref TextureRef, image_size Vec2) bool {
 		str_idFin()
 		tex_refFin()
 	}()
-	return C.wrap_igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC())) == C.bool(true)
+	return C.wrap_igImageButton(str_idArg, internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC())) == C.bool(true)
 }
 
 func InternalImageButtonEx(id ID, tex_ref TextureRef, image_size, uv0, uv1 Vec2, bg_col, tint_col Vec4) bool {
@@ -13486,12 +13427,12 @@ func InternalImageButtonEx(id ID, tex_ref TextureRef, image_size, uv0, uv1 Vec2,
 		idFin()
 		tex_refFin()
 	}()
-	return C.wrap_igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()), internal.ReinterpretCast[C.ImVec2](uv0.ToC()), internal.ReinterpretCast[C.ImVec2](uv1.ToC()), internal.ReinterpretCast[C.ImVec4](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4](tint_col.ToC())) == C.bool(true)
+	return C.wrap_igImageButtonEx(internal.ReinterpretCast[C.ImGuiID](idArg), internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv0.ToC()), internal.ReinterpretCast[C.ImVec2_c](uv1.ToC()), internal.ReinterpretCast[C.ImVec4_c](bg_col.ToC()), internal.ReinterpretCast[C.ImVec4_c](tint_col.ToC())) == C.bool(true)
 }
 
 func ImageWithBg(tex_ref TextureRef, image_size Vec2) {
 	tex_refArg, tex_refFin := tex_ref.C()
-	C.wrap_igImageWithBg(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2](image_size.ToC()))
+	C.wrap_igImageWithBg(internal.ReinterpretCast[C.ImTextureRef](tex_refArg), internal.ReinterpretCast[C.ImVec2_c](image_size.ToC()))
 
 	tex_refFin()
 }
@@ -13669,7 +13610,7 @@ func InternalInputTextEx(label, hint, buf string, buf_size int32, size_arg Vec2,
 		hintFin()
 		bufFin()
 	}()
-	return C.wrap_igInputTextEx(labelArg, hintArg, bufArg, C.int(buf_size), internal.ReinterpretCast[C.ImVec2](size_arg.ToC()), C.ImGuiInputTextFlags(flags)) == C.bool(true)
+	return C.wrap_igInputTextEx(labelArg, hintArg, bufArg, C.int(buf_size), internal.ReinterpretCast[C.ImVec2_c](size_arg.ToC()), C.ImGuiInputTextFlags(flags)) == C.bool(true)
 }
 
 func InvisibleButton(str_id string, size Vec2) bool {
@@ -13678,7 +13619,7 @@ func InvisibleButton(str_id string, size Vec2) bool {
 	defer func() {
 		str_idFin()
 	}()
-	return C.wrap_igInvisibleButton(str_idArg, internal.ReinterpretCast[C.ImVec2](size.ToC())) == C.bool(true)
+	return C.wrap_igInvisibleButton(str_idArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC())) == C.bool(true)
 }
 
 func IsItemClicked() bool {
@@ -13723,7 +13664,7 @@ func IsMouseDragging(button MouseButton) bool {
 }
 
 func IsMouseHoveringRect(r_min, r_max Vec2) bool {
-	return C.wrap_igIsMouseHoveringRect(internal.ReinterpretCast[C.ImVec2](r_min.ToC()), internal.ReinterpretCast[C.ImVec2](r_max.ToC())) == C.bool(true)
+	return C.wrap_igIsMouseHoveringRect(internal.ReinterpretCast[C.ImVec2_c](r_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](r_max.ToC())) == C.bool(true)
 }
 
 func IsMousePosValid() bool {
@@ -13762,15 +13703,15 @@ func InternalItemAdd(bb Rect, id ID) bool {
 	defer func() {
 		idFin()
 	}()
-	return C.wrap_igItemAdd(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
+	return C.wrap_igItemAdd(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg)) == C.bool(true)
 }
 
 func InternalItemSizeRect(bb Rect) {
-	C.wrap_igItemSize_Rect(internal.ReinterpretCast[C.ImRect](bb.ToC()))
+	C.wrap_igItemSize_Rect(internal.ReinterpretCast[C.ImRect_c](bb.ToC()))
 }
 
 func InternalItemSizeVec2(size Vec2) {
-	C.wrap_igItemSize_Vec2(internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.wrap_igItemSize_Vec2(internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 }
 
 func ListBoxStrarr(label string, current_item *int32, items []string, items_count int32) bool {
@@ -13796,7 +13737,7 @@ func LoadIniSettingsFromMemory(ini_data string) {
 func InternalLogRenderedText(ref_pos *Vec2, text string) {
 	ref_posArg, ref_posFin := internal.Wrap(ref_pos)
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igLogRenderedText(internal.ReinterpretCast[*C.ImVec2](ref_posArg), textArg, C.int(len(text)))
+	C.wrap_igLogRenderedText(internal.ReinterpretCast[*C.ImVec2_c](ref_posArg), textArg, C.int(len(text)))
 
 	ref_posFin()
 	textFin()
@@ -13912,29 +13853,29 @@ func PushTextWrapPos() {
 
 func InternalRenderArrow(draw_list *DrawList, pos Vec2, col uint32, dir Dir) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.wrap_igRenderArrow(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()), C.ImU32(col), C.ImGuiDir(dir))
+	C.wrap_igRenderArrow(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), C.ImU32(col), C.ImGuiDir(dir))
 
 	draw_listFin()
 }
 
 func InternalRenderColorRectWithAlphaCheckerboard(draw_list *DrawList, p_min, p_max Vec2, fill_col uint32, grid_step float32, grid_off Vec2) {
 	draw_listArg, draw_listFin := draw_list.Handle()
-	C.wrap_igRenderColorRectWithAlphaCheckerboard(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(fill_col), C.float(grid_step), internal.ReinterpretCast[C.ImVec2](grid_off.ToC()))
+	C.wrap_igRenderColorRectWithAlphaCheckerboard(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(fill_col), C.float(grid_step), internal.ReinterpretCast[C.ImVec2_c](grid_off.ToC()))
 
 	draw_listFin()
 }
 
 func InternalRenderFrame(p_min, p_max Vec2, fill_col uint32) {
-	C.wrap_igRenderFrame(internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()), C.ImU32(fill_col))
+	C.wrap_igRenderFrame(internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()), C.ImU32(fill_col))
 }
 
 func InternalRenderFrameBorder(p_min, p_max Vec2) {
-	C.wrap_igRenderFrameBorder(internal.ReinterpretCast[C.ImVec2](p_min.ToC()), internal.ReinterpretCast[C.ImVec2](p_max.ToC()))
+	C.wrap_igRenderFrameBorder(internal.ReinterpretCast[C.ImVec2_c](p_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](p_max.ToC()))
 }
 
 func InternalRenderNavCursor(bb Rect, id ID) {
 	idArg, idFin := id.C()
-	C.wrap_igRenderNavCursor(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg))
+	C.wrap_igRenderNavCursor(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg))
 
 	idFin()
 }
@@ -13945,7 +13886,7 @@ func RenderPlatformWindowsDefault() {
 
 func InternalRenderText(pos Vec2, text string) {
 	textArg, textFin := internal.WrapString[C.char](text)
-	C.wrap_igRenderText(internal.ReinterpretCast[C.ImVec2](pos.ToC()), textArg, C.int(len(text)))
+	C.wrap_igRenderText(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()), textArg, C.int(len(text)))
 
 	textFin()
 }
@@ -13953,7 +13894,7 @@ func InternalRenderText(pos Vec2, text string) {
 func InternalRenderTextClipped(pos_min, pos_max Vec2, text string, text_size_if_known *Vec2) {
 	textArg, textFin := internal.WrapString[C.char](text)
 	text_size_if_knownArg, text_size_if_knownFin := internal.Wrap(text_size_if_known)
-	C.wrap_igRenderTextClipped(internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg))
+	C.wrap_igRenderTextClipped(internal.ReinterpretCast[C.ImVec2_c](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2_c](text_size_if_knownArg))
 
 	textFin()
 	text_size_if_knownFin()
@@ -13963,7 +13904,7 @@ func InternalRenderTextClippedEx(draw_list *DrawList, pos_min, pos_max Vec2, tex
 	draw_listArg, draw_listFin := draw_list.Handle()
 	textArg, textFin := internal.WrapString[C.char](text)
 	text_size_if_knownArg, text_size_if_knownFin := internal.Wrap(text_size_if_known)
-	C.wrap_igRenderTextClippedEx(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2](text_size_if_knownArg))
+	C.wrap_igRenderTextClippedEx(internal.ReinterpretCast[*C.ImDrawList](draw_listArg), internal.ReinterpretCast[C.ImVec2_c](pos_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](pos_max.ToC()), textArg, C.int(len(text)), internal.ReinterpretCast[*C.ImVec2_c](text_size_if_knownArg))
 
 	draw_listFin()
 	textFin()
@@ -13988,22 +13929,21 @@ func InternalScrollToItem() {
 
 func InternalScrollToRect(window *Window, rect Rect) {
 	windowArg, windowFin := window.Handle()
-	C.wrap_igScrollToRect(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](rect.ToC()))
+	C.wrap_igScrollToRect(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](rect.ToC()))
 
 	windowFin()
 }
 
 func InternalScrollToRectEx(window *Window, rect Rect) Vec2 {
-	pOut := new(Vec2)
-	pOutArg, pOutFin := internal.Wrap(pOut)
-
 	windowArg, windowFin := window.Handle()
-	C.wrap_igScrollToRectEx(internal.ReinterpretCast[*C.ImVec2](pOutArg), internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect](rect.ToC()))
 
-	pOutFin()
-	windowFin()
-
-	return *pOut
+	defer func() {
+		windowFin()
+	}()
+	return func() Vec2 {
+		out := C.wrap_igScrollToRectEx(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImRect_c](rect.ToC()))
+		return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+	}()
 }
 
 func InternalScrollbarEx(bb Rect, id ID, axis Axis, p_scroll_v *int64, avail_v, contents_v int64) bool {
@@ -14014,7 +13954,7 @@ func InternalScrollbarEx(bb Rect, id ID, axis Axis, p_scroll_v *int64, avail_v, 
 		idFin()
 		p_scroll_vFin()
 	}()
-	return C.wrap_igScrollbarEx(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), p_scroll_vArg, C.ImS64(avail_v), C.ImS64(contents_v)) == C.bool(true)
+	return C.wrap_igScrollbarEx(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), p_scroll_vArg, C.ImS64(avail_v), C.ImS64(contents_v)) == C.bool(true)
 }
 
 func SelectableBool(label string) bool {
@@ -14102,15 +14042,15 @@ func SetNextWindowDockID(dock_id ID) {
 }
 
 func SetNextWindowPos(pos Vec2) {
-	C.wrap_igSetNextWindowPos(internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.wrap_igSetNextWindowPos(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 }
 
 func SetNextWindowSize(size Vec2) {
-	C.wrap_igSetNextWindowSize(internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.wrap_igSetNextWindowSize(internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 }
 
 func SetNextWindowSizeConstraints(size_min, size_max Vec2) {
-	C.wrap_igSetNextWindowSizeConstraints(internal.ReinterpretCast[C.ImVec2](size_min.ToC()), internal.ReinterpretCast[C.ImVec2](size_max.ToC()))
+	C.wrap_igSetNextWindowSizeConstraints(internal.ReinterpretCast[C.ImVec2_c](size_min.ToC()), internal.ReinterpretCast[C.ImVec2_c](size_max.ToC()))
 }
 
 func SetScrollFromPosXFloat(local_x float32) {
@@ -14149,36 +14089,36 @@ func InternalSetWindowCollapsedWindowPtr(window *Window, collapsed bool) {
 
 func SetWindowPosStr(name string, pos Vec2) {
 	nameArg, nameFin := internal.WrapString[C.char](name)
-	C.wrap_igSetWindowPos_Str(nameArg, internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.wrap_igSetWindowPos_Str(nameArg, internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 
 	nameFin()
 }
 
 func SetWindowPosVec2(pos Vec2) {
-	C.wrap_igSetWindowPos_Vec2(internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.wrap_igSetWindowPos_Vec2(internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 }
 
 func InternalSetWindowPosWindowPtr(window *Window, pos Vec2) {
 	windowArg, windowFin := window.Handle()
-	C.wrap_igSetWindowPos_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](pos.ToC()))
+	C.wrap_igSetWindowPos_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](pos.ToC()))
 
 	windowFin()
 }
 
 func SetWindowSizeStr(name string, size Vec2) {
 	nameArg, nameFin := internal.WrapString[C.char](name)
-	C.wrap_igSetWindowSize_Str(nameArg, internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.wrap_igSetWindowSize_Str(nameArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 
 	nameFin()
 }
 
 func SetWindowSizeVec2(size Vec2) {
-	C.wrap_igSetWindowSize_Vec2(internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.wrap_igSetWindowSize_Vec2(internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 }
 
 func InternalSetWindowSizeWindowPtr(window *Window, size Vec2) {
 	windowArg, windowFin := window.Handle()
-	C.wrap_igSetWindowSize_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2](size.ToC()))
+	C.wrap_igSetWindowSize_WindowPtr(internal.ReinterpretCast[*C.ImGuiWindow](windowArg), internal.ReinterpretCast[C.ImVec2_c](size.ToC()))
 
 	windowFin()
 }
@@ -14385,7 +14325,7 @@ func InternalSplitterBehavior(bb Rect, id ID, axis Axis, size1, size2 *float32, 
 		size1Fin()
 		size2Fin()
 	}()
-	return C.wrap_igSplitterBehavior(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), size1Arg, size2Arg, C.float(min_size1), C.float(min_size2)) == C.bool(true)
+	return C.wrap_igSplitterBehavior(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), C.ImGuiAxis(axis), size1Arg, size2Arg, C.float(min_size1), C.float(min_size2)) == C.bool(true)
 }
 
 func StyleColorsClassic() {
@@ -14458,7 +14398,7 @@ func InternalTempInputScalar(bb Rect, id ID, label string, data_type DataType, p
 		labelFin()
 		formatFin()
 	}()
-	return C.wrap_igTempInputScalar(internal.ReinterpretCast[C.ImRect](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), labelArg, C.ImGuiDataType(data_type), C.uintptr_t(p_data), formatArg) == C.bool(true)
+	return C.wrap_igTempInputScalar(internal.ReinterpretCast[C.ImRect_c](bb.ToC()), internal.ReinterpretCast[C.ImGuiID](idArg), labelArg, C.ImGuiDataType(data_type), C.uintptr_t(p_data), formatArg) == C.bool(true)
 }
 
 func InternalTextEx(text string) {
@@ -14516,7 +14456,7 @@ func VSliderFloat(label string, size Vec2, v *float32, v_min, v_max float32) boo
 		labelFin()
 		vFin()
 	}()
-	return C.wrap_igVSliderFloat(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
+	return C.wrap_igVSliderFloat(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), vArg, C.float(v_min), C.float(v_max)) == C.bool(true)
 }
 
 func VSliderInt(label string, size Vec2, v *int32, v_min, v_max int32) bool {
@@ -14527,7 +14467,7 @@ func VSliderInt(label string, size Vec2, v *int32, v_min, v_max int32) bool {
 		labelFin()
 		vFin()
 	}()
-	return C.wrap_igVSliderInt(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
+	return C.wrap_igVSliderInt(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), vArg, C.int(v_min), C.int(v_max)) == C.bool(true)
 }
 
 func VSliderScalar(label string, size Vec2, data_type DataType, p_data, p_min, p_max uintptr) bool {
@@ -14536,7 +14476,7 @@ func VSliderScalar(label string, size Vec2, data_type DataType, p_data, p_min, p
 	defer func() {
 		labelFin()
 	}()
-	return C.wrap_igVSliderScalar(labelArg, internal.ReinterpretCast[C.ImVec2](size.ToC()), C.ImGuiDataType(data_type), C.uintptr_t(p_data), C.uintptr_t(p_min), C.uintptr_t(p_max)) == C.bool(true)
+	return C.wrap_igVSliderScalar(labelArg, internal.ReinterpretCast[C.ImVec2_c](size.ToC()), C.ImGuiDataType(data_type), C.uintptr_t(p_data), C.uintptr_t(p_min), C.uintptr_t(p_max)) == C.bool(true)
 }
 
 func ValueFloat(prefix string, v float32) {
@@ -14579,7 +14519,7 @@ func (self *Color) Value() Vec4 {
 		selfFin()
 	}()
 	return func() Vec4 {
-		out := C.wrap_ImColor_GetValue(internal.ReinterpretCast[*C.ImColor](selfArg))
+		out := C.wrap_ImColor_GetValue(internal.ReinterpretCast[*C.ImColor_c](selfArg))
 		return *(&Vec4{}).FromC(unsafe.Pointer(&out))
 	}()
 }
@@ -14639,7 +14579,7 @@ func (self *DrawChannel) IdxBuffer() vectors.Vector[DrawIdx] {
 func (self DrawCmd) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawCmd_SetClipRect(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_ImDrawCmd_SetClipRect(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self DrawCmd) SetTexRef(v TextureRef) {
@@ -14709,12 +14649,13 @@ func (self *DrawCmd) ClipRect() Vec4 {
 func (self *DrawCmd) TexRef() TextureRef {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImDrawCmd_GetTexRef(internal.ReinterpretCast[*C.ImDrawCmd](selfArg))
-
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextureRefFromC(func() *C.ImTextureRef { result := result; return &result }())
+	return *NewTextureRefFromC(func() *C.ImTextureRef {
+		result := C.wrap_ImDrawCmd_GetTexRef(internal.ReinterpretCast[*C.ImDrawCmd](selfArg))
+		return &result
+	}())
 }
 
 func (self *DrawCmd) VtxOffset() uint32 {
@@ -14785,7 +14726,7 @@ func (self *DrawCmd) UserCallbackDataOffset() int32 {
 func (self DrawCmdHeader) SetClipRect(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawCmdHeader_SetClipRect(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_ImDrawCmdHeader_SetClipRect(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self DrawCmdHeader) SetTexRef(v TextureRef) {
@@ -14817,12 +14758,13 @@ func (self *DrawCmdHeader) ClipRect() Vec4 {
 func (self *DrawCmdHeader) TexRef() TextureRef {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImDrawCmdHeader_GetTexRef(internal.ReinterpretCast[*C.ImDrawCmdHeader](selfArg))
-
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextureRefFromC(func() *C.ImTextureRef { result := result; return &result }())
+	return *NewTextureRefFromC(func() *C.ImTextureRef {
+		result := C.wrap_ImDrawCmdHeader_GetTexRef(internal.ReinterpretCast[*C.ImDrawCmdHeader](selfArg))
+		return &result
+	}())
 }
 
 func (self *DrawCmdHeader) VtxOffset() uint32 {
@@ -14861,19 +14803,19 @@ func (self DrawData) SetTotalVtxCount(v int32) {
 func (self DrawData) SetDisplayPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawData_SetDisplayPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImDrawData_SetDisplayPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DrawData) SetDisplaySize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawData_SetDisplaySize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImDrawData_SetDisplaySize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DrawData) SetFramebufferScale(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawData_SetFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImDrawData_SetFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DrawData) SetOwnerViewport(v *Viewport) {
@@ -15105,7 +15047,7 @@ func (self DrawList) SetPath(v vectors.Vector[Vec2]) {
 	vVecArg := new(C.ImVector_ImVec2)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImVec2](vDataArg)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImVec2_c](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
@@ -15135,7 +15077,7 @@ func (self DrawList) SetClipRectStack(v vectors.Vector[Vec4]) {
 	vVecArg := new(C.ImVector_ImVec4)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImVec4](vDataArg)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImVec4_c](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
@@ -15345,7 +15287,7 @@ func (self *DrawList) OwnerName() string {
 func (self DrawListSharedData) SetTexUvWhitePixel(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawListSharedData_SetTexUvWhitePixel(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImDrawListSharedData_SetTexUvWhitePixel(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DrawListSharedData) SetTexUvLines(v *Vec4) {
@@ -15353,7 +15295,7 @@ func (self DrawListSharedData) SetTexUvLines(v *Vec4) {
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawListSharedData_SetTexUvLines(selfArg, internal.ReinterpretCast[*C.ImVec4](vArg))
+	C.wrap_ImDrawListSharedData_SetTexUvLines(selfArg, internal.ReinterpretCast[*C.ImVec4_c](vArg))
 }
 
 func (self DrawListSharedData) SetFontAtlas(v *FontAtlas) {
@@ -15411,7 +15353,7 @@ func (self DrawListSharedData) SetInitialFlags(v DrawListFlags) {
 func (self DrawListSharedData) SetClipRectFullscreen(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawListSharedData_SetClipRectFullscreen(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_ImDrawListSharedData_SetClipRectFullscreen(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self DrawListSharedData) SetTempBuffer(v vectors.Vector[Vec2]) {
@@ -15420,7 +15362,7 @@ func (self DrawListSharedData) SetTempBuffer(v vectors.Vector[Vec2]) {
 	vVecArg := new(C.ImVector_ImVec2)
 	vVecArg.Size = C.int(v.Size)
 	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImVec2](vDataArg)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImVec2_c](vDataArg)
 	v.Pinner().Pin(vVecArg.Data)
 
 	selfArg, selfFin := self.Handle()
@@ -15437,14 +15379,14 @@ func (self DrawListSharedData) SetContext(v *Context) {
 }
 
 func (self DrawListSharedData) SetArcFastVtx(v *[48]Vec2) {
-	vArg := make([]C.ImVec2, len(v))
+	vArg := make([]C.ImVec2_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec2](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec2_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawListSharedData_SetArcFastVtx(selfArg, (*C.ImVec2)(&vArg[0]))
+	C.wrap_ImDrawListSharedData_SetArcFastVtx(selfArg, (*C.ImVec2_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
@@ -15703,13 +15645,13 @@ func (self *DrawListSplitter) Channels() vectors.Vector[DrawChannel] {
 func (self DrawVert) SetPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawVert_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImDrawVert_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DrawVert) SetUv(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImDrawVert_SetUv(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImDrawVert_SetUv(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DrawVert) SetCol(v uint32) {
@@ -15759,12 +15701,12 @@ func (self Font) SetLastBaked(v *FontBaked) {
 	C.wrap_ImFont_SetLastBaked(selfArg, internal.ReinterpretCast[*C.ImFontBaked](vArg))
 }
 
-func (self Font) SetContainerAtlas(v *FontAtlas) {
+func (self Font) SetOwnerAtlas(v *FontAtlas) {
 	vArg, _ := v.Handle()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFont_SetContainerAtlas(selfArg, internal.ReinterpretCast[*C.ImFontAtlas](vArg))
+	C.wrap_ImFont_SetOwnerAtlas(selfArg, internal.ReinterpretCast[*C.ImFontAtlas](vArg))
 }
 
 func (self Font) SetFlags(v FontFlags) {
@@ -15843,13 +15785,13 @@ func (self *Font) LastBaked() *FontBaked {
 	return NewFontBakedFromC(C.wrap_ImFont_GetLastBaked(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
-func (self *Font) ContainerAtlas() *FontAtlas {
+func (self *Font) OwnerAtlas() *FontAtlas {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontAtlasFromC(C.wrap_ImFont_GetContainerAtlas(internal.ReinterpretCast[*C.ImFont](selfArg)))
+	return NewFontAtlasFromC(C.wrap_ImFont_GetOwnerAtlas(internal.ReinterpretCast[*C.ImFont](selfArg)))
 }
 
 func (self *Font) Flags() FontFlags {
@@ -16048,13 +15990,13 @@ func (self FontAtlas) SetTexPixelsUseColors(v bool) {
 func (self FontAtlas) SetTexUvScale(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexUvScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImFontAtlas_SetTexUvScale(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self FontAtlas) SetTexUvWhitePixel(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexUvWhitePixel(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImFontAtlas_SetTexUvWhitePixel(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self FontAtlas) SetSources(v vectors.Vector[FontConfig]) {
@@ -16072,14 +16014,14 @@ func (self FontAtlas) SetSources(v vectors.Vector[FontConfig]) {
 }
 
 func (self FontAtlas) SetTexUvLines(v *[33]Vec4) {
-	vArg := make([]C.ImVec4, len(v))
+	vArg := make([]C.ImVec4_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec4](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec4_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlas_SetTexUvLines(selfArg, (*C.ImVec4)(&vArg[0]))
+	C.wrap_ImFontAtlas_SetTexUvLines(selfArg, (*C.ImVec4_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() Vec4 { out := vV; return *(&Vec4{}).FromC(unsafe.Pointer(&out)) }()
@@ -16215,12 +16157,13 @@ func (self *FontAtlas) UserData() uintptr {
 func (self *FontAtlas) TexRef() TextureRef {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImFontAtlas_GetTexRef(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
-
 	defer func() {
 		selfFin()
 	}()
-	return *NewTextureRefFromC(func() *C.ImTextureRef { result := result; return &result }())
+	return *NewTextureRefFromC(func() *C.ImTextureRef {
+		result := C.wrap_ImFontAtlas_GetTexRef(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
+		return &result
+	}())
 }
 
 func (self *FontAtlas) TexData() *TextureData {
@@ -16441,14 +16384,6 @@ func (self *FontAtlas) OwnerContext() *Context {
 	return NewContextFromC(C.wrap_ImFontAtlas_GetOwnerContext(internal.ReinterpretCast[*C.ImFontAtlas](selfArg)))
 }
 
-func (self FontAtlasBuilder) SetPackContext(v stbrpcontextopaque) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontAtlasBuilder_SetPackContext(selfArg, internal.ReinterpretCast[C.stbrp_context_opaque](vArg))
-}
-
 func (self FontAtlasBuilder) SetRects(v vectors.Vector[TextureRect]) {
 	vData := v.Data
 	vDataArg, _ := vData.Handle()
@@ -16663,23 +16598,25 @@ func (self *FontAtlasBuilder) FrameCount() int32 {
 func (self *FontAtlasBuilder) MaxRectSize() Vec2i {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImFontAtlasBuilder_GetMaxRectSize(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
-
 	defer func() {
 		selfFin()
 	}()
-	return *NewVec2iFromC(func() *C.ImVec2i { result := result; return &result }())
+	return *NewVec2iFromC(func() *C.ImVec2i {
+		result := C.wrap_ImFontAtlasBuilder_GetMaxRectSize(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+		return &result
+	}())
 }
 
 func (self *FontAtlasBuilder) MaxRectBounds() Vec2i {
 	selfArg, selfFin := self.Handle()
 
-	result := C.wrap_ImFontAtlasBuilder_GetMaxRectBounds(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
-
 	defer func() {
 		selfFin()
 	}()
-	return *NewVec2iFromC(func() *C.ImVec2i { result := result; return &result }())
+	return *NewVec2iFromC(func() *C.ImVec2i {
+		result := C.wrap_ImFontAtlasBuilder_GetMaxRectBounds(internal.ReinterpretCast[*C.ImFontAtlasBuilder](selfArg))
+		return &result
+	}())
 }
 
 func (self *FontAtlasBuilder) LockDisableResize() bool {
@@ -16929,13 +16866,13 @@ func (self FontAtlasRect) SetH(v uint16) {
 func (self FontAtlasRect) SetUv0(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasRect_SetUv0(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImFontAtlasRect_SetUv0(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self FontAtlasRect) SetUv1(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontAtlasRect_SetUv1(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImFontAtlasRect_SetUv1(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self *FontAtlasRect) X() uint16 {
@@ -17159,12 +17096,12 @@ func (self FontBaked) SetBakedId(v ID) {
 	C.wrap_ImFontBaked_SetBakedId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
-func (self FontBaked) SetContainerFont(v *Font) {
+func (self FontBaked) SetOwnerFont(v *Font) {
 	vArg, _ := v.Handle()
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontBaked_SetContainerFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
+	C.wrap_ImFontBaked_SetOwnerFont(selfArg, internal.ReinterpretCast[*C.ImFont](vArg))
 }
 
 func (self FontBaked) SetFontLoaderDatas(v uintptr) {
@@ -17319,13 +17256,13 @@ func (self *FontBaked) BakedId() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
-func (self *FontBaked) ContainerFont() *Font {
+func (self *FontBaked) OwnerFont() *Font {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return NewFontFromC(C.wrap_ImFontBaked_GetContainerFont(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
+	return NewFontFromC(C.wrap_ImFontBaked_GetOwnerFont(internal.ReinterpretCast[*C.ImFontBaked](selfArg)))
 }
 
 func (self *FontBaked) FontLoaderDatas() uintptr {
@@ -17382,12 +17319,6 @@ func (self FontConfig) SetPixelSnapH(v bool) {
 	C.wrap_ImFontConfig_SetPixelSnapH(selfArg, C.bool(v))
 }
 
-func (self FontConfig) SetPixelSnapV(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImFontConfig_SetPixelSnapV(selfArg, C.bool(v))
-}
-
 func (self FontConfig) SetOversampleH(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -17427,7 +17358,7 @@ func (self FontConfig) SetGlyphExcludeRanges(v *Wchar) {
 func (self FontConfig) SetGlyphOffset(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImFontConfig_SetGlyphOffset(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImFontConfig_SetGlyphOffset(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self FontConfig) SetGlyphMinAdvanceX(v float32) {
@@ -17470,6 +17401,12 @@ func (self FontConfig) SetRasterizerDensity(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImFontConfig_SetRasterizerDensity(selfArg, C.float(v))
+}
+
+func (self FontConfig) SetExtraSizeScale(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImFontConfig_SetExtraSizeScale(selfArg, C.float(v))
 }
 
 func (self FontConfig) SetFlags(v FontFlags) {
@@ -17560,15 +17497,6 @@ func (self *FontConfig) PixelSnapH() bool {
 		selfFin()
 	}()
 	return C.wrap_ImFontConfig_GetPixelSnapH(internal.ReinterpretCast[*C.ImFontConfig](selfArg)) == C.bool(true)
-}
-
-func (self *FontConfig) PixelSnapV() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImFontConfig_GetPixelSnapV(internal.ReinterpretCast[*C.ImFontConfig](selfArg)) == C.bool(true)
 }
 
 func (self *FontConfig) OversampleH() int {
@@ -17698,6 +17626,15 @@ func (self *FontConfig) RasterizerDensity() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImFontConfig_GetRasterizerDensity(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
+}
+
+func (self *FontConfig) ExtraSizeScale() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImFontConfig_GetExtraSizeScale(internal.ReinterpretCast[*C.ImFontConfig](selfArg)))
 }
 
 func (self *FontConfig) Flags() FontFlags {
@@ -18100,19 +18037,19 @@ func (self BoxSelectState) SetKeyMods(v KeyChord) {
 func (self BoxSelectState) SetStartPosRel(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiBoxSelectState_SetStartPosRel(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiBoxSelectState_SetStartPosRel(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self BoxSelectState) SetEndPosRel(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiBoxSelectState_SetEndPosRel(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiBoxSelectState_SetEndPosRel(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self BoxSelectState) SetScrollAccum(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiBoxSelectState_SetScrollAccum(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiBoxSelectState_SetScrollAccum(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self BoxSelectState) SetWindow(v *Window) {
@@ -18132,19 +18069,19 @@ func (self BoxSelectState) SetUnclipMode(v bool) {
 func (self BoxSelectState) SetUnclipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiBoxSelectState_SetUnclipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiBoxSelectState_SetUnclipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self BoxSelectState) SetBoxSelectRectPrev(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiBoxSelectState_SetBoxSelectRectPrev(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiBoxSelectState_SetBoxSelectRectPrev(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self BoxSelectState) SetBoxSelectRectCurr(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiBoxSelectState_SetBoxSelectRectCurr(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiBoxSelectState_SetBoxSelectRectCurr(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self *BoxSelectState) ID() ID {
@@ -18313,7 +18250,7 @@ func (self ColorMod) SetCol(v Col) {
 func (self ColorMod) SetBackupValue(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiColorMod_SetBackupValue(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_ImGuiColorMod_SetBackupValue(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self *ColorMod) Col() Col {
@@ -18340,25 +18277,25 @@ func (self *ColorMod) BackupValue() Vec4 {
 func (self ComboPreviewData) SetPreviewRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiComboPreviewData_SetPreviewRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiComboPreviewData_SetPreviewRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self ComboPreviewData) SetBackupCursorPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiComboPreviewData_SetBackupCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiComboPreviewData_SetBackupCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ComboPreviewData) SetBackupCursorMaxPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiComboPreviewData_SetBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiComboPreviewData_SetBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ComboPreviewData) SetBackupCursorPosPrevLine(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiComboPreviewData_SetBackupCursorPosPrevLine(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiComboPreviewData_SetBackupCursorPosPrevLine(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ComboPreviewData) SetBackupPrevLineTextBaseOffset(v float32) {
@@ -18443,6 +18380,69 @@ func (self Context) SetInitialized(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetInitialized(selfArg, C.bool(v))
+}
+
+func (self Context) SetWithinFrameScope(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetWithinFrameScope(selfArg, C.bool(v))
+}
+
+func (self Context) SetWithinFrameScopeWithImplicitWindow(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetWithinFrameScopeWithImplicitWindow(selfArg, C.bool(v))
+}
+
+func (self Context) SetTestEngineHookItems(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetTestEngineHookItems(selfArg, C.bool(v))
+}
+
+func (self Context) SetFrameCount(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFrameCount(selfArg, C.int(v))
+}
+
+func (self Context) SetFrameCountEnded(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFrameCountEnded(selfArg, C.int(v))
+}
+
+func (self Context) SetFrameCountPlatformEnded(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFrameCountPlatformEnded(selfArg, C.int(v))
+}
+
+func (self Context) SetFrameCountRendered(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetFrameCountRendered(selfArg, C.int(v))
+}
+
+func (self Context) SetTime(v float64) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetTime(selfArg, C.double(v))
+}
+
+func (self Context) SetContextName(v *[16]rune) {
+	vArg := make([]C.char, len(v))
+	for i, vV := range v {
+		vArg[i] = C.char(vV)
+	}
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetContextName(selfArg, (*C.char)(&vArg[0]))
+
+	for i, vV := range vArg {
+		(*v)[i] = rune(vV)
+	}
 }
 
 func (self Context) SetIO(v IO) {
@@ -18535,36 +18535,6 @@ func (self Context) SetDrawListSharedData(v DrawListSharedData) {
 	C.wrap_ImGuiContext_SetDrawListSharedData(selfArg, internal.ReinterpretCast[C.ImDrawListSharedData](vArg))
 }
 
-func (self Context) SetTime(v float64) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetTime(selfArg, C.double(v))
-}
-
-func (self Context) SetFrameCount(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetFrameCount(selfArg, C.int(v))
-}
-
-func (self Context) SetFrameCountEnded(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetFrameCountEnded(selfArg, C.int(v))
-}
-
-func (self Context) SetFrameCountPlatformEnded(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetFrameCountPlatformEnded(selfArg, C.int(v))
-}
-
-func (self Context) SetFrameCountRendered(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetFrameCountRendered(selfArg, C.int(v))
-}
-
 func (self Context) SetWithinEndChildID(v ID) {
 	vArg, _ := v.C()
 
@@ -18573,49 +18543,10 @@ func (self Context) SetWithinEndChildID(v ID) {
 	C.wrap_ImGuiContext_SetWithinEndChildID(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
-func (self Context) SetWithinFrameScope(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetWithinFrameScope(selfArg, C.bool(v))
-}
-
-func (self Context) SetWithinFrameScopeWithImplicitWindow(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetWithinFrameScopeWithImplicitWindow(selfArg, C.bool(v))
-}
-
-func (self Context) SetGcCompactAll(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetGcCompactAll(selfArg, C.bool(v))
-}
-
-func (self Context) SetTestEngineHookItems(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetTestEngineHookItems(selfArg, C.bool(v))
-}
-
 func (self Context) SetTestEngine(v uintptr) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetTestEngine(selfArg, C.uintptr_t(v))
-}
-
-func (self Context) SetContextName(v *[16]rune) {
-	vArg := make([]C.char, len(v))
-	for i, vV := range v {
-		vArg[i] = C.char(vV)
-	}
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetContextName(selfArg, (*C.char)(&vArg[0]))
-
-	for i, vV := range vArg {
-		(*v)[i] = rune(vV)
-	}
 }
 
 func (self Context) SetInputEventsQueue(v vectors.Vector[InputEvent]) {
@@ -18751,7 +18682,7 @@ func (self Context) SetWheelingWindow(v *Window) {
 func (self Context) SetWheelingWindowRefMousePos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetWheelingWindowRefMousePos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetWheelingWindowRefMousePos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetWheelingWindowStartFrame(v int32) {
@@ -18775,13 +18706,13 @@ func (self Context) SetWheelingWindowReleaseTimer(v float32) {
 func (self Context) SetWheelingWindowWheelRemainder(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetWheelingWindowWheelRemainder(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetWheelingWindowWheelRemainder(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetWheelingAxisAvg(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetWheelingAxisAvg(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetWheelingAxisAvg(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetDebugDrawIdConflictsId(v ID) {
@@ -18916,6 +18847,12 @@ func (self Context) SetActiveIdFromShortcut(v bool) {
 	C.wrap_ImGuiContext_SetActiveIdFromShortcut(selfArg, C.bool(v))
 }
 
+func (self Context) SetActiveIdMouseButton(v int) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetActiveIdMouseButton(selfArg, C.ImS8(v))
+}
+
 func (self Context) SetActiveIdDisabledId(v ID) {
 	vArg, _ := v.C()
 
@@ -18924,16 +18861,16 @@ func (self Context) SetActiveIdDisabledId(v ID) {
 	C.wrap_ImGuiContext_SetActiveIdDisabledId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
-func (self Context) SetActiveIdMouseButton(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetActiveIdMouseButton(selfArg, C.int(v))
-}
-
 func (self Context) SetActiveIdClickOffset(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetActiveIdClickOffset(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetActiveIdClickOffset(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
+}
+
+func (self Context) SetActiveIdSource(v InputSource) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetActiveIdSource(selfArg, C.ImGuiInputSource(v))
 }
 
 func (self Context) SetActiveIdWindow(v *Window) {
@@ -18942,12 +18879,6 @@ func (self Context) SetActiveIdWindow(v *Window) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetActiveIdWindow(selfArg, internal.ReinterpretCast[*C.ImGuiWindow](vArg))
-}
-
-func (self Context) SetActiveIdSource(v InputSource) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetActiveIdSource(selfArg, C.ImGuiInputSource(v))
 }
 
 func (self Context) SetActiveIdPreviousFrame(v ID) {
@@ -19108,6 +19039,12 @@ func (self Context) SetDebugShowGroupRects(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetDebugShowGroupRects(selfArg, C.bool(v))
+}
+
+func (self Context) SetGcCompactAll(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetGcCompactAll(selfArg, C.bool(v))
 }
 
 func (self Context) SetDebugFlashStyleColorIdx(v Col) {
@@ -19285,7 +19222,7 @@ func (self Context) SetFallbackMonitor(v PlatformMonitor) {
 func (self Context) SetPlatformMonitorsFullWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetPlatformMonitorsFullWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiContext_SetPlatformMonitorsFullWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Context) SetViewportCreatedCount(v int32) {
@@ -19537,13 +19474,13 @@ func (self Context) SetNavMoveClipDir(v Dir) {
 func (self Context) SetNavScoringRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetNavScoringRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiContext_SetNavScoringRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Context) SetNavScoringNoClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetNavScoringNoClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiContext_SetNavScoringNoClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Context) SetNavScoringDebugCount(v int32) {
@@ -19719,13 +19656,13 @@ func (self Context) SetNavWindowingToggleKey(v Key) {
 func (self Context) SetNavWindowingAccumDeltaPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetNavWindowingAccumDeltaPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetNavWindowingAccumDeltaPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetNavWindowingAccumDeltaSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetNavWindowingAccumDeltaSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetNavWindowingAccumDeltaSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetDimBgRatio(v float32) {
@@ -19781,13 +19718,13 @@ func (self Context) SetDragDropPayload(v Payload) {
 func (self Context) SetDragDropTargetRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetDragDropTargetRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiContext_SetDragDropTargetRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Context) SetDragDropTargetClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetDragDropTargetClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiContext_SetDragDropTargetClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Context) SetDragDropTargetId(v ID) {
@@ -19806,10 +19743,16 @@ func (self Context) SetDragDropTargetFullViewport(v ID) {
 	C.wrap_ImGuiContext_SetDragDropTargetFullViewport(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
-func (self Context) SetDragDropAcceptFlags(v DragDropFlags) {
+func (self Context) SetDragDropAcceptFlagsCurr(v DragDropFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetDragDropAcceptFlags(selfArg, C.ImGuiDragDropFlags(v))
+	C.wrap_ImGuiContext_SetDragDropAcceptFlagsCurr(selfArg, C.ImGuiDragDropFlags(v))
+}
+
+func (self Context) SetDragDropAcceptFlagsPrev(v DragDropFlags) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetDragDropAcceptFlagsPrev(selfArg, C.ImGuiDragDropFlags(v))
 }
 
 func (self Context) SetDragDropAcceptIdCurrRectSurface(v float32) {
@@ -20078,7 +20021,7 @@ func (self Context) SetMouseStationaryTimer(v float32) {
 func (self Context) SetMouseLastValidPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetMouseLastValidPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetMouseLastValidPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetInputTextState(v InputTextState) {
@@ -20190,7 +20133,7 @@ func (self Context) SetColorEditSavedColor(v uint32) {
 func (self Context) SetColorPickerRef(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetColorPickerRef(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_ImGuiContext_SetColorPickerRef(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self Context) SetComboPreviewData(v ComboPreviewData) {
@@ -20204,7 +20147,7 @@ func (self Context) SetComboPreviewData(v ComboPreviewData) {
 func (self Context) SetWindowResizeBorderExpectedRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetWindowResizeBorderExpectedRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiContext_SetWindowResizeBorderExpectedRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Context) SetWindowResizeRelativeMode(v bool) {
@@ -20425,6 +20368,12 @@ func (self Context) SetLogEnabled(v bool) {
 	C.wrap_ImGuiContext_SetLogEnabled(selfArg, C.bool(v))
 }
 
+func (self Context) SetLogLineFirstItem(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetLogLineFirstItem(selfArg, C.bool(v))
+}
+
 func (self Context) SetLogFlags(v LogFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20469,12 +20418,6 @@ func (self Context) SetLogLinePosY(v float32) {
 	C.wrap_ImGuiContext_SetLogLinePosY(selfArg, C.float(v))
 }
 
-func (self Context) SetLogLineFirstItem(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiContext_SetLogLineFirstItem(selfArg, C.bool(v))
-}
-
 func (self Context) SetLogDepthRef(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -20510,7 +20453,7 @@ func (self Context) SetErrorCallbackUserData(v uintptr) {
 func (self Context) SetErrorTooltipLockedPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetErrorTooltipLockedPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiContext_SetErrorTooltipLockedPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Context) SetErrorFirst(v bool) {
@@ -20642,7 +20585,7 @@ func (self Context) SetDebugFlashStyleColorTime(v float32) {
 func (self Context) SetDebugFlashStyleColorBackup(v Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiContext_SetDebugFlashStyleColorBackup(selfArg, internal.ReinterpretCast[C.ImVec4](v.ToC()))
+	C.wrap_ImGuiContext_SetDebugFlashStyleColorBackup(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
 func (self Context) SetDebugMetricsConfig(v MetricsConfig) {
@@ -20651,6 +20594,14 @@ func (self Context) SetDebugMetricsConfig(v MetricsConfig) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiContext_SetDebugMetricsConfig(selfArg, internal.ReinterpretCast[C.ImGuiMetricsConfig](vArg))
+}
+
+func (self Context) SetDebugItemPathQuery(v DebugItemPathQuery) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetDebugItemPathQuery(selfArg, internal.ReinterpretCast[C.ImGuiDebugItemPathQuery](vArg))
 }
 
 func (self Context) SetDebugIDStackTool(v IDStackTool) {
@@ -20764,6 +20715,95 @@ func (self *Context) Initialized() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiContext_GetInitialized(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) WithinFrameScope() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetWithinFrameScope(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) WithinFrameScopeWithImplicitWindow() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetWithinFrameScopeWithImplicitWindow(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) TestEngineHookItems() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetTestEngineHookItems(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) FrameCount() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiContext_GetFrameCount(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) FrameCountEnded() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiContext_GetFrameCountEnded(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) FrameCountPlatformEnded() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiContext_GetFrameCountPlatformEnded(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) FrameCountRendered() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiContext_GetFrameCountRendered(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) Time() float64 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float64(C.wrap_ImGuiContext_GetTime(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) ContextName() [16]rune {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [16]rune {
+		result := [16]rune{}
+		resultMirr := C.wrap_ImGuiContext_GetContextName(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+		for i := range result {
+			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
 }
 
 func (self *Context) IO() IO {
@@ -20903,51 +20943,6 @@ func (self *Context) DrawListSharedData() DrawListSharedData {
 	return *NewDrawListSharedDataFromC(func() *C.ImDrawListSharedData { result := result; return &result }())
 }
 
-func (self *Context) Time() float64 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float64(C.wrap_ImGuiContext_GetTime(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
-func (self *Context) FrameCount() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiContext_GetFrameCount(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
-func (self *Context) FrameCountEnded() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiContext_GetFrameCountEnded(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
-func (self *Context) FrameCountPlatformEnded() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiContext_GetFrameCountPlatformEnded(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
-func (self *Context) FrameCountRendered() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiContext_GetFrameCountRendered(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
 func (self *Context) WithinEndChildID() ID {
 	selfArg, selfFin := self.Handle()
 
@@ -20959,42 +20954,6 @@ func (self *Context) WithinEndChildID() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
-func (self *Context) WithinFrameScope() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiContext_GetWithinFrameScope(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
-}
-
-func (self *Context) WithinFrameScopeWithImplicitWindow() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiContext_GetWithinFrameScopeWithImplicitWindow(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
-}
-
-func (self *Context) GcCompactAll() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiContext_GetGcCompactAll(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
-}
-
-func (self *Context) TestEngineHookItems() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiContext_GetTestEngineHookItems(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
-}
-
 func (self *Context) TestEngine() uintptr {
 	selfArg, selfFin := self.Handle()
 
@@ -21002,23 +20961,6 @@ func (self *Context) TestEngine() uintptr {
 		selfFin()
 	}()
 	return uintptr(C.wrap_ImGuiContext_GetTestEngine(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
-func (self *Context) ContextName() [16]rune {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() [16]rune {
-		result := [16]rune{}
-		resultMirr := C.wrap_ImGuiContext_GetContextName(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		for i := range result {
-			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
-		}
-
-		return result
-	}()
 }
 
 func (self *Context) InputEventsQueue() vectors.Vector[InputEvent] {
@@ -21460,6 +21402,15 @@ func (self *Context) ActiveIdFromShortcut() bool {
 	return C.wrap_ImGuiContext_GetActiveIdFromShortcut(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
+func (self *Context) ActiveIdMouseButton() int {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (int)(C.wrap_ImGuiContext_GetActiveIdMouseButton(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
 func (self *Context) ActiveIdDisabledId() ID {
 	selfArg, selfFin := self.Handle()
 
@@ -21469,15 +21420,6 @@ func (self *Context) ActiveIdDisabledId() ID {
 		selfFin()
 	}()
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
-}
-
-func (self *Context) ActiveIdMouseButton() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiContext_GetActiveIdMouseButton(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
 func (self *Context) ActiveIdClickOffset() Vec2 {
@@ -21492,15 +21434,6 @@ func (self *Context) ActiveIdClickOffset() Vec2 {
 	}()
 }
 
-func (self *Context) ActiveIdWindow() *Window {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return NewWindowFromC(C.wrap_ImGuiContext_GetActiveIdWindow(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
 func (self *Context) ActiveIdSource() InputSource {
 	selfArg, selfFin := self.Handle()
 
@@ -21508,6 +21441,15 @@ func (self *Context) ActiveIdSource() InputSource {
 		selfFin()
 	}()
 	return InputSource(C.wrap_ImGuiContext_GetActiveIdSource(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) ActiveIdWindow() *Window {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return NewWindowFromC(C.wrap_ImGuiContext_GetActiveIdWindow(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
 func (self *Context) ActiveIdPreviousFrame() ID {
@@ -21732,6 +21674,15 @@ func (self *Context) DebugShowGroupRects() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiContext_GetDebugShowGroupRects(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) GcCompactAll() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetGcCompactAll(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
 func (self *Context) DebugFlashStyleColorIdx() Col {
@@ -22675,13 +22626,22 @@ func (self *Context) DragDropTargetFullViewport() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
-func (self *Context) DragDropAcceptFlags() DragDropFlags {
+func (self *Context) DragDropAcceptFlagsCurr() DragDropFlags {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return DragDropFlags(C.wrap_ImGuiContext_GetDragDropAcceptFlags(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+	return DragDropFlags(C.wrap_ImGuiContext_GetDragDropAcceptFlagsCurr(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
+}
+
+func (self *Context) DragDropAcceptFlagsPrev() DragDropFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return DragDropFlags(C.wrap_ImGuiContext_GetDragDropAcceptFlagsPrev(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
 }
 
 func (self *Context) DragDropAcceptIdCurrRectSurface() float32 {
@@ -23477,6 +23437,15 @@ func (self *Context) LogEnabled() bool {
 	return C.wrap_ImGuiContext_GetLogEnabled(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
+func (self *Context) LogLineFirstItem() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetLogLineFirstItem(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
 func (self *Context) LogFlags() LogFlags {
 	selfArg, selfFin := self.Handle()
 
@@ -23531,15 +23500,6 @@ func (self *Context) LogLinePosY() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiContext_GetLogLinePosY(internal.ReinterpretCast[*C.ImGuiContext](selfArg)))
-}
-
-func (self *Context) LogLineFirstItem() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiContext_GetLogLineFirstItem(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
 func (self *Context) LogDepthRef() int32 {
@@ -23803,6 +23763,17 @@ func (self *Context) DebugMetricsConfig() MetricsConfig {
 		selfFin()
 	}()
 	return *NewMetricsConfigFromC(func() *C.ImGuiMetricsConfig { result := result; return &result }())
+}
+
+func (self *Context) DebugItemPathQuery() DebugItemPathQuery {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiContext_GetDebugItemPathQuery(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewDebugItemPathQueryFromC(func() *C.ImGuiDebugItemPathQuery { result := result; return &result }())
 }
 
 func (self *Context) DebugIDStackTool() IDStackTool {
@@ -24311,6 +24282,134 @@ func (self *DebugAllocInfo) LastEntriesBuf() [6]DebugAllocEntry {
 	}()
 }
 
+func (self DebugItemPathQuery) SetMainID(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetMainID(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
+func (self DebugItemPathQuery) SetActive(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetActive(selfArg, C.bool(v))
+}
+
+func (self DebugItemPathQuery) SetComplete(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetComplete(selfArg, C.bool(v))
+}
+
+func (self DebugItemPathQuery) SetStep(v int) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetStep(selfArg, C.ImS8(v))
+}
+
+func (self DebugItemPathQuery) SetResults(v vectors.Vector[StackLevelInfo]) {
+	vData := v.Data
+	vDataArg, _ := vData.Handle()
+	vVecArg := new(C.ImVector_ImGuiStackLevelInfo)
+	vVecArg.Size = C.int(v.Size)
+	vVecArg.Capacity = C.int(v.Capacity)
+	vVecArg.Data = internal.ReinterpretCast[*C.ImGuiStackLevelInfo](vDataArg)
+	v.Pinner().Pin(vVecArg.Data)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetResults(selfArg, *vVecArg)
+}
+
+func (self DebugItemPathQuery) SetResultsDescBuf(v TextBuffer) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetResultsDescBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
+}
+
+func (self DebugItemPathQuery) SetResultPathBuf(v TextBuffer) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiDebugItemPathQuery_SetResultPathBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
+}
+
+func (self *DebugItemPathQuery) MainID() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiDebugItemPathQuery_GetMainID(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self *DebugItemPathQuery) Active() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiDebugItemPathQuery_GetActive(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg)) == C.bool(true)
+}
+
+func (self *DebugItemPathQuery) Complete() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiDebugItemPathQuery_GetComplete(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg)) == C.bool(true)
+}
+
+func (self *DebugItemPathQuery) Step() int {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (int)(C.wrap_ImGuiDebugItemPathQuery_GetStep(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg)))
+}
+
+func (self *DebugItemPathQuery) Results() vectors.Vector[StackLevelInfo] {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() vectors.Vector[StackLevelInfo] {
+		result := C.wrap_ImGuiDebugItemPathQuery_GetResults(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, NewStackLevelInfoFromC(result.Data))
+	}()
+}
+
+func (self *DebugItemPathQuery) ResultsDescBuf() TextBuffer {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiDebugItemPathQuery_GetResultsDescBuf(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
+}
+
+func (self *DebugItemPathQuery) ResultPathBuf() TextBuffer {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiDebugItemPathQuery_GetResultPathBuf(internal.ReinterpretCast[*C.ImGuiDebugItemPathQuery](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
+}
+
 func (self DockContext) SetNodes(v Storage) {
 	vArg, _ := v.C()
 
@@ -24464,19 +24563,19 @@ func (self DockNode) SetTabBar(v *TabBar) {
 func (self DockNode) SetPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiDockNode_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiDockNode_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DockNode) SetSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiDockNode_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiDockNode_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DockNode) SetSizeRef(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiDockNode_SetSizeRef(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiDockNode_SetSizeRef(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self DockNode) SetSplitAxis(v Axis) {
@@ -25295,19 +25394,19 @@ func (self GroupData) SetWindowID(v ID) {
 func (self GroupData) SetBackupCursorPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiGroupData_SetBackupCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiGroupData_SetBackupCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self GroupData) SetBackupCursorMaxPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiGroupData_SetBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiGroupData_SetBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self GroupData) SetBackupCursorPosPrevLine(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiGroupData_SetBackupCursorPosPrevLine(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiGroupData_SetBackupCursorPosPrevLine(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self GroupData) SetBackupIndent(v Vec1) {
@@ -25329,7 +25428,7 @@ func (self GroupData) SetBackupGroupOffset(v Vec1) {
 func (self GroupData) SetBackupCurrLineSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiGroupData_SetBackupCurrLineSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiGroupData_SetBackupCurrLineSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self GroupData) SetBackupCurrLineTextBaseOffset(v float32) {
@@ -25344,6 +25443,12 @@ func (self GroupData) SetBackupActiveIdIsAlive(v ID) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiGroupData_SetBackupActiveIdIsAlive(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
+func (self GroupData) SetBackupActiveIdHasBeenEditedThisFrame(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiGroupData_SetBackupActiveIdHasBeenEditedThisFrame(selfArg, C.bool(v))
 }
 
 func (self GroupData) SetBackupDeactivatedIdIsAlive(v bool) {
@@ -25471,6 +25576,15 @@ func (self *GroupData) BackupActiveIdIsAlive() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self *GroupData) BackupActiveIdHasBeenEditedThisFrame() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiGroupData_GetBackupActiveIdHasBeenEditedThisFrame(internal.ReinterpretCast[*C.ImGuiGroupData](selfArg)) == C.bool(true)
+}
+
 func (self *GroupData) BackupDeactivatedIdIsAlive() bool {
 	selfArg, selfFin := self.Handle()
 
@@ -25507,46 +25621,6 @@ func (self *GroupData) EmitItem() bool {
 	return C.wrap_ImGuiGroupData_GetEmitItem(internal.ReinterpretCast[*C.ImGuiGroupData](selfArg)) == C.bool(true)
 }
 
-func (self IDStackTool) SetLastActiveFrame(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetLastActiveFrame(selfArg, C.int(v))
-}
-
-func (self IDStackTool) SetStackLevel(v int32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetStackLevel(selfArg, C.int(v))
-}
-
-func (self IDStackTool) SetQueryMainId(v ID) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetQueryMainId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
-}
-
-func (self IDStackTool) SetResults(v vectors.Vector[StackLevelInfo]) {
-	vData := v.Data
-	vDataArg, _ := vData.Handle()
-	vVecArg := new(C.ImVector_ImGuiStackLevelInfo)
-	vVecArg.Size = C.int(v.Size)
-	vVecArg.Capacity = C.int(v.Capacity)
-	vVecArg.Data = internal.ReinterpretCast[*C.ImGuiStackLevelInfo](vDataArg)
-	v.Pinner().Pin(vVecArg.Data)
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetResults(selfArg, *vVecArg)
-}
-
-func (self IDStackTool) SetQueryHookActive(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetQueryHookActive(selfArg, C.bool(v))
-}
-
 func (self IDStackTool) SetOptHexEncodeNonAsciiChars(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -25559,76 +25633,16 @@ func (self IDStackTool) SetOptCopyToClipboardOnCtrlC(v bool) {
 	C.wrap_ImGuiIDStackTool_SetOptCopyToClipboardOnCtrlC(selfArg, C.bool(v))
 }
 
+func (self IDStackTool) SetLastActiveFrame(v int32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIDStackTool_SetLastActiveFrame(selfArg, C.int(v))
+}
+
 func (self IDStackTool) SetCopyToClipboardLastTime(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiIDStackTool_SetCopyToClipboardLastTime(selfArg, C.float(v))
-}
-
-func (self IDStackTool) SetResultPathsBuf(v TextBuffer) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetResultPathsBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
-}
-
-func (self IDStackTool) SetResultTempBuf(v TextBuffer) {
-	vArg, _ := v.C()
-
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiIDStackTool_SetResultTempBuf(selfArg, internal.ReinterpretCast[C.ImGuiTextBuffer](vArg))
-}
-
-func (self *IDStackTool) LastActiveFrame() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiIDStackTool_GetLastActiveFrame(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)))
-}
-
-func (self *IDStackTool) StackLevel() int32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return int32(C.wrap_ImGuiIDStackTool_GetStackLevel(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)))
-}
-
-func (self *IDStackTool) QueryMainId() ID {
-	selfArg, selfFin := self.Handle()
-
-	result := C.wrap_ImGuiIDStackTool_GetQueryMainId(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
-
-	defer func() {
-		selfFin()
-	}()
-	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
-}
-
-func (self *IDStackTool) Results() vectors.Vector[StackLevelInfo] {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() vectors.Vector[StackLevelInfo] {
-		result := C.wrap_ImGuiIDStackTool_GetResults(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewStackLevelInfoFromC(result.Data))
-	}()
-}
-
-func (self *IDStackTool) QueryHookActive() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiIDStackTool_GetQueryHookActive(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)) == C.bool(true)
 }
 
 func (self *IDStackTool) OptHexEncodeNonAsciiChars() bool {
@@ -25649,6 +25663,15 @@ func (self *IDStackTool) OptCopyToClipboardOnCtrlC() bool {
 	return C.wrap_ImGuiIDStackTool_GetOptCopyToClipboardOnCtrlC(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)) == C.bool(true)
 }
 
+func (self *IDStackTool) LastActiveFrame() int32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return int32(C.wrap_ImGuiIDStackTool_GetLastActiveFrame(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)))
+}
+
 func (self *IDStackTool) CopyToClipboardLastTime() float32 {
 	selfArg, selfFin := self.Handle()
 
@@ -25656,28 +25679,6 @@ func (self *IDStackTool) CopyToClipboardLastTime() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiIDStackTool_GetCopyToClipboardLastTime(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg)))
-}
-
-func (self *IDStackTool) ResultPathsBuf() TextBuffer {
-	selfArg, selfFin := self.Handle()
-
-	result := C.wrap_ImGuiIDStackTool_GetResultPathsBuf(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
-
-	defer func() {
-		selfFin()
-	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
-}
-
-func (self *IDStackTool) ResultTempBuf() TextBuffer {
-	selfArg, selfFin := self.Handle()
-
-	result := C.wrap_ImGuiIDStackTool_GetResultTempBuf(internal.ReinterpretCast[*C.ImGuiIDStackTool](selfArg))
-
-	defer func() {
-		selfFin()
-	}()
-	return *NewTextBufferFromC(func() *C.ImGuiTextBuffer { result := result; return &result }())
 }
 
 func (self IO) SetConfigFlags(v ConfigFlags) {
@@ -25695,13 +25696,13 @@ func (self IO) SetBackendFlags(v BackendFlags) {
 func (self IO) SetDisplaySize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetDisplaySize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiIO_SetDisplaySize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self IO) SetDisplayFramebufferScale(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetDisplayFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiIO_SetDisplayFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self IO) SetDeltaTime(v float32) {
@@ -25806,6 +25807,12 @@ func (self IO) SetConfigDockingNoSplit(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiIO_SetConfigDockingNoSplit(selfArg, C.bool(v))
+}
+
+func (self IO) SetConfigDockingNoDockingOver(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiIO_SetConfigDockingNoDockingOver(selfArg, C.bool(v))
 }
 
 func (self IO) SetConfigDockingWithShift(v bool) {
@@ -26139,7 +26146,7 @@ func (self IO) SetMetricsActiveWindows(v int32) {
 func (self IO) SetMouseDelta(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetMouseDelta(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiIO_SetMouseDelta(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self IO) SetCtx(v *Context) {
@@ -26153,7 +26160,7 @@ func (self IO) SetCtx(v *Context) {
 func (self IO) SetMousePos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetMousePos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiIO_SetMousePos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self IO) SetMouseDown(v *[5]bool) {
@@ -26254,18 +26261,18 @@ func (self IO) SetWantCaptureMouseUnlessPopupClose(v bool) {
 func (self IO) SetMousePosPrev(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetMousePosPrev(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiIO_SetMousePosPrev(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self IO) SetMouseClickedPos(v *[5]Vec2) {
-	vArg := make([]C.ImVec2, len(v))
+	vArg := make([]C.ImVec2_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec2](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec2_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetMouseClickedPos(selfArg, (*C.ImVec2)(&vArg[0]))
+	C.wrap_ImGuiIO_SetMouseClickedPos(selfArg, (*C.ImVec2_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
@@ -26450,14 +26457,14 @@ func (self IO) SetMouseDownDurationPrev(v *[5]float32) {
 }
 
 func (self IO) SetMouseDragMaxDistanceAbs(v *[5]Vec2) {
-	vArg := make([]C.ImVec2, len(v))
+	vArg := make([]C.ImVec2_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec2](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec2_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiIO_SetMouseDragMaxDistanceAbs(selfArg, (*C.ImVec2)(&vArg[0]))
+	C.wrap_ImGuiIO_SetMouseDragMaxDistanceAbs(selfArg, (*C.ImVec2_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() Vec2 { out := vV; return *(&Vec2{}).FromC(unsafe.Pointer(&out)) }()
@@ -26695,6 +26702,15 @@ func (self *IO) ConfigDockingNoSplit() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiIO_GetConfigDockingNoSplit(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
+}
+
+func (self *IO) ConfigDockingNoDockingOver() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiIO_GetConfigDockingNoDockingOver(internal.ReinterpretCast[*C.ImGuiIO](selfArg)) == C.bool(true)
 }
 
 func (self *IO) ConfigDockingWithShift() bool {
@@ -28288,7 +28304,7 @@ func (self InputTextState) SetBufCapacity(v int32) {
 func (self InputTextState) SetScroll(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiInputTextState_SetScroll(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiInputTextState_SetScroll(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self InputTextState) SetLineCount(v int32) {
@@ -28901,25 +28917,25 @@ func (self LastItemData) SetStatusFlags(v ItemStatusFlags) {
 func (self LastItemData) SetRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiLastItemData_SetRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiLastItemData_SetRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self LastItemData) SetNavRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiLastItemData_SetNavRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiLastItemData_SetNavRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self LastItemData) SetDisplayRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiLastItemData_SetDisplayRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiLastItemData_SetDisplayRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self LastItemData) SetClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiLastItemData_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiLastItemData_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self LastItemData) SetShortcut(v KeyChord) {
@@ -29992,13 +30008,13 @@ func (self MultiSelectTempData) SetFlags(v MultiSelectFlags) {
 func (self MultiSelectTempData) SetScopeRectMin(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiMultiSelectTempData_SetScopeRectMin(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiMultiSelectTempData_SetScopeRectMin(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self MultiSelectTempData) SetBackupCursorMaxPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiMultiSelectTempData_SetBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiMultiSelectTempData_SetBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self MultiSelectTempData) SetLastSubmittedItem(v SelectionUserData) {
@@ -30254,7 +30270,7 @@ func (self NavItemData) SetFocusScopeId(v ID) {
 func (self NavItemData) SetRectRel(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNavItemData_SetRectRel(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiNavItemData_SetRectRel(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self NavItemData) SetItemFlags(v ItemFlags) {
@@ -30455,6 +30471,12 @@ func (self NextItemData) SetStorageId(v ID) {
 	C.wrap_ImGuiNextItemData_SetStorageId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
+func (self NextItemData) SetColorMarker(v uint32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiNextItemData_SetColorMarker(selfArg, C.ImU32(v))
+}
+
 func (self *NextItemData) HasFlags() NextItemDataFlags {
 	selfArg, selfFin := self.Handle()
 
@@ -30564,6 +30586,15 @@ func (self *NextItemData) StorageId() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
+func (self *NextItemData) ColorMarker() uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (uint32)(C.wrap_ImGuiNextItemData_GetColorMarker(internal.ReinterpretCast[*C.ImGuiNextItemData](selfArg)))
+}
+
 func (self NextWindowData) SetHasFlags(v NextWindowDataFlags) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -30597,31 +30628,31 @@ func (self NextWindowData) SetDockCond(v Cond) {
 func (self NextWindowData) SetPosVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetPosVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetPosVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self NextWindowData) SetPosPivotVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetPosPivotVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetPosPivotVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self NextWindowData) SetSizeVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetSizeVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetSizeVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self NextWindowData) SetContentSizeVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetContentSizeVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetContentSizeVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self NextWindowData) SetScrollVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetScrollVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetScrollVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self NextWindowData) SetWindowFlags(v WindowFlags) {
@@ -30651,7 +30682,7 @@ func (self NextWindowData) SetCollapsedVal(v bool) {
 func (self NextWindowData) SetSizeConstraintRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetSizeConstraintRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetSizeConstraintRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self NextWindowData) SetSizeCallback(v SizeCallback) {
@@ -30701,7 +30732,7 @@ func (self NextWindowData) SetWindowClass(v WindowClass) {
 func (self NextWindowData) SetMenuBarOffsetMinVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiNextWindowData_SetMenuBarOffsetMinVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiNextWindowData_SetMenuBarOffsetMinVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self NextWindowData) SetRefreshFlagsVal(v WindowRefreshFlags) {
@@ -30967,7 +30998,7 @@ func (self OldColumnData) SetFlags(v OldColumnFlags) {
 func (self OldColumnData) SetClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiOldColumnData_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiOldColumnData_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self *OldColumnData) OffsetNorm() float32 {
@@ -31086,19 +31117,19 @@ func (self OldColumns) SetHostCursorMaxPosX(v float32) {
 func (self OldColumns) SetHostInitialClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiOldColumns_SetHostInitialClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiOldColumns_SetHostInitialClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self OldColumns) SetHostBackupClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiOldColumns_SetHostBackupClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiOldColumns_SetHostBackupClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self OldColumns) SetHostBackupParentWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiOldColumns_SetHostBackupParentWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiOldColumns_SetHostBackupParentWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self OldColumns) SetColumns(v vectors.Vector[OldColumnData]) {
@@ -31622,7 +31653,7 @@ func (self PlatformImeData) SetWantTextInput(v bool) {
 func (self PlatformImeData) SetInputPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPlatformImeData_SetInputPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPlatformImeData_SetInputPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self PlatformImeData) SetInputLineHeight(v float32) {
@@ -31692,25 +31723,25 @@ func (self *PlatformImeData) ViewportId() ID {
 func (self PlatformMonitor) SetMainPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPlatformMonitor_SetMainPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPlatformMonitor_SetMainPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self PlatformMonitor) SetMainSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPlatformMonitor_SetMainSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPlatformMonitor_SetMainSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self PlatformMonitor) SetWorkPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPlatformMonitor_SetWorkPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPlatformMonitor_SetWorkPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self PlatformMonitor) SetWorkSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPlatformMonitor_SetWorkSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPlatformMonitor_SetWorkSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self PlatformMonitor) SetDpiScale(v float32) {
@@ -31838,13 +31869,13 @@ func (self PopupData) SetOpenParentId(v ID) {
 func (self PopupData) SetOpenPopupPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPopupData_SetOpenPopupPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPopupData_SetOpenPopupPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self PopupData) SetOpenMousePos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiPopupData_SetOpenMousePos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiPopupData_SetOpenMousePos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self *PopupData) PopupId() ID {
@@ -32241,19 +32272,19 @@ func (self SizeCallbackData) SetUserData(v uintptr) {
 func (self SizeCallbackData) SetPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiSizeCallbackData_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiSizeCallbackData_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self SizeCallbackData) SetCurrentSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiSizeCallbackData_SetCurrentSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiSizeCallbackData_SetCurrentSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self SizeCallbackData) SetDesiredSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiSizeCallbackData_SetDesiredSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiSizeCallbackData_SetDesiredSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self *SizeCallbackData) UserData() uintptr {
@@ -32458,7 +32489,7 @@ func (self Style) SetDisabledAlpha(v float32) {
 func (self Style) SetWindowPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetWindowPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetWindowPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetWindowRounding(v float32) {
@@ -32482,13 +32513,13 @@ func (self Style) SetWindowBorderHoverPadding(v float32) {
 func (self Style) SetWindowMinSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetWindowMinSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetWindowMinSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetWindowTitleAlign(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetWindowTitleAlign(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetWindowTitleAlign(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetWindowMenuButtonPosition(v Dir) {
@@ -32524,7 +32555,7 @@ func (self Style) SetPopupBorderSize(v float32) {
 func (self Style) SetFramePadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetFramePadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetFramePadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetFrameRounding(v float32) {
@@ -32542,25 +32573,25 @@ func (self Style) SetFrameBorderSize(v float32) {
 func (self Style) SetItemSpacing(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetItemSpacing(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetItemSpacing(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetItemInnerSpacing(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetItemInnerSpacing(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetItemInnerSpacing(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetCellPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetCellPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetCellPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetTouchExtraPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetTouchExtraPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetTouchExtraPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetIndentSpacing(v float32) {
@@ -32674,7 +32705,7 @@ func (self Style) SetTableAngledHeadersAngle(v float32) {
 func (self Style) SetTableAngledHeadersTextAlign(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetTableAngledHeadersTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetTableAngledHeadersTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetTreeLinesFlags(v TreeNodeFlags) {
@@ -32695,6 +32726,30 @@ func (self Style) SetTreeLinesRounding(v float32) {
 	C.wrap_ImGuiStyle_SetTreeLinesRounding(selfArg, C.float(v))
 }
 
+func (self Style) SetDragDropTargetRounding(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetDragDropTargetRounding(selfArg, C.float(v))
+}
+
+func (self Style) SetDragDropTargetBorderSize(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetDragDropTargetBorderSize(selfArg, C.float(v))
+}
+
+func (self Style) SetDragDropTargetPadding(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetDragDropTargetPadding(selfArg, C.float(v))
+}
+
+func (self Style) SetColorMarkerSize(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetColorMarkerSize(selfArg, C.float(v))
+}
+
 func (self Style) SetColorButtonPosition(v Dir) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -32704,13 +32759,13 @@ func (self Style) SetColorButtonPosition(v Dir) {
 func (self Style) SetButtonTextAlign(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetButtonTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetButtonTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetSelectableTextAlign(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetSelectableTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetSelectableTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetSeparatorTextBorderSize(v float32) {
@@ -32722,25 +32777,25 @@ func (self Style) SetSeparatorTextBorderSize(v float32) {
 func (self Style) SetSeparatorTextAlign(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetSeparatorTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetSeparatorTextAlign(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetSeparatorTextPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetSeparatorTextPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetSeparatorTextPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetDisplayWindowPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetDisplayWindowPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetDisplayWindowPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetDisplaySafeAreaPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetDisplaySafeAreaPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiStyle_SetDisplaySafeAreaPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Style) SetDockingNodeHasCloseButton(v bool) {
@@ -32791,15 +32846,15 @@ func (self Style) SetCircleTessellationMaxError(v float32) {
 	C.wrap_ImGuiStyle_SetCircleTessellationMaxError(selfArg, C.float(v))
 }
 
-func (self Style) SetColors(v *[61]Vec4) {
-	vArg := make([]C.ImVec4, len(v))
+func (self Style) SetColors(v *[62]Vec4) {
+	vArg := make([]C.ImVec4_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImVec4](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImVec4_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiStyle_SetColors(selfArg, (*C.ImVec4)(&vArg[0]))
+	C.wrap_ImGuiStyle_SetColors(selfArg, (*C.ImVec4_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() Vec4 { out := vV; return *(&Vec4{}).FromC(unsafe.Pointer(&out)) }()
@@ -33280,6 +33335,42 @@ func (self *Style) TreeLinesRounding() float32 {
 	return float32(C.wrap_ImGuiStyle_GetTreeLinesRounding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
+func (self *Style) DragDropTargetRounding() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetDragDropTargetRounding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self *Style) DragDropTargetBorderSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetDragDropTargetBorderSize(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self *Style) DragDropTargetPadding() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetDragDropTargetPadding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self *Style) ColorMarkerSize() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetColorMarkerSize(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
 func (self *Style) ColorButtonPosition() Dir {
 	selfArg, selfFin := self.Handle()
 
@@ -33442,14 +33533,14 @@ func (self *Style) CircleTessellationMaxError() float32 {
 	return float32(C.wrap_ImGuiStyle_GetCircleTessellationMaxError(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
-func (self *Style) Colors() [61]Vec4 {
+func (self *Style) Colors() [62]Vec4 {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [61]Vec4 {
-		result := [61]Vec4{}
+	return func() [62]Vec4 {
+		result := [62]Vec4{}
 		resultMirr := C.wrap_ImGuiStyle_GetColors(internal.ReinterpretCast[*C.ImGuiStyle](selfArg))
 		for i := range result {
 			result[i] = func() Vec4 {
@@ -33660,7 +33751,7 @@ func (self TabBar) SetPrevFrameVisible(v int32) {
 func (self TabBar) SetBarRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTabBar_SetBarRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTabBar_SetBarRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self TabBar) SetBarRectPrevWidth(v float32) {
@@ -33806,13 +33897,13 @@ func (self TabBar) SetItemSpacingY(v float32) {
 func (self TabBar) SetFramePadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTabBar_SetFramePadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiTabBar_SetFramePadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self TabBar) SetBackupCursorPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTabBar_SetBackupCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiTabBar_SetBackupCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self TabBar) SetTabsNames(v TextBuffer) {
@@ -34658,55 +34749,55 @@ func (self Table) SetAngledHeadersSlope(v float32) {
 func (self Table) SetOuterRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetOuterRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetOuterRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetInnerRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetInnerRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetInnerRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetInnerClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetInnerClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetInnerClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetBgClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetBgClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetBgClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetBg0ClipRectForDrawCmd(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetBg0ClipRectForDrawCmd(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetBg0ClipRectForDrawCmd(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetBg2ClipRectForDrawCmd(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetBg2ClipRectForDrawCmd(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetBg2ClipRectForDrawCmd(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetHostClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetHostClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetHostClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetHostBackupInnerClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTable_SetHostBackupInnerClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTable_SetHostBackupInnerClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Table) SetOuterWindow(v *Window) {
@@ -36327,7 +36418,7 @@ func (self TableColumn) SetInitStretchWeightOrWidth(v float32) {
 func (self TableColumn) SetClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableColumn_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTableColumn_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self TableColumn) SetUserID(v ID) {
@@ -37446,6 +37537,14 @@ func (self *TableSortSpecs) SpecsDirty() bool {
 	return C.wrap_ImGuiTableSortSpecs_GetSpecsDirty(internal.ReinterpretCast[*C.ImGuiTableSortSpecs](selfArg)) == C.bool(true)
 }
 
+func (self TableTempData) SetWindowID(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTableTempData_SetWindowID(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
 func (self TableTempData) SetTableIndex(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -37481,7 +37580,7 @@ func (self TableTempData) SetAngledHeadersRequests(v vectors.Vector[TableHeaderD
 func (self TableTempData) SetUserOuterSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetUserOuterSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiTableTempData_SetUserOuterSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self TableTempData) SetDrawSplitter(v DrawListSplitter) {
@@ -37495,31 +37594,31 @@ func (self TableTempData) SetDrawSplitter(v DrawListSplitter) {
 func (self TableTempData) SetHostBackupWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetHostBackupWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTableTempData_SetHostBackupWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self TableTempData) SetHostBackupParentWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetHostBackupParentWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTableTempData_SetHostBackupParentWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self TableTempData) SetHostBackupPrevLineSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetHostBackupPrevLineSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiTableTempData_SetHostBackupPrevLineSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self TableTempData) SetHostBackupCurrLineSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetHostBackupCurrLineSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiTableTempData_SetHostBackupCurrLineSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self TableTempData) SetHostBackupCursorMaxPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTableTempData_SetHostBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiTableTempData_SetHostBackupCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self TableTempData) SetHostBackupColumnsOffset(v Vec1) {
@@ -37540,6 +37639,17 @@ func (self TableTempData) SetHostBackupItemWidthStackSize(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiTableTempData_SetHostBackupItemWidthStackSize(selfArg, C.int(v))
+}
+
+func (self *TableTempData) WindowID() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiTableTempData_GetWindowID(internal.ReinterpretCast[*C.ImGuiTableTempData](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
 func (self *TableTempData) TableIndex() int32 {
@@ -37890,7 +38000,7 @@ func (self TreeNodeStackData) SetItemFlags(v ItemFlags) {
 func (self TreeNodeStackData) SetNavRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiTreeNodeStackData_SetNavRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiTreeNodeStackData_SetNavRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self TreeNodeStackData) SetDrawLinesX1(v float32) {
@@ -38207,31 +38317,31 @@ func (self Viewport) SetFlags(v ViewportFlags) {
 func (self Viewport) SetPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewport_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Viewport) SetSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewport_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Viewport) SetFramebufferScale(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewport_SetFramebufferScale(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Viewport) SetWorkPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetWorkPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewport_SetWorkPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Viewport) SetWorkSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewport_SetWorkSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewport_SetWorkSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Viewport) SetDpiScale(v float32) {
@@ -38547,13 +38657,13 @@ func (self ViewportP) SetLastNameHash(v ID) {
 func (self ViewportP) SetLastPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetLastPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetLastPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetLastSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetLastSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetLastSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetAlpha(v float32) {
@@ -38630,43 +38740,43 @@ func (self ViewportP) SetDrawDataBuilder(v DrawDataBuilder) {
 func (self ViewportP) SetLastPlatformPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetLastPlatformPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetLastPlatformPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetLastPlatformSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetLastPlatformSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetLastPlatformSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetLastRendererSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetLastRendererSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetLastRendererSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetWorkInsetMin(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetWorkInsetMin(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetWorkInsetMin(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetWorkInsetMax(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetWorkInsetMax(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetWorkInsetMax(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetBuildWorkInsetMin(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetBuildWorkInsetMin(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetBuildWorkInsetMin(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self ViewportP) SetBuildWorkInsetMax(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiViewportP_SetBuildWorkInsetMax(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiViewportP_SetBuildWorkInsetMax(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self *ViewportP) ImGuiViewport() Viewport {
@@ -38996,7 +39106,7 @@ func (self Window) SetViewportId(v ID) {
 func (self Window) SetViewportPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetViewportPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetViewportPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetViewportAllowPlatformMonitorExtend(v int32) {
@@ -39008,43 +39118,43 @@ func (self Window) SetViewportAllowPlatformMonitorExtend(v int32) {
 func (self Window) SetPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetSizeFull(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetSizeFull(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetSizeFull(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetContentSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetContentSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetContentSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetContentSizeIdeal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetContentSizeIdeal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetContentSizeIdeal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetContentSizeExplicit(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetContentSizeExplicit(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetContentSizeExplicit(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetWindowPadding(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetWindowPadding(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetWindowPadding(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetWindowRounding(v float32) {
@@ -39148,37 +39258,37 @@ func (self Window) SetPopupId(v ID) {
 func (self Window) SetScroll(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetScroll(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetScroll(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetScrollMax(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetScrollMax(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetScrollMax(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetScrollTarget(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetScrollTarget(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetScrollTarget(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetScrollTargetCenterRatio(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetScrollTargetCenterRatio(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetScrollTargetCenterRatio(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetScrollTargetEdgeSnapDist(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetScrollTargetEdgeSnapDist(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetScrollTargetEdgeSnapDist(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetScrollbarSizes(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetScrollbarSizes(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetScrollbarSizes(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetScrollbarX(v bool) {
@@ -39313,6 +39423,12 @@ func (self Window) SetFocusOrder(v int16) {
 	C.wrap_ImGuiWindow_SetFocusOrder(selfArg, C.short(v))
 }
 
+func (self Window) SetAutoPosLastDirection(v Dir) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiWindow_SetAutoPosLastDirection(selfArg, C.ImGuiDir(v))
+}
+
 func (self Window) SetAutoFitFramesX(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -39329,12 +39445,6 @@ func (self Window) SetAutoFitOnlyGrows(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetAutoFitOnlyGrows(selfArg, C.bool(v))
-}
-
-func (self Window) SetAutoPosLastDirection(v Dir) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiWindow_SetAutoPosLastDirection(selfArg, C.ImGuiDir(v))
 }
 
 func (self Window) SetHiddenFramesCanSkipItems(v int) {
@@ -39359,6 +39469,12 @@ func (self Window) SetDisableInputsFrames(v int) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiWindow_SetDisableInputsFrames(selfArg, C.ImS8(v))
+}
+
+func (self Window) SetBgClickFlags(v WindowBgClickFlags) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiWindow_SetBgClickFlags(selfArg, C.ImGuiWindowBgClickFlags(v))
 }
 
 func (self Window) SetSetWindowPosAllowFlags(v Cond) {
@@ -39388,13 +39504,13 @@ func (self Window) SetSetWindowDockAllowFlags(v Cond) {
 func (self Window) SetSetWindowPosVal(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetSetWindowPosVal(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetSetWindowPosVal(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetSetWindowPosPivot(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetSetWindowPosPivot(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindow_SetSetWindowPosPivot(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self Window) SetIDStack(v vectors.Vector[ID]) {
@@ -39422,43 +39538,43 @@ func (self Window) SetDC(v WindowTempData) {
 func (self Window) SetOuterRectClipped(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetOuterRectClipped(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetOuterRectClipped(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetInnerRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetInnerRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetInnerRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetInnerClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetInnerClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetInnerClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetParentWorkRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetParentWorkRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetParentWorkRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetClipRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetClipRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetContentRegionRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetContentRegionRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindow_SetContentRegionRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self Window) SetLastFrameActive(v int32) {
@@ -39636,14 +39752,14 @@ func (self Window) SetNavLastIds(v *[2]ID) {
 }
 
 func (self Window) SetNavRectRel(v *[2]Rect) {
-	vArg := make([]C.ImRect, len(v))
+	vArg := make([]C.ImRect_c, len(v))
 	for i, vV := range v {
-		vArg[i] = internal.ReinterpretCast[C.ImRect](vV.ToC())
+		vArg[i] = internal.ReinterpretCast[C.ImRect_c](vV.ToC())
 	}
 
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindow_SetNavRectRel(selfArg, (*C.ImRect)(&vArg[0]))
+	C.wrap_ImGuiWindow_SetNavRectRel(selfArg, (*C.ImRect_c)(&vArg[0]))
 
 	for i, vV := range vArg {
 		(*v)[i] = func() Rect { out := vV; return *(&Rect{}).FromC(unsafe.Pointer(&out)) }()
@@ -40357,6 +40473,15 @@ func (self *Window) FocusOrder() int16 {
 	return int16(C.wrap_ImGuiWindow_GetFocusOrder(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
 }
 
+func (self *Window) AutoPosLastDirection() Dir {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return Dir(C.wrap_ImGuiWindow_GetAutoPosLastDirection(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
+}
+
 func (self *Window) AutoFitFramesX() int {
 	selfArg, selfFin := self.Handle()
 
@@ -40382,15 +40507,6 @@ func (self *Window) AutoFitOnlyGrows() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiWindow_GetAutoFitOnlyGrows(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)) == C.bool(true)
-}
-
-func (self *Window) AutoPosLastDirection() Dir {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return Dir(C.wrap_ImGuiWindow_GetAutoPosLastDirection(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
 }
 
 func (self *Window) HiddenFramesCanSkipItems() int {
@@ -40427,6 +40543,15 @@ func (self *Window) DisableInputsFrames() int {
 		selfFin()
 	}()
 	return (int)(C.wrap_ImGuiWindow_GetDisableInputsFrames(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
+}
+
+func (self *Window) BgClickFlags() WindowBgClickFlags {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return WindowBgClickFlags(C.wrap_ImGuiWindow_GetBgClickFlags(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
 }
 
 func (self *Window) SetWindowPosAllowFlags() Cond {
@@ -41119,7 +41244,7 @@ func (self *WindowClass) DockingAllowUnclassed() bool {
 	return C.wrap_ImGuiWindowClass_GetDockingAllowUnclassed(internal.ReinterpretCast[*C.ImGuiWindowClass](selfArg)) == C.bool(true)
 }
 
-func (self WindowDockStyle) SetColors(v *[8]uint32) {
+func (self WindowDockStyle) SetColors(v *[9]uint32) {
 	vArg := make([]C.ImU32, len(v))
 	for i, vV := range v {
 		vArg[i] = C.ImU32(vV)
@@ -41134,14 +41259,14 @@ func (self WindowDockStyle) SetColors(v *[8]uint32) {
 	}
 }
 
-func (self *WindowDockStyle) Colors() [8](uint32) {
+func (self *WindowDockStyle) Colors() [9](uint32) {
 	selfArg, selfFin := self.Handle()
 
 	defer func() {
 		selfFin()
 	}()
-	return func() [8](uint32) {
-		result := [8](uint32){}
+	return func() [9](uint32) {
+		result := [9](uint32){}
 		resultMirr := C.wrap_ImGuiWindowDockStyle_GetColors(internal.ReinterpretCast[*C.ImGuiWindowDockStyle](selfArg))
 		for i := range result {
 			result[i] = (uint32)(C.imgui_ImU32_GetAtIdx(resultMirr, C.int(i)))
@@ -41390,43 +41515,43 @@ func (self *WindowStackData) DisabledOverrideReenableAlphaBackup() float32 {
 func (self WindowTempData) SetCursorPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetCursorPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetCursorPosPrevLine(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetCursorPosPrevLine(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetCursorPosPrevLine(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetCursorStartPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetCursorStartPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetCursorStartPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetCursorMaxPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetCursorMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetIdealMaxPos(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetIdealMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetIdealMaxPos(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetCurrLineSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetCurrLineSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetCurrLineSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetPrevLineSize(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetPrevLineSize(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetPrevLineSize(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetCurrLineTextBaseOffset(v float32) {
@@ -41480,7 +41605,7 @@ func (self WindowTempData) SetGroupOffset(v Vec1) {
 func (self WindowTempData) SetCursorStartPosLossyness(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetCursorStartPosLossyness(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetCursorStartPosLossyness(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetNavLayerCurrent(v NavLayer) {
@@ -41528,7 +41653,7 @@ func (self WindowTempData) SetMenuBarAppending(v bool) {
 func (self WindowTempData) SetMenuBarOffset(v Vec2) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetMenuBarOffset(selfArg, internal.ReinterpretCast[C.ImVec2](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetMenuBarOffset(selfArg, internal.ReinterpretCast[C.ImVec2_c](v.ToC()))
 }
 
 func (self WindowTempData) SetMenuColumns(v MenuColumns) {
@@ -41618,7 +41743,7 @@ func (self WindowTempData) SetDockTabItemStatusFlags(v ItemStatusFlags) {
 func (self WindowTempData) SetDockTabItemRect(v Rect) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiWindowTempData_SetDockTabItemRect(selfArg, internal.ReinterpretCast[C.ImRect](v.ToC()))
+	C.wrap_ImGuiWindowTempData_SetDockTabItemRect(selfArg, internal.ReinterpretCast[C.ImRect_c](v.ToC()))
 }
 
 func (self WindowTempData) SetItemWidth(v float32) {
@@ -42441,21 +42566,4 @@ func (self *Vec2i) Y() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImVec2i_GetY(internal.ReinterpretCast[*C.ImVec2i](selfArg)))
-}
-
-func (self *stbrpcontextopaque) ContextopaqueGetData() [80]rune {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return func() [80]rune {
-		result := [80]rune{}
-		resultMirr := C.wrap_stbrp_context_opaque_GetData(internal.ReinterpretCast[*C.stbrp_context_opaque](selfArg))
-		for i := range result {
-			result[i] = rune(C.imgui_char_GetAtIdx(resultMirr, C.int(i)))
-		}
-
-		return result
-	}()
 }

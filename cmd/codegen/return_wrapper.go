@@ -65,6 +65,8 @@ func getReturnWrapper(
 
 	isPointer := HasSuffix(t, "*")
 	pureType := TrimPrefix(TrimSuffix(t, "*"), "const ")
+	// isNonPODUsed := HasSuffix(pureType, context.preset.NonPODUsedSuffix) // FIXME
+	pureType = TrimSuffix(pureType, context.preset.NonPODUsedSuffix)
 	// check if pureType is a declared type (struct or something else from typedefs)
 	_, isRefStruct := context.refStructNames[pureType]
 	_, isRefTypedef := context.refTypedefs[pureType]
@@ -73,7 +75,7 @@ func getReturnWrapper(
 	shouldSkipRefTypedef := context.ShouldSkipTypedef(pureType)
 	_, isStruct := context.typedefsNames[pureType]
 	isStruct = isStruct || ((isRefStruct || (isRefTypedef && !isRefEnum)) && !shouldSkipRefTypedef)
-	w, known := returnWrapperMap[TrimPrefix(t, "const ")]
+	w, known := returnWrapperMap[TrimPrefix(ReplaceAll(t, context.preset.NonPODUsedSuffix, ""), "const ")]
 	// check if is array (match regex)
 	isArray, err := regexp.Match(".*\\[\\d+\\]", []byte(t))
 	if err != nil {
@@ -120,6 +122,13 @@ func getReturnWrapper(
 			pureType = TrimSuffix(pureType, "Ptr")
 		}
 
+		for _, st := range context.structs {
+			if st.Name == pureType {
+				pureType = st.podName(context)
+				break
+			}
+		}
+
 		pureType += "*"
 
 		rw, err := getReturnWrapper(pureType, context)
@@ -160,6 +169,7 @@ func getReturnWrapper(
 		}
 
 		typeName := typeCount[0]
+		typeName = TrimSuffix(typeName, context.preset.NonPODUsedSuffix)
 		// check if array index getter exists
 		getterName, ok := context.arrayIndexGetters[typeName]
 		if !ok {

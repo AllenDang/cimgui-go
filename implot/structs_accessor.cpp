@@ -10,8 +10,8 @@ void wrap_Formatter_Time_Data_SetTime(Formatter_Time_Data *Formatter_Time_DataPt
 void wrap_Formatter_Time_Data_SetSpec(Formatter_Time_Data *Formatter_Time_DataPtr, ImPlotDateTimeSpec v) { Formatter_Time_DataPtr->Spec = v; }
 void wrap_Formatter_Time_Data_SetUserFormatter(Formatter_Time_Data *Formatter_Time_DataPtr, ImPlotFormatter v) { Formatter_Time_DataPtr->UserFormatter = v; }
 void wrap_Formatter_Time_Data_SetUserFormatterData(Formatter_Time_Data *Formatter_Time_DataPtr, uintptr_t v) { Formatter_Time_DataPtr->UserFormatterData = (void*)v; }
-ImPlotTime wrap_Formatter_Time_Data_GetTime(Formatter_Time_Data *self) { return self->Time; }
-ImPlotDateTimeSpec wrap_Formatter_Time_Data_GetSpec(Formatter_Time_Data *self) { return self->Spec; }
+ImPlotTime_c wrap_Formatter_Time_Data_GetTime(Formatter_Time_Data *self) { return self->Time; }
+ImPlotDateTimeSpec_c wrap_Formatter_Time_Data_GetSpec(Formatter_Time_Data *self) { return self->Spec; }
 ImPlotFormatter wrap_Formatter_Time_Data_GetUserFormatter(Formatter_Time_Data *self) { return self->UserFormatter; }
 uintptr_t wrap_Formatter_Time_Data_GetUserFormatterData(Formatter_Time_Data *self) { return (uintptr_t)self->UserFormatterData; }
 void wrap_ImPlotAlignmentData_SetVertical(ImPlotAlignmentData *ImPlotAlignmentDataPtr, bool v) { ImPlotAlignmentDataPtr->Vertical = v; }
@@ -93,13 +93,13 @@ void wrap_ImPlotAxis_SetHeld(ImPlotAxis *ImPlotAxisPtr, bool v) { ImPlotAxisPtr-
 ImGuiID wrap_ImPlotAxis_GetID(ImPlotAxis *self) { return self->ID; }
 ImPlotAxisFlags wrap_ImPlotAxis_GetFlags(ImPlotAxis *self) { return self->Flags; }
 ImPlotAxisFlags wrap_ImPlotAxis_GetPreviousFlags(ImPlotAxis *self) { return self->PreviousFlags; }
-ImPlotRange wrap_ImPlotAxis_GetRange(ImPlotAxis *self) { return self->Range; }
+ImPlotRange_c wrap_ImPlotAxis_GetRange(ImPlotAxis *self) { return self->Range; }
 ImPlotCond wrap_ImPlotAxis_GetRangeCond(ImPlotAxis *self) { return self->RangeCond; }
 ImPlotScale wrap_ImPlotAxis_GetScale(ImPlotAxis *self) { return self->Scale; }
-ImPlotRange wrap_ImPlotAxis_GetFitExtents(ImPlotAxis *self) { return self->FitExtents; }
-ImPlotAxis* wrap_ImPlotAxis_GetOrthoAxis(ImPlotAxis *self) { return self->OrthoAxis; }
-ImPlotRange wrap_ImPlotAxis_GetConstraintRange(ImPlotAxis *self) { return self->ConstraintRange; }
-ImPlotRange wrap_ImPlotAxis_GetConstraintZoom(ImPlotAxis *self) { return self->ConstraintZoom; }
+ImPlotRange_c wrap_ImPlotAxis_GetFitExtents(ImPlotAxis *self) { return self->FitExtents; }
+ImPlotAxis_c* wrap_ImPlotAxis_GetOrthoAxis(ImPlotAxis *self) { return self->OrthoAxis; }
+ImPlotRange_c wrap_ImPlotAxis_GetConstraintRange(ImPlotAxis *self) { return self->ConstraintRange; }
+ImPlotRange_c wrap_ImPlotAxis_GetConstraintZoom(ImPlotAxis *self) { return self->ConstraintZoom; }
 ImPlotTicker wrap_ImPlotAxis_GetTicker(ImPlotAxis *self) { return self->Ticker; }
 ImPlotFormatter wrap_ImPlotAxis_GetFormatter(ImPlotAxis *self) { return self->Formatter; }
 uintptr_t wrap_ImPlotAxis_GetFormatterData(ImPlotAxis *self) { return (uintptr_t)self->FormatterData; }
@@ -109,8 +109,8 @@ ImPlotLocator wrap_ImPlotAxis_GetLocator(ImPlotAxis *self) { return self->Locato
 double* wrap_ImPlotAxis_GetLinkedMin(ImPlotAxis *self) { return self->LinkedMin; }
 double* wrap_ImPlotAxis_GetLinkedMax(ImPlotAxis *self) { return self->LinkedMax; }
 int wrap_ImPlotAxis_GetPickerLevel(ImPlotAxis *self) { return self->PickerLevel; }
-ImPlotTime wrap_ImPlotAxis_GetPickerTimeMin(ImPlotAxis *self) { return self->PickerTimeMin; }
-ImPlotTime wrap_ImPlotAxis_GetPickerTimeMax(ImPlotAxis *self) { return self->PickerTimeMax; }
+ImPlotTime_c wrap_ImPlotAxis_GetPickerTimeMin(ImPlotAxis *self) { return self->PickerTimeMin; }
+ImPlotTime_c wrap_ImPlotAxis_GetPickerTimeMax(ImPlotAxis *self) { return self->PickerTimeMax; }
 ImPlotTransform wrap_ImPlotAxis_GetTransformForward(ImPlotAxis *self) { return self->TransformForward; }
 ImPlotTransform wrap_ImPlotAxis_GetTransformInverse(ImPlotAxis *self) { return self->TransformInverse; }
 uintptr_t wrap_ImPlotAxis_GetTransformData(ImPlotAxis *self) { return (uintptr_t)self->TransformData; }
@@ -341,7 +341,7 @@ void wrap_ImPlotNextPlotData_SetLinkedMin(ImPlotNextPlotData *ImPlotNextPlotData
 void wrap_ImPlotNextPlotData_SetLinkedMax(ImPlotNextPlotData *ImPlotNextPlotDataPtr, double** v) { memcpy(ImPlotNextPlotDataPtr->LinkedMax, v, sizeof(double*)*6); }
 ImPlotCond* wrap_ImPlotNextPlotData_GetRangeCond(ImPlotNextPlotData *self) { return self->RangeCond; }
 ImPlotCond implot_ImPlotCond_GetAtIdx(ImPlotCond *self, int index) { return self[index]; }
-ImPlotRange* wrap_ImPlotNextPlotData_GetRange(ImPlotNextPlotData *self) { return self->Range; }
+ImPlotRange_c* wrap_ImPlotNextPlotData_GetRange(ImPlotNextPlotData *self) { return self->Range; }
 ImPlotRange implot_ImPlotRange_GetAtIdx(ImPlotRange *self, int index) { return self[index]; }
 bool* wrap_ImPlotNextPlotData_GetHasRange(ImPlotNextPlotData *self) { return self->HasRange; }
 bool implot_bool_GetAtIdx(bool *self, int index) { return self[index]; }
@@ -380,7 +380,7 @@ ImPlotFlags wrap_ImPlotPlot_GetFlags(ImPlotPlot *self) { return self->Flags; }
 ImPlotFlags wrap_ImPlotPlot_GetPreviousFlags(ImPlotPlot *self) { return self->PreviousFlags; }
 ImPlotLocation wrap_ImPlotPlot_GetMouseTextLocation(ImPlotPlot *self) { return self->MouseTextLocation; }
 ImPlotMouseTextFlags wrap_ImPlotPlot_GetMouseTextFlags(ImPlotPlot *self) { return self->MouseTextFlags; }
-ImPlotAxis* wrap_ImPlotPlot_GetAxes(ImPlotPlot *self) { return self->Axes; }
+ImPlotAxis_c* wrap_ImPlotPlot_GetAxes(ImPlotPlot *self) { return self->Axes; }
 ImPlotAxis implot_ImPlotAxis_GetAtIdx(ImPlotAxis *self, int index) { return self[index]; }
 ImGuiTextBuffer wrap_ImPlotPlot_GetTextBuffer(ImPlotPlot *self) { return self->TextBuffer; }
 ImPlotItemGroup wrap_ImPlotPlot_GetItems(ImPlotPlot *self) { return self->Items; }
@@ -416,8 +416,8 @@ double wrap_ImPlotRange_GetMin(ImPlotRange *self) { return self->Min; }
 double wrap_ImPlotRange_GetMax(ImPlotRange *self) { return self->Max; }
 void wrap_ImPlotRect_SetX(ImPlotRect *ImPlotRectPtr, ImPlotRange v) { ImPlotRectPtr->X = v; }
 void wrap_ImPlotRect_SetY(ImPlotRect *ImPlotRectPtr, ImPlotRange v) { ImPlotRectPtr->Y = v; }
-ImPlotRange wrap_ImPlotRect_GetX(ImPlotRect *self) { return self->X; }
-ImPlotRange wrap_ImPlotRect_GetY(ImPlotRect *self) { return self->Y; }
+ImPlotRange_c wrap_ImPlotRect_GetX(ImPlotRect *self) { return self->X; }
+ImPlotRange_c wrap_ImPlotRect_GetY(ImPlotRect *self) { return self->Y; }
 void wrap_ImPlotStyle_SetLineWeight(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->LineWeight = v; }
 void wrap_ImPlotStyle_SetMarker(ImPlotStyle *ImPlotStylePtr, int v) { ImPlotStylePtr->Marker = v; }
 void wrap_ImPlotStyle_SetMarkerSize(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->MarkerSize = v; }

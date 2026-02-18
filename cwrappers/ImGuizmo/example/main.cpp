@@ -1,9 +1,9 @@
 // https://github.com/CedricGuillemet/ImGuizmo
-// v1.91.3 WIP
+// v1.92.5 WIP
 //
 // The MIT License(MIT)
 //
-// Copyright(c) 2021 Cedric Guillemet
+// Copyright(c) 2016-2021 Cedric Guillemet
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -34,6 +34,7 @@
 #include "ImZoomSlider.h"
 #include "ImCurveEdit.h"
 #include "GraphEditor.h"
+#include "ImLightRig.h"
 #include <cmath>
 #include <vector>
 #include <algorithm>
@@ -243,7 +244,7 @@ void TransformStart(float* cameraView, float* cameraProjection, float* matrix)
 
     if (ImGui::IsKeyPressed(ImGuiKey_S))
         useSnap = !useSnap;
-    ImGui::Checkbox(" ", &useSnap);
+    ImGui::Checkbox("##useSnap", &useSnap);
     ImGui::SameLine();
     switch (mCurrentGizmoOperation)
     {
@@ -894,6 +895,25 @@ int main(int, char**)
       {
          ImGui::Checkbox("Show GraphEditor", &showGraphEditor);
          GraphEditor::EditOptions(options);
+      }
+
+      // Light Rig
+      if (ImGui::CollapsingHeader("Light Rig"))
+      {
+         static ImLightRig::Light lights[128] = {
+            { 1.f, 0.3f, 0.1f,  1.f,  0.5f, 0.5f},
+            { 0.3f, 1.f, 0.1f,  1.f,  -0.5f, 0.5f},
+            { 0.1f, 0.3f, 1.f,  1.f,  -0.5f, -0.5f},
+         };
+         static int lightCount = 3;
+         static int selectedLight = -1;
+         selectedLight = ImLightRig::Edit(lights, lightCount, selectedLight, ImVec2(200,200));
+         if (selectedLight >= 0 && selectedLight < lightCount)
+         {
+            auto& light = lights[selectedLight];
+            ImGui::ColorEdit3("RGB", &light.r);
+            ImGui::SliderFloat("Intensity", &light.intensity, 0.f, 10.f);
+         }
       }
 
       ImGui::End();

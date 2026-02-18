@@ -267,7 +267,7 @@ func (self *TextEditor) RenderV(aTitle string, aParentIsFocused bool, aSize imgu
 		selfFin()
 		aTitleFin()
 	}()
-	return C.TextEditor_Render(internal.ReinterpretCast[*C.TextEditor](selfArg), aTitleArg, C.bool(aParentIsFocused), internal.ReinterpretCast[C.ImVec2](aSize.ToC()), C.bool(aBorder)) == C.bool(true)
+	return C.TextEditor_Render(internal.ReinterpretCast[*C.TextEditor](selfArg), aTitleArg, C.bool(aParentIsFocused), internal.ReinterpretCast[C.ImVec2_c](aSize.ToC()), C.bool(aBorder)) == C.bool(true)
 }
 
 func (self *TextEditor) SelectAll() {

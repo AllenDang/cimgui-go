@@ -1,9 +1,9 @@
 // https://github.com/CedricGuillemet/ImGuizmo
-// v1.91.3 WIP
+// v1.92.5 WIP
 //
 // The MIT License(MIT)
 //
-// Copyright(c) 2021 Cedric Guillemet
+// Copyright(c) 2016-2021 Cedric Guillemet
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -1278,19 +1278,19 @@ namespace IMGUIZMO_NAMESPACE
       ImU32 colors[7];
       ComputeColors(colors, type, ROTATE);
 
-      vec_t cameraToModelNormalized;
+      vec_t viewDirNormalized;
       if (gContext.mIsOrthographic)
       {
          matrix_t viewInverse;
          viewInverse.Inverse(*(matrix_t*)&gContext.mViewMat);
-         cameraToModelNormalized = -viewInverse.v.dir;
+         viewDirNormalized = -viewInverse.v.dir;
       }
       else
       {
-         cameraToModelNormalized = Normalized(gContext.mModel.v.position - gContext.mCameraEye);
+         viewDirNormalized = Normalized(gContext.mCameraDir);
       }
 
-      cameraToModelNormalized.TransformVector(gContext.mModelInverse);
+      viewDirNormalized.TransformVector(gContext.mModelInverse);
 
       gContext.mRadiusSquareCenter = screenRotateSize * gContext.mHeight;
 
@@ -1313,7 +1313,7 @@ namespace IMGUIZMO_NAMESPACE
 
          ImVec2* circlePos = (ImVec2*)alloca(sizeof(ImVec2) * (circleMul * halfCircleSegmentCount + 1));
 
-         float angleStart = atan2f(cameraToModelNormalized[(4 - axis) % 3], cameraToModelNormalized[(3 - axis) % 3]) + ZPI * 0.5f;
+         float angleStart = atan2f(viewDirNormalized[(4 - axis) % 3], viewDirNormalized[(3 - axis) % 3]) + (gContext.mIsOrthographic ? ZPI : -ZPI) * 0.5f;
 
          for (int i = 0; i < circleMul * halfCircleSegmentCount + 1; i++)
          {
@@ -1656,10 +1656,12 @@ namespace IMGUIZMO_NAMESPACE
       return false;
    }
 
-   static void HandleAndDrawLocalBounds(const float* bounds, matrix_t* matrix, const float* snapValues, OPERATION operation)
+   static bool HandleAndDrawLocalBounds(const float* bounds, matrix_t* matrix, const float* snapValues, OPERATION operation)
    {
       ImGuiIO& io = ImGui::GetIO();
       ImDrawList* drawList = gContext.mDrawList;
+
+      bool manipulated = false;
 
       // compute best projection axis
       vec_t axesWorldDirections[3];
@@ -1885,6 +1887,10 @@ namespace IMGUIZMO_NAMESPACE
                   }
                }
                scale.component[axisIndex1] *= ratioAxis;
+
+               if (fabsf(ratioAxis - 1.0f) > FLT_EPSILON) {
+                  manipulated = true;
+               }
             }
 
             // transform matrix
@@ -1915,6 +1921,8 @@ namespace IMGUIZMO_NAMESPACE
             break;
          }
       }
+
+      return manipulated;
    }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2685,7 +2693,7 @@ namespace IMGUIZMO_NAMESPACE
 
       if (localBounds && !gContext.mbUsing)
       {
-         HandleAndDrawLocalBounds(localBounds, (matrix_t*)matrix, boundsSnap, operation);
+         manipulated |= HandleAndDrawLocalBounds(localBounds, (matrix_t*)matrix, boundsSnap, operation);
       }
 
       gContext.mOperation = operation;
