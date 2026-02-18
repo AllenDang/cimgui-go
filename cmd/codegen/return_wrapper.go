@@ -169,6 +169,7 @@ func getReturnWrapper(
 		}
 
 		typeName := typeCount[0]
+		typeName = TrimSuffix(typeName, context.preset.NonPODUsedSuffix)
 		// check if array index getter exists
 		getterName, ok := context.arrayIndexGetters[typeName]
 		if !ok {
