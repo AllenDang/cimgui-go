@@ -254,6 +254,7 @@ int wrap_ImPlotInputMap_GetZoomMod(ImPlotInputMap *self) { return self->ZoomMod;
 float wrap_ImPlotInputMap_GetZoomRate(ImPlotInputMap *self) { return self->ZoomRate; }
 void wrap_ImPlotItem_SetID(ImPlotItem *ImPlotItemPtr, ImGuiID v) { ImPlotItemPtr->ID = v; }
 void wrap_ImPlotItem_SetColor(ImPlotItem *ImPlotItemPtr, ImU32 v) { ImPlotItemPtr->Color = v; }
+void wrap_ImPlotItem_SetMarker(ImPlotItem *ImPlotItemPtr, ImPlotMarker v) { ImPlotItemPtr->Marker = v; }
 void wrap_ImPlotItem_SetLegendHoverRect(ImPlotItem *ImPlotItemPtr, ImRect v) { ImPlotItemPtr->LegendHoverRect = v; }
 void wrap_ImPlotItem_SetNameOffset(ImPlotItem *ImPlotItemPtr, int v) { ImPlotItemPtr->NameOffset = v; }
 void wrap_ImPlotItem_SetShow(ImPlotItem *ImPlotItemPtr, bool v) { ImPlotItemPtr->Show = v; }
@@ -261,6 +262,7 @@ void wrap_ImPlotItem_SetLegendHovered(ImPlotItem *ImPlotItemPtr, bool v) { ImPlo
 void wrap_ImPlotItem_SetSeenThisFrame(ImPlotItem *ImPlotItemPtr, bool v) { ImPlotItemPtr->SeenThisFrame = v; }
 ImGuiID wrap_ImPlotItem_GetID(ImPlotItem *self) { return self->ID; }
 ImU32 wrap_ImPlotItem_GetColor(ImPlotItem *self) { return self->Color; }
+ImPlotMarker wrap_ImPlotItem_GetMarker(ImPlotItem *self) { return self->Marker; }
 ImRect wrap_ImPlotItem_GetLegendHoverRect(ImPlotItem *self) { return self->LegendHoverRect; }
 int wrap_ImPlotItem_GetNameOffset(ImPlotItem *self) { return self->NameOffset; }
 bool wrap_ImPlotItem_GetShow(ImPlotItem *self) { return self->Show; }
@@ -270,10 +272,12 @@ void wrap_ImPlotItemGroup_SetID(ImPlotItemGroup *ImPlotItemGroupPtr, ImGuiID v) 
 void wrap_ImPlotItemGroup_SetLegend(ImPlotItemGroup *ImPlotItemGroupPtr, ImPlotLegend v) { ImPlotItemGroupPtr->Legend = v; }
 void wrap_ImPlotItemGroup_SetItemPool(ImPlotItemGroup *ImPlotItemGroupPtr, ImPool_ImPlotItem v) { ImPlotItemGroupPtr->ItemPool = v; }
 void wrap_ImPlotItemGroup_SetColormapIdx(ImPlotItemGroup *ImPlotItemGroupPtr, int v) { ImPlotItemGroupPtr->ColormapIdx = v; }
+void wrap_ImPlotItemGroup_SetMarkerIdx(ImPlotItemGroup *ImPlotItemGroupPtr, ImPlotMarker v) { ImPlotItemGroupPtr->MarkerIdx = v; }
 ImGuiID wrap_ImPlotItemGroup_GetID(ImPlotItemGroup *self) { return self->ID; }
 ImPlotLegend wrap_ImPlotItemGroup_GetLegend(ImPlotItemGroup *self) { return self->Legend; }
 ImPool_ImPlotItem wrap_ImPlotItemGroup_GetItemPool(ImPlotItemGroup *self) { return self->ItemPool; }
 int wrap_ImPlotItemGroup_GetColormapIdx(ImPlotItemGroup *self) { return self->ColormapIdx; }
+ImPlotMarker wrap_ImPlotItemGroup_GetMarkerIdx(ImPlotItemGroup *self) { return self->MarkerIdx; }
 void wrap_ImPlotLegend_SetFlags(ImPlotLegend *ImPlotLegendPtr, ImPlotLegendFlags v) { ImPlotLegendPtr->Flags = v; }
 void wrap_ImPlotLegend_SetPreviousFlags(ImPlotLegend *ImPlotLegendPtr, ImPlotLegendFlags v) { ImPlotLegendPtr->PreviousFlags = v; }
 void wrap_ImPlotLegend_SetLocation(ImPlotLegend *ImPlotLegendPtr, ImPlotLocation v) { ImPlotLegendPtr->Location = v; }
@@ -298,38 +302,21 @@ ImRect wrap_ImPlotLegend_GetRectClamped(ImPlotLegend *self) { return self->RectC
 bool wrap_ImPlotLegend_GetHovered(ImPlotLegend *self) { return self->Hovered; }
 bool wrap_ImPlotLegend_GetHeld(ImPlotLegend *self) { return self->Held; }
 bool wrap_ImPlotLegend_GetCanGoInside(ImPlotLegend *self) { return self->CanGoInside; }
-void wrap_ImPlotNextItemData_SetColors(ImPlotNextItemData *ImPlotNextItemDataPtr, ImVec4* v) { memcpy(ImPlotNextItemDataPtr->Colors, v, sizeof(ImVec4)*5); }
-void wrap_ImPlotNextItemData_SetLineWeight(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->LineWeight = v; }
-void wrap_ImPlotNextItemData_SetMarker(ImPlotNextItemData *ImPlotNextItemDataPtr, ImPlotMarker v) { ImPlotNextItemDataPtr->Marker = v; }
-void wrap_ImPlotNextItemData_SetMarkerSize(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->MarkerSize = v; }
-void wrap_ImPlotNextItemData_SetMarkerWeight(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->MarkerWeight = v; }
-void wrap_ImPlotNextItemData_SetFillAlpha(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->FillAlpha = v; }
-void wrap_ImPlotNextItemData_SetErrorBarSize(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->ErrorBarSize = v; }
-void wrap_ImPlotNextItemData_SetErrorBarWeight(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->ErrorBarWeight = v; }
-void wrap_ImPlotNextItemData_SetDigitalBitHeight(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->DigitalBitHeight = v; }
-void wrap_ImPlotNextItemData_SetDigitalBitGap(ImPlotNextItemData *ImPlotNextItemDataPtr, float v) { ImPlotNextItemDataPtr->DigitalBitGap = v; }
+void wrap_ImPlotNextItemData_SetSpec(ImPlotNextItemData *ImPlotNextItemDataPtr, ImPlotSpec v) { ImPlotNextItemDataPtr->Spec = v; }
 void wrap_ImPlotNextItemData_SetRenderLine(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->RenderLine = v; }
 void wrap_ImPlotNextItemData_SetRenderFill(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->RenderFill = v; }
 void wrap_ImPlotNextItemData_SetRenderMarkerLine(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->RenderMarkerLine = v; }
 void wrap_ImPlotNextItemData_SetRenderMarkerFill(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->RenderMarkerFill = v; }
+void wrap_ImPlotNextItemData_SetRenderMarkers(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->RenderMarkers = v; }
 void wrap_ImPlotNextItemData_SetHasHidden(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->HasHidden = v; }
 void wrap_ImPlotNextItemData_SetHidden(ImPlotNextItemData *ImPlotNextItemDataPtr, bool v) { ImPlotNextItemDataPtr->Hidden = v; }
 void wrap_ImPlotNextItemData_SetHiddenCond(ImPlotNextItemData *ImPlotNextItemDataPtr, ImPlotCond v) { ImPlotNextItemDataPtr->HiddenCond = v; }
-ImVec4* wrap_ImPlotNextItemData_GetColors(ImPlotNextItemData *self) { return self->Colors; }
-ImVec4 implot_ImVec4_GetAtIdx(ImVec4 *self, int index) { return self[index]; }
-float wrap_ImPlotNextItemData_GetLineWeight(ImPlotNextItemData *self) { return self->LineWeight; }
-ImPlotMarker wrap_ImPlotNextItemData_GetMarker(ImPlotNextItemData *self) { return self->Marker; }
-float wrap_ImPlotNextItemData_GetMarkerSize(ImPlotNextItemData *self) { return self->MarkerSize; }
-float wrap_ImPlotNextItemData_GetMarkerWeight(ImPlotNextItemData *self) { return self->MarkerWeight; }
-float wrap_ImPlotNextItemData_GetFillAlpha(ImPlotNextItemData *self) { return self->FillAlpha; }
-float wrap_ImPlotNextItemData_GetErrorBarSize(ImPlotNextItemData *self) { return self->ErrorBarSize; }
-float wrap_ImPlotNextItemData_GetErrorBarWeight(ImPlotNextItemData *self) { return self->ErrorBarWeight; }
-float wrap_ImPlotNextItemData_GetDigitalBitHeight(ImPlotNextItemData *self) { return self->DigitalBitHeight; }
-float wrap_ImPlotNextItemData_GetDigitalBitGap(ImPlotNextItemData *self) { return self->DigitalBitGap; }
+ImPlotSpec_c wrap_ImPlotNextItemData_GetSpec(ImPlotNextItemData *self) { return self->Spec; }
 bool wrap_ImPlotNextItemData_GetRenderLine(ImPlotNextItemData *self) { return self->RenderLine; }
 bool wrap_ImPlotNextItemData_GetRenderFill(ImPlotNextItemData *self) { return self->RenderFill; }
 bool wrap_ImPlotNextItemData_GetRenderMarkerLine(ImPlotNextItemData *self) { return self->RenderMarkerLine; }
 bool wrap_ImPlotNextItemData_GetRenderMarkerFill(ImPlotNextItemData *self) { return self->RenderMarkerFill; }
+bool wrap_ImPlotNextItemData_GetRenderMarkers(ImPlotNextItemData *self) { return self->RenderMarkers; }
 bool wrap_ImPlotNextItemData_GetHasHidden(ImPlotNextItemData *self) { return self->HasHidden; }
 bool wrap_ImPlotNextItemData_GetHidden(ImPlotNextItemData *self) { return self->Hidden; }
 ImPlotCond wrap_ImPlotNextItemData_GetHiddenCond(ImPlotNextItemData *self) { return self->HiddenCond; }
@@ -418,15 +405,32 @@ void wrap_ImPlotRect_SetX(ImPlotRect *ImPlotRectPtr, ImPlotRange v) { ImPlotRect
 void wrap_ImPlotRect_SetY(ImPlotRect *ImPlotRectPtr, ImPlotRange v) { ImPlotRectPtr->Y = v; }
 ImPlotRange_c wrap_ImPlotRect_GetX(ImPlotRect *self) { return self->X; }
 ImPlotRange_c wrap_ImPlotRect_GetY(ImPlotRect *self) { return self->Y; }
-void wrap_ImPlotStyle_SetLineWeight(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->LineWeight = v; }
-void wrap_ImPlotStyle_SetMarker(ImPlotStyle *ImPlotStylePtr, int v) { ImPlotStylePtr->Marker = v; }
-void wrap_ImPlotStyle_SetMarkerSize(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->MarkerSize = v; }
-void wrap_ImPlotStyle_SetMarkerWeight(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->MarkerWeight = v; }
-void wrap_ImPlotStyle_SetFillAlpha(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->FillAlpha = v; }
-void wrap_ImPlotStyle_SetErrorBarSize(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->ErrorBarSize = v; }
-void wrap_ImPlotStyle_SetErrorBarWeight(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->ErrorBarWeight = v; }
-void wrap_ImPlotStyle_SetDigitalBitHeight(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->DigitalBitHeight = v; }
-void wrap_ImPlotStyle_SetDigitalBitGap(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->DigitalBitGap = v; }
+void wrap_ImPlotSpec_SetLineColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->LineColor = v; }
+void wrap_ImPlotSpec_SetLineWeight(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->LineWeight = v; }
+void wrap_ImPlotSpec_SetFillColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->FillColor = v; }
+void wrap_ImPlotSpec_SetFillAlpha(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->FillAlpha = v; }
+void wrap_ImPlotSpec_SetMarker(ImPlotSpec *ImPlotSpecPtr, ImPlotMarker v) { ImPlotSpecPtr->Marker = v; }
+void wrap_ImPlotSpec_SetMarkerSize(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->MarkerSize = v; }
+void wrap_ImPlotSpec_SetMarkerLineColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->MarkerLineColor = v; }
+void wrap_ImPlotSpec_SetMarkerFillColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->MarkerFillColor = v; }
+void wrap_ImPlotSpec_SetSize(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->Size = v; }
+void wrap_ImPlotSpec_SetOffset(ImPlotSpec *ImPlotSpecPtr, int v) { ImPlotSpecPtr->Offset = v; }
+void wrap_ImPlotSpec_SetStride(ImPlotSpec *ImPlotSpecPtr, int v) { ImPlotSpecPtr->Stride = v; }
+void wrap_ImPlotSpec_SetFlags(ImPlotSpec *ImPlotSpecPtr, ImPlotItemFlags v) { ImPlotSpecPtr->Flags = v; }
+ImVec4 wrap_ImPlotSpec_GetLineColor(ImPlotSpec *self) { return self->LineColor; }
+float wrap_ImPlotSpec_GetLineWeight(ImPlotSpec *self) { return self->LineWeight; }
+ImVec4 wrap_ImPlotSpec_GetFillColor(ImPlotSpec *self) { return self->FillColor; }
+float wrap_ImPlotSpec_GetFillAlpha(ImPlotSpec *self) { return self->FillAlpha; }
+ImPlotMarker wrap_ImPlotSpec_GetMarker(ImPlotSpec *self) { return self->Marker; }
+float wrap_ImPlotSpec_GetMarkerSize(ImPlotSpec *self) { return self->MarkerSize; }
+ImVec4 wrap_ImPlotSpec_GetMarkerLineColor(ImPlotSpec *self) { return self->MarkerLineColor; }
+ImVec4 wrap_ImPlotSpec_GetMarkerFillColor(ImPlotSpec *self) { return self->MarkerFillColor; }
+float wrap_ImPlotSpec_GetSize(ImPlotSpec *self) { return self->Size; }
+int wrap_ImPlotSpec_GetOffset(ImPlotSpec *self) { return self->Offset; }
+int wrap_ImPlotSpec_GetStride(ImPlotSpec *self) { return self->Stride; }
+ImPlotItemFlags wrap_ImPlotSpec_GetFlags(ImPlotSpec *self) { return self->Flags; }
+void wrap_ImPlotStyle_SetPlotDefaultSize(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->PlotDefaultSize = v; }
+void wrap_ImPlotStyle_SetPlotMinSize(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->PlotMinSize = v; }
 void wrap_ImPlotStyle_SetPlotBorderSize(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->PlotBorderSize = v; }
 void wrap_ImPlotStyle_SetMinorAlpha(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->MinorAlpha = v; }
 void wrap_ImPlotStyle_SetMajorTickLen(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->MajorTickLen = v; }
@@ -443,22 +447,15 @@ void wrap_ImPlotStyle_SetLegendSpacing(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { 
 void wrap_ImPlotStyle_SetMousePosPadding(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->MousePosPadding = v; }
 void wrap_ImPlotStyle_SetAnnotationPadding(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->AnnotationPadding = v; }
 void wrap_ImPlotStyle_SetFitPadding(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->FitPadding = v; }
-void wrap_ImPlotStyle_SetPlotDefaultSize(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->PlotDefaultSize = v; }
-void wrap_ImPlotStyle_SetPlotMinSize(ImPlotStyle *ImPlotStylePtr, ImVec2 v) { ImPlotStylePtr->PlotMinSize = v; }
-void wrap_ImPlotStyle_SetColors(ImPlotStyle *ImPlotStylePtr, ImVec4* v) { memcpy(ImPlotStylePtr->Colors, v, sizeof(ImVec4)*21); }
+void wrap_ImPlotStyle_SetDigitalPadding(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->DigitalPadding = v; }
+void wrap_ImPlotStyle_SetDigitalSpacing(ImPlotStyle *ImPlotStylePtr, float v) { ImPlotStylePtr->DigitalSpacing = v; }
+void wrap_ImPlotStyle_SetColors(ImPlotStyle *ImPlotStylePtr, ImVec4* v) { memcpy(ImPlotStylePtr->Colors, v, sizeof(ImVec4)*16); }
 void wrap_ImPlotStyle_SetColormap(ImPlotStyle *ImPlotStylePtr, ImPlotColormap v) { ImPlotStylePtr->Colormap = v; }
 void wrap_ImPlotStyle_SetUseLocalTime(ImPlotStyle *ImPlotStylePtr, bool v) { ImPlotStylePtr->UseLocalTime = v; }
 void wrap_ImPlotStyle_SetUseISO8601(ImPlotStyle *ImPlotStylePtr, bool v) { ImPlotStylePtr->UseISO8601 = v; }
 void wrap_ImPlotStyle_SetUse24HourClock(ImPlotStyle *ImPlotStylePtr, bool v) { ImPlotStylePtr->Use24HourClock = v; }
-float wrap_ImPlotStyle_GetLineWeight(ImPlotStyle *self) { return self->LineWeight; }
-int wrap_ImPlotStyle_GetMarker(ImPlotStyle *self) { return self->Marker; }
-float wrap_ImPlotStyle_GetMarkerSize(ImPlotStyle *self) { return self->MarkerSize; }
-float wrap_ImPlotStyle_GetMarkerWeight(ImPlotStyle *self) { return self->MarkerWeight; }
-float wrap_ImPlotStyle_GetFillAlpha(ImPlotStyle *self) { return self->FillAlpha; }
-float wrap_ImPlotStyle_GetErrorBarSize(ImPlotStyle *self) { return self->ErrorBarSize; }
-float wrap_ImPlotStyle_GetErrorBarWeight(ImPlotStyle *self) { return self->ErrorBarWeight; }
-float wrap_ImPlotStyle_GetDigitalBitHeight(ImPlotStyle *self) { return self->DigitalBitHeight; }
-float wrap_ImPlotStyle_GetDigitalBitGap(ImPlotStyle *self) { return self->DigitalBitGap; }
+ImVec2 wrap_ImPlotStyle_GetPlotDefaultSize(ImPlotStyle *self) { return self->PlotDefaultSize; }
+ImVec2 wrap_ImPlotStyle_GetPlotMinSize(ImPlotStyle *self) { return self->PlotMinSize; }
 float wrap_ImPlotStyle_GetPlotBorderSize(ImPlotStyle *self) { return self->PlotBorderSize; }
 float wrap_ImPlotStyle_GetMinorAlpha(ImPlotStyle *self) { return self->MinorAlpha; }
 ImVec2 wrap_ImPlotStyle_GetMajorTickLen(ImPlotStyle *self) { return self->MajorTickLen; }
@@ -475,9 +472,10 @@ ImVec2 wrap_ImPlotStyle_GetLegendSpacing(ImPlotStyle *self) { return self->Legen
 ImVec2 wrap_ImPlotStyle_GetMousePosPadding(ImPlotStyle *self) { return self->MousePosPadding; }
 ImVec2 wrap_ImPlotStyle_GetAnnotationPadding(ImPlotStyle *self) { return self->AnnotationPadding; }
 ImVec2 wrap_ImPlotStyle_GetFitPadding(ImPlotStyle *self) { return self->FitPadding; }
-ImVec2 wrap_ImPlotStyle_GetPlotDefaultSize(ImPlotStyle *self) { return self->PlotDefaultSize; }
-ImVec2 wrap_ImPlotStyle_GetPlotMinSize(ImPlotStyle *self) { return self->PlotMinSize; }
+float wrap_ImPlotStyle_GetDigitalPadding(ImPlotStyle *self) { return self->DigitalPadding; }
+float wrap_ImPlotStyle_GetDigitalSpacing(ImPlotStyle *self) { return self->DigitalSpacing; }
 ImVec4* wrap_ImPlotStyle_GetColors(ImPlotStyle *self) { return self->Colors; }
+ImVec4 implot_ImVec4_GetAtIdx(ImVec4 *self, int index) { return self[index]; }
 ImPlotColormap wrap_ImPlotStyle_GetColormap(ImPlotStyle *self) { return self->Colormap; }
 bool wrap_ImPlotStyle_GetUseLocalTime(ImPlotStyle *self) { return self->UseLocalTime; }
 bool wrap_ImPlotStyle_GetUseISO8601(ImPlotStyle *self) { return self->UseISO8601; }

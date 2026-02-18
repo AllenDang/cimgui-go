@@ -109,7 +109,7 @@
       "above": "// Status flags for an already submitted item\n// - output: stored in g.LastItemData.StatusFlags"
     },
     "ImGuiKey": {
-      "above": "// A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.\n// All our named keys are >= 512. Keys value 0 to 511 are left unused and were legacy native/opaque key values (< 1.87).\n// Support for legacy keys was completely removed in 1.91.5.\n// Read details about the 1.87+ transition : https://github.com/ocornut/imgui/issues/4921\n// Note that \"Keys\" related to physical keys and are not the same concept as input \"Characters\", the later are submitted via io.AddInputCharacter().\n// The keyboard key enum values are named after the keys on a standard US keyboard, and on other keyboard types the keys reported may not match the keycaps."
+      "above": "// A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.\n// All our named keys are >= 512. Keys value 0 to 511 are left unused and were legacy native/opaque key values (< 1.87).\n// Support for legacy keys was completely removed in 1.91.5.\n// Read details about the 1.87+ transition : https://github.com/ocornut/imgui/issues/4921\n// Note that \"Keys\" related to physical keys and are not the same concept as input \"Characters\", the latter are submitted via io.AddInputCharacter().\n// The keyboard key enum values are named after the keys on a standard US keyboard, and on other keyboard types the keys reported may not match the keycaps."
     },
     "ImGuiLayoutType_": {
       "above": "// FIXME: this is in development, not exposed/functional as a generic feature yet.\n// Horizontal/Vertical enums are fixed to 0/1 so they may be used to index ImVec2"
@@ -1136,7 +1136,7 @@
       },
       {
         "calc_value": 512,
-        "comment": "//              // ColorEdit: disable drag and drop target. ColorButton: disable drag and drop source.",
+        "comment": "//              // ColorEdit: disable drag and drop target/source. ColorButton: disable drag and drop source.",
         "name": "ImGuiColorEditFlags_NoDragDrop",
         "value": "1 << 9"
       },
@@ -1375,7 +1375,7 @@
       },
       {
         "calc_value": 1,
-        "comment": "// Master keyboard navigation enable flag. Enable full Tabbing + directional arrows + space/enter to activate.",
+        "comment": "// Master keyboard navigation enable flag. Enable full Tabbing + directional arrows + Space/Enter to activate. Note: some features such as basic Tabbing and CtrL+Tab are enabled by regardless of this flag (and may be disabled via other means, see #4828, #9218).",
         "name": "ImGuiConfigFlags_NavEnableKeyboard",
         "value": "1 << 0"
       },
@@ -4945,110 +4945,116 @@
       },
       {
         "calc_value": 23,
-        "comment": "// float     ImageBorderSize",
-        "name": "ImGuiStyleVar_ImageBorderSize",
+        "comment": "// float     ImageRounding",
+        "name": "ImGuiStyleVar_ImageRounding",
         "value": "23"
       },
       {
         "calc_value": 24,
-        "comment": "// float     TabRounding",
-        "name": "ImGuiStyleVar_TabRounding",
+        "comment": "// float     ImageBorderSize",
+        "name": "ImGuiStyleVar_ImageBorderSize",
         "value": "24"
       },
       {
         "calc_value": 25,
-        "comment": "// float     TabBorderSize",
-        "name": "ImGuiStyleVar_TabBorderSize",
+        "comment": "// float     TabRounding",
+        "name": "ImGuiStyleVar_TabRounding",
         "value": "25"
       },
       {
         "calc_value": 26,
-        "comment": "// float     TabMinWidthBase",
-        "name": "ImGuiStyleVar_TabMinWidthBase",
+        "comment": "// float     TabBorderSize",
+        "name": "ImGuiStyleVar_TabBorderSize",
         "value": "26"
       },
       {
         "calc_value": 27,
-        "comment": "// float     TabMinWidthShrink",
-        "name": "ImGuiStyleVar_TabMinWidthShrink",
+        "comment": "// float     TabMinWidthBase",
+        "name": "ImGuiStyleVar_TabMinWidthBase",
         "value": "27"
       },
       {
         "calc_value": 28,
-        "comment": "// float     TabBarBorderSize",
-        "name": "ImGuiStyleVar_TabBarBorderSize",
+        "comment": "// float     TabMinWidthShrink",
+        "name": "ImGuiStyleVar_TabMinWidthShrink",
         "value": "28"
       },
       {
         "calc_value": 29,
-        "comment": "// float     TabBarOverlineSize",
-        "name": "ImGuiStyleVar_TabBarOverlineSize",
+        "comment": "// float     TabBarBorderSize",
+        "name": "ImGuiStyleVar_TabBarBorderSize",
         "value": "29"
       },
       {
         "calc_value": 30,
-        "comment": "// float     TableAngledHeadersAngle",
-        "name": "ImGuiStyleVar_TableAngledHeadersAngle",
+        "comment": "// float     TabBarOverlineSize",
+        "name": "ImGuiStyleVar_TabBarOverlineSize",
         "value": "30"
       },
       {
         "calc_value": 31,
-        "comment": "// ImVec2  TableAngledHeadersTextAlign",
-        "name": "ImGuiStyleVar_TableAngledHeadersTextAlign",
+        "comment": "// float     TableAngledHeadersAngle",
+        "name": "ImGuiStyleVar_TableAngledHeadersAngle",
         "value": "31"
       },
       {
         "calc_value": 32,
-        "comment": "// float     TreeLinesSize",
-        "name": "ImGuiStyleVar_TreeLinesSize",
+        "comment": "// ImVec2  TableAngledHeadersTextAlign",
+        "name": "ImGuiStyleVar_TableAngledHeadersTextAlign",
         "value": "32"
       },
       {
         "calc_value": 33,
-        "comment": "// float     TreeLinesRounding",
-        "name": "ImGuiStyleVar_TreeLinesRounding",
+        "comment": "// float     TreeLinesSize",
+        "name": "ImGuiStyleVar_TreeLinesSize",
         "value": "33"
       },
       {
         "calc_value": 34,
-        "comment": "// ImVec2    ButtonTextAlign",
-        "name": "ImGuiStyleVar_ButtonTextAlign",
+        "comment": "// float     TreeLinesRounding",
+        "name": "ImGuiStyleVar_TreeLinesRounding",
         "value": "34"
       },
       {
         "calc_value": 35,
-        "comment": "// ImVec2    SelectableTextAlign",
-        "name": "ImGuiStyleVar_SelectableTextAlign",
+        "comment": "// ImVec2    ButtonTextAlign",
+        "name": "ImGuiStyleVar_ButtonTextAlign",
         "value": "35"
       },
       {
         "calc_value": 36,
-        "comment": "// float     SeparatorTextBorderSize",
-        "name": "ImGuiStyleVar_SeparatorTextBorderSize",
+        "comment": "// ImVec2    SelectableTextAlign",
+        "name": "ImGuiStyleVar_SelectableTextAlign",
         "value": "36"
       },
       {
         "calc_value": 37,
-        "comment": "// ImVec2    SeparatorTextAlign",
-        "name": "ImGuiStyleVar_SeparatorTextAlign",
+        "comment": "// float     SeparatorTextBorderSize",
+        "name": "ImGuiStyleVar_SeparatorTextBorderSize",
         "value": "37"
       },
       {
         "calc_value": 38,
-        "comment": "// ImVec2    SeparatorTextPadding",
-        "name": "ImGuiStyleVar_SeparatorTextPadding",
+        "comment": "// ImVec2    SeparatorTextAlign",
+        "name": "ImGuiStyleVar_SeparatorTextAlign",
         "value": "38"
       },
       {
         "calc_value": 39,
-        "comment": "// float     DockingSeparatorSize",
-        "name": "ImGuiStyleVar_DockingSeparatorSize",
+        "comment": "// ImVec2    SeparatorTextPadding",
+        "name": "ImGuiStyleVar_SeparatorTextPadding",
         "value": "39"
       },
       {
         "calc_value": 40,
-        "name": "ImGuiStyleVar_COUNT",
+        "comment": "// float     DockingSeparatorSize",
+        "name": "ImGuiStyleVar_DockingSeparatorSize",
         "value": "40"
+      },
+      {
+        "calc_value": 41,
+        "name": "ImGuiStyleVar_COUNT",
+        "value": "41"
       }
     ],
     "ImGuiTabBarFlagsPrivate_": [
@@ -6302,79 +6308,79 @@
     "ImGuiSortDirection": "ImU8"
   },
   "locations": {
-    "ImBitVector": "imgui_internal:671",
-    "ImColor": "imgui:3070",
-    "ImDrawChannel": "imgui:3319",
-    "ImDrawCmd": "imgui:3275",
-    "ImDrawCmdHeader": "imgui:3311",
-    "ImDrawData": "imgui:3540",
-    "ImDrawDataBuilder": "imgui_internal:899",
-    "ImDrawFlags_": "imgui:3344",
-    "ImDrawList": "imgui:3382",
-    "ImDrawListFlags_": "imgui:3364",
-    "ImDrawListSharedData": "imgui_internal:872",
-    "ImDrawListSplitter": "imgui:3327",
-    "ImDrawTextFlags_": "imgui_internal:444",
-    "ImDrawVert": "imgui:3296",
-    "ImFont": "imgui:3966",
-    "ImFontAtlas": "imgui:3767",
-    "ImFontAtlasBuilder": "imgui_internal:4149",
-    "ImFontAtlasFlags_": "imgui:3740",
-    "ImFontAtlasPostProcessData": "imgui_internal:4122",
-    "ImFontAtlasRect": "imgui:3730",
-    "ImFontAtlasRectEntry": "imgui_internal:4114",
-    "ImFontBaked": "imgui:3918",
-    "ImFontConfig": "imgui:3649",
-    "ImFontFlags_": "imgui:3953",
-    "ImFontGlyph": "imgui:3692",
-    "ImFontGlyphRangesBuilder": "imgui:3708",
-    "ImFontLoader": "imgui_internal:4063",
-    "ImFontStackData": "imgui_internal:907",
+    "ImBitVector": "imgui_internal:670",
+    "ImColor": "imgui:3084",
+    "ImDrawChannel": "imgui:3333",
+    "ImDrawCmd": "imgui:3289",
+    "ImDrawCmdHeader": "imgui:3325",
+    "ImDrawData": "imgui:3554",
+    "ImDrawDataBuilder": "imgui_internal:898",
+    "ImDrawFlags_": "imgui:3358",
+    "ImDrawList": "imgui:3396",
+    "ImDrawListFlags_": "imgui:3378",
+    "ImDrawListSharedData": "imgui_internal:871",
+    "ImDrawListSplitter": "imgui:3341",
+    "ImDrawTextFlags_": "imgui_internal:443",
+    "ImDrawVert": "imgui:3310",
+    "ImFont": "imgui:3980",
+    "ImFontAtlas": "imgui:3781",
+    "ImFontAtlasBuilder": "imgui_internal:4159",
+    "ImFontAtlasFlags_": "imgui:3754",
+    "ImFontAtlasPostProcessData": "imgui_internal:4132",
+    "ImFontAtlasRect": "imgui:3744",
+    "ImFontAtlasRectEntry": "imgui_internal:4124",
+    "ImFontBaked": "imgui:3932",
+    "ImFontConfig": "imgui:3663",
+    "ImFontFlags_": "imgui:3967",
+    "ImFontGlyph": "imgui:3706",
+    "ImFontGlyphRangesBuilder": "imgui:3722",
+    "ImFontLoader": "imgui_internal:4073",
+    "ImFontStackData": "imgui_internal:906",
     "ImGuiActivateFlags_": "imgui_internal:1705",
-    "ImGuiAxis": "imgui_internal:1156",
-    "ImGuiBackendFlags_": "imgui:1791",
+    "ImGuiAxis": "imgui_internal:1155",
+    "ImGuiBackendFlags_": "imgui:1800",
     "ImGuiBoxSelectState": "imgui_internal:1896",
-    "ImGuiButtonFlagsPrivate_": "imgui_internal:1043",
-    "ImGuiButtonFlags_": "imgui:1937",
-    "ImGuiChildFlags_": "imgui:1250",
-    "ImGuiCol_": "imgui:1808",
-    "ImGuiColorEditFlags_": "imgui:1948",
-    "ImGuiColorMod": "imgui_internal:927",
-    "ImGuiComboFlagsPrivate_": "imgui_internal:1070",
-    "ImGuiComboFlags_": "imgui:1412",
-    "ImGuiComboPreviewData": "imgui_internal:1170",
-    "ImGuiCond_": "imgui:2064",
-    "ImGuiConfigFlags_": "imgui:1762",
-    "ImGuiContext": "imgui_internal:2381",
-    "ImGuiContextHook": "imgui_internal:2366",
-    "ImGuiContextHookType": "imgui_internal:2364",
+    "ImGuiButtonFlagsPrivate_": "imgui_internal:1042",
+    "ImGuiButtonFlags_": "imgui:1947",
+    "ImGuiChildFlags_": "imgui:1259",
+    "ImGuiCol_": "imgui:1817",
+    "ImGuiColorEditFlags_": "imgui:1958",
+    "ImGuiColorMod": "imgui_internal:926",
+    "ImGuiComboFlagsPrivate_": "imgui_internal:1069",
+    "ImGuiComboFlags_": "imgui:1421",
+    "ImGuiComboPreviewData": "imgui_internal:1169",
+    "ImGuiCond_": "imgui:2074",
+    "ImGuiConfigFlags_": "imgui:1771",
+    "ImGuiContext": "imgui_internal:2383",
+    "ImGuiContextHook": "imgui_internal:2368",
+    "ImGuiContextHookType": "imgui_internal:2366",
     "ImGuiDataAuthority_": "imgui_internal:2009",
-    "ImGuiDataTypeInfo": "imgui_internal:953",
-    "ImGuiDataTypePrivate_": "imgui_internal:962",
-    "ImGuiDataTypeStorage": "imgui_internal:947",
-    "ImGuiDataType_": "imgui:1568",
+    "ImGuiDataTypeInfo": "imgui_internal:952",
+    "ImGuiDataTypePrivate_": "imgui_internal:961",
+    "ImGuiDataTypeStorage": "imgui_internal:946",
+    "ImGuiDataType_": "imgui:1577",
     "ImGuiDeactivatedItemData": "imgui_internal:1470",
-    "ImGuiDebugAllocEntry": "imgui_internal:2288",
-    "ImGuiDebugAllocInfo": "imgui_internal:2295",
-    "ImGuiDebugItemPathQuery": "imgui_internal:2335",
-    "ImGuiDebugLogFlags_": "imgui_internal:2265",
-    "ImGuiDir": "imgui:1586",
+    "ImGuiDebugAllocEntry": "imgui_internal:2290",
+    "ImGuiDebugAllocInfo": "imgui_internal:2297",
+    "ImGuiDebugItemPathQuery": "imgui_internal:2337",
+    "ImGuiDebugLogFlags_": "imgui_internal:2267",
+    "ImGuiDir": "imgui:1595",
     "ImGuiDockContext": "imgui_internal:2112",
     "ImGuiDockNode": "imgui_internal:2025",
     "ImGuiDockNodeFlagsPrivate_": "imgui_internal:1977",
-    "ImGuiDockNodeFlags_": "imgui:1520",
+    "ImGuiDockNodeFlags_": "imgui:1529",
     "ImGuiDockNodeState": "imgui_internal:2016",
-    "ImGuiDragDropFlags_": "imgui:1539",
+    "ImGuiDragDropFlags_": "imgui:1548",
     "ImGuiErrorRecoveryState": "imgui_internal:1426",
-    "ImGuiFocusRequestFlags_": "imgui_internal:1116",
+    "ImGuiFocusRequestFlags_": "imgui_internal:1115",
     "ImGuiFocusScopeData": "imgui_internal:1793",
-    "ImGuiFocusedFlags_": "imgui:1466",
+    "ImGuiFocusedFlags_": "imgui:1475",
     "ImGuiFreeTypeLoaderFlags_": "imgui_freetype:29",
-    "ImGuiGroupData": "imgui_internal:1183",
-    "ImGuiHoveredFlagsPrivate_": "imgui_internal:1026",
-    "ImGuiHoveredFlags_": "imgui:1480",
-    "ImGuiIDStackTool": "imgui_internal:2349",
-    "ImGuiIO": "imgui:2469",
+    "ImGuiGroupData": "imgui_internal:1182",
+    "ImGuiHoveredFlagsPrivate_": "imgui_internal:1025",
+    "ImGuiHoveredFlags_": "imgui:1489",
+    "ImGuiIDStackTool": "imgui_internal:2351",
+    "ImGuiIO": "imgui:2480",
     "ImGuiInputEvent": "imgui_internal:1565",
     "ImGuiInputEventAppFocused": "imgui_internal:1563",
     "ImGuiInputEventKey": "imgui_internal:1561",
@@ -6385,37 +6391,37 @@
     "ImGuiInputEventText": "imgui_internal:1562",
     "ImGuiInputEventType": "imgui_internal:1533",
     "ImGuiInputFlagsPrivate_": "imgui_internal:1632",
-    "ImGuiInputFlags_": "imgui:1739",
+    "ImGuiInputFlags_": "imgui:1748",
     "ImGuiInputSource": "imgui_internal:1546",
-    "ImGuiInputTextCallbackData": "imgui:2732",
-    "ImGuiInputTextDeactivatedState": "imgui_internal:1220",
-    "ImGuiInputTextFlagsPrivate_": "imgui_internal:1034",
-    "ImGuiInputTextFlags_": "imgui:1285",
-    "ImGuiInputTextState": "imgui_internal:1242",
-    "ImGuiItemFlagsPrivate_": "imgui_internal:975",
-    "ImGuiItemFlags_": "imgui:1271",
-    "ImGuiItemStatusFlags_": "imgui_internal:999",
-    "ImGuiKey": "imgui:1610",
-    "ImGuiKeyData": "imgui:2461",
+    "ImGuiInputTextCallbackData": "imgui:2743",
+    "ImGuiInputTextDeactivatedState": "imgui_internal:1219",
+    "ImGuiInputTextFlagsPrivate_": "imgui_internal:1033",
+    "ImGuiInputTextFlags_": "imgui:1294",
+    "ImGuiInputTextState": "imgui_internal:1241",
+    "ImGuiItemFlagsPrivate_": "imgui_internal:974",
+    "ImGuiItemFlags_": "imgui:1280",
+    "ImGuiItemStatusFlags_": "imgui_internal:998",
+    "ImGuiKey": "imgui:1619",
+    "ImGuiKeyData": "imgui:2472",
     "ImGuiKeyOwnerData": "imgui_internal:1619",
     "ImGuiKeyRoutingData": "imgui_internal:1593",
     "ImGuiKeyRoutingTable": "imgui_internal:1607",
     "ImGuiLastItemData": "imgui_internal:1395",
-    "ImGuiLayoutType_": "imgui_internal:1137",
-    "ImGuiListClipper": "imgui:2969",
+    "ImGuiLayoutType_": "imgui_internal:1136",
+    "ImGuiListClipper": "imgui:2983",
     "ImGuiListClipperData": "imgui_internal:1689",
-    "ImGuiListClipperFlags_": "imgui:2943",
+    "ImGuiListClipperFlags_": "imgui:2957",
     "ImGuiListClipperRange": "imgui_internal:1676",
     "ImGuiLocEntry": "imgui_internal:2238",
     "ImGuiLocKey": "imgui_internal:2220",
-    "ImGuiLogFlags_": "imgui_internal:1144",
-    "ImGuiMenuColumns": "imgui_internal:1202",
-    "ImGuiMetricsConfig": "imgui_internal:2305",
-    "ImGuiMouseButton_": "imgui:2022",
-    "ImGuiMouseCursor_": "imgui:2032",
-    "ImGuiMouseSource": "imgui:2053",
-    "ImGuiMultiSelectFlags_": "imgui:3128",
-    "ImGuiMultiSelectIO": "imgui:3156",
+    "ImGuiLogFlags_": "imgui_internal:1143",
+    "ImGuiMenuColumns": "imgui_internal:1201",
+    "ImGuiMetricsConfig": "imgui_internal:2307",
+    "ImGuiMouseButton_": "imgui:2032",
+    "ImGuiMouseCursor_": "imgui:2042",
+    "ImGuiMouseSource": "imgui:2063",
+    "ImGuiMultiSelectFlags_": "imgui:3142",
+    "ImGuiMultiSelectIO": "imgui:3170",
     "ImGuiMultiSelectState": "imgui_internal:1953",
     "ImGuiMultiSelectTempData": "imgui_internal:1928",
     "ImGuiNavItemData": "imgui_internal:1776",
@@ -6429,95 +6435,95 @@
     "ImGuiOldColumnData": "imgui_internal:1861",
     "ImGuiOldColumnFlags_": "imgui_internal:1841",
     "ImGuiOldColumns": "imgui_internal:1871",
-    "ImGuiOnceUponAFrame": "imgui:2832",
-    "ImGuiPayload": "imgui:2797",
-    "ImGuiPlatformIO": "imgui:4151",
-    "ImGuiPlatformImeData": "imgui:4273",
-    "ImGuiPlatformMonitor": "imgui:4263",
-    "ImGuiPlotType": "imgui_internal:1163",
+    "ImGuiOnceUponAFrame": "imgui:2846",
+    "ImGuiPayload": "imgui:2811",
+    "ImGuiPlatformIO": "imgui:4165",
+    "ImGuiPlatformImeData": "imgui:4287",
+    "ImGuiPlatformMonitor": "imgui:4277",
+    "ImGuiPlotType": "imgui_internal:1162",
     "ImGuiPopupData": "imgui_internal:1490",
-    "ImGuiPopupFlags_": "imgui:1375",
+    "ImGuiPopupFlags_": "imgui:1384",
     "ImGuiPopupPositionPolicy": "imgui_internal:1482",
     "ImGuiPtrOrIndex": "imgui_internal:1460",
     "ImGuiScrollFlags_": "imgui_internal:1717",
-    "ImGuiSelectableFlagsPrivate_": "imgui_internal:1083",
-    "ImGuiSelectableFlags_": "imgui:1394",
-    "ImGuiSelectionBasicStorage": "imgui:3202",
-    "ImGuiSelectionExternalStorage": "imgui:3225",
-    "ImGuiSelectionRequest": "imgui:3176",
-    "ImGuiSelectionRequestType": "imgui:3168",
-    "ImGuiSeparatorFlags_": "imgui_internal:1105",
+    "ImGuiSelectableFlagsPrivate_": "imgui_internal:1082",
+    "ImGuiSelectableFlags_": "imgui:1403",
+    "ImGuiSelectionBasicStorage": "imgui:3216",
+    "ImGuiSelectionExternalStorage": "imgui:3239",
+    "ImGuiSelectionRequest": "imgui:3190",
+    "ImGuiSelectionRequestType": "imgui:3182",
+    "ImGuiSeparatorFlags_": "imgui_internal:1104",
     "ImGuiSettingsHandler": "imgui_internal:2200",
     "ImGuiShrinkWidthItem": "imgui_internal:1453",
-    "ImGuiSizeCallbackData": "imgui:2766",
-    "ImGuiSliderFlagsPrivate_": "imgui_internal:1076",
-    "ImGuiSliderFlags_": "imgui:2005",
-    "ImGuiSortDirection": "imgui:1597",
-    "ImGuiStackLevelInfo": "imgui_internal:2324",
-    "ImGuiStorage": "imgui:2905",
-    "ImGuiStoragePair": "imgui:2888",
-    "ImGuiStyle": "imgui:2351",
-    "ImGuiStyleMod": "imgui_internal:934",
-    "ImGuiStyleVarInfo": "imgui_internal:918",
-    "ImGuiStyleVar_": "imgui:1890",
-    "ImGuiTabBar": "imgui_internal:3040",
-    "ImGuiTabBarFlagsPrivate_": "imgui_internal:3002",
-    "ImGuiTabBarFlags_": "imgui:1427",
-    "ImGuiTabItem": "imgui_internal:3020",
-    "ImGuiTabItemFlagsPrivate_": "imgui_internal:3010",
-    "ImGuiTabItemFlags_": "imgui:1451",
-    "ImGuiTable": "imgui_internal:3185",
-    "ImGuiTableBgTarget_": "imgui:2205",
-    "ImGuiTableCellData": "imgui_internal:3153",
-    "ImGuiTableColumn": "imgui_internal:3093",
-    "ImGuiTableColumnFlags_": "imgui:2152",
-    "ImGuiTableColumnSettings": "imgui_internal:3334",
-    "ImGuiTableColumnSortSpecs": "imgui:2227",
-    "ImGuiTableFlags_": "imgui:2099",
-    "ImGuiTableHeaderData": "imgui_internal:3162",
-    "ImGuiTableInstanceData": "imgui_internal:3172",
-    "ImGuiTableRowFlags_": "imgui:2190",
-    "ImGuiTableSettings": "imgui_internal:3358",
-    "ImGuiTableSortSpecs": "imgui:2217",
-    "ImGuiTableTempData": "imgui_internal:3310",
-    "ImGuiTextBuffer": "imgui:2867",
-    "ImGuiTextFilter": "imgui:2840",
-    "ImGuiTextFlags_": "imgui_internal:1123",
-    "ImGuiTextIndex": "imgui_internal:824",
-    "ImGuiTextRange": "imgui:2850",
-    "ImGuiTooltipFlags_": "imgui_internal:1129",
-    "ImGuiTreeNodeFlagsPrivate_": "imgui_internal:1096",
-    "ImGuiTreeNodeFlags_": "imgui:1336",
+    "ImGuiSizeCallbackData": "imgui:2780",
+    "ImGuiSliderFlagsPrivate_": "imgui_internal:1075",
+    "ImGuiSliderFlags_": "imgui:2015",
+    "ImGuiSortDirection": "imgui:1606",
+    "ImGuiStackLevelInfo": "imgui_internal:2326",
+    "ImGuiStorage": "imgui:2919",
+    "ImGuiStoragePair": "imgui:2902",
+    "ImGuiStyle": "imgui:2361",
+    "ImGuiStyleMod": "imgui_internal:933",
+    "ImGuiStyleVarInfo": "imgui_internal:917",
+    "ImGuiStyleVar_": "imgui:1899",
+    "ImGuiTabBar": "imgui_internal:3047",
+    "ImGuiTabBarFlagsPrivate_": "imgui_internal:3009",
+    "ImGuiTabBarFlags_": "imgui:1436",
+    "ImGuiTabItem": "imgui_internal:3027",
+    "ImGuiTabItemFlagsPrivate_": "imgui_internal:3017",
+    "ImGuiTabItemFlags_": "imgui:1460",
+    "ImGuiTable": "imgui_internal:3193",
+    "ImGuiTableBgTarget_": "imgui:2215",
+    "ImGuiTableCellData": "imgui_internal:3161",
+    "ImGuiTableColumn": "imgui_internal:3101",
+    "ImGuiTableColumnFlags_": "imgui:2162",
+    "ImGuiTableColumnSettings": "imgui_internal:3342",
+    "ImGuiTableColumnSortSpecs": "imgui:2237",
+    "ImGuiTableFlags_": "imgui:2109",
+    "ImGuiTableHeaderData": "imgui_internal:3170",
+    "ImGuiTableInstanceData": "imgui_internal:3180",
+    "ImGuiTableRowFlags_": "imgui:2200",
+    "ImGuiTableSettings": "imgui_internal:3366",
+    "ImGuiTableSortSpecs": "imgui:2227",
+    "ImGuiTableTempData": "imgui_internal:3318",
+    "ImGuiTextBuffer": "imgui:2881",
+    "ImGuiTextFilter": "imgui:2854",
+    "ImGuiTextFlags_": "imgui_internal:1122",
+    "ImGuiTextIndex": "imgui_internal:823",
+    "ImGuiTextRange": "imgui:2864",
+    "ImGuiTooltipFlags_": "imgui_internal:1128",
+    "ImGuiTreeNodeFlagsPrivate_": "imgui_internal:1095",
+    "ImGuiTreeNodeFlags_": "imgui:1345",
     "ImGuiTreeNodeStackData": "imgui_internal:1414",
     "ImGuiTypingSelectFlags_": "imgui_internal:1804",
     "ImGuiTypingSelectRequest": "imgui_internal:1812",
     "ImGuiTypingSelectState": "imgui_internal:1823",
-    "ImGuiViewport": "imgui:4064",
-    "ImGuiViewportFlags_": "imgui:4036",
+    "ImGuiViewport": "imgui:4078",
+    "ImGuiViewportFlags_": "imgui:4050",
     "ImGuiViewportP": "imgui_internal:2129",
-    "ImGuiWindow": "imgui_internal:2846",
+    "ImGuiWindow": "imgui_internal:2854",
     "ImGuiWindowBgClickFlags_": "imgui_internal:1304",
-    "ImGuiWindowClass": "imgui:2781",
+    "ImGuiWindowClass": "imgui:2795",
     "ImGuiWindowDockStyle": "imgui_internal:2107",
     "ImGuiWindowDockStyleCol": "imgui_internal:2092",
-    "ImGuiWindowFlags_": "imgui:1199",
+    "ImGuiWindowFlags_": "imgui:1208",
     "ImGuiWindowRefreshFlags_": "imgui_internal:1295",
     "ImGuiWindowSettings": "imgui_internal:2181",
     "ImGuiWindowStackData": "imgui_internal:1444",
-    "ImGuiWindowTempData": "imgui_internal:2789",
-    "ImRect": "imgui_internal:593",
-    "ImTextureData": "imgui:3605",
-    "ImTextureFormat": "imgui:3573",
-    "ImTextureRect": "imgui:3592",
+    "ImGuiWindowTempData": "imgui_internal:2796",
+    "ImRect": "imgui_internal:592",
+    "ImTextureData": "imgui:3619",
+    "ImTextureFormat": "imgui:3587",
+    "ImTextureRect": "imgui:3606",
     "ImTextureRef": "imgui:370",
-    "ImTextureStatus": "imgui:3580",
-    "ImVec1": "imgui_internal:567",
+    "ImTextureStatus": "imgui:3594",
+    "ImVec1": "imgui_internal:566",
     "ImVec2": "imgui:300",
-    "ImVec2i": "imgui_internal:575",
-    "ImVec2ih": "imgui_internal:583",
+    "ImVec2i": "imgui_internal:574",
+    "ImVec2ih": "imgui_internal:582",
     "ImVec4": "imgui:313",
-    "ImWcharClass": "imgui_internal:456",
-    "stbrp_context_opaque": "imgui_internal:4146"
+    "ImWcharClass": "imgui_internal:455",
+    "stbrp_context_opaque": "imgui_internal:4156"
   },
   "nonPOD": {
     "ImBitArray": true,
@@ -7439,7 +7445,7 @@
       },
       {
         "comment": {
-          "sameline": "// 2-4   // out // Character used for ellipsis rendering ('...')."
+          "sameline": "// 2-4   // out // Character used for ellipsis rendering ('...'). If you ever want to temporarily swap this for an alternative/dummy char, make sure to clear EllipsisAutoBake."
         },
         "name": "EllipsisChar",
         "type": "ImWchar"
@@ -7453,7 +7459,7 @@
       },
       {
         "comment": {
-          "sameline": "// 1 bytes if ImWchar=ImWchar16, 16 bytes if ImWchar==ImWchar32. Store 1-bit for each block of 4K codepoints that has one active glyph. This is mainly used to facilitate iterations across all used codepoints."
+          "sameline": "// 1 bytes if ImWchar=ImWchar16, 17 bytes if ImWchar==ImWchar32. Store 1-bit for each block of 8K codepoints that has one active glyph. This is mainly used to facilitate iterations across all used codepoints."
         },
         "name": "Used8kPagesMap[(0xFFFF+1)/8192/8]",
         "size": 1,
@@ -7461,7 +7467,7 @@
       },
       {
         "comment": {
-          "sameline": "// 1     //     // Mark when the \"...\" glyph needs to be generated."
+          "sameline": "// 1     //     // Mark when the \"...\" glyph (== EllipsisChar) needs to be generated by combining multiple '.'."
         },
         "name": "EllipsisAutoBake",
         "type": "bool"
@@ -8033,7 +8039,7 @@
       {
         "bitfield": "1",
         "comment": {
-          "sameline": "// 0  //     // Enable a two-steps mode where CalcTextSize() calls will load AdvanceX *without* rendering/packing glyphs. Only advantagous if you know that the glyph is unlikely to actually be rendered, otherwise it is slower because we'd do one query on the first CalcTextSize and one query on the first Draw."
+          "sameline": "// 0  //     // Enable a two-steps mode where CalcTextSize() calls will load AdvanceX *without* rendering/packing glyphs. Only advantageous if you know that the glyph is unlikely to actually be rendered, otherwise it is slower because we'd do one query on the first CalcTextSize and one query on the first Draw."
         },
         "name": "LoadNoRenderOnLayout",
         "type": "unsigned int"
@@ -8108,7 +8114,7 @@
       },
       {
         "comment": {
-          "sameline": "// false    // Align every glyph AdvanceX to pixel boundaries. Prevents fractional font size from working correctly! Useful e.g. if you are merging a non-pixel aligned font with the default font. If enabled, you can set OversampleH/V to 1."
+          "sameline": "// false    // Align every glyph AdvanceX to pixel boundaries. Prevents fractional font size from working correctly! Useful e.g. if you are merging a non-pixel aligned font with the default font. If enabled, OversampleH/V will default to 1."
         },
         "name": "PixelSnapH",
         "type": "bool"
@@ -9514,7 +9520,7 @@
       },
       {
         "comment": {
-          "sameline": "// Some nav operations (such as PageUp/PageDown) enforce a region which clipper will attempt to always keep submitted"
+          "sameline": "// Some nav operations (such as PageUp/PageDown) enforce a region which clipper will attempt to always keep submitted. Unset/invalid if inverted."
         },
         "name": "NavScoringNoClipRect",
         "type": "ImRect"
@@ -9610,7 +9616,14 @@
       },
       {
         "comment": {
-          "above": "    // Navigation: Windowing (Ctrl+Tab for list, or Menu button + keys or directional pads to move/resize)",
+          "above": "    // Navigation: extra config options (will be made public eventually)\n    // - Tabbing (Tab, Shift+Tab) and Windowing (Ctrl+Tab, Ctrl+Shift+Tab) are enabled REGARDLESS of ImGuiConfigFlags_NavEnableKeyboard being set.\n    // - Ctrl+Tab is reconfigurable because it is the only shortcut that may be polled when no window are focused. It also doesn't work e.g. Web platforms.",
+          "sameline": "// = true. Enable tabbing (Tab, Shift+Tab). PLEASE LET ME KNOW IF YOU USE THIS."
+        },
+        "name": "ConfigNavEnableTabbing",
+        "type": "bool"
+      },
+      {
+        "comment": {
           "sameline": "// = true. Enable Ctrl+Tab by holding ImGuiKey_GamepadFaceLeft (== ImGuiKey_NavGamepadMenu). When false, the button may still be used to toggle Menu layer."
         },
         "name": "ConfigNavWindowingWithGamepad",
@@ -9618,7 +9631,7 @@
       },
       {
         "comment": {
-          "sameline": "// = ImGuiMod_Ctrl | ImGuiKey_Tab (or ImGuiMod_Super | ImGuiKey_Tab on OS X). For reconfiguration (see #4828)"
+          "sameline": "// = ImGuiMod_Ctrl | ImGuiKey_Tab (or ImGuiMod_Super | ImGuiKey_Tab on OS X). Set to 0 to disable. For reconfiguration (see #4828)"
         },
         "name": "ConfigNavWindowingKeyNext",
         "type": "ImGuiKeyChord"
@@ -9632,6 +9645,7 @@
       },
       {
         "comment": {
+          "above": "    // Navigation: Windowing (Ctrl+Tab for list, or Menu button + keys or directional pads to move/resize)",
           "sameline": "// Target window when doing Ctrl+Tab (or Pad Menu + FocusPrev/Next), this window is temporarily displayed top-most!"
         },
         "name": "NavWindowingTarget",
@@ -11489,7 +11503,7 @@
       },
       {
         "comment": {
-          "above": "    // Options to configure Error Handling and how we handle recoverable errors [EXPERIMENTAL]\n    // - Error recovery is provided as a way to facilitate:\n    //    - Recovery after a programming error (native code or scripting language - the later tends to facilitate iterating on code while running).\n    //    - Recovery after running an exception handler or any error processing which may skip code after an error has been detected.\n    // - Error recovery is not perfect nor guaranteed! It is a feature to ease development.\n    //   You not are not supposed to rely on it in the course of a normal application run.\n    // - Functions that support error recovery are using IM_ASSERT_USER_ERROR() instead of IM_ASSERT().\n    // - By design, we do NOT allow error recovery to be 100% silent. One of the three options needs to be checked!\n    // - Always ensure that on programmers seats you have at minimum Asserts or Tooltips enabled when making direct imgui API calls!\n    //   Otherwise it would severely hinder your ability to catch and correct mistakes!\n    // Read https://github.com/ocornut/imgui/wiki/Error-Handling for details.\n    // - Programmer seats: keep asserts (default), or disable asserts and keep error tooltips (new and nice!)\n    // - Non-programmer seats: maybe disable asserts, but make sure errors are resurfaced (tooltips, visible log entries, use callback etc.)\n    // - Recovery after error/exception: record stack sizes with ErrorRecoveryStoreState(), disable assert, set log callback (to e.g. trigger high-level breakpoint), recover with ErrorRecoveryTryToRecoverState(), restore settings.",
+          "above": "    // Options to configure Error Handling and how we handle recoverable errors [EXPERIMENTAL]\n    // - Error recovery is provided as a way to facilitate:\n    //    - Recovery after a programming error (native code or scripting language - the latter tends to facilitate iterating on code while running).\n    //    - Recovery after running an exception handler or any error processing which may skip code after an error has been detected.\n    // - Error recovery is not perfect nor guaranteed! It is a feature to ease development.\n    //   You not are not supposed to rely on it in the course of a normal application run.\n    // - Functions that support error recovery are using IM_ASSERT_USER_ERROR() instead of IM_ASSERT().\n    // - By design, we do NOT allow error recovery to be 100% silent. One of the three options needs to be checked!\n    // - Always ensure that on programmers seats you have at minimum Asserts or Tooltips enabled when making direct imgui API calls!\n    //   Otherwise it would severely hinder your ability to catch and correct mistakes!\n    // Read https://github.com/ocornut/imgui/wiki/Error-Handling for details.\n    // - Programmer seats: keep asserts (default), or disable asserts and keep error tooltips (new and nice!)\n    // - Non-programmer seats: maybe disable asserts, but make sure errors are resurfaced (tooltips, visible log entries, use callback etc.)\n    // - Recovery after error/exception: record stack sizes with ErrorRecoveryStoreState(), disable assert, set log callback (to e.g. trigger high-level breakpoint), recover with ErrorRecoveryTryToRecoverState(), restore settings.",
           "sameline": "// = true       // Enable error recovery support. Some errors won't be detected and lead to direct crashes if recovery is disabled."
         },
         "name": "ConfigErrorRecovery",
@@ -12102,7 +12116,21 @@
       },
       {
         "comment": {
+          "sameline": "// Widget ID                             // Read-only"
+        },
+        "name": "ID",
+        "type": "ImGuiID"
+      },
+      {
+        "comment": {
           "above": "    // Arguments for the different callback events\n    // - During Resize callback, Buf will be same as your input buffer.\n    // - However, during Completion/History/Always callback, Buf always points to our own internal data (it is not the same as your buffer)! Changes to it will be reflected into your own buffer shortly after the callback.\n    // - To modify the text buffer in a callback, prefer using the InsertChars() / DeleteChars() function. InsertChars() will take care of calling the resize callback if necessary.\n    // - If you know your edits are not going to resize the underlying buffer allocation, you may modify the contents of 'Buf[]' directly. You need to update 'BufTextLen' accordingly (0 <= BufTextLen < BufSize) and set 'BufDirty'' to true so InputText can update its internal state.",
+          "sameline": "// Key pressed (Up/Down/TAB)            // Read-only    // [Completion,History]"
+        },
+        "name": "EventKey",
+        "type": "ImGuiKey"
+      },
+      {
+        "comment": {
           "sameline": "// Character input                      // Read-write   // [CharFilter] Replace character with another one, or set to zero to drop. return 1 is equivalent to setting EventChar=0;"
         },
         "name": "EventChar",
@@ -12110,10 +12138,17 @@
       },
       {
         "comment": {
-          "sameline": "// Key pressed (Up/Down/TAB)            // Read-only    // [Completion,History]"
+          "sameline": "// Input field just got activated       // Read-only    // [Always]"
         },
-        "name": "EventKey",
-        "type": "ImGuiKey"
+        "name": "EventActivated",
+        "type": "bool"
+      },
+      {
+        "comment": {
+          "sameline": "// Set if you modify Buf/BufTextLen!    // Write        // [Completion,History,Always]"
+        },
+        "name": "BufDirty",
+        "type": "bool"
       },
       {
         "comment": {
@@ -12135,13 +12170,6 @@
         },
         "name": "BufSize",
         "type": "int"
-      },
-      {
-        "comment": {
-          "sameline": "// Set if you modify Buf/BufTextLen!    // Write        // [Completion,History,Always]"
-        },
-        "name": "BufDirty",
-        "type": "bool"
       },
       {
         "comment": {
@@ -12220,7 +12248,7 @@
       },
       {
         "comment": {
-          "sameline": "// == TextA.Data unless read-only, in which case == buf passed to InputText(). Field only set and valid _inside_ the call InputText() call."
+          "sameline": "// == TextA.Data unless read-only, in which case == buf passed to InputText(). For _ReadOnly fields, pointer will be null outside the InputText() call."
         },
         "name": "TextSrc",
         "type": "const char*"
@@ -13373,7 +13401,8 @@
     "ImGuiPlatformIO": [
       {
         "comment": {
-          "above": "    // Optional: Access OS clipboard\n    // (default to use native Win32 clipboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)"
+          "above": "    // Optional: Access OS clipboard\n    // (default to use native Win32 clipboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)",
+          "sameline": "// Should return NULL on failure (e.g. clipboard data is not text)."
         },
         "name": "Platform_GetClipboardTextFn",
         "type": "const char*(*)(ImGuiContext* ctx)"
@@ -14071,7 +14100,7 @@
       },
       {
         "comment": {
-          "sameline": "// Additional global scale factor from viewport/monitor contents scale. When io.ConfigDpiScaleFonts is enabled, this is automatically overwritten when changing monitor DPI."
+          "sameline": "// Additional global scale factor from viewport/monitor contents scale. In docking branch: when io.ConfigDpiScaleFonts is enabled, this is automatically overwritten when changing monitor DPI."
         },
         "name": "FontScaleDpi",
         "type": "float"
@@ -14270,6 +14299,13 @@
           "sameline": "// The size in pixels of the dead-zone around zero on logarithmic sliders that cross zero."
         },
         "name": "LogSliderDeadzone",
+        "type": "float"
+      },
+      {
+        "comment": {
+          "sameline": "// Rounding of Image() calls."
+        },
+        "name": "ImageRounding",
         "type": "float"
       },
       {
@@ -14639,6 +14675,10 @@
         "type": "ImGuiID"
       },
       {
+        "name": "NextScrollToTabId",
+        "type": "ImGuiID"
+      },
+      {
         "comment": {
           "sameline": "// Can occasionally be != SelectedTabId (e.g. when previewing contents for Ctrl+Tab preview)"
         },
@@ -14818,7 +14858,7 @@
       },
       {
         "comment": {
-          "sameline": "// Position relative to beginning of tab"
+          "sameline": "// Position relative to beginning of tab bar"
         },
         "name": "Offset",
         "type": "float"
@@ -17222,10 +17262,6 @@
         "type": "float"
       },
       {
-        "name": "ItemWidthDefault",
-        "type": "float"
-      },
-      {
         "name": "StateStorage",
         "type": "ImGuiStorage"
       },
@@ -17842,6 +17878,10 @@
           "sameline": "// Current item width (>0.0: width in pixels, <0.0: align xx pixels to the right of window)."
         },
         "name": "ItemWidth",
+        "type": "float"
+      },
+      {
+        "name": "ItemWidthDefault",
         "type": "float"
       },
       {
