@@ -13092,6 +13092,23 @@ func (self *NextPlotData) RangeCond() [6]Cond {
 	}()
 }
 
+func (self *NextPlotData) Range() [6]Range {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]Range {
+		result := [6]Range{}
+		resultMirr := C.wrap_ImPlotNextPlotData_GetRange(internal.ReinterpretCast[*C.ImPlotNextPlotData](selfArg))
+		for i := range result {
+			result[i] = *NewRangeFromC(func() *C.ImPlotRange { result := C.implot_ImPlotRange_GetAtIdx(resultMirr, C.int(i)); return &result }())
+		}
+
+		return result
+	}()
+}
+
 func (self *NextPlotData) HasRange() [6]bool {
 	selfArg, selfFin := self.Handle()
 
@@ -13378,6 +13395,23 @@ func (self *Plot) MouseTextFlags() MouseTextFlags {
 		selfFin()
 	}()
 	return MouseTextFlags(C.wrap_ImPlotPlot_GetMouseTextFlags(internal.ReinterpretCast[*C.ImPlotPlot](selfArg)))
+}
+
+func (self *Plot) Axes() [6]Axis {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [6]Axis {
+		result := [6]Axis{}
+		resultMirr := C.wrap_ImPlotPlot_GetAxes(internal.ReinterpretCast[*C.ImPlotPlot](selfArg))
+		for i := range result {
+			result[i] = *NewAxisFromC(func() *C.ImPlotAxis { result := C.implot_ImPlotAxis_GetAtIdx(resultMirr, C.int(i)); return &result }())
+		}
+
+		return result
+	}()
 }
 
 func (self *Plot) TextBuffer() imgui.TextBuffer {

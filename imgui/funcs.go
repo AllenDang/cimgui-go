@@ -15540,6 +15540,26 @@ func (self *DrawListSharedData) Context() *Context {
 	return NewContextFromC(C.wrap_ImDrawListSharedData_GetContext(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg)))
 }
 
+func (self *DrawListSharedData) ArcFastVtx() [48]Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [48]Vec2 {
+		result := [48]Vec2{}
+		resultMirr := C.wrap_ImDrawListSharedData_GetArcFastVtx(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg))
+		for i := range result {
+			result[i] = func() Vec2 {
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
+		}
+
+		return result
+	}()
+}
+
 func (self *DrawListSharedData) ArcFastRadiusCutoff() float32 {
 	selfArg, selfFin := self.Handle()
 
@@ -16248,6 +16268,26 @@ func (self *FontAtlas) Sources() vectors.Vector[FontConfig] {
 	return func() vectors.Vector[FontConfig] {
 		result := C.wrap_ImFontAtlas_GetSources(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
 		return vectors.NewVectorFromC(result.Size, result.Capacity, NewFontConfigFromC(result.Data))
+	}()
+}
+
+func (self *FontAtlas) TexUvLines() [33]Vec4 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [33]Vec4 {
+		result := [33]Vec4{}
+		resultMirr := C.wrap_ImFontAtlas_GetTexUvLines(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
+		for i := range result {
+			result[i] = func() Vec4 {
+				out := C.imgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+			}()
+		}
+
+		return result
 	}()
 }
 
@@ -27332,6 +27372,26 @@ func (self *IO) MousePosPrev() Vec2 {
 	}()
 }
 
+func (self *IO) MouseClickedPos() [5]Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [5]Vec2 {
+		result := [5]Vec2{}
+		resultMirr := C.wrap_ImGuiIO_GetMouseClickedPos(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		for i := range result {
+			result[i] = func() Vec2 {
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
+		}
+
+		return result
+	}()
+}
+
 func (self *IO) MouseClickedTime() [5]float64 {
 	selfArg, selfFin := self.Handle()
 
@@ -27531,6 +27591,26 @@ func (self *IO) MouseDownDurationPrev() [5]float32 {
 		resultMirr := C.wrap_ImGuiIO_GetMouseDownDurationPrev(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
 		for i := range result {
 			result[i] = float32(C.imgui_float_GetAtIdx(resultMirr, C.int(i)))
+		}
+
+		return result
+	}()
+}
+
+func (self *IO) MouseDragMaxDistanceAbs() [5]Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [5]Vec2 {
+		result := [5]Vec2{}
+		resultMirr := C.wrap_ImGuiIO_GetMouseDragMaxDistanceAbs(internal.ReinterpretCast[*C.ImGuiIO](selfArg))
+		for i := range result {
+			result[i] = func() Vec2 {
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
@@ -33451,6 +33531,26 @@ func (self *Style) CircleTessellationMaxError() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiStyle_GetCircleTessellationMaxError(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
+func (self *Style) Colors() [62]Vec4 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [62]Vec4 {
+		result := [62]Vec4{}
+		resultMirr := C.wrap_ImGuiStyle_GetColors(internal.ReinterpretCast[*C.ImGuiStyle](selfArg))
+		for i := range result {
+			result[i] = func() Vec4 {
+				out := C.imgui_ImVec4_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec4{}).FromC(unsafe.Pointer(&out))
+			}()
+		}
+
+		return result
+	}()
 }
 
 func (self *Style) HoverStationaryDelay() float32 {
@@ -40828,6 +40928,46 @@ func (self *Window) NavLastIds() [2]ID {
 		resultMirr := C.wrap_ImGuiWindow_GetNavLastIds(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
 		for i := range result {
 			result[i] = *NewIDFromC(func() *C.ImGuiID { result := C.imgui_ImGuiID_GetAtIdx(resultMirr, C.int(i)); return &result }())
+		}
+
+		return result
+	}()
+}
+
+func (self *Window) NavRectRel() [2]Rect {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [2]Rect {
+		result := [2]Rect{}
+		resultMirr := C.wrap_ImGuiWindow_GetNavRectRel(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
+		for i := range result {
+			result[i] = func() Rect {
+				out := C.imgui_ImRect_GetAtIdx(resultMirr, C.int(i))
+				return *(&Rect{}).FromC(unsafe.Pointer(&out))
+			}()
+		}
+
+		return result
+	}()
+}
+
+func (self *Window) NavPreferredScoringPosRel() [2]Vec2 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return func() [2]Vec2 {
+		result := [2]Vec2{}
+		resultMirr := C.wrap_ImGuiWindow_GetNavPreferredScoringPosRel(internal.ReinterpretCast[*C.ImGuiWindow](selfArg))
+		for i := range result {
+			result[i] = func() Vec2 {
+				out := C.imgui_ImVec2_GetAtIdx(resultMirr, C.int(i))
+				return *(&Vec2{}).FromC(unsafe.Pointer(&out))
+			}()
 		}
 
 		return result
