@@ -12688,7 +12688,7 @@
   ],
   "ImPlot_PlotBarsG_LJ": [
     {
-      "args": "(const char* label_id,ImPlotGetter getter,void* data,int count,double bar_size,const ImPlotSpec_c spec)",
+      "args": "(const char* label_id,ImPlotPoint_getter getter,void* data,int count,double bar_size,const ImPlotSpec_c spec)",
       "argsT": [
         {
           "name": "label_id",
@@ -12696,7 +12696,7 @@
         },
         {
           "name": "getter",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data",
@@ -12727,7 +12727,7 @@
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotBarsG_LJ",
       "ret": "void",
-      "signature": "(const char*,ImPlotGetter,void*,int,double,const ImPlotSpec)",
+      "signature": "(const char*,ImPlotPoint_getter,void*,int,double,const ImPlotSpec)",
       "stname": ""
     }
   ],
@@ -14088,7 +14088,7 @@
   ],
   "ImPlot_PlotDigitalG_LJ": [
     {
-      "args": "(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)",
+      "args": "(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)",
       "argsT": [
         {
           "name": "label_id",
@@ -14096,7 +14096,7 @@
         },
         {
           "name": "getter",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data",
@@ -14123,7 +14123,7 @@
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotDigitalG_LJ",
       "ret": "void",
-      "signature": "(const char*,ImPlotGetter,void*,int,const ImPlotSpec)",
+      "signature": "(const char*,ImPlotPoint_getter,void*,int,const ImPlotSpec)",
       "stname": ""
     }
   ],
@@ -18037,7 +18037,7 @@
   ],
   "ImPlot_PlotLineG_LJ": [
     {
-      "args": "(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)",
+      "args": "(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)",
       "argsT": [
         {
           "name": "label_id",
@@ -18045,7 +18045,7 @@
         },
         {
           "name": "getter",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data",
@@ -18072,7 +18072,7 @@
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotLineG_LJ",
       "ret": "void",
-      "signature": "(const char*,ImPlotGetter,void*,int,const ImPlotSpec)",
+      "signature": "(const char*,ImPlotPoint_getter,void*,int,const ImPlotSpec)",
       "stname": ""
     }
   ],
@@ -20143,7 +20143,7 @@
   ],
   "ImPlot_PlotScatterG_LJ": [
     {
-      "args": "(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)",
+      "args": "(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)",
       "argsT": [
         {
           "name": "label_id",
@@ -20151,7 +20151,7 @@
         },
         {
           "name": "getter",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data",
@@ -20178,7 +20178,7 @@
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotScatterG_LJ",
       "ret": "void",
-      "signature": "(const char*,ImPlotGetter,void*,int,const ImPlotSpec)",
+      "signature": "(const char*,ImPlotPoint_getter,void*,int,const ImPlotSpec)",
       "stname": ""
     }
   ],
@@ -21605,7 +21605,7 @@
   ],
   "ImPlot_PlotShadedG_LJ": [
     {
-      "args": "(const char* label_id,ImPlotGetter getter1,void* data1,ImPlotGetter getter2,void* data2,int count,const ImPlotSpec_c spec)",
+      "args": "(const char* label_id,ImPlotPoint_getter getter1,void* data1,ImPlotPoint_getter getter2,void* data2,int count,const ImPlotSpec_c spec)",
       "argsT": [
         {
           "name": "label_id",
@@ -21613,7 +21613,7 @@
         },
         {
           "name": "getter1",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data1",
@@ -21621,7 +21621,7 @@
         },
         {
           "name": "getter2",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data2",
@@ -21648,7 +21648,7 @@
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotShadedG_LJ",
       "ret": "void",
-      "signature": "(const char*,ImPlotGetter,void*,ImPlotGetter,void*,int,const ImPlotSpec)",
+      "signature": "(const char*,ImPlotPoint_getter,void*,ImPlotPoint_getter,void*,int,const ImPlotSpec)",
       "stname": ""
     }
   ],
@@ -22537,7 +22537,7 @@
   ],
   "ImPlot_PlotStairsG_LJ": [
     {
-      "args": "(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)",
+      "args": "(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)",
       "argsT": [
         {
           "name": "label_id",
@@ -22545,7 +22545,7 @@
         },
         {
           "name": "getter",
-          "type": "ImPlotGetter"
+          "type": "ImPlotPoint_getter"
         },
         {
           "name": "data",
@@ -22572,7 +22572,7 @@
       "namespace": "ImPlot",
       "ov_cimguiname": "ImPlot_PlotStairsG_LJ",
       "ret": "void",
-      "signature": "(const char*,ImPlotGetter,void*,int,const ImPlotSpec)",
+      "signature": "(const char*,ImPlotPoint_getter,void*,int,const ImPlotSpec)",
       "stname": ""
     }
   ],

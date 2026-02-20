@@ -3205,19 +3205,6 @@ func PlotBarsGV(label_id string, getter ter, data uintptr, count int32, bar_size
 	specFin()
 }
 
-// PlotBarsGLJV parameter default value hint:
-// spec: ImPlotSpec()
-func PlotBarsGLJV(label_id string, getter ter, data uintptr, count int32, bar_size float64, spec Spec) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	specArg, specFin := spec.C()
-	C.wrap_ImPlot_PlotBarsG_LJV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), C.double(bar_size), internal.ReinterpretCast[C.ImPlotSpec](specArg))
-
-	label_idFin()
-	getterFin()
-	specFin()
-}
-
 // PlotBarsFloatPtrFloatPtrV parameter default value hint:
 // spec: ImPlotSpec()
 func PlotBarsFloatPtrFloatPtrV(label_id string, xs, ys *float32, count int32, bar_size float64, spec Spec) {
@@ -3865,19 +3852,6 @@ func PlotDigitalGV(label_id string, getter ter, data uintptr, count int32, spec 
 	getterArg, getterFin := getter.C()
 	specArg, specFin := spec.C()
 	C.wrap_ImPlot_PlotDigitalGV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
-
-	label_idFin()
-	getterFin()
-	specFin()
-}
-
-// PlotDigitalGLJV parameter default value hint:
-// spec: ImPlotSpec()
-func PlotDigitalGLJV(label_id string, getter ter, data uintptr, count int32, spec Spec) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	specArg, specFin := spec.C()
-	C.wrap_ImPlot_PlotDigitalG_LJV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
 
 	label_idFin()
 	getterFin()
@@ -5164,19 +5138,6 @@ func PlotLineGV(label_id string, getter ter, data uintptr, count int32, spec Spe
 	specFin()
 }
 
-// PlotLineGLJV parameter default value hint:
-// spec: ImPlotSpec()
-func PlotLineGLJV(label_id string, getter ter, data uintptr, count int32, spec Spec) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	specArg, specFin := spec.C()
-	C.wrap_ImPlot_PlotLineG_LJV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
-
-	label_idFin()
-	getterFin()
-	specFin()
-}
-
 // PlotLineFloatPtrFloatPtrV parameter default value hint:
 // spec: ImPlotSpec()
 func PlotLineFloatPtrFloatPtrV(label_id string, xs, ys *float32, count int32, spec Spec) {
@@ -5830,19 +5791,6 @@ func PlotScatterGV(label_id string, getter ter, data uintptr, count int32, spec 
 	specFin()
 }
 
-// PlotScatterGLJV parameter default value hint:
-// spec: ImPlotSpec()
-func PlotScatterGLJV(label_id string, getter ter, data uintptr, count int32, spec Spec) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	specArg, specFin := spec.C()
-	C.wrap_ImPlot_PlotScatterG_LJV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
-
-	label_idFin()
-	getterFin()
-	specFin()
-}
-
 // PlotScatterFloatPtrFloatPtrV parameter default value hint:
 // spec: ImPlotSpec()
 func PlotScatterFloatPtrFloatPtrV(label_id string, xs, ys *float32, count int32, spec Spec) {
@@ -6151,21 +6099,6 @@ func PlotShadedGV(label_id string, getter1 ter, data1 uintptr, getter2 ter, data
 	getter2Arg, getter2Fin := getter2.C()
 	specArg, specFin := spec.C()
 	C.wrap_ImPlot_PlotShadedGV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getter1Arg), C.uintptr_t(data1), internal.ReinterpretCast[C.ImPlotGetter](getter2Arg), C.uintptr_t(data2), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
-
-	label_idFin()
-	getter1Fin()
-	getter2Fin()
-	specFin()
-}
-
-// PlotShadedGLJV parameter default value hint:
-// spec: ImPlotSpec()
-func PlotShadedGLJV(label_id string, getter1 ter, data1 uintptr, getter2 ter, data2 uintptr, count int32, spec Spec) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getter1Arg, getter1Fin := getter1.C()
-	getter2Arg, getter2Fin := getter2.C()
-	specArg, specFin := spec.C()
-	C.wrap_ImPlot_PlotShadedG_LJV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getter1Arg), C.uintptr_t(data1), internal.ReinterpretCast[C.ImPlotGetter](getter2Arg), C.uintptr_t(data2), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
 
 	label_idFin()
 	getter1Fin()
@@ -6670,19 +6603,6 @@ func PlotStairsGV(label_id string, getter ter, data uintptr, count int32, spec S
 	getterArg, getterFin := getter.C()
 	specArg, specFin := spec.C()
 	C.wrap_ImPlot_PlotStairsGV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
-
-	label_idFin()
-	getterFin()
-	specFin()
-}
-
-// PlotStairsGLJV parameter default value hint:
-// spec: ImPlotSpec()
-func PlotStairsGLJV(label_id string, getter ter, data uintptr, count int32, spec Spec) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	specArg, specFin := spec.C()
-	C.wrap_ImPlot_PlotStairsG_LJV(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
 
 	label_idFin()
 	getterFin()
@@ -8277,15 +8197,6 @@ func PlotBarsG(label_id string, getter ter, data uintptr, count int32, bar_size 
 	getterFin()
 }
 
-func PlotBarsGLJ(label_id string, getter ter, data uintptr, count int32, bar_size float64) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	C.wrap_ImPlot_PlotBarsG_LJ(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count), C.double(bar_size))
-
-	label_idFin()
-	getterFin()
-}
-
 func PlotBarsFloatPtrFloatPtr(label_id string, xs, ys *float32, count int32, bar_size float64) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
 	xsArg, xsFin := internal.WrapNumberPtr[C.float, float32](xs)
@@ -8730,15 +8641,6 @@ func PlotDigitalG(label_id string, getter ter, data uintptr, count int32) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
 	getterArg, getterFin := getter.C()
 	C.wrap_ImPlot_PlotDigitalG(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count))
-
-	label_idFin()
-	getterFin()
-}
-
-func PlotDigitalGLJ(label_id string, getter ter, data uintptr, count int32) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	C.wrap_ImPlot_PlotDigitalG_LJ(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count))
 
 	label_idFin()
 	getterFin()
@@ -9579,15 +9481,6 @@ func PlotLineG(label_id string, getter ter, data uintptr, count int32) {
 	getterFin()
 }
 
-func PlotLineGLJ(label_id string, getter ter, data uintptr, count int32) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	C.wrap_ImPlot_PlotLineG_LJ(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count))
-
-	label_idFin()
-	getterFin()
-}
-
 func PlotLineFloatPtrFloatPtr(label_id string, xs, ys *float32, count int32) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
 	xsArg, xsFin := internal.WrapNumberPtr[C.float, float32](xs)
@@ -9997,15 +9890,6 @@ func PlotScatterG(label_id string, getter ter, data uintptr, count int32) {
 	getterFin()
 }
 
-func PlotScatterGLJ(label_id string, getter ter, data uintptr, count int32) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	C.wrap_ImPlot_PlotScatterG_LJ(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count))
-
-	label_idFin()
-	getterFin()
-}
-
 func PlotScatterFloatPtrFloatPtr(label_id string, xs, ys *float32, count int32) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
 	xsArg, xsFin := internal.WrapNumberPtr[C.float, float32](xs)
@@ -10211,17 +10095,6 @@ func PlotShadedG(label_id string, getter1 ter, data1 uintptr, getter2 ter, data2
 	getter1Arg, getter1Fin := getter1.C()
 	getter2Arg, getter2Fin := getter2.C()
 	C.wrap_ImPlot_PlotShadedG(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getter1Arg), C.uintptr_t(data1), internal.ReinterpretCast[C.ImPlotGetter](getter2Arg), C.uintptr_t(data2), C.int(count))
-
-	label_idFin()
-	getter1Fin()
-	getter2Fin()
-}
-
-func PlotShadedGLJ(label_id string, getter1 ter, data1 uintptr, getter2 ter, data2 uintptr, count int32) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getter1Arg, getter1Fin := getter1.C()
-	getter2Arg, getter2Fin := getter2.C()
-	C.wrap_ImPlot_PlotShadedG_LJ(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getter1Arg), C.uintptr_t(data1), internal.ReinterpretCast[C.ImPlotGetter](getter2Arg), C.uintptr_t(data2), C.int(count))
 
 	label_idFin()
 	getter1Fin()
@@ -10562,15 +10435,6 @@ func PlotStairsG(label_id string, getter ter, data uintptr, count int32) {
 	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
 	getterArg, getterFin := getter.C()
 	C.wrap_ImPlot_PlotStairsG(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count))
-
-	label_idFin()
-	getterFin()
-}
-
-func PlotStairsGLJ(label_id string, getter ter, data uintptr, count int32) {
-	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
-	getterArg, getterFin := getter.C()
-	C.wrap_ImPlot_PlotStairsG_LJ(label_idArg, internal.ReinterpretCast[C.ImPlotGetter](getterArg), C.uintptr_t(data), C.int(count))
 
 	label_idFin()
 	getterFin()
