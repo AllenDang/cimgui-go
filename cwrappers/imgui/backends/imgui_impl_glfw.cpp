@@ -31,7 +31,10 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
-//  2025-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2026-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2026-02-10: Try to set IMGUI_IMPL_GLFW_DISABLE_X11 / IMGUI_IMPL_GLFW_DISABLE_WAYLAND automatically if corresponding headers are not accessible. (#9225)
+//  2026-01-25: [Docking] Improve workarounds for cases where GLFW is unable to provide any reliable monitor info. Preserve existing monitor list when none of the new one is valid. (#9195, #7902, #5683)
+//  2026-01-18: [Docking] Dynamically load X11 functions to avoid -lx11 linking requirement introduced on 2025-09-10.
 //  2025-12-12: Added IMGUI_IMPL_GLFW_DISABLE_X11 / IMGUI_IMPL_GLFW_DISABLE_WAYLAND to forcefully disable either.
 //  2025-12-10: Avoid repeated glfwSetCursor()/glfwSetInputMode() calls when unnecessary. Lowers overhead for very high framerates (e.g. 10k+ FPS).
 //  2025-11-06: Lower minimum requirement to GLFW 3.0. Though a recent version e.g GLFW 3.4 is highly recommended.
@@ -120,6 +123,15 @@
 #pragma GCC diagnostic ignored "-Wfloat-equal"              // warning: comparing floating-point with '==' or '!=' is unsafe
 #endif
 
+#if defined(__has_include)
+#if !__has_include(<X11/Xlib.h>) || !__has_include(<X11/extensions/Xrandr.h>)
+#define IMGUI_IMPL_GLFW_DISABLE_X11
+#endif
+#if !__has_include(<wayland-client.h>)
+#define IMGUI_IMPL_GLFW_DISABLE_WAYLAND
+#endif
+#endif
+
 // GLFW
 #if !defined(IMGUI_IMPL_GLFW_DISABLE_X11) && (defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__))
 #define GLFW_HAS_X11        1
@@ -147,6 +159,7 @@
 #ifndef GLFW_EXPOSE_NATIVE_X11      // for glfwGetX11Display(), glfwGetX11Window() on Freedesktop (Linux, BSD, etc.)
 #define GLFW_EXPOSE_NATIVE_X11
 #include <X11/Xatom.h>
+#include <dlfcn.h>              // for dlopen()
 #endif
 #include <GLFW/glfw3native.h>
 #undef Status                   // X11 headers are leaking this.
@@ -215,6 +228,13 @@ enum GlfwClientApi
     GlfwClientApi_Unknown,  // Anything else fits here.
 };
 
+#if GLFW_HAS_X11
+typedef Atom (*PFN_XInternAtom)(Display*, const char* ,Bool);
+typedef int  (*PFN_XChangeProperty)(Display*, Window, Atom, Atom, int, int, const unsigned char*, int);
+typedef int  (*PFN_XChangeWindowAttributes)(Display*, Window, unsigned long, XSetWindowAttributes*);
+typedef int  (*PFN_XFlush)(Display*);
+#endif
+
 // GLFW data
 struct ImGui_ImplGlfw_Data
 {
@@ -250,6 +270,15 @@ struct ImGui_ImplGlfw_Data
     GLFWmonitorfun          PrevUserCallbackMonitor;
 #ifdef _WIN32
     WNDPROC                 PrevWndProc;
+#endif
+
+#if GLFW_HAS_X11
+    // Module and function pointers loaded at initialization to avoid linking statically with X11.
+    void*                       X11Module;
+    PFN_XInternAtom             XInternAtom;
+    PFN_XChangeProperty         XChangeProperty;
+    PFN_XChangeWindowAttributes XChangeWindowAttributes;
+    PFN_XFlush                  XFlush;
 #endif
 
     ImGui_ImplGlfw_Data()   { memset((void*)this, 0, sizeof(*this)); }
@@ -289,10 +318,10 @@ static bool ImGui_ImplGlfw_IsWayland()
     return glfwGetPlatform() == GLFW_PLATFORM_WAYLAND;
 #else
     const char* version = glfwGetVersionString();
-    if (strstr(version, "Wayland") == NULL) // e.g. Ubuntu 22.04 ships with GLFW 3.3.6 compiled without Wayland
+    if (strstr(version, "Wayland") == nullptr) // e.g. Ubuntu 22.04 ships with GLFW 3.3.6 compiled without Wayland
         return false;
 #ifdef GLFW_EXPOSE_NATIVE_X11
-    if (glfwGetX11Display() != NULL)
+    if (glfwGetX11Display() != nullptr)
         return false;
 #endif
     return true;
@@ -792,6 +821,26 @@ static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, Glfw
     ::SetWindowLongPtrW((HWND)main_viewport->PlatformHandleRaw, GWLP_WNDPROC, (LONG_PTR)ImGui_ImplGlfw_WndProc);
 #endif
 
+#if GLFW_HAS_X11
+    if (!bd->IsWayland)
+    {
+        // Load X11 module dynamically. Copied from the way that GLFW does it in x11_init.c
+#if defined(__CYGWIN__)
+        const char* x11_module_path = "libX11-6.so";
+#elif defined(__OpenBSD__) || defined(__NetBSD__)
+        const char* x11_module_path = "libX11.so";
+#else
+        const char* x11_module_path = "libX11.so.6";
+#endif
+        bd->X11Module = dlopen(x11_module_path, RTLD_LAZY | RTLD_LOCAL);
+        bd->XInternAtom = (PFN_XInternAtom)dlsym(bd->X11Module, "XInternAtom");
+        bd->XChangeProperty = (PFN_XChangeProperty)dlsym(bd->X11Module, "XChangeProperty");
+        bd->XChangeWindowAttributes = (PFN_XChangeWindowAttributes)dlsym(bd->X11Module, "XChangeWindowAttributes");
+        bd->XFlush = (PFN_XFlush)dlsym(bd->X11Module, "XFlush");
+        IM_ASSERT(bd->XInternAtom != nullptr && bd->XChangeProperty != nullptr && bd->XChangeWindowAttributes != nullptr && bd->XFlush != nullptr);
+    }
+#endif
+
     // Emscripten: the same application can run on various platforms, so we detect the Apple platform at runtime
     // to override io.ConfigMacOSXBehaviors from its default (which is always false in Emscripten).
 #ifdef __EMSCRIPTEN__
@@ -853,6 +902,11 @@ void ImGui_ImplGlfw_Shutdown()
     ::SetPropA((HWND)main_viewport->PlatformHandleRaw, "IMGUI_BACKEND_DATA", nullptr);
     ::SetWindowLongPtrW((HWND)main_viewport->PlatformHandleRaw, GWLP_WNDPROC, (LONG_PTR)bd->PrevWndProc);
     bd->PrevWndProc = nullptr;
+#endif
+
+#if GLFW_HAS_X11
+    if (bd->X11Module != nullptr)
+        dlclose(bd->X11Module);
 #endif
 
     io.BackendPlatformName = nullptr;
@@ -1028,13 +1082,10 @@ static void ImGui_ImplGlfw_UpdateGamepads()
 static void ImGui_ImplGlfw_UpdateMonitors()
 {
     ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
-
     int monitors_count = 0;
     GLFWmonitor** glfw_monitors = glfwGetMonitors(&monitors_count);
-    if (monitors_count == 0) // Preserve existing monitor list if there are none. Happens on macOS sleeping (#5683)
-        return;
 
-    platform_io.Monitors.resize(0);
+    bool updated_monitors = false;
     for (int n = 0; n < monitors_count; n++)
     {
         ImGuiPlatformMonitor monitor;
@@ -1043,6 +1094,8 @@ static void ImGui_ImplGlfw_UpdateMonitors()
         const GLFWvidmode* vid_mode = glfwGetVideoMode(glfw_monitors[n]);
         if (vid_mode == nullptr)
             continue; // Failed to get Video mode (e.g. Emscripten does not support this function)
+        if (vid_mode->width <= 0 || vid_mode->height <= 0)
+            continue; // Failed to query suitable monitor info (#9195)
         monitor.MainPos = monitor.WorkPos = ImVec2((float)x, (float)y);
         monitor.MainSize = monitor.WorkSize = ImVec2((float)vid_mode->width, (float)vid_mode->height);
 #if GLFW_HAS_MONITOR_WORK_AREA
@@ -1056,9 +1109,15 @@ static void ImGui_ImplGlfw_UpdateMonitors()
 #endif
         float scale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfw_monitors[n]);
         if (scale == 0.0f)
-            continue; // Some accessibility applications are declaring virtual monitors with a DPI of 0, see #7902.
+            continue; // Some accessibility applications are declaring virtual monitors with a DPI of 0 (#7902)
         monitor.DpiScale = scale;
         monitor.PlatformHandle = (void*)glfw_monitors[n]; // [...] GLFW doc states: "guaranteed to be valid only until the monitor configuration changes"
+
+        // Preserve existing monitor list until a valid one is added.
+        // Happens on macOS sleeping (#5683) and seemingly occasionally on Windows (#9195)
+        if (!updated_monitors)
+            platform_io.Monitors.resize(0);
+        updated_monitors = true;
         platform_io.Monitors.push_back(monitor);
     }
 }
@@ -1272,20 +1331,20 @@ static void ImGui_ImplGlfw_WindowSizeCallback(GLFWwindow* window, int, int)
 
 #if !defined(__APPLE__) && !defined(_WIN32) && !defined(__EMSCRIPTEN__) && GLFW_HAS_GETPLATFORM
 #define IMGUI_GLFW_HAS_SETWINDOWFLOATING
-static void ImGui_ImplGlfw_SetWindowFloating(GLFWwindow* window)
+static void ImGui_ImplGlfw_SetWindowFloating(ImGui_ImplGlfw_Data* bd, GLFWwindow* window)
 {
 #ifdef GLFW_EXPOSE_NATIVE_X11
     if (glfwGetPlatform() == GLFW_PLATFORM_X11)
     {
         Display* display = glfwGetX11Display();
         Window xwindow = glfwGetX11Window(window);
-        Atom wm_type = XInternAtom(display, "_NET_WM_WINDOW_TYPE", False);
-        Atom wm_type_dialog = XInternAtom(display, "_NET_WM_WINDOW_TYPE_DIALOG", False);
-        XChangeProperty(display, xwindow, wm_type, XA_ATOM, 32, PropModeReplace, (unsigned char*)&wm_type_dialog, 1);
+        Atom wm_type = bd->XInternAtom(display, "_NET_WM_WINDOW_TYPE", False);
+        Atom wm_type_dialog = bd->XInternAtom(display, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+        bd->XChangeProperty(display, xwindow, wm_type, XA_ATOM, 32, PropModeReplace, (unsigned char*)&wm_type_dialog, 1);
         XSetWindowAttributes attrs;
         attrs.override_redirect = False;
-        XChangeWindowAttributes(display, xwindow, CWOverrideRedirect, &attrs);
-        XFlush(display);
+        bd->XChangeWindowAttributes(display, xwindow, CWOverrideRedirect, &attrs);
+        bd->XFlush(display);
     }
 #endif // GLFW_EXPOSE_NATIVE_X11
 #ifdef GLFW_EXPOSE_NATIVE_WAYLAND
@@ -1322,7 +1381,7 @@ static void ImGui_ImplGlfw_CreateWindow(ImGuiViewport* viewport)
     ImGui_ImplGlfw_ContextMap_Add(vd->Window, bd->Context);
     viewport->PlatformHandle = (void*)vd->Window;
 #ifdef IMGUI_GLFW_HAS_SETWINDOWFLOATING
-    ImGui_ImplGlfw_SetWindowFloating(vd->Window);
+    ImGui_ImplGlfw_SetWindowFloating(bd, vd->Window);
 #endif
 #ifdef _WIN32
     viewport->PlatformHandleRaw = glfwGetWin32Window(vd->Window);

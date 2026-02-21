@@ -213,6 +213,64 @@ static inline ImPlotRect_c ConvertFromCPP_ImPlotRect(const ImPlotRect& src)
     dest.Y.Max = src.Y.Max;
     return dest;
 }
+static inline ImPlotSpec ConvertToCPP_ImPlotSpec(const ImPlotSpec_c& src)
+{
+    ImPlotSpec dest;
+    dest.LineColor.x = src.LineColor.x;
+    dest.LineColor.y = src.LineColor.y;
+    dest.LineColor.z = src.LineColor.z;
+    dest.LineColor.w = src.LineColor.w;
+    dest.LineWeight = src.LineWeight;
+    dest.FillColor.x = src.FillColor.x;
+    dest.FillColor.y = src.FillColor.y;
+    dest.FillColor.z = src.FillColor.z;
+    dest.FillColor.w = src.FillColor.w;
+    dest.FillAlpha = src.FillAlpha;
+    dest.Marker = src.Marker;
+    dest.MarkerSize = src.MarkerSize;
+    dest.MarkerLineColor.x = src.MarkerLineColor.x;
+    dest.MarkerLineColor.y = src.MarkerLineColor.y;
+    dest.MarkerLineColor.z = src.MarkerLineColor.z;
+    dest.MarkerLineColor.w = src.MarkerLineColor.w;
+    dest.MarkerFillColor.x = src.MarkerFillColor.x;
+    dest.MarkerFillColor.y = src.MarkerFillColor.y;
+    dest.MarkerFillColor.z = src.MarkerFillColor.z;
+    dest.MarkerFillColor.w = src.MarkerFillColor.w;
+    dest.Size = src.Size;
+    dest.Offset = src.Offset;
+    dest.Stride = src.Stride;
+    dest.Flags = src.Flags;
+    return dest;
+}
+static inline ImPlotSpec_c ConvertFromCPP_ImPlotSpec(const ImPlotSpec& src)
+{
+    ImPlotSpec_c dest;
+    dest.LineColor.x = src.LineColor.x;
+    dest.LineColor.y = src.LineColor.y;
+    dest.LineColor.z = src.LineColor.z;
+    dest.LineColor.w = src.LineColor.w;
+    dest.LineWeight = src.LineWeight;
+    dest.FillColor.x = src.FillColor.x;
+    dest.FillColor.y = src.FillColor.y;
+    dest.FillColor.z = src.FillColor.z;
+    dest.FillColor.w = src.FillColor.w;
+    dest.FillAlpha = src.FillAlpha;
+    dest.Marker = src.Marker;
+    dest.MarkerSize = src.MarkerSize;
+    dest.MarkerLineColor.x = src.MarkerLineColor.x;
+    dest.MarkerLineColor.y = src.MarkerLineColor.y;
+    dest.MarkerLineColor.z = src.MarkerLineColor.z;
+    dest.MarkerLineColor.w = src.MarkerLineColor.w;
+    dest.MarkerFillColor.x = src.MarkerFillColor.x;
+    dest.MarkerFillColor.y = src.MarkerFillColor.y;
+    dest.MarkerFillColor.z = src.MarkerFillColor.z;
+    dest.MarkerFillColor.w = src.MarkerFillColor.w;
+    dest.Size = src.Size;
+    dest.Offset = src.Offset;
+    dest.Stride = src.Stride;
+    dest.Flags = src.Flags;
+    return dest;
+}
 static inline ImPlotTick ConvertToCPP_ImPlotTick(const ImPlotTick_c& src)
 {
     ImPlotTick dest;
@@ -318,7 +376,59 @@ static inline ImVec4_c ConvertFromCPP_ImVec4(const ImVec4& src)
     dest.z = src.z;
     dest.w = src.w;
     return dest;
-}CIMGUI_API ImPlotPoint* ImPlotPoint_ImPlotPoint_Nil(void)
+}CIMGUI_API ImPlotSpec* ImPlotSpec_ImPlotSpec(void)
+{
+    return IM_NEW(ImPlotSpec)();
+}
+CIMGUI_API void ImPlotSpec_destroy(ImPlotSpec* self)
+{
+    IM_DELETE(self);
+}
+CIMGUI_API void ImPlotSpec_SetProp_Float(ImPlotSpec* self,ImPlotProp prop,float v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_double(ImPlotSpec* self,ImPlotProp prop,double v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_S8(ImPlotSpec* self,ImPlotProp prop,ImS8 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_U8(ImPlotSpec* self,ImPlotProp prop,ImU8 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_S16(ImPlotSpec* self,ImPlotProp prop,ImS16 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_U16(ImPlotSpec* self,ImPlotProp prop,ImU16 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_S32(ImPlotSpec* self,ImPlotProp prop,ImS32 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_U32(ImPlotSpec* self,ImPlotProp prop,ImU32 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_S64(ImPlotSpec* self,ImPlotProp prop,ImS64 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_U64(ImPlotSpec* self,ImPlotProp prop,ImU64 v)
+{
+    return self->SetProp(prop,v);
+}
+CIMGUI_API void ImPlotSpec_SetProp_Vec4(ImPlotSpec* self,ImPlotProp prop,const ImVec4_c v)
+{
+    return self->SetProp(prop,ConvertToCPP_ImVec4(v));
+}
+CIMGUI_API ImPlotPoint* ImPlotPoint_ImPlotPoint_Nil(void)
 {
     return IM_NEW(ImPlotPoint)();
 }
@@ -534,968 +644,1072 @@ CIMGUI_API void ImPlot_SetNextAxesToFit()
 {
     return ImPlot::SetNextAxesToFit();
 }
-CIMGUI_API void ImPlot_PlotLine_FloatPtrInt(const char* label_id,const float* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_FloatPtrInt(const char* label_id,const float* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_doublePtrInt(const char* label_id,const double* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_doublePtrInt(const char* label_id,const double* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S8PtrInt(const char* label_id,const ImS8* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S8PtrInt(const char* label_id,const ImS8* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U8PtrInt(const char* label_id,const ImU8* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U8PtrInt(const char* label_id,const ImU8* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S16PtrInt(const char* label_id,const ImS16* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S16PtrInt(const char* label_id,const ImS16* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U16PtrInt(const char* label_id,const ImU16* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U16PtrInt(const char* label_id,const ImU16* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S32PtrInt(const char* label_id,const ImS32* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S32PtrInt(const char* label_id,const ImS32* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U32PtrInt(const char* label_id,const ImU32* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U32PtrInt(const char* label_id,const ImU32* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S64PtrInt(const char* label_id,const ImS64* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S64PtrInt(const char* label_id,const ImS64* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U64PtrInt(const char* label_id,const ImU64* values,int count,double xscale,double xstart,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U64PtrInt(const char* label_id,const ImU64* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLine_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,ImPlotLineFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLine_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotLine(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotLine(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotLineG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,ImPlotLineFlags flags)
-{
-    getter_funcX = getter;
-    ImPlot::PlotLineG(label_id,Wrapper,data,count,flags);
-}
-CIMGUI_API void ImPlot_PlotScatter_FloatPtrInt(const char* label_id,const float* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_doublePtrInt(const char* label_id,const double* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S8PtrInt(const char* label_id,const ImS8* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U8PtrInt(const char* label_id,const ImU8* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S16PtrInt(const char* label_id,const ImS16* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U16PtrInt(const char* label_id,const ImU16* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S32PtrInt(const char* label_id,const ImS32* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U32PtrInt(const char* label_id,const ImU32* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S64PtrInt(const char* label_id,const ImS64* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U64PtrInt(const char* label_id,const ImU64* values,int count,double xscale,double xstart,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatter_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,ImPlotScatterFlags flags,int offset,int stride)
-{
-    return ImPlot::PlotScatter(label_id,xs,ys,count,flags,offset,stride);
-}
-CIMGUI_API void ImPlot_PlotScatterG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,ImPlotScatterFlags flags)
+CIMGUI_API void ImPlot_PlotLineG_LJ(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)//custom implementation
 {
     getter_funcX = getter;
-    ImPlot::PlotScatterG(label_id,Wrapper,data,count,flags);
+    ImPlot::PlotLineG(label_id,Wrapper,data,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_FloatPtrInt(const char* label_id,const float* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotLineG(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotLineG(label_id,getter,data,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_doublePtrInt(const char* label_id,const double* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_FloatPtrInt(const char* label_id,const float* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S8PtrInt(const char* label_id,const ImS8* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_doublePtrInt(const char* label_id,const double* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U8PtrInt(const char* label_id,const ImU8* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S8PtrInt(const char* label_id,const ImS8* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S16PtrInt(const char* label_id,const ImS16* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U8PtrInt(const char* label_id,const ImU8* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U16PtrInt(const char* label_id,const ImU16* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S16PtrInt(const char* label_id,const ImS16* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S32PtrInt(const char* label_id,const ImS32* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U16PtrInt(const char* label_id,const ImU16* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U32PtrInt(const char* label_id,const ImU32* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S32PtrInt(const char* label_id,const ImS32* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S64PtrInt(const char* label_id,const ImS64* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U32PtrInt(const char* label_id,const ImU32* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U64PtrInt(const char* label_id,const ImU64* values,int count,double xscale,double xstart,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S64PtrInt(const char* label_id,const ImS64* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U64PtrInt(const char* label_id,const ImU64* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairs_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,ImPlotStairsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatter_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStairs(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStairsG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,ImPlotStairsFlags flags)
+CIMGUI_API void ImPlot_PlotScatter_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotScatter(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotScatterG_LJ(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)//custom implementation
 {
     getter_funcX = getter;
-    ImPlot::PlotStairsG(label_id,Wrapper,data,count,flags);
+    ImPlot::PlotScatterG(label_id,Wrapper,data,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_FloatPtrInt(const char* label_id,const float* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotScatterG(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotScatterG(label_id,getter,data,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_doublePtrInt(const char* label_id,const double* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_FloatPtrFloatPtrInt(const char* label_id,const float* values,const float* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S8PtrInt(const char* label_id,const ImS8* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_doublePtrdoublePtrInt(const char* label_id,const double* values,const double* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U8PtrInt(const char* label_id,const ImU8* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S8PtrS8PtrInt(const char* label_id,const ImS8* values,const ImS8* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S16PtrInt(const char* label_id,const ImS16* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U8PtrU8PtrInt(const char* label_id,const ImU8* values,const ImU8* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U16PtrInt(const char* label_id,const ImU16* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S16PtrS16PtrInt(const char* label_id,const ImS16* values,const ImS16* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S32PtrInt(const char* label_id,const ImS32* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U16PtrU16PtrInt(const char* label_id,const ImU16* values,const ImU16* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U32PtrInt(const char* label_id,const ImU32* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S32PtrS32PtrInt(const char* label_id,const ImS32* values,const ImS32* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S64PtrInt(const char* label_id,const ImS64* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U32PtrU32PtrInt(const char* label_id,const ImU32* values,const ImU32* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U64PtrInt(const char* label_id,const ImU64* values,int count,double yref,double xscale,double xstart,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S64PtrS64PtrInt(const char* label_id,const ImS64* values,const ImS64* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_FloatPtrFloatPtrInt(const char* label_id,const float* xs,const float* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U64PtrU64PtrInt(const char* label_id,const ImU64* values,const ImU64* szs,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,values,szs,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_doublePtrdoublePtrInt(const char* label_id,const double* xs,const double* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_FloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,const float* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S8PtrS8PtrInt(const char* label_id,const ImS8* xs,const ImS8* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_doublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,const double* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U8PtrU8PtrInt(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S8PtrS8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,const ImS8* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S16PtrS16PtrInt(const char* label_id,const ImS16* xs,const ImS16* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U8PtrU8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,const ImU8* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U16PtrU16PtrInt(const char* label_id,const ImU16* xs,const ImU16* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S16PtrS16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,const ImS16* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S32PtrS32PtrInt(const char* label_id,const ImS32* xs,const ImS32* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U16PtrU16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,const ImU16* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U32PtrU32PtrInt(const char* label_id,const ImU32* xs,const ImU32* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S32PtrS32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,const ImS32* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S64PtrS64PtrInt(const char* label_id,const ImS64* xs,const ImS64* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U32PtrU32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,const ImU32* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U64PtrU64PtrInt(const char* label_id,const ImU64* xs,const ImU64* ys,int count,double yref,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_S64PtrS64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,const ImS64* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_FloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys1,const float* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBubbles_U64PtrU64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,const ImU64* szs,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotBubbles(label_id,xs,ys,szs,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys1,const double* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_FloatPtrInt(const char* label_id,const float* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S8PtrS8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys1,const ImS8* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_doublePtrInt(const char* label_id,const double* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U8PtrU8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys1,const ImU8* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_S8PtrInt(const char* label_id,const ImS8* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S16PtrS16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys1,const ImS16* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_U8PtrInt(const char* label_id,const ImU8* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U16PtrU16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys1,const ImU16* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_S16PtrInt(const char* label_id,const ImS16* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S32PtrS32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys1,const ImS32* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_U16PtrInt(const char* label_id,const ImU16* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U32PtrU32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys1,const ImU32* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_S32PtrInt(const char* label_id,const ImS32* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_S64PtrS64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys1,const ImS64* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_U32PtrInt(const char* label_id,const ImU32* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShaded_U64PtrU64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys1,const ImU64* ys2,int count,ImPlotShadedFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStairs_S64PtrInt(const char* label_id,const ImS64* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,flags,offset,stride);
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotShadedG(const char* label_id,ImPlotPoint_getter getter1,void* data1,ImPlotPoint_getter getter2,void* data2,int count,ImPlotShadedFlags flags)
+CIMGUI_API void ImPlot_PlotStairs_U64PtrInt(const char* label_id,const ImU64* values,int count,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,values,count,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairs_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairs(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairsG_LJ(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)//custom implementation
+{
+    getter_funcX = getter;
+    ImPlot::PlotStairsG(label_id,Wrapper,data,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotStairsG(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotStairsG(label_id,getter,data,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_FloatPtrInt(const char* label_id,const float* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_doublePtrInt(const char* label_id,const double* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S8PtrInt(const char* label_id,const ImS8* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U8PtrInt(const char* label_id,const ImU8* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S16PtrInt(const char* label_id,const ImS16* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U16PtrInt(const char* label_id,const ImU16* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S32PtrInt(const char* label_id,const ImS32* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U32PtrInt(const char* label_id,const ImU32* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S64PtrInt(const char* label_id,const ImS64* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U64PtrInt(const char* label_id,const ImU64* values,int count,double yref,double xscale,double xstart,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,values,count,yref,xscale,xstart,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_FloatPtrFloatPtrInt(const char* label_id,const float* xs,const float* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_doublePtrdoublePtrInt(const char* label_id,const double* xs,const double* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S8PtrS8PtrInt(const char* label_id,const ImS8* xs,const ImS8* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U8PtrU8PtrInt(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S16PtrS16PtrInt(const char* label_id,const ImS16* xs,const ImS16* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U16PtrU16PtrInt(const char* label_id,const ImU16* xs,const ImU16* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S32PtrS32PtrInt(const char* label_id,const ImS32* xs,const ImS32* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U32PtrU32PtrInt(const char* label_id,const ImU32* xs,const ImU32* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S64PtrS64PtrInt(const char* label_id,const ImS64* xs,const ImS64* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U64PtrU64PtrInt(const char* label_id,const ImU64* xs,const ImU64* ys,int count,double yref,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys,count,yref,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_FloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys1,const float* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_doublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys1,const double* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S8PtrS8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys1,const ImS8* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U8PtrU8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys1,const ImU8* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S16PtrS16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys1,const ImS16* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U16PtrU16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys1,const ImU16* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S32PtrS32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys1,const ImS32* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U32PtrU32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys1,const ImU32* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_S64PtrS64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys1,const ImS64* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShaded_U64PtrU64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys1,const ImU64* ys2,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotShaded(label_id,xs,ys1,ys2,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotShadedG_LJ(const char* label_id,ImPlotPoint_getter getter1,void* data1,ImPlotPoint_getter getter2,void* data2,int count,const ImPlotSpec_c spec)//custom implementation
 {
     getter_funcX = getter1;
     getter_funcX2 = getter2;
-    ImPlot::PlotShadedG(label_id,Wrapper,data1,Wrapper2,data2,count,flags);
+    ImPlot::PlotShadedG(label_id,Wrapper,data1,Wrapper2,data2,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_FloatPtrInt(const char* label_id,const float* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotShadedG(const char* label_id,ImPlotGetter getter1,void* data1,ImPlotGetter getter2,void* data2,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotShadedG(label_id,getter1,data1,getter2,data2,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_doublePtrInt(const char* label_id,const double* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_FloatPtrInt(const char* label_id,const float* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S8PtrInt(const char* label_id,const ImS8* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_doublePtrInt(const char* label_id,const double* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U8PtrInt(const char* label_id,const ImU8* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S8PtrInt(const char* label_id,const ImS8* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S16PtrInt(const char* label_id,const ImS16* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U8PtrInt(const char* label_id,const ImU8* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U16PtrInt(const char* label_id,const ImU16* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S16PtrInt(const char* label_id,const ImS16* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S32PtrInt(const char* label_id,const ImS32* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U16PtrInt(const char* label_id,const ImU16* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U32PtrInt(const char* label_id,const ImU32* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S32PtrInt(const char* label_id,const ImS32* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S64PtrInt(const char* label_id,const ImS64* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U32PtrInt(const char* label_id,const ImU32* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U64PtrInt(const char* label_id,const ImU64* values,int count,double bar_size,double shift,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S64PtrInt(const char* label_id,const ImS64* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U64PtrInt(const char* label_id,const ImU64* values,int count,double bar_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,values,count,bar_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBars_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,double bar_size,ImPlotBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBars_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,flags,offset,stride);
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarsG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,double bar_size,ImPlotBarsFlags flags)
+CIMGUI_API void ImPlot_PlotBars_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,double bar_size,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotBars(label_id,xs,ys,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotBarsG_LJ(const char* label_id,ImPlotPoint_getter getter,void* data,int count,double bar_size,const ImPlotSpec_c spec)//custom implementation
 {
     getter_funcX = getter;
-    ImPlot::PlotBarsG(label_id,Wrapper,data,count,bar_size,flags);
+    ImPlot::PlotBarsG(label_id,Wrapper,data,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_FloatPtr(const char* const label_ids[],const float* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarsG(const char* label_id,ImPlotGetter getter,void* data,int count,double bar_size,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarsG(label_id,getter,data,count,bar_size,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_doublePtr(const char* const label_ids[],const double* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_FloatPtr(const char* const label_ids[],const float* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_S8Ptr(const char* const label_ids[],const ImS8* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_doublePtr(const char* const label_ids[],const double* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_U8Ptr(const char* const label_ids[],const ImU8* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_S8Ptr(const char* const label_ids[],const ImS8* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_S16Ptr(const char* const label_ids[],const ImS16* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_U8Ptr(const char* const label_ids[],const ImU8* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_U16Ptr(const char* const label_ids[],const ImU16* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_S16Ptr(const char* const label_ids[],const ImS16* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_S32Ptr(const char* const label_ids[],const ImS32* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_U16Ptr(const char* const label_ids[],const ImU16* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_U32Ptr(const char* const label_ids[],const ImU32* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_S32Ptr(const char* const label_ids[],const ImS32* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_S64Ptr(const char* const label_ids[],const ImS64* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_U32Ptr(const char* const label_ids[],const ImU32* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotBarGroups_U64Ptr(const char* const label_ids[],const ImU64* values,int item_count,int group_count,double group_size,double shift,ImPlotBarGroupsFlags flags)
+CIMGUI_API void ImPlot_PlotBarGroups_S64Ptr(const char* const label_ids[],const ImS64* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,flags);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_FloatPtrFloatPtrFloatPtrInt(const char* label_id,const float* xs,const float* ys,const float* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotBarGroups_U64Ptr(const char* const label_ids[],const ImU64* values,int item_count,int group_count,double group_size,double shift,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotBarGroups(label_ids,values,item_count,group_count,group_size,shift,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrInt(const char* label_id,const double* xs,const double* ys,const double* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_FloatPtrFloatPtrFloatPtrInt(const char* label_id,const float* xs,const float* ys,const float* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S8PtrS8PtrS8PtrInt(const char* label_id,const ImS8* xs,const ImS8* ys,const ImS8* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrInt(const char* label_id,const double* xs,const double* ys,const double* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U8PtrU8PtrU8PtrInt(const char* label_id,const ImU8* xs,const ImU8* ys,const ImU8* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S8PtrS8PtrS8PtrInt(const char* label_id,const ImS8* xs,const ImS8* ys,const ImS8* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S16PtrS16PtrS16PtrInt(const char* label_id,const ImS16* xs,const ImS16* ys,const ImS16* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U8PtrU8PtrU8PtrInt(const char* label_id,const ImU8* xs,const ImU8* ys,const ImU8* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U16PtrU16PtrU16PtrInt(const char* label_id,const ImU16* xs,const ImU16* ys,const ImU16* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S16PtrS16PtrS16PtrInt(const char* label_id,const ImS16* xs,const ImS16* ys,const ImS16* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S32PtrS32PtrS32PtrInt(const char* label_id,const ImS32* xs,const ImS32* ys,const ImS32* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U16PtrU16PtrU16PtrInt(const char* label_id,const ImU16* xs,const ImU16* ys,const ImU16* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U32PtrU32PtrU32PtrInt(const char* label_id,const ImU32* xs,const ImU32* ys,const ImU32* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S32PtrS32PtrS32PtrInt(const char* label_id,const ImS32* xs,const ImS32* ys,const ImS32* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S64PtrS64PtrS64PtrInt(const char* label_id,const ImS64* xs,const ImS64* ys,const ImS64* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U32PtrU32PtrU32PtrInt(const char* label_id,const ImU32* xs,const ImU32* ys,const ImU32* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U64PtrU64PtrU64PtrInt(const char* label_id,const ImU64* xs,const ImU64* ys,const ImU64* err,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S64PtrS64PtrS64PtrInt(const char* label_id,const ImS64* xs,const ImS64* ys,const ImS64* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_FloatPtrFloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,const float* neg,const float* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U64PtrU64PtrU64PtrInt(const char* label_id,const ImU64* xs,const ImU64* ys,const ImU64* err,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,err,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,const double* neg,const double* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_FloatPtrFloatPtrFloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,const float* neg,const float* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S8PtrS8PtrS8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,const ImS8* neg,const ImS8* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_doublePtrdoublePtrdoublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,const double* neg,const double* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U8PtrU8PtrU8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,const ImU8* neg,const ImU8* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S8PtrS8PtrS8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,const ImS8* neg,const ImS8* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S16PtrS16PtrS16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,const ImS16* neg,const ImS16* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U8PtrU8PtrU8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,const ImU8* neg,const ImU8* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U16PtrU16PtrU16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,const ImU16* neg,const ImU16* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S16PtrS16PtrS16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,const ImS16* neg,const ImS16* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S32PtrS32PtrS32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,const ImS32* neg,const ImS32* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U16PtrU16PtrU16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,const ImU16* neg,const ImU16* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U32PtrU32PtrU32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,const ImU32* neg,const ImU32* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S32PtrS32PtrS32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,const ImS32* neg,const ImS32* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_S64PtrS64PtrS64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,const ImS64* neg,const ImS64* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U32PtrU32PtrU32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,const ImU32* neg,const ImU32* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotErrorBars_U64PtrU64PtrU64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,const ImU64* neg,const ImU64* pos,int count,ImPlotErrorBarsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_S64PtrS64PtrS64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,const ImS64* neg,const ImS64* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_FloatPtrInt(const char* label_id,const float* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotErrorBars_U64PtrU64PtrU64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,const ImU64* neg,const ImU64* pos,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotErrorBars(label_id,xs,ys,neg,pos,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_doublePtrInt(const char* label_id,const double* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_FloatPtrInt(const char* label_id,const float* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S8PtrInt(const char* label_id,const ImS8* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_doublePtrInt(const char* label_id,const double* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U8PtrInt(const char* label_id,const ImU8* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S8PtrInt(const char* label_id,const ImS8* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S16PtrInt(const char* label_id,const ImS16* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U8PtrInt(const char* label_id,const ImU8* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U16PtrInt(const char* label_id,const ImU16* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S16PtrInt(const char* label_id,const ImS16* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S32PtrInt(const char* label_id,const ImS32* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U16PtrInt(const char* label_id,const ImU16* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U32PtrInt(const char* label_id,const ImU32* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S32PtrInt(const char* label_id,const ImS32* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S64PtrInt(const char* label_id,const ImS64* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U32PtrInt(const char* label_id,const ImU32* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U64PtrInt(const char* label_id,const ImU64* values,int count,double ref,double scale,double start,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S64PtrInt(const char* label_id,const ImS64* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U64PtrInt(const char* label_id,const ImU64* values,int count,double ref,double scale,double start,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,values,count,ref,scale,start,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_doublePtrdoublePtr(const char* label_id,const double* xs,const double* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S8PtrS8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U8PtrU8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S16PtrS16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U16PtrU16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S32PtrS32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U32PtrU32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotStems_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,double ref,ImPlotStemsFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_S64PtrS64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotStems(label_id,xs,ys,count,ref,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_FloatPtr(const char* label_id,const float* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotStems_U64PtrU64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,double ref,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotStems(label_id,xs,ys,count,ref,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_doublePtr(const char* label_id,const double* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_FloatPtr(const char* label_id,const float* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_S8Ptr(const char* label_id,const ImS8* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_doublePtr(const char* label_id,const double* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_U8Ptr(const char* label_id,const ImU8* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_S8Ptr(const char* label_id,const ImS8* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_S16Ptr(const char* label_id,const ImS16* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_U8Ptr(const char* label_id,const ImU8* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_U16Ptr(const char* label_id,const ImU16* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_S16Ptr(const char* label_id,const ImS16* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_S32Ptr(const char* label_id,const ImS32* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_U16Ptr(const char* label_id,const ImU16* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_U32Ptr(const char* label_id,const ImU32* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_S32Ptr(const char* label_id,const ImS32* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_S64Ptr(const char* label_id,const ImS64* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_U32Ptr(const char* label_id,const ImU32* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotInfLines_U64Ptr(const char* label_id,const ImU64* values,int count,ImPlotInfLinesFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotInfLines_S64Ptr(const char* label_id,const ImS64* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotInfLines(label_id,values,count,flags,offset,stride);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_FloatPtrPlotFormatter(const char* const label_ids[],const float* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotInfLines_U64Ptr(const char* label_id,const ImU64* values,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotInfLines(label_id,values,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_doublePtrPlotFormatter(const char* const label_ids[],const double* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_FloatPtrPlotFormatter(const char* const label_ids[],const float* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S8PtrPlotFormatter(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_doublePtrPlotFormatter(const char* const label_ids[],const double* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U8PtrPlotFormatter(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S8PtrPlotFormatter(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S16PtrPlotFormatter(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U8PtrPlotFormatter(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U16PtrPlotFormatter(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S16PtrPlotFormatter(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S32PtrPlotFormatter(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U16PtrPlotFormatter(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U32PtrPlotFormatter(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S32PtrPlotFormatter(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S64PtrPlotFormatter(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U32PtrPlotFormatter(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U64PtrPlotFormatter(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S64PtrPlotFormatter(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_FloatPtrStr(const char* const label_ids[],const float* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U64PtrPlotFormatter(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,ImPlotFormatter fmt,void* fmt_data,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,fmt,fmt_data,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_doublePtrStr(const char* const label_ids[],const double* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_FloatPtrStr(const char* const label_ids[],const float* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S8PtrStr(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_doublePtrStr(const char* const label_ids[],const double* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U8PtrStr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S8PtrStr(const char* const label_ids[],const ImS8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S16PtrStr(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U8PtrStr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U16PtrStr(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S16PtrStr(const char* const label_ids[],const ImS16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S32PtrStr(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U16PtrStr(const char* const label_ids[],const ImU16* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U32PtrStr(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S32PtrStr(const char* const label_ids[],const ImS32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_S64PtrStr(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U32PtrStr(const char* const label_ids[],const ImU32* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotPieChart_U64PtrStr(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,ImPlotPieChartFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_S64PtrStr(const char* const label_ids[],const ImS64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_FloatPtr(const char* label_id,const float* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotPieChart_U64PtrStr(const char* const label_ids[],const ImU64* values,int count,double x,double y,double radius,const char* label_fmt,double angle0,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotPieChart(label_ids,values,count,x,y,radius,label_fmt,angle0,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_doublePtr(const char* label_id,const double* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_FloatPtr(const char* label_id,const float* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_S8Ptr(const char* label_id,const ImS8* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_doublePtr(const char* label_id,const double* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_U8Ptr(const char* label_id,const ImU8* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_S8Ptr(const char* label_id,const ImS8* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_S16Ptr(const char* label_id,const ImS16* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_U8Ptr(const char* label_id,const ImU8* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_U16Ptr(const char* label_id,const ImU16* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_S16Ptr(const char* label_id,const ImS16* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_S32Ptr(const char* label_id,const ImS32* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_U16Ptr(const char* label_id,const ImU16* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_U32Ptr(const char* label_id,const ImU32* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_S32Ptr(const char* label_id,const ImS32* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_S64Ptr(const char* label_id,const ImS64* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_U32Ptr(const char* label_id,const ImU32* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotHeatmap_U64Ptr(const char* label_id,const ImU64* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,ImPlotHeatmapFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_S64Ptr(const char* label_id,const ImS64* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_FloatPtr(const char* label_id,const float* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API void ImPlot_PlotHeatmap_U64Ptr(const char* label_id,const ImU64* values,int rows,int cols,double scale_min,double scale_max,const char* label_fmt,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHeatmap(label_id,values,rows,cols,scale_min,scale_max,label_fmt,ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_doublePtr(const char* label_id,const double* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_FloatPtr(const char* label_id,const float* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_S8Ptr(const char* label_id,const ImS8* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_doublePtr(const char* label_id,const double* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_U8Ptr(const char* label_id,const ImU8* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_S8Ptr(const char* label_id,const ImS8* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_S16Ptr(const char* label_id,const ImS16* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_U8Ptr(const char* label_id,const ImU8* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_U16Ptr(const char* label_id,const ImU16* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_S16Ptr(const char* label_id,const ImS16* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_S32Ptr(const char* label_id,const ImS32* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_U16Ptr(const char* label_id,const ImU16* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_U32Ptr(const char* label_id,const ImU32* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_S32Ptr(const char* label_id,const ImS32* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_S64Ptr(const char* label_id,const ImS64* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_U32Ptr(const char* label_id,const ImU32* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram_U64Ptr(const char* label_id,const ImU64* values,int count,int bins,double bar_scale,ImPlotRange_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_S64Ptr(const char* label_id,const ImS64* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_FloatPtr(const char* label_id,const float* xs,const float* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram_U64Ptr(const char* label_id,const ImU64* values,int count,int bins,double bar_scale,ImPlotRange_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram(label_id,values,count,bins,bar_scale,ConvertToCPP_ImPlotRange(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_doublePtr(const char* label_id,const double* xs,const double* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_FloatPtr(const char* label_id,const float* xs,const float* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_S8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_doublePtr(const char* label_id,const double* xs,const double* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_U8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_S8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_U8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_U16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_U16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_U32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_S64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_U32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API double ImPlot_PlotHistogram2D_U64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,ImPlotHistogramFlags flags)
+CIMGUI_API double ImPlot_PlotHistogram2D_S64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),flags);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_FloatPtr(const char* label_id,const float* xs,const float* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API double ImPlot_PlotHistogram2D_U64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,int x_bins,int y_bins,ImPlotRect_c range,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotHistogram2D(label_id,xs,ys,count,x_bins,y_bins,ConvertToCPP_ImPlotRect(range),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_doublePtr(const char* label_id,const double* xs,const double* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_FloatPtr(const char* label_id,const float* xs,const float* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_S8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_doublePtr(const char* label_id,const double* xs,const double* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_U8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_S8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_U8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_U16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_U16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_U32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_S64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_U32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigital_U64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,ImPlotDigitalFlags flags,int offset,int stride)
+CIMGUI_API void ImPlot_PlotDigital_S64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDigital(label_id,xs,ys,count,flags,offset,stride);
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDigitalG(const char* label_id,ImPlotPoint_getter getter,void* data,int count,ImPlotDigitalFlags flags)
+CIMGUI_API void ImPlot_PlotDigital_U64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotDigital(label_id,xs,ys,count,ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotDigitalG_LJ(const char* label_id,ImPlotPoint_getter getter,void* data,int count,const ImPlotSpec_c spec)//custom implementation
 {
     getter_funcX = getter;
-    ImPlot::PlotDigitalG(label_id,Wrapper,data,count,flags);
+    ImPlot::PlotDigitalG(label_id,Wrapper,data,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureRef_c tex_ref,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImVec2_c uv0,const ImVec2_c uv1,const ImVec4_c tint_col,ImPlotImageFlags flags)
+CIMGUI_API void ImPlot_PlotDigitalG(const char* label_id,ImPlotGetter getter,void* data,int count,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotImage(label_id,ConvertToCPP_ImTextureRef(tex_ref),ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImVec2(uv0),ConvertToCPP_ImVec2(uv1),ConvertToCPP_ImVec4(tint_col),flags);
+    return ImPlot::PlotDigitalG(label_id,getter,data,count,ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotText(const char* text,double x,double y,const ImVec2_c pix_offset,ImPlotTextFlags flags)
+CIMGUI_API void ImPlot_PlotImage(const char* label_id,ImTextureRef_c tex_ref,const ImPlotPoint_c bounds_min,const ImPlotPoint_c bounds_max,const ImVec2_c uv0,const ImVec2_c uv1,const ImVec4_c tint_col,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotText(text,x,y,ConvertToCPP_ImVec2(pix_offset),flags);
+    return ImPlot::PlotImage(label_id,ConvertToCPP_ImTextureRef(tex_ref),ConvertToCPP_ImPlotPoint(bounds_min),ConvertToCPP_ImPlotPoint(bounds_max),ConvertToCPP_ImVec2(uv0),ConvertToCPP_ImVec2(uv1),ConvertToCPP_ImVec4(tint_col),ConvertToCPP_ImPlotSpec(spec));
 }
-CIMGUI_API void ImPlot_PlotDummy(const char* label_id,ImPlotDummyFlags flags)
+CIMGUI_API void ImPlot_PlotText(const char* text,double x,double y,const ImVec2_c pix_offset,const ImPlotSpec_c spec)
 {
-    return ImPlot::PlotDummy(label_id,flags);
+    return ImPlot::PlotText(text,x,y,ConvertToCPP_ImVec2(pix_offset),ConvertToCPP_ImPlotSpec(spec));
+}
+CIMGUI_API void ImPlot_PlotDummy(const char* label_id,const ImPlotSpec_c spec)
+{
+    return ImPlot::PlotDummy(label_id,ConvertToCPP_ImPlotSpec(spec));
 }
 CIMGUI_API bool ImPlot_DragPoint(int id,double* x,double* y,const ImVec4_c col,float size,ImPlotDragToolFlags flags,bool* out_clicked,bool* out_hovered,bool* out_held)
 {
@@ -1744,22 +1958,6 @@ CIMGUI_API void ImPlot_PopStyleVar(int count)
 {
     return ImPlot::PopStyleVar(count);
 }
-CIMGUI_API void ImPlot_SetNextLineStyle(const ImVec4_c col,float weight)
-{
-    return ImPlot::SetNextLineStyle(ConvertToCPP_ImVec4(col),weight);
-}
-CIMGUI_API void ImPlot_SetNextFillStyle(const ImVec4_c col,float alpha_mod)
-{
-    return ImPlot::SetNextFillStyle(ConvertToCPP_ImVec4(col),alpha_mod);
-}
-CIMGUI_API void ImPlot_SetNextMarkerStyle(ImPlotMarker marker,float size,const ImVec4_c fill,float weight,const ImVec4_c outline)
-{
-    return ImPlot::SetNextMarkerStyle(marker,size,ConvertToCPP_ImVec4(fill),weight,ConvertToCPP_ImVec4(outline));
-}
-CIMGUI_API void ImPlot_SetNextErrorBarStyle(const ImVec4_c col,float size,float weight)
-{
-    return ImPlot::SetNextErrorBarStyle(ConvertToCPP_ImVec4(col),size,weight);
-}
 CIMGUI_API ImVec4_c ImPlot_GetLastItemColor()
 {
     return ConvertFromCPP_ImVec4(ImPlot::GetLastItemColor());
@@ -1771,6 +1969,10 @@ CIMGUI_API const char* ImPlot_GetStyleColorName(ImPlotCol idx)
 CIMGUI_API const char* ImPlot_GetMarkerName(ImPlotMarker idx)
 {
     return ImPlot::GetMarkerName(idx);
+}
+CIMGUI_API ImPlotMarker ImPlot_NextMarker()
+{
+    return ImPlot::NextMarker();
 }
 CIMGUI_API ImPlotColormap ImPlot_AddColormap_Vec4Ptr(const char* name,const ImVec4* cols,int size,bool qual)
 {
@@ -2946,9 +3148,9 @@ CIMGUI_API void ImPlot_ShowSubplotsContextMenu(ImPlotSubplot* subplot)
 {
     return ImPlot::ShowSubplotsContextMenu(*subplot);
 }
-CIMGUI_API bool ImPlot_BeginItem(const char* label_id,ImPlotItemFlags flags,ImPlotCol recolor_from)
+CIMGUI_API bool ImPlot_BeginItem(const char* label_id,const ImPlotSpec_c spec,const ImVec4_c item_col,ImPlotMarker item_mkr)
 {
-    return ImPlot::BeginItem(label_id,flags,recolor_from);
+    return ImPlot::BeginItem(label_id,ConvertToCPP_ImPlotSpec(spec),ConvertToCPP_ImVec4(item_col),item_mkr);
 }
 CIMGUI_API void ImPlot_EndItem()
 {
@@ -3169,46 +3371,6 @@ CIMGUI_API void ImPlot_FillRange_Vector_S64_Ptr(ImVector_ImS64 * buffer,int n,Im
 CIMGUI_API void ImPlot_FillRange_Vector_U64_Ptr(ImVector_ImU64 * buffer,int n,ImU64 vmin,ImU64 vmax)
 {
     return ImPlot::FillRange(*buffer,n,vmin,vmax);
-}
-CIMGUI_API void ImPlot_CalculateBins_FloatPtr(const float* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_doublePtr(const double* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_S8Ptr(const ImS8* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_U8Ptr(const ImU8* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_S16Ptr(const ImS16* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_U16Ptr(const ImU16* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_S32Ptr(const ImS32* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_U32Ptr(const ImU32* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_S64Ptr(const ImS64* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
-}
-CIMGUI_API void ImPlot_CalculateBins_U64Ptr(const ImU64* values,int count,ImPlotBin meth,const ImPlotRange_c range,int* bins_out,double* width_out)
-{
-    return ImPlot::CalculateBins(values,count,meth,ConvertToCPP_ImPlotRange(range),*bins_out,*width_out);
 }
 CIMGUI_API bool ImPlot_IsLeapYear(int year)
 {

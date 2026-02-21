@@ -1000,6 +1000,28 @@
       "stname": ""
     }
   ],
+  "ImGui_ImplSDL2_SetMouseCaptureMode": [
+    {
+      "args": "(ImGui_ImplSDL2_MouseCaptureMode mode)",
+      "argsT": [
+        {
+          "name": "mode",
+          "type": "ImGui_ImplSDL2_MouseCaptureMode"
+        }
+      ],
+      "argsoriginal": "(ImGui_ImplSDL2_MouseCaptureMode mode)",
+      "call_args": "(mode)",
+      "call_args_old": "(mode)",
+      "cimguiname": "ImGui_ImplSDL2_SetMouseCaptureMode",
+      "defaults": {},
+      "funcname": "ImGui_ImplSDL2_SetMouseCaptureMode",
+      "location": "imgui_impl_sdl2:59",
+      "ov_cimguiname": "ImGui_ImplSDL2_SetMouseCaptureMode",
+      "ret": "void",
+      "signature": "(ImGui_ImplSDL2_MouseCaptureMode)",
+      "stname": ""
+    }
+  ],
   "ImGui_ImplSDL2_Shutdown": [
     {
       "args": "()",

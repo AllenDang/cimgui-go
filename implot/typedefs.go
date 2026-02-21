@@ -494,6 +494,32 @@ func NewRectFromC[SRC any](cvalue SRC) *Rect {
 	return &Rect{CData: internal.ReinterpretCast[*C.ImPlotRect](cvalue)}
 }
 
+type Spec struct {
+	CData *C.ImPlotSpec
+}
+
+// Handle returns C version of Spec and its finalizer func.
+func (self *Spec) Handle() (result *C.ImPlotSpec, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self Spec) C() (C.ImPlotSpec, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptySpec creates Spec with its 0 value.
+func NewEmptySpec() *Spec {
+	return &Spec{CData: new(C.ImPlotSpec)}
+}
+
+// NewSpecFromC creates Spec from its C pointer.
+// SRC ~= *C.ImPlotSpec
+func NewSpecFromC[SRC any](cvalue SRC) *Spec {
+	return &Spec{CData: internal.ReinterpretCast[*C.ImPlotSpec](cvalue)}
+}
+
 type Style struct {
 	CData *C.ImPlotStyle
 }
