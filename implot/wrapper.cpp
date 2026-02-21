@@ -60,7 +60,7 @@ bool wrap_ImPlot_BeginAlignedPlots(const char* group_id) { return ImPlot_BeginAl
 bool wrap_ImPlot_BeginDragDropSourceAxis(ImAxis axis) { return ImPlot_BeginDragDropSourceAxis(axis,0); }
 bool wrap_ImPlot_BeginDragDropSourceItem(const char* label_id) { return ImPlot_BeginDragDropSourceItem(label_id,0); }
 bool wrap_ImPlot_BeginDragDropSourcePlot() { return ImPlot_BeginDragDropSourcePlot(0); }
-bool wrap_ImPlot_BeginItem(const char* label_id) { return ImPlot_BeginItem(label_id,(ImPlotSpec){},IMPLOT_AUTO_COL,ImPlotMarker_Invalid); }
+bool wrap_ImPlot_BeginItem(const char* label_id) { return ImPlot_BeginItem(label_id,(ImPlotSpec){},{0,0,0,-1},ImPlotMarker_Invalid); }
 bool wrap_ImPlot_BeginLegendPopup(const char* label_id) { return ImPlot_BeginLegendPopup(label_id,1); }
 bool wrap_ImPlot_BeginPlot(const char* title_id) { return ImPlot_BeginPlot(title_id,(ImVec2){-1,0},0); }
 bool wrap_ImPlot_BeginSubplots(const char* title_id,int rows,int cols,const ImVec2 size) { return ImPlot_BeginSubplots(title_id,rows,cols,size,0,0,0); }
