@@ -19,6 +19,7 @@ extern void sizeCallback(void* wnd, int w, int h);
 }
 
 @class MetalView;
+static void igMetalResetTimer(struct MetalBackendContext* ctx);
 
 struct MetalBackendContext {
     __strong NSWindow* window;
@@ -108,6 +109,10 @@ struct MetalBackendContext {
     MetalBackendContext* ctx = self.ctx;
     if (ctx == nullptr)
         return;
+    if (view.window == nil || !NSApp.isActive)
+        return;
+    if ((view.window.occlusionState & NSWindowOcclusionStateVisible) == 0)
+        return;
 
     if (ctx->beforeRender != NULL)
         ctx->beforeRender();
@@ -185,6 +190,19 @@ struct MetalBackendContext {
         closeCallback((__bridge void*)ctx->window);
 }
 
+- (void)windowDidBecomeKey:(NSNotification*)notification
+{
+    MetalBackendContext* ctx = self.ctx;
+    if (ctx == nullptr)
+        return;
+
+    // After app reactivation, the timer may still be coalesced at a low rate.
+    // Recreating the timer and forcing one frame avoids delayed first repaint.
+    igMetalResetTimer(ctx);
+    if (ctx->view != nil)
+        [ctx->view setNeedsDisplay:YES];
+}
+
 @end
 
 @interface MetalAppDelegate : NSObject<NSApplicationDelegate>
@@ -210,8 +228,12 @@ struct MetalBackendContext {
 {
     if (self.ctx == nullptr || self.ctx->view == nil)
         return;
+    if (!NSApp.isActive)
+        return;
+    if (self.ctx->window == nil || (self.ctx->window.occlusionState & NSWindowOcclusionStateVisible) == 0)
+        return;
 
-    [self.ctx->view draw];
+    [self.ctx->view setNeedsDisplay:YES];
 }
 
 @end
@@ -236,11 +258,12 @@ static void igMetalResetTimer(MetalBackendContext* ctx)
 
     unsigned int fps = ctx->targetFPS == 0 ? 60 : ctx->targetFPS;
     NSTimeInterval interval = 1.0 / (double)fps;
-    ctx->timer = [NSTimer scheduledTimerWithTimeInterval:interval
-                                                  target:ctx->timerTarget
-                                                selector:@selector(tick:)
-                                                userInfo:nil
-                                                 repeats:YES];
+    ctx->timer = [NSTimer timerWithTimeInterval:interval
+                                         target:ctx->timerTarget
+                                       selector:@selector(tick:)
+                                       userInfo:nil
+                                        repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:ctx->timer forMode:NSRunLoopCommonModes];
 }
 
 int igInitMetal(void)
@@ -393,7 +416,7 @@ void igMetalRefresh(MetalBackendContext* ctx)
 {
     if (ctx == nullptr || ctx->view == nil)
         return;
-    [ctx->view draw];
+    [ctx->view setNeedsDisplay:YES];
 }
 
 void igMetalWindow_GetDisplaySize(MetalBackendContext* ctx, int* width, int* height)

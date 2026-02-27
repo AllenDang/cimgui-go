@@ -60,6 +60,7 @@ struct SDL_Renderer;
 struct _SDL_GameController;
 typedef union SDL_Event SDL_Event;
 typedef enum { ImGui_ImplSDL2_GamepadMode_AutoFirst, ImGui_ImplSDL2_GamepadMode_AutoAll, ImGui_ImplSDL2_GamepadMode_Manual }ImGui_ImplSDL2_GamepadMode;
+typedef enum { ImGui_ImplSDL2_MouseCaptureMode_Enabled, ImGui_ImplSDL2_MouseCaptureMode_EnabledAfterDrag, ImGui_ImplSDL2_MouseCaptureMode_Disabled }ImGui_ImplSDL2_MouseCaptureMode;
 #endif //CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 CIMGUI_API float ImGui_ImplSDL2_GetContentScaleForDisplay(int display_index);
 CIMGUI_API float ImGui_ImplSDL2_GetContentScaleForWindow(SDL_Window* window);
@@ -72,6 +73,7 @@ CIMGUI_API bool ImGui_ImplSDL2_InitForVulkan(SDL_Window* window);
 CIMGUI_API void ImGui_ImplSDL2_NewFrame(void);
 CIMGUI_API bool ImGui_ImplSDL2_ProcessEvent(const SDL_Event* event);
 CIMGUI_API void ImGui_ImplSDL2_SetGamepadMode(ImGui_ImplSDL2_GamepadMode mode,struct _SDL_GameController** manual_gamepads_array,int manual_gamepads_count);
+CIMGUI_API void ImGui_ImplSDL2_SetMouseCaptureMode(ImGui_ImplSDL2_MouseCaptureMode mode);
 CIMGUI_API void ImGui_ImplSDL2_Shutdown(void);
 
 #endif

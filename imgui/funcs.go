@@ -1823,6 +1823,13 @@ func (self *InputTextCallbackData) SelectAll() {
 	selfFin()
 }
 
+func (self *InputTextCallbackData) SetSelection(s, e int32) {
+	selfArg, selfFin := self.Handle()
+	C.ImGuiInputTextCallbackData_SetSelection(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg), C.int(s), C.int(e))
+
+	selfFin()
+}
+
 func (self *InputTextCallbackData) Destroy() {
 	selfArg, selfFin := self.Handle()
 	C.ImGuiInputTextCallbackData_destroy(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg))
@@ -1971,6 +1978,13 @@ func (self *InputTextState) InternalReloadUserBufAndSelectAll() {
 func (self *InputTextState) InternalSelectAll() {
 	selfArg, selfFin := self.Handle()
 	C.ImGuiInputTextState_SelectAll(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg))
+
+	selfFin()
+}
+
+func (self *InputTextState) InternalSetSelection(start, end int32) {
+	selfArg, selfFin := self.Handle()
+	C.ImGuiInputTextState_SetSelection(internal.ReinterpretCast[*C.ImGuiInputTextState](selfArg), C.int(start), C.int(end))
 
 	selfFin()
 }
@@ -6661,6 +6675,11 @@ func InternalRoundedFontSize(size float32) float32 {
 	return float32(C.igGetRoundedFontSize(C.float(size)))
 }
 
+// FIXME-DPI: I don't want to formalize this just yet. Because reasons. Please don't use.
+func InternalScale() float32 {
+	return float32(C.igGetScale())
+}
+
 // get maximum scrolling amount ~~ ContentSize.x - WindowSize.x - DecorationsSize.x
 func ScrollMaxX() float32 {
 	return float32(C.igGetScrollMaxX())
@@ -6779,6 +6798,7 @@ func InternalWindowAlwaysWantOwnTabBar(window *Window) bool {
 	return C.igGetWindowAlwaysWantOwnTabBar(internal.ReinterpretCast[*C.ImGuiWindow](windowArg)) == C.bool(true)
 }
 
+// get dock id of current window, or 0 if not associated to any docking node.
 func WindowDockID() ID {
 	return *NewIDFromC(func() *C.ImGuiID { result := C.igGetWindowDockID(); return &result }())
 }
@@ -8682,7 +8702,7 @@ func IsKeyDown(key Key) bool {
 	return C.igIsKeyDown_Nil(C.ImGuiKey(key)) == C.bool(true)
 }
 
-// was key pressed (went from !Down to Down)? if repeat=true, uses io.KeyRepeatDelay / KeyRepeatRate
+// was key pressed (went from !Down to Down)? Repeat rate uses io.KeyRepeatDelay / KeyRepeatRate.
 // IsKeyPressedBoolV parameter default value hint:
 // repeat: true
 func IsKeyPressedBoolV(key Key, repeat bool) bool {
@@ -11612,6 +11632,13 @@ func InternalTableSaveSettings(table *Table) {
 // column_n: -1
 func TableSetBgColorV(target TableBgTarget, color uint32, column_n int32) {
 	C.igTableSetBgColor(C.ImGuiTableBgTarget(target), C.ImU32(color), C.int(column_n))
+}
+
+func InternalTableSetColumnDisplayOrder(table *Table, column_n, dst_order int32) {
+	tableArg, tableFin := table.Handle()
+	C.igTableSetColumnDisplayOrder(internal.ReinterpretCast[*C.ImGuiTable](tableArg), C.int(column_n), C.int(dst_order))
+
+	tableFin()
 }
 
 // change user accessible enabled/disabled state of a column. Set to false to hide the column. User can use the context menu to change this themselves (right-click in headers, or right-click in columns body with ImGuiTableFlags_ContextMenuInBody)
@@ -19577,6 +19604,12 @@ func (self Context) SetNavJustMovedToHasSelectionData(v bool) {
 	C.wrap_ImGuiContext_SetNavJustMovedToHasSelectionData(selfArg, C.bool(v))
 }
 
+func (self Context) SetConfigNavEnableTabbing(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiContext_SetConfigNavEnableTabbing(selfArg, C.bool(v))
+}
+
 func (self Context) SetConfigNavWindowingWithGamepad(v bool) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -22377,6 +22410,15 @@ func (self *Context) NavJustMovedToHasSelectionData() bool {
 		selfFin()
 	}()
 	return C.wrap_ImGuiContext_GetNavJustMovedToHasSelectionData(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
+}
+
+func (self *Context) ConfigNavEnableTabbing() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiContext_GetConfigNavEnableTabbing(internal.ReinterpretCast[*C.ImGuiContext](selfArg)) == C.bool(true)
 }
 
 func (self *Context) ConfigNavWindowingWithGamepad() bool {
@@ -27999,16 +28041,36 @@ func (self InputTextCallbackData) SetUserData(v uintptr) {
 	C.wrap_ImGuiInputTextCallbackData_SetUserData(selfArg, C.uintptr_t(v))
 }
 
-func (self InputTextCallbackData) SetEventChar(v Wchar) {
+func (self InputTextCallbackData) SetID(v ID) {
+	vArg, _ := v.C()
+
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
-	C.wrap_ImGuiInputTextCallbackData_SetEventChar(selfArg, C.ImWchar(v))
+	C.wrap_ImGuiInputTextCallbackData_SetID(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
 func (self InputTextCallbackData) SetEventKey(v Key) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiInputTextCallbackData_SetEventKey(selfArg, C.ImGuiKey(v))
+}
+
+func (self InputTextCallbackData) SetEventChar(v Wchar) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextCallbackData_SetEventChar(selfArg, C.ImWchar(v))
+}
+
+func (self InputTextCallbackData) SetEventActivated(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextCallbackData_SetEventActivated(selfArg, C.bool(v))
+}
+
+func (self InputTextCallbackData) SetBufDirty(v bool) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiInputTextCallbackData_SetBufDirty(selfArg, C.bool(v))
 }
 
 func (self InputTextCallbackData) SetBuf(v string) {
@@ -28029,12 +28091,6 @@ func (self InputTextCallbackData) SetBufSize(v int32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImGuiInputTextCallbackData_SetBufSize(selfArg, C.int(v))
-}
-
-func (self InputTextCallbackData) SetBufDirty(v bool) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiInputTextCallbackData_SetBufDirty(selfArg, C.bool(v))
 }
 
 func (self InputTextCallbackData) SetCursorPos(v int32) {
@@ -28091,13 +28147,15 @@ func (self *InputTextCallbackData) UserData() uintptr {
 	return uintptr(C.wrap_ImGuiInputTextCallbackData_GetUserData(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)))
 }
 
-func (self *InputTextCallbackData) EventChar() Wchar {
+func (self *InputTextCallbackData) ID() ID {
 	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiInputTextCallbackData_GetID(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg))
 
 	defer func() {
 		selfFin()
 	}()
-	return (Wchar)(C.wrap_ImGuiInputTextCallbackData_GetEventChar(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)))
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
 }
 
 func (self *InputTextCallbackData) EventKey() Key {
@@ -28107,6 +28165,33 @@ func (self *InputTextCallbackData) EventKey() Key {
 		selfFin()
 	}()
 	return Key(C.wrap_ImGuiInputTextCallbackData_GetEventKey(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)))
+}
+
+func (self *InputTextCallbackData) EventChar() Wchar {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (Wchar)(C.wrap_ImGuiInputTextCallbackData_GetEventChar(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)))
+}
+
+func (self *InputTextCallbackData) EventActivated() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiInputTextCallbackData_GetEventActivated(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)) == C.bool(true)
+}
+
+func (self *InputTextCallbackData) BufDirty() bool {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return C.wrap_ImGuiInputTextCallbackData_GetBufDirty(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)) == C.bool(true)
 }
 
 func (self *InputTextCallbackData) Buf() string {
@@ -28134,15 +28219,6 @@ func (self *InputTextCallbackData) BufSize() int32 {
 		selfFin()
 	}()
 	return int32(C.wrap_ImGuiInputTextCallbackData_GetBufSize(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)))
-}
-
-func (self *InputTextCallbackData) BufDirty() bool {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return C.wrap_ImGuiInputTextCallbackData_GetBufDirty(internal.ReinterpretCast[*C.ImGuiInputTextCallbackData](selfArg)) == C.bool(true)
 }
 
 func (self *InputTextCallbackData) CursorPos() int32 {
@@ -32642,6 +32718,12 @@ func (self Style) SetLogSliderDeadzone(v float32) {
 	C.wrap_ImGuiStyle_SetLogSliderDeadzone(selfArg, C.float(v))
 }
 
+func (self Style) SetImageRounding(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiStyle_SetImageRounding(selfArg, C.float(v))
+}
+
 func (self Style) SetImageBorderSize(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -33206,6 +33288,15 @@ func (self *Style) LogSliderDeadzone() float32 {
 	return float32(C.wrap_ImGuiStyle_GetLogSliderDeadzone(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
 }
 
+func (self *Style) ImageRounding() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiStyle_GetImageRounding(internal.ReinterpretCast[*C.ImGuiStyle](selfArg)))
+}
+
 func (self *Style) ImageBorderSize() float32 {
 	selfArg, selfFin := self.Handle()
 
@@ -33728,6 +33819,14 @@ func (self TabBar) SetNextSelectedTabId(v ID) {
 	C.wrap_ImGuiTabBar_SetNextSelectedTabId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
 }
 
+func (self TabBar) SetNextScrollToTabId(v ID) {
+	vArg, _ := v.C()
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiTabBar_SetNextScrollToTabId(selfArg, internal.ReinterpretCast[C.ImGuiID](vArg))
+}
+
 func (self TabBar) SetVisibleTabId(v ID) {
 	vArg, _ := v.C()
 
@@ -33970,6 +34069,17 @@ func (self *TabBar) NextSelectedTabId() ID {
 	selfArg, selfFin := self.Handle()
 
 	result := C.wrap_ImGuiTabBar_GetNextSelectedTabId(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg))
+
+	defer func() {
+		selfFin()
+	}()
+	return *NewIDFromC(func() *C.ImGuiID { result := result; return &result }())
+}
+
+func (self *TabBar) NextScrollToTabId() ID {
+	selfArg, selfFin := self.Handle()
+
+	result := C.wrap_ImGuiTabBar_GetNextScrollToTabId(internal.ReinterpretCast[*C.ImGuiTabBar](selfArg))
 
 	defer func() {
 		selfFin()
@@ -39595,12 +39705,6 @@ func (self Window) SetLastTimeActive(v float32) {
 	C.wrap_ImGuiWindow_SetLastTimeActive(selfArg, C.float(v))
 }
 
-func (self Window) SetItemWidthDefault(v float32) {
-	selfArg, selfFin := self.Handle()
-	defer selfFin()
-	C.wrap_ImGuiWindow_SetItemWidthDefault(selfArg, C.float(v))
-}
-
 func (self Window) SetStateStorage(v Storage) {
 	vArg, _ := v.C()
 
@@ -40748,15 +40852,6 @@ func (self *Window) LastTimeActive() float32 {
 	return float32(C.wrap_ImGuiWindow_GetLastTimeActive(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
 }
 
-func (self *Window) ItemWidthDefault() float32 {
-	selfArg, selfFin := self.Handle()
-
-	defer func() {
-		selfFin()
-	}()
-	return float32(C.wrap_ImGuiWindow_GetItemWidthDefault(internal.ReinterpretCast[*C.ImGuiWindow](selfArg)))
-}
-
 func (self *Window) StateStorage() Storage {
 	selfArg, selfFin := self.Handle()
 
@@ -41752,6 +41847,12 @@ func (self WindowTempData) SetItemWidth(v float32) {
 	C.wrap_ImGuiWindowTempData_SetItemWidth(selfArg, C.float(v))
 }
 
+func (self WindowTempData) SetItemWidthDefault(v float32) {
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImGuiWindowTempData_SetItemWidthDefault(selfArg, C.float(v))
+}
+
 func (self WindowTempData) SetTextWrapPos(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -42176,6 +42277,15 @@ func (self *WindowTempData) ItemWidth() float32 {
 		selfFin()
 	}()
 	return float32(C.wrap_ImGuiWindowTempData_GetItemWidth(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)))
+}
+
+func (self *WindowTempData) ItemWidthDefault() float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return float32(C.wrap_ImGuiWindowTempData_GetItemWidthDefault(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg)))
 }
 
 func (self *WindowTempData) TextWrapPos() float32 {

@@ -190,116 +190,98 @@
         "value": "-4"
       }
     ],
+    "ImPlotBubblesFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotBubblesFlags_None",
+        "value": "0"
+      }
+    ],
     "ImPlotCol_": [
       {
         "calc_value": 0,
-        "name": "ImPlotCol_Line",
+        "name": "ImPlotCol_FrameBg",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "ImPlotCol_Fill",
+        "name": "ImPlotCol_PlotBg",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "ImPlotCol_MarkerOutline",
+        "name": "ImPlotCol_PlotBorder",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "ImPlotCol_MarkerFill",
+        "name": "ImPlotCol_LegendBg",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "ImPlotCol_ErrorBar",
+        "name": "ImPlotCol_LegendBorder",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "ImPlotCol_FrameBg",
+        "name": "ImPlotCol_LegendText",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "ImPlotCol_PlotBg",
+        "name": "ImPlotCol_TitleText",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "ImPlotCol_PlotBorder",
+        "name": "ImPlotCol_InlayText",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "ImPlotCol_LegendBg",
+        "name": "ImPlotCol_AxisText",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "ImPlotCol_LegendBorder",
+        "name": "ImPlotCol_AxisGrid",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "ImPlotCol_LegendText",
+        "name": "ImPlotCol_AxisTick",
         "value": "10"
       },
       {
         "calc_value": 11,
-        "name": "ImPlotCol_TitleText",
+        "name": "ImPlotCol_AxisBg",
         "value": "11"
       },
       {
         "calc_value": 12,
-        "name": "ImPlotCol_InlayText",
+        "name": "ImPlotCol_AxisBgHovered",
         "value": "12"
       },
       {
         "calc_value": 13,
-        "name": "ImPlotCol_AxisText",
+        "name": "ImPlotCol_AxisBgActive",
         "value": "13"
       },
       {
         "calc_value": 14,
-        "name": "ImPlotCol_AxisGrid",
+        "name": "ImPlotCol_Selection",
         "value": "14"
       },
       {
         "calc_value": 15,
-        "name": "ImPlotCol_AxisTick",
+        "name": "ImPlotCol_Crosshairs",
         "value": "15"
       },
       {
         "calc_value": 16,
-        "name": "ImPlotCol_AxisBg",
-        "value": "16"
-      },
-      {
-        "calc_value": 17,
-        "name": "ImPlotCol_AxisBgHovered",
-        "value": "17"
-      },
-      {
-        "calc_value": 18,
-        "name": "ImPlotCol_AxisBgActive",
-        "value": "18"
-      },
-      {
-        "calc_value": 19,
-        "name": "ImPlotCol_Selection",
-        "value": "19"
-      },
-      {
-        "calc_value": 20,
-        "name": "ImPlotCol_Crosshairs",
-        "value": "20"
-      },
-      {
-        "calc_value": 21,
         "name": "ImPlotCol_COUNT",
-        "value": "21"
+        "value": "16"
       }
     ],
     "ImPlotColormapScaleFlags_": [
@@ -771,10 +753,22 @@
         "value": "ImPlotLocation_South | ImPlotLocation_East"
       }
     ],
+    "ImPlotMarkerInternal_": [
+      {
+        "calc_value": -3,
+        "name": "ImPlotMarker_Invalid",
+        "value": "-3"
+      }
+    ],
     "ImPlotMarker_": [
       {
-        "calc_value": -1,
+        "calc_value": -2,
         "name": "ImPlotMarker_None",
+        "value": "-2"
+      },
+      {
+        "calc_value": -1,
+        "name": "ImPlotMarker_Auto",
         "value": "-1"
       },
       {
@@ -877,6 +871,68 @@
         "value": "1 << 12"
       }
     ],
+    "ImPlotProp_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotProp_LineColor",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotProp_LineWeight",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotProp_FillColor",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ImPlotProp_FillAlpha",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotProp_Marker",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImPlotProp_MarkerSize",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "ImPlotProp_MarkerLineColor",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "ImPlotProp_MarkerFillColor",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotProp_Size",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "ImPlotProp_Offset",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ImPlotProp_Stride",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ImPlotProp_Flags",
+        "value": "11"
+      }
+    ],
     "ImPlotScale_": [
       {
         "calc_value": 0,
@@ -950,143 +1006,108 @@
     "ImPlotStyleVar_": [
       {
         "calc_value": 0,
-        "name": "ImPlotStyleVar_LineWeight",
+        "name": "ImPlotStyleVar_PlotDefaultSize",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "ImPlotStyleVar_Marker",
+        "name": "ImPlotStyleVar_PlotMinSize",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "ImPlotStyleVar_MarkerSize",
+        "name": "ImPlotStyleVar_PlotBorderSize",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "ImPlotStyleVar_MarkerWeight",
+        "name": "ImPlotStyleVar_MinorAlpha",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "ImPlotStyleVar_FillAlpha",
+        "name": "ImPlotStyleVar_MajorTickLen",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "ImPlotStyleVar_ErrorBarSize",
+        "name": "ImPlotStyleVar_MinorTickLen",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "ImPlotStyleVar_ErrorBarWeight",
+        "name": "ImPlotStyleVar_MajorTickSize",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "ImPlotStyleVar_DigitalBitHeight",
+        "name": "ImPlotStyleVar_MinorTickSize",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "ImPlotStyleVar_DigitalBitGap",
+        "name": "ImPlotStyleVar_MajorGridSize",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "ImPlotStyleVar_PlotBorderSize",
+        "name": "ImPlotStyleVar_MinorGridSize",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "ImPlotStyleVar_MinorAlpha",
+        "name": "ImPlotStyleVar_PlotPadding",
         "value": "10"
       },
       {
         "calc_value": 11,
-        "name": "ImPlotStyleVar_MajorTickLen",
+        "name": "ImPlotStyleVar_LabelPadding",
         "value": "11"
       },
       {
         "calc_value": 12,
-        "name": "ImPlotStyleVar_MinorTickLen",
+        "name": "ImPlotStyleVar_LegendPadding",
         "value": "12"
       },
       {
         "calc_value": 13,
-        "name": "ImPlotStyleVar_MajorTickSize",
+        "name": "ImPlotStyleVar_LegendInnerPadding",
         "value": "13"
       },
       {
         "calc_value": 14,
-        "name": "ImPlotStyleVar_MinorTickSize",
+        "name": "ImPlotStyleVar_LegendSpacing",
         "value": "14"
       },
       {
         "calc_value": 15,
-        "name": "ImPlotStyleVar_MajorGridSize",
+        "name": "ImPlotStyleVar_MousePosPadding",
         "value": "15"
       },
       {
         "calc_value": 16,
-        "name": "ImPlotStyleVar_MinorGridSize",
+        "name": "ImPlotStyleVar_AnnotationPadding",
         "value": "16"
       },
       {
         "calc_value": 17,
-        "name": "ImPlotStyleVar_PlotPadding",
+        "name": "ImPlotStyleVar_FitPadding",
         "value": "17"
       },
       {
         "calc_value": 18,
-        "name": "ImPlotStyleVar_LabelPadding",
+        "name": "ImPlotStyleVar_DigitalPadding",
         "value": "18"
       },
       {
         "calc_value": 19,
-        "name": "ImPlotStyleVar_LegendPadding",
+        "name": "ImPlotStyleVar_DigitalSpacing",
         "value": "19"
       },
       {
         "calc_value": 20,
-        "name": "ImPlotStyleVar_LegendInnerPadding",
-        "value": "20"
-      },
-      {
-        "calc_value": 21,
-        "name": "ImPlotStyleVar_LegendSpacing",
-        "value": "21"
-      },
-      {
-        "calc_value": 22,
-        "name": "ImPlotStyleVar_MousePosPadding",
-        "value": "22"
-      },
-      {
-        "calc_value": 23,
-        "name": "ImPlotStyleVar_AnnotationPadding",
-        "value": "23"
-      },
-      {
-        "calc_value": 24,
-        "name": "ImPlotStyleVar_FitPadding",
-        "value": "24"
-      },
-      {
-        "calc_value": 25,
-        "name": "ImPlotStyleVar_PlotDefaultSize",
-        "value": "25"
-      },
-      {
-        "calc_value": 26,
-        "name": "ImPlotStyleVar_PlotMinSize",
-        "value": "26"
-      },
-      {
-        "calc_value": 27,
         "name": "ImPlotStyleVar_COUNT",
-        "value": "27"
+        "value": "20"
       }
     ],
     "ImPlotSubplotFlags_": [
@@ -1265,68 +1286,72 @@
   },
   "enumtypes": [],
   "locations": {
-    "Formatter_Time_Data": "implot_internal:1687",
-    "ImAxis_": "implot:120",
-    "ImPlotAlignmentData": "implot_internal:938",
-    "ImPlotAnnotation": "implot_internal:431",
-    "ImPlotAnnotationCollection": "implot_internal:446",
-    "ImPlotAxis": "implot_internal:645",
-    "ImPlotAxisFlags_": "implot:149",
-    "ImPlotBarGroupsFlags_": "implot:268",
-    "ImPlotBarsFlags_": "implot:262",
-    "ImPlotBin_": "implot:465",
-    "ImPlotCol_": "implot:346",
-    "ImPlotColormapData": "implot_internal:320",
-    "ImPlotColormapScaleFlags_": "implot:219",
-    "ImPlotColormap_": "implot:432",
-    "ImPlotCond_": "implot:338",
-    "ImPlotContext": "implot_internal:1225",
-    "ImPlotDateFmt_": "implot_internal:246",
-    "ImPlotDateTimeSpec": "implot_internal:279",
-    "ImPlotDigitalFlags_": "implot:317",
-    "ImPlotDragToolFlags_": "implot:210",
-    "ImPlotDummyFlags_": "implot:333",
-    "ImPlotErrorBarsFlags_": "implot:275",
-    "ImPlotFlags_": "implot:134",
-    "ImPlotHeatmapFlags_": "implot:301",
-    "ImPlotHistogramFlags_": "implot:307",
-    "ImPlotImageFlags_": "implot:322",
-    "ImPlotInfLinesFlags_": "implot:287",
-    "ImPlotInputMap": "implot:570",
-    "ImPlotItem": "implot_internal:961",
-    "ImPlotItemFlags_": "implot:227",
-    "ImPlotItemGroup": "implot_internal:1011",
-    "ImPlotLegend": "implot_internal:984",
-    "ImPlotLegendFlags_": "implot:189",
-    "ImPlotLineFlags_": "implot:234",
-    "ImPlotLocation_": "implot:452",
-    "ImPlotMarker_": "implot:416",
-    "ImPlotMouseTextFlags_": "implot:202",
-    "ImPlotNextItemData": "implot_internal:1196",
-    "ImPlotNextPlotData": "implot_internal:1174",
-    "ImPlotPieChartFlags_": "implot:293",
-    "ImPlotPlot": "implot_internal:1034",
-    "ImPlotPoint": "implot:474",
-    "ImPlotPointError": "implot_internal:422",
-    "ImPlotRange": "implot:489",
-    "ImPlotRect": "implot:499",
-    "ImPlotScale_": "implot:408",
-    "ImPlotScatterFlags_": "implot:244",
-    "ImPlotShadedFlags_": "implot:257",
-    "ImPlotStairsFlags_": "implot:250",
-    "ImPlotStemsFlags_": "implot:281",
-    "ImPlotStyle": "implot:513",
-    "ImPlotStyleVar_": "implot:374",
-    "ImPlotSubplot": "implot_internal:1139",
-    "ImPlotSubplotFlags_": "implot:173",
-    "ImPlotTag": "implot_internal:485",
-    "ImPlotTagCollection": "implot_internal:501",
-    "ImPlotTextFlags_": "implot:327",
-    "ImPlotTick": "implot_internal:542",
-    "ImPlotTicker": "implot_internal:575",
-    "ImPlotTime": "implot_internal:294",
-    "ImPlotTimeFmt_": "implot_internal:255",
-    "ImPlotTimeUnit_": "implot_internal:234"
+    "Formatter_Time_Data": "implot_internal:1690",
+    "ImAxis_": "implot:124",
+    "ImPlotAlignmentData": "implot_internal:948",
+    "ImPlotAnnotation": "implot_internal:441",
+    "ImPlotAnnotationCollection": "implot_internal:456",
+    "ImPlotAxis": "implot_internal:655",
+    "ImPlotAxisFlags_": "implot:169",
+    "ImPlotBarGroupsFlags_": "implot:293",
+    "ImPlotBarsFlags_": "implot:287",
+    "ImPlotBin_": "implot:475",
+    "ImPlotBubblesFlags_": "implot:270",
+    "ImPlotCol_": "implot:371",
+    "ImPlotColormapData": "implot_internal:330",
+    "ImPlotColormapScaleFlags_": "implot:239",
+    "ImPlotColormap_": "implot:442",
+    "ImPlotCond_": "implot:363",
+    "ImPlotContext": "implot_internal:1228",
+    "ImPlotDateFmt_": "implot_internal:252",
+    "ImPlotDateTimeSpec": "implot_internal:289",
+    "ImPlotDigitalFlags_": "implot:342",
+    "ImPlotDragToolFlags_": "implot:230",
+    "ImPlotDummyFlags_": "implot:358",
+    "ImPlotErrorBarsFlags_": "implot:300",
+    "ImPlotFlags_": "implot:154",
+    "ImPlotHeatmapFlags_": "implot:326",
+    "ImPlotHistogramFlags_": "implot:332",
+    "ImPlotImageFlags_": "implot:347",
+    "ImPlotInfLinesFlags_": "implot:312",
+    "ImPlotInputMap": "implot:658",
+    "ImPlotItem": "implot_internal:971",
+    "ImPlotItemFlags_": "implot:247",
+    "ImPlotItemGroup": "implot_internal:1023",
+    "ImPlotLegend": "implot_internal:996",
+    "ImPlotLegendFlags_": "implot:209",
+    "ImPlotLineFlags_": "implot:254",
+    "ImPlotLocation_": "implot:462",
+    "ImPlotMarkerInternal_": "implot_internal:274",
+    "ImPlotMarker_": "implot:425",
+    "ImPlotMouseTextFlags_": "implot:222",
+    "ImPlotNextItemData": "implot_internal:1209",
+    "ImPlotNextPlotData": "implot_internal:1187",
+    "ImPlotPieChartFlags_": "implot:318",
+    "ImPlotPlot": "implot_internal:1047",
+    "ImPlotPoint": "implot:569",
+    "ImPlotPointError": "implot_internal:432",
+    "ImPlotProp_": "implot:138",
+    "ImPlotRange": "implot:584",
+    "ImPlotRect": "implot:594",
+    "ImPlotScale_": "implot:417",
+    "ImPlotScatterFlags_": "implot:264",
+    "ImPlotShadedFlags_": "implot:282",
+    "ImPlotSpec": "implot:502",
+    "ImPlotStairsFlags_": "implot:275",
+    "ImPlotStemsFlags_": "implot:306",
+    "ImPlotStyle": "implot:608",
+    "ImPlotStyleVar_": "implot:392",
+    "ImPlotSubplot": "implot_internal:1152",
+    "ImPlotSubplotFlags_": "implot:193",
+    "ImPlotTag": "implot_internal:495",
+    "ImPlotTagCollection": "implot_internal:511",
+    "ImPlotTextFlags_": "implot:352",
+    "ImPlotTick": "implot_internal:552",
+    "ImPlotTicker": "implot_internal:585",
+    "ImPlotTime": "implot_internal:304",
+    "ImPlotTimeFmt_": "implot_internal:261",
+    "ImPlotTimeUnit_": "implot_internal:240"
   },
   "nonPOD": {
     "ImBitArray": "inherited",
@@ -1425,6 +1450,7 @@
     "ImPlotPointError": true,
     "ImPlotRange": true,
     "ImPlotRect": true,
+    "ImPlotSpec": true,
     "ImPlotStyle": true,
     "ImPlotSubplot": true,
     "ImPlotTag": true,
@@ -1452,6 +1478,7 @@
     "ImPlotPoint": true,
     "ImPlotRange": true,
     "ImPlotRect": true,
+    "ImPlotSpec": true,
     "ImPlotTick": true,
     "ImPlotTime": true,
     "ImRect": "inherited",
@@ -1999,6 +2026,10 @@
         "type": "ImU32"
       },
       {
+        "name": "Marker",
+        "type": "ImPlotMarker"
+      },
+      {
         "name": "LegendHoverRect",
         "type": "ImRect"
       },
@@ -2036,6 +2067,10 @@
       {
         "name": "ColormapIdx",
         "type": "int"
+      },
+      {
+        "name": "MarkerIdx",
+        "type": "ImPlotMarker"
       }
     ],
     "ImPlotLegend": [
@@ -2091,45 +2126,8 @@
     ],
     "ImPlotNextItemData": [
       {
-        "name": "Colors[5]",
-        "size": 5,
-        "type": "ImVec4"
-      },
-      {
-        "name": "LineWeight",
-        "type": "float"
-      },
-      {
-        "name": "Marker",
-        "type": "ImPlotMarker"
-      },
-      {
-        "name": "MarkerSize",
-        "type": "float"
-      },
-      {
-        "name": "MarkerWeight",
-        "type": "float"
-      },
-      {
-        "name": "FillAlpha",
-        "type": "float"
-      },
-      {
-        "name": "ErrorBarSize",
-        "type": "float"
-      },
-      {
-        "name": "ErrorBarWeight",
-        "type": "float"
-      },
-      {
-        "name": "DigitalBitHeight",
-        "type": "float"
-      },
-      {
-        "name": "DigitalBitGap",
-        "type": "float"
+        "name": "Spec",
+        "type": "ImPlotSpec"
       },
       {
         "name": "RenderLine",
@@ -2145,6 +2143,10 @@
       },
       {
         "name": "RenderMarkerFill",
+        "type": "bool"
+      },
+      {
+        "name": "RenderMarkers",
         "type": "bool"
       },
       {
@@ -2347,42 +2349,64 @@
         "type": "ImPlotRange"
       }
     ],
-    "ImPlotStyle": [
+    "ImPlotSpec": [
+      {
+        "name": "LineColor",
+        "type": "ImVec4"
+      },
       {
         "name": "LineWeight",
         "type": "float"
       },
       {
-        "name": "Marker",
-        "type": "int"
-      },
-      {
-        "name": "MarkerSize",
-        "type": "float"
-      },
-      {
-        "name": "MarkerWeight",
-        "type": "float"
+        "name": "FillColor",
+        "type": "ImVec4"
       },
       {
         "name": "FillAlpha",
         "type": "float"
       },
       {
-        "name": "ErrorBarSize",
+        "name": "Marker",
+        "type": "ImPlotMarker"
+      },
+      {
+        "name": "MarkerSize",
         "type": "float"
       },
       {
-        "name": "ErrorBarWeight",
+        "name": "MarkerLineColor",
+        "type": "ImVec4"
+      },
+      {
+        "name": "MarkerFillColor",
+        "type": "ImVec4"
+      },
+      {
+        "name": "Size",
         "type": "float"
       },
       {
-        "name": "DigitalBitHeight",
-        "type": "float"
+        "name": "Offset",
+        "type": "int"
       },
       {
-        "name": "DigitalBitGap",
-        "type": "float"
+        "name": "Stride",
+        "type": "int"
+      },
+      {
+        "name": "Flags",
+        "type": "ImPlotItemFlags"
+      }
+    ],
+    "ImPlotStyle": [
+      {
+        "name": "PlotDefaultSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "PlotMinSize",
+        "type": "ImVec2"
       },
       {
         "name": "PlotBorderSize",
@@ -2449,16 +2473,16 @@
         "type": "ImVec2"
       },
       {
-        "name": "PlotDefaultSize",
-        "type": "ImVec2"
+        "name": "DigitalPadding",
+        "type": "float"
       },
       {
-        "name": "PlotMinSize",
-        "type": "ImVec2"
+        "name": "DigitalSpacing",
+        "type": "float"
       },
       {
         "name": "Colors[ImPlotCol_COUNT]",
-        "size": 21,
+        "size": 16,
         "type": "ImVec4"
       },
       {
