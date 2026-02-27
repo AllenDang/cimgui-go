@@ -366,7 +366,7 @@ const (
 	ColorEditFlagsNoLabel ColorEditFlags = 128
 	//              // ColorPicker: disable bigger color preview on right side of the picker, use small color square preview instead.
 	ColorEditFlagsNoSidePreview ColorEditFlags = 256
-	//              // ColorEdit: disable drag and drop target. ColorButton: disable drag and drop source.
+	//              // ColorEdit: disable drag and drop target/source. ColorButton: disable drag and drop source.
 	ColorEditFlagsNoDragDrop ColorEditFlags = 512
 	//              // ColorButton: disable border (which is enforced by default)
 	ColorEditFlagsNoBorder ColorEditFlags = 1024
@@ -467,7 +467,7 @@ type ConfigFlags int32
 
 const (
 	ConfigFlagsNone ConfigFlags = 0
-	// Master keyboard navigation enable flag. Enable full Tabbing + directional arrows + space/enter to activate.
+	// Master keyboard navigation enable flag. Enable full Tabbing + directional arrows + Space/Enter to activate. Note: some features such as basic Tabbing and CtrL+Tab are enabled by regardless of this flag (and may be disabled via other means, see #4828, #9218).
 	ConfigFlagsNavEnableKeyboard ConfigFlags = 1
 	// Master gamepad navigation enable flag. Backend also needs to set ImGuiBackendFlags_HasGamepad.
 	ConfigFlagsNavEnableGamepad ConfigFlags = 2
@@ -1081,7 +1081,7 @@ const (
 // All our named keys are >= 512. Keys value 0 to 511 are left unused and were legacy native/opaque key values (< 1.87).
 // Support for legacy keys was completely removed in 1.91.5.
 // Read details about the 1.87+ transition : https://github.com/ocornut/imgui/issues/4921
-// Note that "Keys" related to physical keys and are not the same concept as input "Characters", the later are submitted via io.AddInputCharacter().
+// Note that "Keys" related to physical keys and are not the same concept as input "Characters", the latter are submitted via io.AddInputCharacter().
 // The keyboard key enum values are named after the keys on a standard US keyboard, and on other keyboard types the keys reported may not match the keycaps.
 // original name: ImGuiKey
 type Key int32
@@ -1819,41 +1819,43 @@ const (
 	StyleVarGrabMinSize StyleVar = 21
 	// float     GrabRounding
 	StyleVarGrabRounding StyleVar = 22
+	// float     ImageRounding
+	StyleVarImageRounding StyleVar = 23
 	// float     ImageBorderSize
-	StyleVarImageBorderSize StyleVar = 23
+	StyleVarImageBorderSize StyleVar = 24
 	// float     TabRounding
-	StyleVarTabRounding StyleVar = 24
+	StyleVarTabRounding StyleVar = 25
 	// float     TabBorderSize
-	StyleVarTabBorderSize StyleVar = 25
+	StyleVarTabBorderSize StyleVar = 26
 	// float     TabMinWidthBase
-	StyleVarTabMinWidthBase StyleVar = 26
+	StyleVarTabMinWidthBase StyleVar = 27
 	// float     TabMinWidthShrink
-	StyleVarTabMinWidthShrink StyleVar = 27
+	StyleVarTabMinWidthShrink StyleVar = 28
 	// float     TabBarBorderSize
-	StyleVarTabBarBorderSize StyleVar = 28
+	StyleVarTabBarBorderSize StyleVar = 29
 	// float     TabBarOverlineSize
-	StyleVarTabBarOverlineSize StyleVar = 29
+	StyleVarTabBarOverlineSize StyleVar = 30
 	// float     TableAngledHeadersAngle
-	StyleVarTableAngledHeadersAngle StyleVar = 30
+	StyleVarTableAngledHeadersAngle StyleVar = 31
 	// ImVec2  TableAngledHeadersTextAlign
-	StyleVarTableAngledHeadersTextAlign StyleVar = 31
+	StyleVarTableAngledHeadersTextAlign StyleVar = 32
 	// float     TreeLinesSize
-	StyleVarTreeLinesSize StyleVar = 32
+	StyleVarTreeLinesSize StyleVar = 33
 	// float     TreeLinesRounding
-	StyleVarTreeLinesRounding StyleVar = 33
+	StyleVarTreeLinesRounding StyleVar = 34
 	// ImVec2    ButtonTextAlign
-	StyleVarButtonTextAlign StyleVar = 34
+	StyleVarButtonTextAlign StyleVar = 35
 	// ImVec2    SelectableTextAlign
-	StyleVarSelectableTextAlign StyleVar = 35
+	StyleVarSelectableTextAlign StyleVar = 36
 	// float     SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize StyleVar = 36
+	StyleVarSeparatorTextBorderSize StyleVar = 37
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign StyleVar = 37
+	StyleVarSeparatorTextAlign StyleVar = 38
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding StyleVar = 38
+	StyleVarSeparatorTextPadding StyleVar = 39
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize StyleVar = 39
-	StyleVarCOUNT                StyleVar = 40
+	StyleVarDockingSeparatorSize StyleVar = 40
+	StyleVarCOUNT                StyleVar = 41
 )
 
 // Extend ImGuiTabBarFlags_

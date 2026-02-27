@@ -69,32 +69,34 @@ const (
 	BinScott   Bin = -4
 )
 
+// original name: ImPlotBubblesFlags_
+type BubblesFlags int32
+
+const (
+	BubblesFlagsNone BubblesFlags = 0
+)
+
 // original name: ImPlotCol_
 type Col int32
 
 const (
-	ColLine          Col = 0
-	ColFill          Col = 1
-	ColMarkerOutline Col = 2
-	ColMarkerFill    Col = 3
-	ColErrorBar      Col = 4
-	ColFrameBg       Col = 5
-	ColPlotBg        Col = 6
-	ColPlotBorder    Col = 7
-	ColLegendBg      Col = 8
-	ColLegendBorder  Col = 9
-	ColLegendText    Col = 10
-	ColTitleText     Col = 11
-	ColInlayText     Col = 12
-	ColAxisText      Col = 13
-	ColAxisGrid      Col = 14
-	ColAxisTick      Col = 15
-	ColAxisBg        Col = 16
-	ColAxisBgHovered Col = 17
-	ColAxisBgActive  Col = 18
-	ColSelection     Col = 19
-	ColCrosshairs    Col = 20
-	ColCOUNT         Col = 21
+	ColFrameBg       Col = 0
+	ColPlotBg        Col = 1
+	ColPlotBorder    Col = 2
+	ColLegendBg      Col = 3
+	ColLegendBorder  Col = 4
+	ColLegendText    Col = 5
+	ColTitleText     Col = 6
+	ColInlayText     Col = 7
+	ColAxisText      Col = 8
+	ColAxisGrid      Col = 9
+	ColAxisTick      Col = 10
+	ColAxisBg        Col = 11
+	ColAxisBgHovered Col = 12
+	ColAxisBgActive  Col = 13
+	ColSelection     Col = 14
+	ColCrosshairs    Col = 15
+	ColCOUNT         Col = 16
 )
 
 // original name: ImPlotColormapScaleFlags_
@@ -286,11 +288,19 @@ const (
 	LocationSouthEast Location = 10
 )
 
+// original name: ImPlotMarkerInternal_
+type MarkerInternal int32
+
+const (
+	MarkerInvalid MarkerInternal = -3
+)
+
 // original name: ImPlotMarker_
 type Marker int32
 
 const (
-	MarkerNone     Marker = -1
+	MarkerNone     Marker = -2
+	MarkerAuto     Marker = -1
 	MarkerCircle   Marker = 0
 	MarkerSquare   Marker = 1
 	MarkerDiamond  Marker = 2
@@ -322,6 +332,24 @@ const (
 	PieChartFlagsNormalize    PieChartFlags = 1024
 	PieChartFlagsIgnoreHidden PieChartFlags = 2048
 	PieChartFlagsExploding    PieChartFlags = 4096
+)
+
+// original name: ImPlotProp_
+type Prop int32
+
+const (
+	PropLineColor       Prop = 0
+	PropLineWeight      Prop = 1
+	PropFillColor       Prop = 2
+	PropFillAlpha       Prop = 3
+	PropMarker          Prop = 4
+	PropMarkerSize      Prop = 5
+	PropMarkerLineColor Prop = 6
+	PropMarkerFillColor Prop = 7
+	PropSize            Prop = 8
+	PropOffset          Prop = 9
+	PropStride          Prop = 10
+	PropFlags           Prop = 11
 )
 
 // original name: ImPlotScale_
@@ -370,34 +398,27 @@ const (
 type StyleVar int32
 
 const (
-	StyleVarLineWeight         StyleVar = 0
-	StyleVarMarker             StyleVar = 1
-	StyleVarMarkerSize         StyleVar = 2
-	StyleVarMarkerWeight       StyleVar = 3
-	StyleVarFillAlpha          StyleVar = 4
-	StyleVarErrorBarSize       StyleVar = 5
-	StyleVarErrorBarWeight     StyleVar = 6
-	StyleVarDigitalBitHeight   StyleVar = 7
-	StyleVarDigitalBitGap      StyleVar = 8
-	StyleVarPlotBorderSize     StyleVar = 9
-	StyleVarMinorAlpha         StyleVar = 10
-	StyleVarMajorTickLen       StyleVar = 11
-	StyleVarMinorTickLen       StyleVar = 12
-	StyleVarMajorTickSize      StyleVar = 13
-	StyleVarMinorTickSize      StyleVar = 14
-	StyleVarMajorGridSize      StyleVar = 15
-	StyleVarMinorGridSize      StyleVar = 16
-	StyleVarPlotPadding        StyleVar = 17
-	StyleVarLabelPadding       StyleVar = 18
-	StyleVarLegendPadding      StyleVar = 19
-	StyleVarLegendInnerPadding StyleVar = 20
-	StyleVarLegendSpacing      StyleVar = 21
-	StyleVarMousePosPadding    StyleVar = 22
-	StyleVarAnnotationPadding  StyleVar = 23
-	StyleVarFitPadding         StyleVar = 24
-	StyleVarPlotDefaultSize    StyleVar = 25
-	StyleVarPlotMinSize        StyleVar = 26
-	StyleVarCOUNT              StyleVar = 27
+	StyleVarPlotDefaultSize    StyleVar = 0
+	StyleVarPlotMinSize        StyleVar = 1
+	StyleVarPlotBorderSize     StyleVar = 2
+	StyleVarMinorAlpha         StyleVar = 3
+	StyleVarMajorTickLen       StyleVar = 4
+	StyleVarMinorTickLen       StyleVar = 5
+	StyleVarMajorTickSize      StyleVar = 6
+	StyleVarMinorTickSize      StyleVar = 7
+	StyleVarMajorGridSize      StyleVar = 8
+	StyleVarMinorGridSize      StyleVar = 9
+	StyleVarPlotPadding        StyleVar = 10
+	StyleVarLabelPadding       StyleVar = 11
+	StyleVarLegendPadding      StyleVar = 12
+	StyleVarLegendInnerPadding StyleVar = 13
+	StyleVarLegendSpacing      StyleVar = 14
+	StyleVarMousePosPadding    StyleVar = 15
+	StyleVarAnnotationPadding  StyleVar = 16
+	StyleVarFitPadding         StyleVar = 17
+	StyleVarDigitalPadding     StyleVar = 18
+	StyleVarDigitalSpacing     StyleVar = 19
+	StyleVarCOUNT              StyleVar = 20
 )
 
 // original name: ImPlotSubplotFlags_
