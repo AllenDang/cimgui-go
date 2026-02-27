@@ -107,9 +107,6 @@ func sendRaylibGamepad(io *imgui.IO) {
 	rt := rl.GetGamepadAxisMovement(pad, rl.GamepadAxisRightTrigger)
 
 	norm := func(v float32) float32 {
-		// Try to support both [-1..1] and [1..-1]
-		// If v in [-1..1], (v+1)/2; if v in [1..-1], (1-v)/2 gives same mapping.
-		// Blend using symmetrical formula: (1 - v) * 0.5 maps 1->0, -1->1.
 		return clamp01((1 - v) * 0.5)
 	}
 
