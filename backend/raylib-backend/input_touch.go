@@ -5,7 +5,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-// Track touch state to generate proper edge events
+// Track touch state
 var prevTouchDown bool
 
 // GetPrevTouchDown returns whether touch was down in the previous frame
@@ -13,7 +13,7 @@ func GetPrevTouchDown() bool {
 	return prevTouchDown
 }
 
-// sendRaylibTouch forwards primary touch as ImGui touch-screen mouse events.
+// sendRaylibTouch forwards primary touch as ImGui touch-screen mouse events
 func sendRaylibTouch(io *imgui.IO) {
 	// Number of active touchpoints
 	count := rl.GetTouchPointCount()
