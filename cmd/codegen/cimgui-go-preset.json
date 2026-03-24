@@ -89,7 +89,8 @@
                 "nullptr":    "0",
                 "NULL":       "0",
                 "((void*)0)": "0",
-                "IMPLOT_AUTO_COL": "{0,0,0,-1}"
+                "IMPLOT_AUTO_COL": "{0,0,0,-1}",
+                "ImPlotSpec()":    "*ImPlotSpec_ImPlotSpec()"
         },
         "DefaultArgArbitraryValue": {
                 "text_end":   "0",

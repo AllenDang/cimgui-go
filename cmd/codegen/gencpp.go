@@ -255,25 +255,28 @@ extern "C" {
 			invocationStmt := fmt.Sprintf("(%s)", Join(invocationArgs, ","))
 
 			for k, v := range f.Defaults {
-				// match anything of form ImVec2(0, 0) or ImVec2(0.0f, 0.0f)
-				re := regexp.MustCompile(`(\w*)\((.*)\)`)
-				// 3, because according to FindStringSubmatch doc, it returns [ImVec2(x, y), ImVec2, "x, y"]
-				// we also need to ensure aur match matches the whole string
-				// we also don't want sizeof
-				if m := re.FindStringSubmatch(v); len(m) == 3 && m[0] == v && m[1] != "sizeof" {
-					for k, v := range ctx.preset.DefaultArgReplace {
-						m[2] = ReplaceAll(m[2], k, v)
+				// preset replace is superior to any auto-replacing  mechanism.
+				presetReplace, ok := ctx.preset.DefaultArgReplace[CIdentifier(v)]
+				if ok {
+					v = string(presetReplace)
+				} else {
+
+					// match anything of form ImVec2(0, 0) or ImVec2(0.0f, 0.0f)
+					re := regexp.MustCompile(`(\w*)\((.*)\)`)
+					// 3, because according to FindStringSubmatch doc, it returns [ImVec2(x, y), ImVec2, "x, y"]
+					// we also need to ensure aur match matches the whole string
+					// we also don't want sizeof
+					if m := re.FindStringSubmatch(v); len(m) == 3 && m[0] == v && m[1] != "sizeof" {
+						for k, v := range ctx.preset.DefaultArgReplace {
+							m[2] = ReplaceAll(m[2], k, v)
+						}
+
+						v = fmt.Sprintf("(%s){%s}", m[1], m[2])
 					}
 
-					v = fmt.Sprintf("(%s){%s}", m[1], m[2])
-				}
-
-				if r, ok := ctx.preset.DefaultArgReplace[CIdentifier(v)]; ok {
-					v = string(r)
-				}
-
-				if r, ok := ctx.preset.DefaultArgArbitraryValue[CIdentifier(k)]; ok {
-					v = string(r)
+					if r, ok := ctx.preset.DefaultArgArbitraryValue[CIdentifier(k)]; ok {
+						v = string(r)
+					}
 				}
 
 				if strings.Contains(invocationStmt, ","+k) {
