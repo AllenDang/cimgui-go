@@ -52,6 +52,7 @@ type Preset struct {
 	// DefaultArgReplace is used in C-side default args generation (gencpp.go).
 	// cimgui-go uses this to change FLT_MIN with igGet_FLT_MIN()
 	// NOTE: Iterated randomly!
+	// NOTE: This is superior to any automatic rules. E.g. if some rule matches Type1(x,y) and translates it to Type2(x,y), the auto rule will not make it (Type2){x,y}
 	DefaultArgReplace map[CIdentifier]CIdentifier
 	// DefaultArgArbitraryValue is similar to the above DefaultArgReplace, but
 	// associates default arg name with any arbitrary value.
