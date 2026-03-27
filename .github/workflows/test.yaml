@@ -40,7 +40,7 @@ jobs:
         if: startsWith(matrix.os,'ubuntu')
         run: |
           sudo apt-get --allow-releaseinfo-change update
-          sudo apt-get install -y libgtk-3-dev libasound2-dev libxxf86vm-dev
+          sudo apt-get install -y libgtk-3-dev libasound2-dev libxxf86vm-dev libdrm-dev libgbm-dev libegl1-mesa-dev libgles2-mesa-dev pkg-config
       - name: Set up Go environment
         uses: actions/setup-go@v6
         with:
