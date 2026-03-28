@@ -49,10 +49,17 @@ We support the following backends:
 - [GLFW](./examples/glfw). (GLFW 3.3 + OpenGL)
 - [SDL2](./examples/sdl). (SDL 2 + OpenGL)
 - [Ebitengine](./examples/ebiten) (`import "github.com/AllenDang/cimgui-go/backend/ebitenbackend"`).
+- [DRM/EGL](./examples/drm-egl) (`import "github.com/AllenDang/cimgui-go/backend/drmeglbackend"`, Linux only).
 
 > [!important]
 > Remember that various solution use different C libraries that can conflict with each other.
 > It is recommended not to import e.g. GLFW and SDL backends at the same time as it may result in linker crash.
+
+> [!note]
+> The DRM/EGL backend is intended for embedded Linux / kiosk setups that render directly through DRM/KMS without X11 or Wayland. It currently focuses on rendering and texture upload; desktop-style window management, drag-and-drop, and input event wiring are not implemented yet.
+
+> [!tip]
+> To build the DRM/EGL example/backend, install `libdrm-dev`, `libgbm-dev`, `libegl1-mesa-dev`, `libgles2-mesa-dev`, then use `go run ./examples/drm-egl`.
 
 > [!tip]
 > Because [glfw v3.4](https://github.com/glfw/glfw) defaults to wayland when possible and wayland does not support some of imgui features, there is a `glfwbackend.ForceX11()`. Call it before creating a `glfwbackend.GLFWBakend` instance.
