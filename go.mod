@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.9.9
-	github.com/tthhr/go-drm-egl v1.0.0
+	github.com/tthhr/go-drm-egl v1.0.1
 )
 
 require (
