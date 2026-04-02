@@ -8,8 +8,8 @@ github.com/hajimehoshi/ebiten/v2 v2.9.9 h1:JdDag6Ndj12iD4lxQGG8kbsrh7ssj4Sbzth6r
 github.com/hajimehoshi/ebiten/v2 v2.9.9/go.mod h1:DAt4tnkYYpCvu3x9i1X/nK/vOruNXIlYq/tBXxnhrXM=
 github.com/jezek/xgb v1.1.1 h1:bE/r8ZZtSv7l9gk6nU0mYx51aXrvnyb44892TwSaqS4=
 github.com/jezek/xgb v1.1.1/go.mod h1:nrhwO0FX/enq75I7Y7G8iN1ubpSGZEiA3v9e9GyRFlk=
-github.com/tthhr/go-drm-egl v1.0.0 h1:GnGPBNZH8CN7rflyNDaGpnOCD8Y8XFjA8Zc9jpdsYNQ=
-github.com/tthhr/go-drm-egl v1.0.0/go.mod h1:j6Im0lAXU+WtgxMaSDAoB296HwQVWC2Ar1xl2aZNpgs=
+github.com/tthhr/go-drm-egl v1.0.1 h1:I4/QiopqXASAnMpqN2SYUbp65RobieWkPD87Te85jF4=
+github.com/tthhr/go-drm-egl v1.0.1/go.mod h1:Jf+FHc85eIBO4JAcliL1VGoGMkrUQ47RJ1C1UsWlPo0=
 golang.org/x/image v0.31.0 h1:mLChjE2MV6g1S7oqbXC0/UcKijjm5fnJLUYKIYrLESA=
 golang.org/x/image v0.31.0/go.mod h1:R9ec5Lcp96v9FTF+ajwaH3uGxPH4fKfHHAVbUILxghA=
 golang.org/x/sync v0.17.0 h1:l60nONMj9l5drqw6jlhIELNv9I0A4OFgRsG9k2oT9Ug=
