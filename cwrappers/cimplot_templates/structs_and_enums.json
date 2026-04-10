@@ -869,6 +869,23 @@
         "calc_value": 4096,
         "name": "ImPlotPieChartFlags_Exploding",
         "value": "1 << 12"
+      },
+      {
+        "calc_value": 8192,
+        "name": "ImPlotPieChartFlags_NoSliceBorder",
+        "value": "1 << 13"
+      }
+    ],
+    "ImPlotPolygonFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotPolygonFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1024,
+        "name": "ImPlotPolygonFlags_Concave",
+        "value": "1 << 10"
       }
     ],
     "ImPlotProp_": [
@@ -879,58 +896,83 @@
       },
       {
         "calc_value": 1,
-        "name": "ImPlotProp_LineWeight",
+        "name": "ImPlotProp_LineColors",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "ImPlotProp_FillColor",
+        "name": "ImPlotProp_LineWeight",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "ImPlotProp_FillAlpha",
+        "name": "ImPlotProp_FillColor",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "ImPlotProp_Marker",
+        "name": "ImPlotProp_FillColors",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "ImPlotProp_MarkerSize",
+        "name": "ImPlotProp_FillAlpha",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "ImPlotProp_MarkerLineColor",
+        "name": "ImPlotProp_Marker",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "ImPlotProp_MarkerFillColor",
+        "name": "ImPlotProp_MarkerSize",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "ImPlotProp_Size",
+        "name": "ImPlotProp_MarkerSizes",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "ImPlotProp_Offset",
+        "name": "ImPlotProp_MarkerLineColor",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "ImPlotProp_Stride",
+        "name": "ImPlotProp_MarkerLineColors",
         "value": "10"
       },
       {
         "calc_value": 11,
-        "name": "ImPlotProp_Flags",
+        "name": "ImPlotProp_MarkerFillColor",
         "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "ImPlotProp_MarkerFillColors",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "ImPlotProp_Size",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "ImPlotProp_Offset",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "ImPlotProp_Stride",
+        "value": "15"
+      },
+      {
+        "calc_value": 16,
+        "name": "ImPlotProp_Flags",
+        "value": "16"
       }
     ],
     "ImPlotScale_": [
@@ -1287,66 +1329,67 @@
   "enumtypes": [],
   "locations": {
     "Formatter_Time_Data": "implot_internal:1690",
-    "ImAxis_": "implot:124",
+    "ImAxis_": "implot:125",
     "ImPlotAlignmentData": "implot_internal:948",
     "ImPlotAnnotation": "implot_internal:441",
     "ImPlotAnnotationCollection": "implot_internal:456",
     "ImPlotAxis": "implot_internal:655",
-    "ImPlotAxisFlags_": "implot:169",
-    "ImPlotBarGroupsFlags_": "implot:293",
-    "ImPlotBarsFlags_": "implot:287",
-    "ImPlotBin_": "implot:475",
-    "ImPlotBubblesFlags_": "implot:270",
-    "ImPlotCol_": "implot:371",
+    "ImPlotAxisFlags_": "implot:175",
+    "ImPlotBarGroupsFlags_": "implot:305",
+    "ImPlotBarsFlags_": "implot:299",
+    "ImPlotBin_": "implot:488",
+    "ImPlotBubblesFlags_": "implot:276",
+    "ImPlotCol_": "implot:384",
     "ImPlotColormapData": "implot_internal:330",
-    "ImPlotColormapScaleFlags_": "implot:239",
-    "ImPlotColormap_": "implot:442",
-    "ImPlotCond_": "implot:363",
+    "ImPlotColormapScaleFlags_": "implot:245",
+    "ImPlotColormap_": "implot:455",
+    "ImPlotCond_": "implot:376",
     "ImPlotContext": "implot_internal:1228",
     "ImPlotDateFmt_": "implot_internal:252",
     "ImPlotDateTimeSpec": "implot_internal:289",
-    "ImPlotDigitalFlags_": "implot:342",
-    "ImPlotDragToolFlags_": "implot:230",
-    "ImPlotDummyFlags_": "implot:358",
-    "ImPlotErrorBarsFlags_": "implot:300",
-    "ImPlotFlags_": "implot:154",
-    "ImPlotHeatmapFlags_": "implot:326",
-    "ImPlotHistogramFlags_": "implot:332",
-    "ImPlotImageFlags_": "implot:347",
-    "ImPlotInfLinesFlags_": "implot:312",
-    "ImPlotInputMap": "implot:658",
+    "ImPlotDigitalFlags_": "implot:355",
+    "ImPlotDragToolFlags_": "implot:236",
+    "ImPlotDummyFlags_": "implot:371",
+    "ImPlotErrorBarsFlags_": "implot:312",
+    "ImPlotFlags_": "implot:160",
+    "ImPlotHeatmapFlags_": "implot:339",
+    "ImPlotHistogramFlags_": "implot:345",
+    "ImPlotImageFlags_": "implot:360",
+    "ImPlotInfLinesFlags_": "implot:324",
+    "ImPlotInputMap": "implot:697",
     "ImPlotItem": "implot_internal:971",
-    "ImPlotItemFlags_": "implot:247",
+    "ImPlotItemFlags_": "implot:253",
     "ImPlotItemGroup": "implot_internal:1023",
     "ImPlotLegend": "implot_internal:996",
-    "ImPlotLegendFlags_": "implot:209",
-    "ImPlotLineFlags_": "implot:254",
-    "ImPlotLocation_": "implot:462",
+    "ImPlotLegendFlags_": "implot:215",
+    "ImPlotLineFlags_": "implot:260",
+    "ImPlotLocation_": "implot:475",
     "ImPlotMarkerInternal_": "implot_internal:274",
-    "ImPlotMarker_": "implot:425",
-    "ImPlotMouseTextFlags_": "implot:222",
+    "ImPlotMarker_": "implot:438",
+    "ImPlotMouseTextFlags_": "implot:228",
     "ImPlotNextItemData": "implot_internal:1209",
     "ImPlotNextPlotData": "implot_internal:1187",
-    "ImPlotPieChartFlags_": "implot:318",
+    "ImPlotPieChartFlags_": "implot:330",
     "ImPlotPlot": "implot_internal:1047",
-    "ImPlotPoint": "implot:569",
+    "ImPlotPoint": "implot:608",
     "ImPlotPointError": "implot_internal:432",
-    "ImPlotProp_": "implot:138",
-    "ImPlotRange": "implot:584",
-    "ImPlotRect": "implot:594",
-    "ImPlotScale_": "implot:417",
-    "ImPlotScatterFlags_": "implot:264",
-    "ImPlotShadedFlags_": "implot:282",
-    "ImPlotSpec": "implot:502",
-    "ImPlotStairsFlags_": "implot:275",
-    "ImPlotStemsFlags_": "implot:306",
-    "ImPlotStyle": "implot:608",
-    "ImPlotStyleVar_": "implot:392",
+    "ImPlotPolygonFlags_": "implot:281",
+    "ImPlotProp_": "implot:139",
+    "ImPlotRange": "implot:623",
+    "ImPlotRect": "implot:633",
+    "ImPlotScale_": "implot:430",
+    "ImPlotScatterFlags_": "implot:270",
+    "ImPlotShadedFlags_": "implot:294",
+    "ImPlotSpec": "implot:515",
+    "ImPlotStairsFlags_": "implot:287",
+    "ImPlotStemsFlags_": "implot:318",
+    "ImPlotStyle": "implot:647",
+    "ImPlotStyleVar_": "implot:405",
     "ImPlotSubplot": "implot_internal:1152",
-    "ImPlotSubplotFlags_": "implot:193",
+    "ImPlotSubplotFlags_": "implot:199",
     "ImPlotTag": "implot_internal:495",
     "ImPlotTagCollection": "implot_internal:511",
-    "ImPlotTextFlags_": "implot:352",
+    "ImPlotTextFlags_": "implot:365",
     "ImPlotTick": "implot_internal:552",
     "ImPlotTicker": "implot_internal:585",
     "ImPlotTime": "implot_internal:304",
@@ -2355,12 +2398,20 @@
         "type": "ImVec4"
       },
       {
+        "name": "LineColors",
+        "type": "ImU32*"
+      },
+      {
         "name": "LineWeight",
         "type": "float"
       },
       {
         "name": "FillColor",
         "type": "ImVec4"
+      },
+      {
+        "name": "FillColors",
+        "type": "ImU32*"
       },
       {
         "name": "FillAlpha",
@@ -2375,12 +2426,24 @@
         "type": "float"
       },
       {
+        "name": "MarkerSizes",
+        "type": "float*"
+      },
+      {
         "name": "MarkerLineColor",
         "type": "ImVec4"
       },
       {
+        "name": "MarkerLineColors",
+        "type": "ImU32*"
+      },
+      {
         "name": "MarkerFillColor",
         "type": "ImVec4"
+      },
+      {
+        "name": "MarkerFillColors",
+        "type": "ImU32*"
       },
       {
         "name": "Size",

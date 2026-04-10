@@ -92,6 +92,7 @@ extern bool wrap_igSliderBehavior(const ImRect_c bb,ImGuiID id,ImGuiDataType dat
 extern bool wrap_igSliderScalarV(const char* label,ImGuiDataType data_type,uintptr_t p_data,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags);
 extern bool wrap_igSliderScalarNV(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags);
 extern bool wrap_igTempInputScalarV(const ImRect_c bb,ImGuiID id,const char* label,ImGuiDataType data_type,uintptr_t p_data,const char* format,const uintptr_t p_clamp_min,const uintptr_t p_clamp_max);
+extern bool wrap_igTempInputTextV(const ImRect_c bb,ImGuiID id,const char* label,char* buf,size_t buf_size,ImGuiInputTextFlags flags,ImGuiInputTextCallback callback,uintptr_t user_data);
 extern void wrap_igText(const char* fmt);
 extern void wrap_igTextAligned(float align_x,float size_x,const char* fmt);
 extern void wrap_igTextColored(const ImVec4_c col,const char* fmt);
@@ -375,6 +376,7 @@ extern void wrap_igTableOpenContextMenu();
 extern void wrap_igTableSetBgColor(ImGuiTableBgTarget target,ImU32 color);
 extern void wrap_igTableSetupColumn(const char* label);
 extern bool wrap_igTempInputScalar(const ImRect bb,ImGuiID id,const char* label,ImGuiDataType data_type,uintptr_t p_data,const char* format);
+extern bool wrap_igTempInputText(const ImRect bb,ImGuiID id,const char* label,char* buf,size_t buf_size);
 extern void wrap_igTextEx(const char* text,const int text_len);
 extern bool wrap_igTextLinkOpenURL(const char* label);
 extern void wrap_igTextUnformatted(const char* text,const int text_len);

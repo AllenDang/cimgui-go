@@ -19,9 +19,6 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include <emscripten/html5.h>
-#if defined(IMGUI_IMPL_WEBGPU_BACKEND_WGPU)
-#include <emscripten/html5_webgpu.h>
-#endif
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
 
@@ -68,8 +65,8 @@ int main(int, char**)
 
     // Create window
     float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor()); // Valid on GLFW 3.3+ only
-    wgpu_surface_width *= main_scale;
-    wgpu_surface_height *= main_scale;
+    wgpu_surface_width = (int)(wgpu_surface_width * main_scale);
+    wgpu_surface_height = (int)(wgpu_surface_height * main_scale);
     GLFWwindow* window = glfwCreateWindow(wgpu_surface_width, wgpu_surface_height, "Dear ImGui GLFW+WebGPU example", nullptr, nullptr);
     if (window == nullptr)
         return 1;
@@ -344,20 +341,10 @@ static WGPUDevice RequestDevice(wgpu::Instance& instance, wgpu::Adapter& adapter
     IM_ASSERT(acquired_device != nullptr && waitStatusDevice == wgpu::WaitStatus::Success && "Error on Device request");
     return acquired_device.MoveToCHandle();
 }
-#elif defined(IMGUI_IMPL_WEBGPU_BACKEND_WGPU)
-#ifdef __EMSCRIPTEN__
-// Adapter and device initialization via JS
-EM_ASYNC_JS( void, getAdapterAndDeviceViaJS, (),
-{
-    if (!navigator.gpu)
-        throw Error("WebGPU not supported.");
-    const adapter = await navigator.gpu.requestAdapter();
-    const device = await adapter.requestDevice();
-    Module.preinitializedWebGPUDevice = device;
-} );
-#else // __EMSCRIPTEN__
+#elif defined(IMGUI_IMPL_WEBGPU_BACKEND_WGPU) || defined(IMGUI_IMPL_WEBGPU_BACKEND_WGVK)
 static void handle_request_adapter(WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message, void* userdata1, void* userdata2)
 {
+    IM_UNUSED(userdata2);
     if (status == WGPURequestAdapterStatus_Success)
     {
         WGPUAdapter* extAdapter = (WGPUAdapter*)userdata1;
@@ -371,6 +358,7 @@ static void handle_request_adapter(WGPURequestAdapterStatus status, WGPUAdapter 
 
 static void handle_request_device(WGPURequestDeviceStatus status, WGPUDevice device, WGPUStringView message, void* userdata1, void* userdata2)
 {
+    IM_UNUSED(userdata2);
     if (status == WGPURequestDeviceStatus_Success)
     {
         WGPUDevice* extDevice = (WGPUDevice*)userdata1;
@@ -386,27 +374,32 @@ static WGPUAdapter RequestAdapter(WGPUInstance& instance)
 {
     WGPURequestAdapterOptions adapter_options = {};
 
-    WGPUAdapter local_adapter;
+    WGPUAdapter local_adapter = nullptr;
     WGPURequestAdapterCallbackInfo adapterCallbackInfo = {};
+    adapterCallbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
     adapterCallbackInfo.callback = handle_request_adapter;
     adapterCallbackInfo.userdata1 = &local_adapter;
 
-    wgpuInstanceRequestAdapter(instance, &adapter_options, adapterCallbackInfo);
+    WGPUFuture future = wgpuInstanceRequestAdapter(instance, &adapter_options, adapterCallbackInfo);
+    WGPUFutureWaitInfo waitInfo = { future, false };
+    wgpuInstanceWaitAny(instance, 1, &waitInfo, ~0ull);
     IM_ASSERT(local_adapter && "Error on Adapter request");
     return local_adapter;
 }
 
-static WGPUDevice RequestDevice(WGPUAdapter& adapter)
+static WGPUDevice RequestDevice(WGPUInstance& instance, WGPUAdapter& adapter)
 {
-    WGPUDevice local_device;
+    WGPUDevice local_device = nullptr;
     WGPURequestDeviceCallbackInfo deviceCallbackInfo = {};
+    deviceCallbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
     deviceCallbackInfo.callback = handle_request_device;
     deviceCallbackInfo.userdata1 = &local_device;
-    wgpuAdapterRequestDevice(adapter, nullptr, deviceCallbackInfo);
+    WGPUFuture future = wgpuAdapterRequestDevice(adapter, nullptr, deviceCallbackInfo);
+    WGPUFutureWaitInfo waitInfo = { future, false };
+    wgpuInstanceWaitAny(instance, 1, &waitInfo, ~0ull);
     IM_ASSERT(local_device && "Error on Device request");
     return local_device;
 }
-#endif // __EMSCRIPTEN__
 #endif // IMGUI_IMPL_WEBGPU_BACKEND_WGPU
 
 bool InitWGPU(GLFWwindow* window)
@@ -449,35 +442,24 @@ bool InitWGPU(GLFWwindow* window)
     preferred_fmt = surface_capabilities.formats[0];
 
     // WGPU backend: Adapter and Device acquisition, Surface creation
-#elif defined(IMGUI_IMPL_WEBGPU_BACKEND_WGPU)
-    wgpu_instance = wgpuCreateInstance(nullptr);
+#elif defined(IMGUI_IMPL_WEBGPU_BACKEND_WGPU) || defined(IMGUI_IMPL_WEBGPU_BACKEND_WGVK)
+    WGPUInstanceDescriptor instanceDesc = {};
+    WGPUInstanceFeatureName timedWaitAny = WGPUInstanceFeatureName_TimedWaitAny;
+    instanceDesc.requiredFeatureCount = 1;
+    instanceDesc.requiredFeatures = &timedWaitAny;
+    wgpu_instance = wgpuCreateInstance(&instanceDesc);
 
-#ifdef __EMSCRIPTEN__
-    getAdapterAndDeviceViaJS();
-
-    wgpu_device = emscripten_webgpu_get_device();
-    IM_ASSERT(wgpu_device != nullptr && "Error creating the Device");
-
-    WGPUSurfaceDescriptorFromCanvasHTMLSelector html_surface_desc = {};
-    html_surface_desc.chain.sType = WGPUSType_SurfaceDescriptorFromCanvasHTMLSelector;
-    html_surface_desc.selector = "#canvas";
-
-    WGPUSurfaceDescriptor surface_desc = {};
-    surface_desc.nextInChain = &html_surface_desc.chain;
-
-    // Create the surface.
-    wgpu_surface = wgpuInstanceCreateSurface(wgpu_instance, &surface_desc);
-    preferred_fmt = wgpuSurfaceGetPreferredFormat(wgpu_surface, {} /* adapter */);
-#else // __EMSCRIPTEN__
+#if defined(IMGUI_IMPL_WEBGPU_BACKEND_WGPU)
     wgpuSetLogCallback(
         [](WGPULogLevel level, WGPUStringView msg, void* userdata) { fprintf(stderr, "%s: %.*s\n", ImGui_ImplWGPU_GetLogLevelName(level), (int)msg.length, msg.data); }, nullptr
     );
     wgpuSetLogLevel(WGPULogLevel_Warn);
+#endif
 
     WGPUAdapter adapter = RequestAdapter(wgpu_instance);
     ImGui_ImplWGPU_DebugPrintAdapterInfo(adapter);
 
-    wgpu_device = RequestDevice(adapter);
+    wgpu_device = RequestDevice(wgpu_instance, adapter);
 
     // Create the surface.
     wgpu_surface = CreateWGPUSurface(wgpu_instance, window);
@@ -488,7 +470,6 @@ bool InitWGPU(GLFWwindow* window)
     wgpuSurfaceGetCapabilities(wgpu_surface, adapter, &surface_capabilities);
 
     preferred_fmt = surface_capabilities.formats[0];
-#endif // __EMSCRIPTEN__
 #endif // IMGUI_IMPL_WEBGPU_BACKEND_WGPU
 
     wgpu_surface_configuration.presentMode = WGPUPresentMode_Fifo;
@@ -573,7 +554,7 @@ WGPUSurface CreateWGPUSurface(const WGPUInstance& instance, GLFWwindow* window)
     }
 #else
 #error "Unsupported WebGPU native platform!"
-#endif
     return nullptr;
+#endif
 }
 #endif // #ifndef __EMSCRIPTEN__

@@ -406,25 +406,35 @@ void wrap_ImPlotRect_SetY(ImPlotRect *ImPlotRectPtr, ImPlotRange v) { ImPlotRect
 ImPlotRange_c wrap_ImPlotRect_GetX(ImPlotRect *self) { return self->X; }
 ImPlotRange_c wrap_ImPlotRect_GetY(ImPlotRect *self) { return self->Y; }
 void wrap_ImPlotSpec_SetLineColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->LineColor = v; }
+void wrap_ImPlotSpec_SetLineColors(ImPlotSpec *ImPlotSpecPtr, ImU32* v) { ImPlotSpecPtr->LineColors = v; }
 void wrap_ImPlotSpec_SetLineWeight(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->LineWeight = v; }
 void wrap_ImPlotSpec_SetFillColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->FillColor = v; }
+void wrap_ImPlotSpec_SetFillColors(ImPlotSpec *ImPlotSpecPtr, ImU32* v) { ImPlotSpecPtr->FillColors = v; }
 void wrap_ImPlotSpec_SetFillAlpha(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->FillAlpha = v; }
 void wrap_ImPlotSpec_SetMarker(ImPlotSpec *ImPlotSpecPtr, ImPlotMarker v) { ImPlotSpecPtr->Marker = v; }
 void wrap_ImPlotSpec_SetMarkerSize(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->MarkerSize = v; }
+void wrap_ImPlotSpec_SetMarkerSizes(ImPlotSpec *ImPlotSpecPtr, float* v) { ImPlotSpecPtr->MarkerSizes = v; }
 void wrap_ImPlotSpec_SetMarkerLineColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->MarkerLineColor = v; }
+void wrap_ImPlotSpec_SetMarkerLineColors(ImPlotSpec *ImPlotSpecPtr, ImU32* v) { ImPlotSpecPtr->MarkerLineColors = v; }
 void wrap_ImPlotSpec_SetMarkerFillColor(ImPlotSpec *ImPlotSpecPtr, ImVec4 v) { ImPlotSpecPtr->MarkerFillColor = v; }
+void wrap_ImPlotSpec_SetMarkerFillColors(ImPlotSpec *ImPlotSpecPtr, ImU32* v) { ImPlotSpecPtr->MarkerFillColors = v; }
 void wrap_ImPlotSpec_SetSize(ImPlotSpec *ImPlotSpecPtr, float v) { ImPlotSpecPtr->Size = v; }
 void wrap_ImPlotSpec_SetOffset(ImPlotSpec *ImPlotSpecPtr, int v) { ImPlotSpecPtr->Offset = v; }
 void wrap_ImPlotSpec_SetStride(ImPlotSpec *ImPlotSpecPtr, int v) { ImPlotSpecPtr->Stride = v; }
 void wrap_ImPlotSpec_SetFlags(ImPlotSpec *ImPlotSpecPtr, ImPlotItemFlags v) { ImPlotSpecPtr->Flags = v; }
 ImVec4 wrap_ImPlotSpec_GetLineColor(ImPlotSpec *self) { return self->LineColor; }
+ImU32* wrap_ImPlotSpec_GetLineColors(ImPlotSpec *self) { return self->LineColors; }
 float wrap_ImPlotSpec_GetLineWeight(ImPlotSpec *self) { return self->LineWeight; }
 ImVec4 wrap_ImPlotSpec_GetFillColor(ImPlotSpec *self) { return self->FillColor; }
+ImU32* wrap_ImPlotSpec_GetFillColors(ImPlotSpec *self) { return self->FillColors; }
 float wrap_ImPlotSpec_GetFillAlpha(ImPlotSpec *self) { return self->FillAlpha; }
 ImPlotMarker wrap_ImPlotSpec_GetMarker(ImPlotSpec *self) { return self->Marker; }
 float wrap_ImPlotSpec_GetMarkerSize(ImPlotSpec *self) { return self->MarkerSize; }
+float* wrap_ImPlotSpec_GetMarkerSizes(ImPlotSpec *self) { return self->MarkerSizes; }
 ImVec4 wrap_ImPlotSpec_GetMarkerLineColor(ImPlotSpec *self) { return self->MarkerLineColor; }
+ImU32* wrap_ImPlotSpec_GetMarkerLineColors(ImPlotSpec *self) { return self->MarkerLineColors; }
 ImVec4 wrap_ImPlotSpec_GetMarkerFillColor(ImPlotSpec *self) { return self->MarkerFillColor; }
+ImU32* wrap_ImPlotSpec_GetMarkerFillColors(ImPlotSpec *self) { return self->MarkerFillColors; }
 float wrap_ImPlotSpec_GetSize(ImPlotSpec *self) { return self->Size; }
 int wrap_ImPlotSpec_GetOffset(ImPlotSpec *self) { return self->Offset; }
 int wrap_ImPlotSpec_GetStride(ImPlotSpec *self) { return self->Stride; }

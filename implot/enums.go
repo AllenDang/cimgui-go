@@ -328,28 +328,42 @@ const (
 type PieChartFlags int32
 
 const (
-	PieChartFlagsNone         PieChartFlags = 0
-	PieChartFlagsNormalize    PieChartFlags = 1024
-	PieChartFlagsIgnoreHidden PieChartFlags = 2048
-	PieChartFlagsExploding    PieChartFlags = 4096
+	PieChartFlagsNone          PieChartFlags = 0
+	PieChartFlagsNormalize     PieChartFlags = 1024
+	PieChartFlagsIgnoreHidden  PieChartFlags = 2048
+	PieChartFlagsExploding     PieChartFlags = 4096
+	PieChartFlagsNoSliceBorder PieChartFlags = 8192
+)
+
+// original name: ImPlotPolygonFlags_
+type PolygonFlags int32
+
+const (
+	PolygonFlagsNone    PolygonFlags = 0
+	PolygonFlagsConcave PolygonFlags = 1024
 )
 
 // original name: ImPlotProp_
 type Prop int32
 
 const (
-	PropLineColor       Prop = 0
-	PropLineWeight      Prop = 1
-	PropFillColor       Prop = 2
-	PropFillAlpha       Prop = 3
-	PropMarker          Prop = 4
-	PropMarkerSize      Prop = 5
-	PropMarkerLineColor Prop = 6
-	PropMarkerFillColor Prop = 7
-	PropSize            Prop = 8
-	PropOffset          Prop = 9
-	PropStride          Prop = 10
-	PropFlags           Prop = 11
+	PropLineColor        Prop = 0
+	PropLineColors       Prop = 1
+	PropLineWeight       Prop = 2
+	PropFillColor        Prop = 3
+	PropFillColors       Prop = 4
+	PropFillAlpha        Prop = 5
+	PropMarker           Prop = 6
+	PropMarkerSize       Prop = 7
+	PropMarkerSizes      Prop = 8
+	PropMarkerLineColor  Prop = 9
+	PropMarkerLineColors Prop = 10
+	PropMarkerFillColor  Prop = 11
+	PropMarkerFillColors Prop = 12
+	PropSize             Prop = 13
+	PropOffset           Prop = 14
+	PropStride           Prop = 15
+	PropFlags            Prop = 16
 )
 
 // original name: ImPlotScale_

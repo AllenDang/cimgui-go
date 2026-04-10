@@ -1081,6 +1081,15 @@ func (self *Spec) SetPropFloat(prop Prop, v float32) {
 	selfFin()
 }
 
+func (self *Spec) SetPropFloatPtr(prop Prop, v *float32) {
+	selfArg, selfFin := self.Handle()
+	vArg, vFin := internal.WrapNumberPtr[C.float, float32](v)
+	C.ImPlotSpec_SetProp_FloatPtr(internal.ReinterpretCast[*C.ImPlotSpec](selfArg), C.ImPlotProp(prop), vArg)
+
+	selfFin()
+	vFin()
+}
+
 func (self *Spec) SetPropS16(prop Prop, v int16) {
 	selfArg, selfFin := self.Handle()
 	C.ImPlotSpec_SetProp_S16(internal.ReinterpretCast[*C.ImPlotSpec](selfArg), C.ImPlotProp(prop), C.ImS16(v))
@@ -1121,6 +1130,15 @@ func (self *Spec) SetPropU32(prop Prop, v uint32) {
 	C.ImPlotSpec_SetProp_U32(internal.ReinterpretCast[*C.ImPlotSpec](selfArg), C.ImPlotProp(prop), C.ImU32(v))
 
 	selfFin()
+}
+
+func (self *Spec) SetPropU32Ptr(prop Prop, v *uint32) {
+	selfArg, selfFin := self.Handle()
+	vArg, vFin := internal.WrapNumberPtr[C.ImU32, uint32](v)
+	C.ImPlotSpec_SetProp_U32Ptr(internal.ReinterpretCast[*C.ImPlotSpec](selfArg), C.ImPlotProp(prop), vArg)
+
+	selfFin()
+	vFin()
 }
 
 func (self *Spec) SetPropU64(prop Prop, v uint64) {
@@ -5778,6 +5796,156 @@ func PlotPieChartdoublePtrStrV(label_ids []string, values *float64, count int32,
 	specFin()
 }
 
+// PlotPolygonFloatPtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonFloatPtrV(label_id string, xs, ys *float32, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.float, float32](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.float, float32](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_FloatPtr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonS16PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonS16PtrV(label_id string, xs, ys *int16, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS16, int16](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS16, int16](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_S16Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonS32PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonS32PtrV(label_id string, xs, ys *int32, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS32, int32](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS32, int32](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_S32Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonS64PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonS64PtrV(label_id string, xs, ys *int64, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS64, int64](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS64, int64](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_S64Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonS8PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonS8PtrV(label_id string, xs, ys *int8, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS8, int8](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS8, int8](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_S8Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonU16PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonU16PtrV(label_id string, xs, ys *uint16, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU16, uint16](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU16, uint16](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_U16Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonU32PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonU32PtrV(label_id string, xs, ys *uint32, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU32, uint32](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU32, uint32](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_U32Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonU64PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonU64PtrV(label_id string, xs, ys *uint64, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU64, uint64](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU64, uint64](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_U64Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygonU8PtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygonU8PtrV(label_id string, xs, ys *byte, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU8, byte](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU8, byte](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_U8Ptr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
+// PlotPolygondoublePtrV parameter default value hint:
+// spec: ImPlotSpec()
+func PlotPolygondoublePtrV(label_id string, xs, ys *float64, count int32, spec Spec) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.double, float64](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.double, float64](ys)
+	specArg, specFin := spec.C()
+	C.ImPlot_PlotPolygon_doublePtr(label_idArg, xsArg, ysArg, C.int(count), internal.ReinterpretCast[C.ImPlotSpec](specArg))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+	specFin()
+}
+
 // PlotScatterGV parameter default value hint:
 // spec: ImPlotSpec()
 func PlotScatterGV(label_id string, getter ter, data uintptr, count int32, spec Spec) {
@@ -9879,6 +10047,116 @@ func PlotPieChartdoublePtrStr(label_ids []string, values *float64, count int32, 
 
 	label_idsFin()
 	valuesFin()
+}
+
+func PlotPolygonFloatPtr(label_id string, xs, ys *float32, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.float, float32](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.float, float32](ys)
+	C.wrap_ImPlot_PlotPolygon_FloatPtr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonS16Ptr(label_id string, xs, ys *int16, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS16, int16](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS16, int16](ys)
+	C.wrap_ImPlot_PlotPolygon_S16Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonS32Ptr(label_id string, xs, ys *int32, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS32, int32](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS32, int32](ys)
+	C.wrap_ImPlot_PlotPolygon_S32Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonS64Ptr(label_id string, xs, ys *int64, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS64, int64](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS64, int64](ys)
+	C.wrap_ImPlot_PlotPolygon_S64Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonS8Ptr(label_id string, xs, ys *int8, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImS8, int8](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImS8, int8](ys)
+	C.wrap_ImPlot_PlotPolygon_S8Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonU16Ptr(label_id string, xs, ys *uint16, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU16, uint16](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU16, uint16](ys)
+	C.wrap_ImPlot_PlotPolygon_U16Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonU32Ptr(label_id string, xs, ys *uint32, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU32, uint32](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU32, uint32](ys)
+	C.wrap_ImPlot_PlotPolygon_U32Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonU64Ptr(label_id string, xs, ys *uint64, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU64, uint64](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU64, uint64](ys)
+	C.wrap_ImPlot_PlotPolygon_U64Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygonU8Ptr(label_id string, xs, ys *byte, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.ImU8, byte](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.ImU8, byte](ys)
+	C.wrap_ImPlot_PlotPolygon_U8Ptr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
+}
+
+func PlotPolygondoublePtr(label_id string, xs, ys *float64, count int32) {
+	label_idArg, label_idFin := internal.WrapString[C.char](label_id)
+	xsArg, xsFin := internal.WrapNumberPtr[C.double, float64](xs)
+	ysArg, ysFin := internal.WrapNumberPtr[C.double, float64](ys)
+	C.wrap_ImPlot_PlotPolygon_doublePtr(label_idArg, xsArg, ysArg, C.int(count))
+
+	label_idFin()
+	xsFin()
+	ysFin()
 }
 
 func PlotScatterG(label_id string, getter ter, data uintptr, count int32) {
@@ -14407,6 +14685,14 @@ func (self Spec) SetLineColor(v imgui.Vec4) {
 	C.wrap_ImPlotSpec_SetLineColor(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
+func (self Spec) SetLineColors(v *uint32) {
+	vArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotSpec_SetLineColors(selfArg, vArg)
+}
+
 func (self Spec) SetLineWeight(v float32) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
@@ -14417,6 +14703,14 @@ func (self Spec) SetFillColor(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotSpec_SetFillColor(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
+}
+
+func (self Spec) SetFillColors(v *uint32) {
+	vArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotSpec_SetFillColors(selfArg, vArg)
 }
 
 func (self Spec) SetFillAlpha(v float32) {
@@ -14437,16 +14731,40 @@ func (self Spec) SetMarkerSize(v float32) {
 	C.wrap_ImPlotSpec_SetMarkerSize(selfArg, C.float(v))
 }
 
+func (self Spec) SetMarkerSizes(v *float32) {
+	vArg, _ := internal.WrapNumberPtr[C.float, float32](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotSpec_SetMarkerSizes(selfArg, vArg)
+}
+
 func (self Spec) SetMarkerLineColor(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotSpec_SetMarkerLineColor(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
 }
 
+func (self Spec) SetMarkerLineColors(v *uint32) {
+	vArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotSpec_SetMarkerLineColors(selfArg, vArg)
+}
+
 func (self Spec) SetMarkerFillColor(v imgui.Vec4) {
 	selfArg, selfFin := self.Handle()
 	defer selfFin()
 	C.wrap_ImPlotSpec_SetMarkerFillColor(selfArg, internal.ReinterpretCast[C.ImVec4_c](v.ToC()))
+}
+
+func (self Spec) SetMarkerFillColors(v *uint32) {
+	vArg, _ := internal.WrapNumberPtr[C.ImU32, uint32](v)
+
+	selfArg, selfFin := self.Handle()
+	defer selfFin()
+	C.wrap_ImPlotSpec_SetMarkerFillColors(selfArg, vArg)
 }
 
 func (self Spec) SetSize(v float32) {
@@ -14485,6 +14803,15 @@ func (self *Spec) LineColor() imgui.Vec4 {
 	}()
 }
 
+func (self *Spec) LineColors() *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.wrap_ImPlotSpec_GetLineColors(internal.ReinterpretCast[*C.ImPlotSpec](selfArg)))
+}
+
 func (self *Spec) LineWeight() float32 {
 	selfArg, selfFin := self.Handle()
 
@@ -14504,6 +14831,15 @@ func (self *Spec) FillColor() imgui.Vec4 {
 		out := C.wrap_ImPlotSpec_GetFillColor(internal.ReinterpretCast[*C.ImPlotSpec](selfArg))
 		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 	}()
+}
+
+func (self *Spec) FillColors() *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.wrap_ImPlotSpec_GetFillColors(internal.ReinterpretCast[*C.ImPlotSpec](selfArg)))
 }
 
 func (self *Spec) FillAlpha() float32 {
@@ -14533,6 +14869,15 @@ func (self *Spec) MarkerSize() float32 {
 	return float32(C.wrap_ImPlotSpec_GetMarkerSize(internal.ReinterpretCast[*C.ImPlotSpec](selfArg)))
 }
 
+func (self *Spec) MarkerSizes() *float32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*float32)(C.wrap_ImPlotSpec_GetMarkerSizes(internal.ReinterpretCast[*C.ImPlotSpec](selfArg)))
+}
+
 func (self *Spec) MarkerLineColor() imgui.Vec4 {
 	selfArg, selfFin := self.Handle()
 
@@ -14545,6 +14890,15 @@ func (self *Spec) MarkerLineColor() imgui.Vec4 {
 	}()
 }
 
+func (self *Spec) MarkerLineColors() *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.wrap_ImPlotSpec_GetMarkerLineColors(internal.ReinterpretCast[*C.ImPlotSpec](selfArg)))
+}
+
 func (self *Spec) MarkerFillColor() imgui.Vec4 {
 	selfArg, selfFin := self.Handle()
 
@@ -14555,6 +14909,15 @@ func (self *Spec) MarkerFillColor() imgui.Vec4 {
 		out := C.wrap_ImPlotSpec_GetMarkerFillColor(internal.ReinterpretCast[*C.ImPlotSpec](selfArg))
 		return *(&imgui.Vec4{}).FromC(unsafe.Pointer(&out))
 	}()
+}
+
+func (self *Spec) MarkerFillColors() *uint32 {
+	selfArg, selfFin := self.Handle()
+
+	defer func() {
+		selfFin()
+	}()
+	return (*uint32)(C.wrap_ImPlotSpec_GetMarkerFillColors(internal.ReinterpretCast[*C.ImPlotSpec](selfArg)))
 }
 
 func (self *Spec) Size() float32 {

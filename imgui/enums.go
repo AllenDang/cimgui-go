@@ -156,7 +156,7 @@ const (
 	ButtonFlagsPressedOnClickRelease ButtonFlagsPrivate = 32
 	// return true on click + release even if the release event is not done while hovering the item
 	ButtonFlagsPressedOnClickReleaseAnywhere ButtonFlagsPrivate = 64
-	// return true on release (default requires click+release)
+	// return true on release (default requires click+release). Prior to 2026/03/20 this implied ImGuiButtonFlags_NoHoldingActiveId but they are separate now.
 	ButtonFlagsPressedOnRelease ButtonFlagsPrivate = 128
 	// return true on double-click (default requires click+release)
 	ButtonFlagsPressedOnDoubleClick ButtonFlagsPrivate = 256
@@ -164,8 +164,6 @@ const (
 	ButtonFlagsPressedOnDragDropHold ButtonFlagsPrivate = 512
 	// allow interactions even if a child window is overlapping
 	ButtonFlagsFlattenChildren ButtonFlagsPrivate = 2048
-	// require previous frame HoveredId to either match id or be null before being usable.
-	ButtonFlagsAllowOverlap ButtonFlagsPrivate = 4096
 	// vertically align button to match text baseline - ButtonEx() only // FIXME: Should be removed and handled by SmallButton(), not possible currently because of DC.CursorPosPrevLine
 	ButtonFlagsAlignTextBaseLine ButtonFlagsPrivate = 32768
 	// disable mouse interaction if a key modifier is held
@@ -202,6 +200,8 @@ const (
 	ButtonFlagsMouseButtonMask ButtonFlags = 7
 	// InvisibleButton(): do not disable navigation/tabbing. Otherwise disabled by default.
 	ButtonFlagsEnableNav ButtonFlags = 8
+	// Hit testing will allow subsequent widgets to overlap this one. Require previous frame HoveredId to match before being usable. Shortcut to calling SetNextItemAllowOverlap().
+	ButtonFlagsAllowOverlap ButtonFlags = 4096
 )
 
 // Flags for ImGui::BeginChild()
@@ -462,6 +462,7 @@ const (
 )
 
 // Configuration flags stored in io.ConfigFlags. Set by user/application.
+// Note that nowadays most of our configuration options are in other ImGuiIO fields, e.g. io.ConfigWindowsMoveFromTitleBarOnly.
 // original name: ImGuiConfigFlags_
 type ConfigFlags int32
 
@@ -816,8 +817,6 @@ const (
 	HoveredFlagsNoSharedDelay HoveredFlags = 131072
 )
 
-// [Internal] Key ranges
-// [Internal] Named shortcuts for Navigation
 // original name: ImGuiInputEventType
 type InputEventType int32
 
@@ -927,7 +926,7 @@ const (
 	// For internal use by InputTextMultiline()
 	InputTextFlagsMultiline InputTextFlagsPrivate = 67108864
 	// For internal use by TempInputText(), will skip calling ItemAdd(). Require bounding-box to strictly match.
-	InputTextFlagsMergedItem InputTextFlagsPrivate = 134217728
+	InputTextFlagsTempInput InputTextFlagsPrivate = 134217728
 	// For internal use by InputScalar() and TempInputScalar()
 	InputTextFlagsLocalizeDecimalPoint InputTextFlagsPrivate = 268435456
 )
@@ -955,7 +954,7 @@ const (
 	InputTextFlagsEnterReturnsTrue InputTextFlags = 64
 	// Escape key clears content if not empty, and deactivate otherwise (contrast to default behavior of Escape to revert)
 	InputTextFlagsEscapeClearsAll InputTextFlags = 128
-	// In multi-line mode, validate with Enter, add new line with Ctrl+Enter (default is opposite: validate with Ctrl+Enter, add line with Enter).
+	// In multi-line mode: validate with Enter, add new line with Ctrl+Enter (default is opposite: validate with Ctrl+Enter, add line with Enter). Note that Shift+Enter always enter a new line either way.
 	InputTextFlagsCtrlEnterForNewLine InputTextFlags = 256
 	// Read-only mode
 	InputTextFlagsReadOnly InputTextFlags = 512
@@ -1229,13 +1228,13 @@ const (
 	KeyGamepadStart Key = 632
 	// View        | -       | Share    |
 	KeyGamepadBack Key = 633
-	// X           | Y       | Square   | Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)
+	// X           | Y       | Square   | Toggle Menu. Hold for Windowing mode (Focus/Move/Resize windows)
 	KeyGamepadFaceLeft Key = 634
 	// B           | A       | Circle   | Cancel / Close / Exit
 	KeyGamepadFaceRight Key = 635
-	// Y           | X       | Triangle | Text Input / On-screen Keyboard
+	// Y           | X       | Triangle | Open Context Menu
 	KeyGamepadFaceUp Key = 636
-	// A           | B       | Cross    | Activate / Open / Toggle / Tweak
+	// A           | B       | Cross    | Activate / Open / Toggle. Hold for 0.60f to Activate in Text Input mode (e.g. wired to an on-screen keyboard).
 	KeyGamepadFaceDown Key = 637
 	// D-pad Left  | "       | "        | Move / Tweak / Resize Window (in Windowing mode)
 	KeyGamepadDpadLeft Key = 638
@@ -1435,7 +1434,7 @@ const (
 	MultiSelectFlagsBoxSelect1d MultiSelectFlags = 64
 	// Enable box-selection with varying width or varying x pos items support (e.g. different width labels, or 2D layout/grid). This is slower: alters clipping logic so that e.g. horizontal movements will update selection of normally clipped items.
 	MultiSelectFlagsBoxSelect2d MultiSelectFlags = 128
-	// Disable scrolling when box-selecting near edges of scope.
+	// Disable scrolling when box-selecting and moving mouse near edges of scope.
 	MultiSelectFlagsBoxSelectNoScroll MultiSelectFlags = 256
 	// Clear selection when pressing Escape while scope is focused.
 	MultiSelectFlagsClearOnEscape MultiSelectFlags = 512
@@ -1445,14 +1444,17 @@ const (
 	MultiSelectFlagsScopeWindow MultiSelectFlags = 2048
 	// Scope for _BoxSelect and _ClearOnClickVoid is rectangle encompassing BeginMultiSelect()/EndMultiSelect(). Use if BeginMultiSelect() is called multiple times in same window.
 	MultiSelectFlagsScopeRect MultiSelectFlags = 4096
-	// Apply selection on mouse down when clicking on unselected item. (Default)
-	MultiSelectFlagsSelectOnClick MultiSelectFlags = 8192
+	// Apply selection on mouse down when clicking on unselected item, on mouse up when clicking on selected item. (Default)
+	MultiSelectFlagsSelectOnAuto MultiSelectFlags = 8192
+	// Apply selection on mouse down when clicking on any items. Prevents Drag and Drop from being used on multiple-selection, but allows e.g. BoxSelect to always reselect even when clicking inside an existing selection. (Excel style behavior)
+	MultiSelectFlagsSelectOnClickAlways MultiSelectFlags = 16384
 	// Apply selection on mouse release when clicking an unselected item. Allow dragging an unselected item without altering selection.
-	MultiSelectFlagsSelectOnClickRelease MultiSelectFlags = 16384
+	MultiSelectFlagsSelectOnClickRelease MultiSelectFlags = 32768
 	// [Temporary] Enable navigation wrapping on X axis. Provided as a convenience because we don't have a design for the general Nav API for this yet. When the more general feature be public we may obsolete this flag in favor of new one.
 	MultiSelectFlagsNavWrapX MultiSelectFlags = 65536
 	// Disable default right-click processing, which selects item on mouse down, and is designed for context-menus.
 	MultiSelectFlagsNoSelectOnRightClick MultiSelectFlags = 131072
+	MultiSelectFlagsSelectOnMask         MultiSelectFlags = 57344
 )
 
 // original name: ImGuiNavLayer
@@ -1676,7 +1678,7 @@ const (
 	SelectableFlagsAllowDoubleClick SelectableFlags = 4
 	// Cannot be selected, display grayed out text
 	SelectableFlagsDisabled SelectableFlags = 8
-	// (WIP) Hit testing to allow subsequent widgets to overlap this one
+	// Hit testing will allow subsequent widgets to overlap this one. Require previous frame HoveredId to match before being usable. Shortcut to calling SetNextItemAllowOverlap().
 	SelectableFlagsAllowOverlap SelectableFlags = 16
 	// Make the item be displayed as if it is hovered
 	SelectableFlagsHighlight SelectableFlags = 32
@@ -1847,15 +1849,17 @@ const (
 	StyleVarButtonTextAlign StyleVar = 35
 	// ImVec2    SelectableTextAlign
 	StyleVarSelectableTextAlign StyleVar = 36
+	// float     SeparatorSize
+	StyleVarSeparatorSize StyleVar = 37
 	// float     SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize StyleVar = 37
+	StyleVarSeparatorTextBorderSize StyleVar = 38
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign StyleVar = 38
+	StyleVarSeparatorTextAlign StyleVar = 39
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding StyleVar = 39
+	StyleVarSeparatorTextPadding StyleVar = 40
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize StyleVar = 40
-	StyleVarCOUNT                StyleVar = 41
+	StyleVarDockingSeparatorSize StyleVar = 41
+	StyleVarCOUNT                StyleVar = 42
 )
 
 // Extend ImGuiTabBarFlags_
@@ -2054,7 +2058,7 @@ const (
 	TableFlagsNone TableFlags = 0
 	// Enable resizing columns.
 	TableFlagsResizable TableFlags = 1
-	// Enable reordering columns in header row (need calling TableSetupColumn() + TableHeadersRow() to display headers)
+	// Enable reordering columns in header row. (Need calling TableSetupColumn() + TableHeadersRow() to display headers, or using ImGuiTableFlags_ContextMenuInBody to access context-menu without headers).
 	TableFlagsReorderable TableFlags = 2
 	// Enable hiding/disabling columns in context menu.
 	TableFlagsHideable TableFlags = 4
@@ -2062,7 +2066,7 @@ const (
 	TableFlagsSortable TableFlags = 8
 	// Disable persisting columns order, width, visibility and sort settings in the .ini file.
 	TableFlagsNoSavedSettings TableFlags = 16
-	// Right-click on columns body/contents will display table context menu. By default it is available in TableHeadersRow().
+	// Right-click on columns body/contents will also display table context menu. By default it is available in TableHeadersRow().
 	TableFlagsContextMenuInBody TableFlags = 32
 	// Set each RowBg color with ImGuiCol_TableRowBg or ImGuiCol_TableRowBgAlt (equivalent of calling TableSetBgColor with ImGuiTableBgFlags_RowBg0 on each row manually)
 	TableFlagsRowBg TableFlags = 64
@@ -2177,7 +2181,7 @@ const (
 	TreeNodeFlagsSelected TreeNodeFlags = 1
 	// Draw frame with background (e.g. for CollapsingHeader)
 	TreeNodeFlagsFramed TreeNodeFlags = 2
-	// Hit testing to allow subsequent widgets to overlap this one
+	// Hit testing will allow subsequent widgets to overlap this one. Require previous frame HoveredId to match before being usable. Shortcut to calling SetNextItemAllowOverlap().
 	TreeNodeFlagsAllowOverlap TreeNodeFlags = 4
 	// Don't do a TreePush() when open (e.g. for CollapsingHeader) = no extra indent nor pushing on ID stack
 	TreeNodeFlagsNoTreePushOnOpen TreeNodeFlags = 8
@@ -2189,7 +2193,7 @@ const (
 	TreeNodeFlagsOpenOnDoubleClick TreeNodeFlags = 64
 	// Open when clicking on the arrow part (default for multi-select unless any _OpenOnXXX behavior is set explicitly). Both behaviors may be combined.
 	TreeNodeFlagsOpenOnArrow TreeNodeFlags = 128
-	// No collapsing, no arrow (use as a convenience for leaf nodes).
+	// No collapsing, no arrow (use as a convenience for leaf nodes). Note: will always open a tree/id scope and return true. If you never use that scope, add ImGuiTreeNodeFlags_NoTreePushOnOpen.
 	TreeNodeFlagsLeaf TreeNodeFlags = 256
 	// Display a bullet instead of arrow. IMPORTANT: node can still be marked open/close if you don't set the _Leaf flag!
 	TreeNodeFlagsBullet TreeNodeFlags = 512
