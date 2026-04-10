@@ -261,6 +261,16 @@ extern void wrap_ImPlot_PlotPieChart_U8PtrPlotFormatter(const char* const label_
 extern void wrap_ImPlot_PlotPieChart_U8PtrStr(const char* const label_ids[],const ImU8* values,int count,double x,double y,double radius);
 extern void wrap_ImPlot_PlotPieChart_doublePtrPlotFormatter(const char* const label_ids[],const double* values,int count,double x,double y,double radius,ImPlotFormatter fmt);
 extern void wrap_ImPlot_PlotPieChart_doublePtrStr(const char* const label_ids[],const double* values,int count,double x,double y,double radius);
+extern void wrap_ImPlot_PlotPolygon_FloatPtr(const char* label_id,const float* xs,const float* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_S16Ptr(const char* label_id,const ImS16* xs,const ImS16* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_S32Ptr(const char* label_id,const ImS32* xs,const ImS32* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_S64Ptr(const char* label_id,const ImS64* xs,const ImS64* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_S8Ptr(const char* label_id,const ImS8* xs,const ImS8* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_U16Ptr(const char* label_id,const ImU16* xs,const ImU16* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_U32Ptr(const char* label_id,const ImU32* xs,const ImU32* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_U64Ptr(const char* label_id,const ImU64* xs,const ImU64* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_U8Ptr(const char* label_id,const ImU8* xs,const ImU8* ys,int count);
+extern void wrap_ImPlot_PlotPolygon_doublePtr(const char* label_id,const double* xs,const double* ys,int count);
 extern void wrap_ImPlot_PlotScatterG(const char* label_id,ImPlotGetter getter,uintptr_t data,int count);
 extern void wrap_ImPlot_PlotScatterG_LJ(const char* label_id,ImPlotPoint_getter getter,uintptr_t data,int count);
 extern void wrap_ImPlot_PlotScatter_FloatPtrFloatPtr(const char* label_id,const float* xs,const float* ys,int count);

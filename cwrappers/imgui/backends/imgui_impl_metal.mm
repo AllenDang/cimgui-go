@@ -18,6 +18,8 @@
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
 //  2026-XX-XX: Metal: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2026-04-03: Metal: avoid redundant vertex buffer bind in SetupRenderState. (#9343)
+//  2026-03-19: Fixed issue in ImGui_ImplMetal_RenderDrawData() if ImTextureID_Invalid is defined to be != 0, which became the default since 2026-03-12. (#9295, #9310)
 //  2025-09-18: Call platform_io.ClearRendererHandlers() on shutdown.
 //  2025-06-11: Added support for ImGuiBackendFlags_RendererHasTextures, for dynamic font atlas. Removed ImGui_ImplMetal_CreateFontsTexture() and ImGui_ImplMetal_DestroyFontsTexture().
 //  2025-02-03: Metal: Crash fix. (#8367)
@@ -226,8 +228,7 @@ static void ImGui_ImplMetal_SetupRenderState(ImDrawData* draw_data, id<MTLComman
 
     [commandEncoder setRenderPipelineState:renderPipelineState];
 
-    [commandEncoder setVertexBuffer:vertexBuffer.buffer offset:0 atIndex:0];
-    [commandEncoder setVertexBufferOffset:vertexBufferOffset atIndex:0];
+    [commandEncoder setVertexBuffer:vertexBuffer.buffer offset:vertexBufferOffset atIndex:0];
 }
 
 // Metal Render function.
@@ -319,7 +320,8 @@ void ImGui_ImplMetal_RenderDrawData(ImDrawData* draw_data, id<MTLCommandBuffer> 
                 [commandEncoder setScissorRect:scissorRect];
 
                 // Bind texture, Draw
-                if (ImTextureID tex_id = pcmd->GetTexID())
+                ImTextureID tex_id = pcmd->GetTexID();
+                if (tex_id != ImTextureID_Invalid)
                     [commandEncoder setFragmentTexture:(__bridge id<MTLTexture>)(void*)(intptr_t)(tex_id) atIndex:0];
 
                 [commandEncoder setVertexBufferOffset:(vertexBufferOffset + pcmd->VtxOffset * sizeof(ImDrawVert)) atIndex:0];

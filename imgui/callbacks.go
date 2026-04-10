@@ -72,6 +72,38 @@ package imgui
 // extern void callbackContextHookCallback29(ImGuiContext*, ImGuiContextHook*);
 // extern void callbackContextHookCallback30(ImGuiContext*, ImGuiContextHook*);
 // extern void callbackContextHookCallback31(ImGuiContext*, ImGuiContextHook*);
+// extern void callbackDemoMarkerCallback0(char*, int, char*);
+// extern void callbackDemoMarkerCallback1(char*, int, char*);
+// extern void callbackDemoMarkerCallback2(char*, int, char*);
+// extern void callbackDemoMarkerCallback3(char*, int, char*);
+// extern void callbackDemoMarkerCallback4(char*, int, char*);
+// extern void callbackDemoMarkerCallback5(char*, int, char*);
+// extern void callbackDemoMarkerCallback6(char*, int, char*);
+// extern void callbackDemoMarkerCallback7(char*, int, char*);
+// extern void callbackDemoMarkerCallback8(char*, int, char*);
+// extern void callbackDemoMarkerCallback9(char*, int, char*);
+// extern void callbackDemoMarkerCallback10(char*, int, char*);
+// extern void callbackDemoMarkerCallback11(char*, int, char*);
+// extern void callbackDemoMarkerCallback12(char*, int, char*);
+// extern void callbackDemoMarkerCallback13(char*, int, char*);
+// extern void callbackDemoMarkerCallback14(char*, int, char*);
+// extern void callbackDemoMarkerCallback15(char*, int, char*);
+// extern void callbackDemoMarkerCallback16(char*, int, char*);
+// extern void callbackDemoMarkerCallback17(char*, int, char*);
+// extern void callbackDemoMarkerCallback18(char*, int, char*);
+// extern void callbackDemoMarkerCallback19(char*, int, char*);
+// extern void callbackDemoMarkerCallback20(char*, int, char*);
+// extern void callbackDemoMarkerCallback21(char*, int, char*);
+// extern void callbackDemoMarkerCallback22(char*, int, char*);
+// extern void callbackDemoMarkerCallback23(char*, int, char*);
+// extern void callbackDemoMarkerCallback24(char*, int, char*);
+// extern void callbackDemoMarkerCallback25(char*, int, char*);
+// extern void callbackDemoMarkerCallback26(char*, int, char*);
+// extern void callbackDemoMarkerCallback27(char*, int, char*);
+// extern void callbackDemoMarkerCallback28(char*, int, char*);
+// extern void callbackDemoMarkerCallback29(char*, int, char*);
+// extern void callbackDemoMarkerCallback30(char*, int, char*);
+// extern void callbackDemoMarkerCallback31(char*, int, char*);
 // extern void callbackErrorCallback0(ImGuiContext*, void*, char*);
 // extern void callbackErrorCallback1(ImGuiContext*, void*, char*);
 // extern void callbackErrorCallback2(ImGuiContext*, void*, char*);
@@ -647,6 +679,227 @@ func init() {
 
 func ClearContextHookCallbackPool() {
 	poolContextHookCallback.Clear()
+}
+
+type (
+	DemoMarkerCallback  func(file string, line int32, section string)
+	cDemoMarkerCallback func(file *C.char, line C.int, section *C.char)
+)
+
+func NewDemoMarkerCallbackFromC(cvalue *C.ImGuiDemoMarkerCallback) *DemoMarkerCallback {
+	result := poolDemoMarkerCallback.Find(*cvalue)
+	return &result
+}
+
+func (c DemoMarkerCallback) C() (C.ImGuiDemoMarkerCallback, func()) {
+	return poolDemoMarkerCallback.Allocate(c), func() {}
+}
+
+func wrapDemoMarkerCallback(cb DemoMarkerCallback, file *C.char, line C.int, section *C.char) {
+	cb(C.GoString(file), int32(line), C.GoString(section))
+}
+
+//export callbackDemoMarkerCallback0
+func callbackDemoMarkerCallback0(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(0), file, line, section)
+}
+
+//export callbackDemoMarkerCallback1
+func callbackDemoMarkerCallback1(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(1), file, line, section)
+}
+
+//export callbackDemoMarkerCallback2
+func callbackDemoMarkerCallback2(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(2), file, line, section)
+}
+
+//export callbackDemoMarkerCallback3
+func callbackDemoMarkerCallback3(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(3), file, line, section)
+}
+
+//export callbackDemoMarkerCallback4
+func callbackDemoMarkerCallback4(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(4), file, line, section)
+}
+
+//export callbackDemoMarkerCallback5
+func callbackDemoMarkerCallback5(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(5), file, line, section)
+}
+
+//export callbackDemoMarkerCallback6
+func callbackDemoMarkerCallback6(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(6), file, line, section)
+}
+
+//export callbackDemoMarkerCallback7
+func callbackDemoMarkerCallback7(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(7), file, line, section)
+}
+
+//export callbackDemoMarkerCallback8
+func callbackDemoMarkerCallback8(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(8), file, line, section)
+}
+
+//export callbackDemoMarkerCallback9
+func callbackDemoMarkerCallback9(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(9), file, line, section)
+}
+
+//export callbackDemoMarkerCallback10
+func callbackDemoMarkerCallback10(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(10), file, line, section)
+}
+
+//export callbackDemoMarkerCallback11
+func callbackDemoMarkerCallback11(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(11), file, line, section)
+}
+
+//export callbackDemoMarkerCallback12
+func callbackDemoMarkerCallback12(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(12), file, line, section)
+}
+
+//export callbackDemoMarkerCallback13
+func callbackDemoMarkerCallback13(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(13), file, line, section)
+}
+
+//export callbackDemoMarkerCallback14
+func callbackDemoMarkerCallback14(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(14), file, line, section)
+}
+
+//export callbackDemoMarkerCallback15
+func callbackDemoMarkerCallback15(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(15), file, line, section)
+}
+
+//export callbackDemoMarkerCallback16
+func callbackDemoMarkerCallback16(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(16), file, line, section)
+}
+
+//export callbackDemoMarkerCallback17
+func callbackDemoMarkerCallback17(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(17), file, line, section)
+}
+
+//export callbackDemoMarkerCallback18
+func callbackDemoMarkerCallback18(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(18), file, line, section)
+}
+
+//export callbackDemoMarkerCallback19
+func callbackDemoMarkerCallback19(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(19), file, line, section)
+}
+
+//export callbackDemoMarkerCallback20
+func callbackDemoMarkerCallback20(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(20), file, line, section)
+}
+
+//export callbackDemoMarkerCallback21
+func callbackDemoMarkerCallback21(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(21), file, line, section)
+}
+
+//export callbackDemoMarkerCallback22
+func callbackDemoMarkerCallback22(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(22), file, line, section)
+}
+
+//export callbackDemoMarkerCallback23
+func callbackDemoMarkerCallback23(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(23), file, line, section)
+}
+
+//export callbackDemoMarkerCallback24
+func callbackDemoMarkerCallback24(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(24), file, line, section)
+}
+
+//export callbackDemoMarkerCallback25
+func callbackDemoMarkerCallback25(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(25), file, line, section)
+}
+
+//export callbackDemoMarkerCallback26
+func callbackDemoMarkerCallback26(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(26), file, line, section)
+}
+
+//export callbackDemoMarkerCallback27
+func callbackDemoMarkerCallback27(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(27), file, line, section)
+}
+
+//export callbackDemoMarkerCallback28
+func callbackDemoMarkerCallback28(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(28), file, line, section)
+}
+
+//export callbackDemoMarkerCallback29
+func callbackDemoMarkerCallback29(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(29), file, line, section)
+}
+
+//export callbackDemoMarkerCallback30
+func callbackDemoMarkerCallback30(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(30), file, line, section)
+}
+
+//export callbackDemoMarkerCallback31
+func callbackDemoMarkerCallback31(file *C.char, line C.int, section *C.char) {
+	wrapDemoMarkerCallback(poolDemoMarkerCallback.Get(31), file, line, section)
+}
+
+var poolDemoMarkerCallback *internal.Pool[DemoMarkerCallback, C.ImGuiDemoMarkerCallback]
+
+func init() {
+	poolDemoMarkerCallback = internal.NewPool[DemoMarkerCallback, C.ImGuiDemoMarkerCallback](
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback0),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback1),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback2),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback3),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback4),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback5),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback6),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback7),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback8),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback9),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback10),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback11),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback12),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback13),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback14),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback15),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback16),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback17),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback18),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback19),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback20),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback21),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback22),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback23),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback24),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback25),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback26),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback27),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback28),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback29),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback30),
+		C.ImGuiDemoMarkerCallback(C.callbackDemoMarkerCallback31),
+	)
+}
+
+func ClearDemoMarkerCallbackPool() {
+	poolDemoMarkerCallback.Clear()
 }
 
 type (

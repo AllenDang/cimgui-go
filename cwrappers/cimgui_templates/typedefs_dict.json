@@ -57,6 +57,7 @@
   "ImGuiDebugAllocInfo": "struct ImGuiDebugAllocInfo",
   "ImGuiDebugItemPathQuery": "struct ImGuiDebugItemPathQuery",
   "ImGuiDebugLogFlags": "int",
+  "ImGuiDemoMarkerCallback": "typedef void (*)(const char* file, int line, const char* section);",
   "ImGuiDockContext": "struct ImGuiDockContext",
   "ImGuiDockNode": "struct ImGuiDockNode",
   "ImGuiDockNodeFlags": "int",

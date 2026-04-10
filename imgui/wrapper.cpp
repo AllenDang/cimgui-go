@@ -86,6 +86,7 @@ bool wrap_igSliderBehavior(const ImRect_c bb,ImGuiID id,ImGuiDataType data_type,
 bool wrap_igSliderScalarV(const char* label,ImGuiDataType data_type,uintptr_t p_data,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags) { return igSliderScalar(label,data_type,(void*)(uintptr_t)p_data,(const void*)(uintptr_t)p_min,(const void*)(uintptr_t)p_max,format,flags); }
 bool wrap_igSliderScalarNV(const char* label,ImGuiDataType data_type,uintptr_t p_data,int components,const uintptr_t p_min,const uintptr_t p_max,const char* format,ImGuiSliderFlags flags) { return igSliderScalarN(label,data_type,(void*)(uintptr_t)p_data,components,(const void*)(uintptr_t)p_min,(const void*)(uintptr_t)p_max,format,flags); }
 bool wrap_igTempInputScalarV(const ImRect_c bb,ImGuiID id,const char* label,ImGuiDataType data_type,uintptr_t p_data,const char* format,const uintptr_t p_clamp_min,const uintptr_t p_clamp_max) { return igTempInputScalar(bb,id,label,data_type,(void*)(uintptr_t)p_data,format,(const void*)(uintptr_t)p_clamp_min,(const void*)(uintptr_t)p_clamp_max); }
+bool wrap_igTempInputTextV(const ImRect_c bb,ImGuiID id,const char* label,char* buf,size_t buf_size,ImGuiInputTextFlags flags,ImGuiInputTextCallback callback,uintptr_t user_data) { return igTempInputText(bb,id,label,buf,buf_size,flags,callback,(void*)(uintptr_t)user_data); }
 void wrap_igText(const char* fmt) { igText(fmt); }
 void wrap_igTextAligned(float align_x,float size_x,const char* fmt) { igTextAligned(align_x,size_x,fmt); }
 void wrap_igTextColored(const ImVec4_c col,const char* fmt) { igTextColored(col,fmt); }
@@ -369,6 +370,7 @@ void wrap_igTableOpenContextMenu() { igTableOpenContextMenu(-1); }
 void wrap_igTableSetBgColor(ImGuiTableBgTarget target,ImU32 color) { igTableSetBgColor(target,color,-1); }
 void wrap_igTableSetupColumn(const char* label) { igTableSetupColumn(label,0,0.0f,0); }
 bool wrap_igTempInputScalar(const ImRect bb,ImGuiID id,const char* label,ImGuiDataType data_type,uintptr_t p_data,const char* format) { return wrap_igTempInputScalarV(bb,id,label,data_type,p_data,format,0,0); }
+bool wrap_igTempInputText(const ImRect bb,ImGuiID id,const char* label,char* buf,size_t buf_size) { return wrap_igTempInputTextV(bb,id,label,buf,buf_size,0,0,0); }
 void wrap_igTextEx(const char* text,const int text_len) { wrap_igTextExV(text,text_len,0); }
 bool wrap_igTextLinkOpenURL(const char* label) { return igTextLinkOpenURL(label,0); }
 void wrap_igTextUnformatted(const char* text,const int text_len) { wrap_igTextUnformattedV(text,text_len); }

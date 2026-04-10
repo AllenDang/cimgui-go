@@ -29,6 +29,7 @@
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
 //  2026-XX-XX: Platform: Added support for multiple windows via the ImGuiPlatformIO interface.
+//  2026-03-11: Vulkan: Added ImGui_ImplVulkan_PipelineInfo::ExtraDynamicStates[] to allow specifying extra dynamic states to add when creating the VkPipeline. (#9211)
 //  2025-09-26: [Helpers] *BREAKING CHANGE*: Vulkan: Helper ImGui_ImplVulkanH_DestroyWindow() does not call vkDestroySurfaceKHR(): as surface is created by caller of ImGui_ImplVulkanH_CreateOrResizeWindow(), it is more consistent that we don't destroy it. (#9163)
 //  2026-01-05: [Helpers] *BREAKING CHANGE*: Vulkan: Helper for creating render pass uses ImGui_ImplVulkanH_Window::AttachmentDesc to create render pass. Removed ClearEnabled. (#9152)
 //  2025-11-24: [Helpers] Vulkan: Helper for creating a swap-chain (used by examples and multi-viewports) selects VkSwapchainCreateInfoKHR's compositeAlpha based on cap.supportedCompositeAlpha. (#8784)
@@ -537,14 +538,12 @@ static void ImGui_ImplVulkan_SetupRenderState(ImDrawData* draw_data, VkPipeline 
     // Setup scale and translation:
     // Our visible imgui space lies from draw_data->DisplayPps (top left) to draw_data->DisplayPos+data_data->DisplaySize (bottom right). DisplayPos is (0,0) for single viewport apps.
     {
-        float scale[2];
-        scale[0] = 2.0f / draw_data->DisplaySize.x;
-        scale[1] = 2.0f / draw_data->DisplaySize.y;
-        float translate[2];
-        translate[0] = -1.0f - draw_data->DisplayPos.x * scale[0];
-        translate[1] = -1.0f - draw_data->DisplayPos.y * scale[1];
-        vkCmdPushConstants(command_buffer, bd->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, sizeof(float) * 0, sizeof(float) * 2, scale);
-        vkCmdPushConstants(command_buffer, bd->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, sizeof(float) * 2, sizeof(float) * 2, translate);
+        float constants[4];
+        constants[0] = 2.0f / draw_data->DisplaySize.x; // Scale
+        constants[1] = 2.0f / draw_data->DisplaySize.y;
+        constants[2] = -1.0f - draw_data->DisplayPos.x * constants[0]; // Translate
+        constants[3] = -1.0f - draw_data->DisplayPos.y * constants[1];
+        vkCmdPushConstants(command_buffer, bd->PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(float) * 4, constants);
     }
 }
 
@@ -1040,11 +1039,13 @@ static VkPipeline ImGui_ImplVulkan_CreatePipeline(VkDevice device, const VkAlloc
     blend_info.attachmentCount = 1;
     blend_info.pAttachments = color_attachment;
 
-    VkDynamicState dynamic_states[2] = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+    ImVector<VkDynamicState> dynamic_states = info->ExtraDynamicStates;
+    dynamic_states.push_back(VK_DYNAMIC_STATE_VIEWPORT);
+    dynamic_states.push_back(VK_DYNAMIC_STATE_SCISSOR);
     VkPipelineDynamicStateCreateInfo dynamic_state = {};
     dynamic_state.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-    dynamic_state.dynamicStateCount = (uint32_t)IM_COUNTOF(dynamic_states);
-    dynamic_state.pDynamicStates = dynamic_states;
+    dynamic_state.dynamicStateCount = dynamic_states.Size;
+    dynamic_state.pDynamicStates = dynamic_states.Data;
 
     VkGraphicsPipelineCreateInfo create_info = {};
     create_info.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -1424,6 +1425,7 @@ VkDescriptorSet ImGui_ImplVulkan_AddTexture(VkSampler sampler, VkImageView image
     }
 
     // Update the Descriptor Set:
+    if (descriptor_set != VK_NULL_HANDLE)
     {
         VkDescriptorImageInfo desc_image[1] = {};
         desc_image[0].sampler = sampler;
@@ -1838,7 +1840,6 @@ void ImGui_ImplVulkanH_CreateOrResizeWindow(VkInstance instance, VkPhysicalDevic
     VkCommandPoolCreateInfo pool_info = {};
     pool_info.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
     pool_info.queueFamilyIndex = queue_family;
-    pool_info.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
     VkResult err = vkCreateCommandPool(device, &pool_info, allocator, &command_pool);
     check_vk_result(err);
 
@@ -2011,7 +2012,7 @@ static void ImGui_ImplVulkan_CreateWindow(ImGuiViewport* viewport)
         requestSurfaceImageFormats.push_back(format);
 
     const VkColorSpaceKHR requestSurfaceColorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-    wd->SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(v->PhysicalDevice, wd->Surface, requestSurfaceImageFormats.Data, (size_t)requestSurfaceImageFormats.Size, requestSurfaceColorSpace);
+    wd->SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(v->PhysicalDevice, wd->Surface, requestSurfaceImageFormats.Data, requestSurfaceImageFormats.Size, requestSurfaceColorSpace);
 
     // Select Present Mode
     // FIXME-VULKAN: Even thought mailbox seems to get us maximum framerate with a single window, it halves framerate with a second window etc. (w/ Nvidia and SDK 1.82.1)

@@ -1,0 +1,14 @@
+{
+  "IMPLOT_AUTO": "-1",
+  "IMPLOT_AUTO_COL": "ImVec4(0,0,0,-1)",
+  "IMPLOT_LABEL_FORMAT": "\"%g\"",
+  "IMPLOT_LABEL_MAX_SIZE": "32",
+  "IMPLOT_MAX_TIME": "32503680000",
+  "IMPLOT_MIN_TIME": "0",
+  "IMPLOT_NUM_X_AXES": "ImAxis_Y1",
+  "IMPLOT_NUM_Y_AXES": "ImAxis_COUNT - IMPLOT_NUM_X_AXES",
+  "IMPLOT_TMP": "template <typename T> IMPLOT_API",
+  "IMPLOT_VERSION": "\"1.0\"",
+  "IMPLOT_VERSION_NUM": "10000",
+  "IM_COL32_SPLIT_RGB(col,r,g,b)": "ImU32 r = ((col >> IM_COL32_R_SHIFT) & 0xFF); ImU32 g = ((col >> IM_COL32_G_SHIFT) & 0xFF); ImU32 b = ((col >> IM_COL32_B_SHIFT) & 0xFF);"
+}
