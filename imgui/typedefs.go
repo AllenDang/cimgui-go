@@ -51,7 +51,7 @@ func (self *BitArrayPtr) Handle() (*C.ImBitArrayPtr, func()) {
 func (selfStruct *BitArrayPtr) C() (result C.ImBitArrayPtr, fin func()) {
 	self := selfStruct.Data
 	selfArg, selfFin := internal.WrapNumberPtr[C.ImU32, uint32](self)
-	return (C.ImBitArrayPtr)(selfArg), func() { selfFin() }
+	return C.ImBitArrayPtr(selfArg), func() { selfFin() }
 }
 
 // NewBitArrayPtrFromC creates BitArrayPtr from its C pointer.
@@ -228,7 +228,7 @@ func (selfSrc *DrawIdx) Handle() (result *C.ImDrawIdx, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self DrawIdx) C() (C.ImDrawIdx, func()) {
-	return (C.ImDrawIdx)(C.ushort(self)), func() {}
+	return C.ImDrawIdx(C.ushort(self)), func() {}
 }
 
 // NewDrawIdxFromC creates DrawIdx from its C pointer.
@@ -508,7 +508,7 @@ func (selfSrc *FontAtlasRectId) Handle() (result *C.ImFontAtlasRectId, fin func(
 
 // C is like Handle but returns plain type instead of pointer.
 func (self FontAtlasRectId) C() (C.ImFontAtlasRectId, func()) {
-	return (C.ImFontAtlasRectId)(C.int(self)), func() {}
+	return C.ImFontAtlasRectId(C.int(self)), func() {}
 }
 
 // NewFontAtlasRectIdFromC creates FontAtlasRectId from its C pointer.
@@ -1130,7 +1130,7 @@ func (selfSrc *ID) Handle() (result *C.ImGuiID, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self ID) C() (C.ImGuiID, func()) {
-	return (C.ImGuiID)(C.uint(self)), func() {}
+	return C.ImGuiID(C.uint(self)), func() {}
 }
 
 // NewIDFromC creates ID from its C pointer.
@@ -1503,7 +1503,7 @@ func (selfSrc *KeyChord) Handle() (result *C.ImGuiKeyChord, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self KeyChord) C() (C.ImGuiKeyChord, func()) {
-	return (C.ImGuiKeyChord)(C.int(self)), func() {}
+	return C.ImGuiKeyChord(C.int(self)), func() {}
 }
 
 // NewKeyChordFromC creates KeyChord from its C pointer.
@@ -1601,7 +1601,7 @@ func (selfSrc *KeyRoutingIndex) Handle() (result *C.ImGuiKeyRoutingIndex, fin fu
 
 // C is like Handle but returns plain type instead of pointer.
 func (self KeyRoutingIndex) C() (C.ImGuiKeyRoutingIndex, func()) {
-	return (C.ImGuiKeyRoutingIndex)(C.ImS16(self)), func() {}
+	return C.ImGuiKeyRoutingIndex(C.ImS16(self)), func() {}
 }
 
 // NewKeyRoutingIndexFromC creates KeyRoutingIndex from its C pointer.
@@ -2297,7 +2297,7 @@ func (selfSrc *SelectionUserData) Handle() (result *C.ImGuiSelectionUserData, fi
 
 // C is like Handle but returns plain type instead of pointer.
 func (self SelectionUserData) C() (C.ImGuiSelectionUserData, func()) {
-	return (C.ImGuiSelectionUserData)(C.ImS64(self)), func() {}
+	return C.ImGuiSelectionUserData(C.ImS64(self)), func() {}
 }
 
 // NewSelectionUserDataFromC creates SelectionUserData from its C pointer.
@@ -2681,7 +2681,7 @@ func (selfSrc *TableColumnIdx) Handle() (result *C.ImGuiTableColumnIdx, fin func
 
 // C is like Handle but returns plain type instead of pointer.
 func (self TableColumnIdx) C() (C.ImGuiTableColumnIdx, func()) {
-	return (C.ImGuiTableColumnIdx)(C.ImS16(self)), func() {}
+	return C.ImGuiTableColumnIdx(C.ImS16(self)), func() {}
 }
 
 // NewTableColumnIdxFromC creates TableColumnIdx from its C pointer.
@@ -2768,7 +2768,7 @@ func (selfSrc *TableDrawChannelIdx) Handle() (result *C.ImGuiTableDrawChannelIdx
 
 // C is like Handle but returns plain type instead of pointer.
 func (self TableDrawChannelIdx) C() (C.ImGuiTableDrawChannelIdx, func()) {
-	return (C.ImGuiTableDrawChannelIdx)(C.ImU16(self)), func() {}
+	return C.ImGuiTableDrawChannelIdx(C.ImU16(self)), func() {}
 }
 
 // NewTableDrawChannelIdxFromC creates TableDrawChannelIdx from its C pointer.
@@ -3308,7 +3308,7 @@ func (selfSrc *PoolIdx) Handle() (result *C.ImPoolIdx, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self PoolIdx) C() (C.ImPoolIdx, func()) {
-	return (C.ImPoolIdx)(C.int(self)), func() {}
+	return C.ImPoolIdx(C.int(self)), func() {}
 }
 
 // NewPoolIdxFromC creates PoolIdx from its C pointer.
@@ -3354,7 +3354,7 @@ func (selfSrc *TextureID) Handle() (result *C.ImTextureID, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self TextureID) C() (C.ImTextureID, func()) {
-	return (C.ImTextureID)(C.ImU64(self)), func() {}
+	return C.ImTextureID(C.ImU64(self)), func() {}
 }
 
 // NewTextureIDFromC creates TextureID from its C pointer.
@@ -3478,7 +3478,7 @@ func (selfSrc *Wchar16) Handle() (result *C.ImWchar16, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self Wchar16) C() (C.ImWchar16, func()) {
-	return (C.ImWchar16)(C.ushort(self)), func() {}
+	return C.ImWchar16(C.ushort(self)), func() {}
 }
 
 // NewWchar16FromC creates Wchar16 from its C pointer.
@@ -3498,7 +3498,7 @@ func (selfSrc *Wchar32) Handle() (result *C.ImWchar32, fin func()) {
 
 // C is like Handle but returns plain type instead of pointer.
 func (self Wchar32) C() (C.ImWchar32, func()) {
-	return (C.ImWchar32)(C.uint(self)), func() {}
+	return C.ImWchar32(C.uint(self)), func() {}
 }
 
 // NewWchar32FromC creates Wchar32 from its C pointer.
