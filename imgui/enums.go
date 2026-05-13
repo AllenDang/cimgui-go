@@ -4,14 +4,11 @@
 package imgui
 
 // Flags for ImDrawList functions
-// (Legacy: bit 0 must always correspond to ImDrawFlags_Closed to be backward compatible with old API using a bool. Bits 1..3 must be unused)
 // original name: ImDrawFlags_
 type DrawFlags int32
 
 const (
 	DrawFlagsNone DrawFlags = 0
-	// PathStroke(), AddPolyline(): specify that shape should be closed (Important: this is always == 1 for legacy reason)
-	DrawFlagsClosed DrawFlags = 1
 	// AddRect(), AddRectFilled(), PathRect(): enable rounding top-left corner only (when rounding > 0.0f, we default to all corners). Was 0x01.
 	DrawFlagsRoundCornersTopLeft DrawFlags = 16
 	// AddRect(), AddRectFilled(), PathRect(): enable rounding top-right corner only (when rounding > 0.0f, we default to all corners). Was 0x02.
@@ -21,7 +18,9 @@ const (
 	// AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-right corner only (when rounding > 0.0f, we default to all corners). Wax 0x08.
 	DrawFlagsRoundCornersBottomRight DrawFlags = 128
 	// AddRect(), AddRectFilled(), PathRect(): disable rounding on all corners (when rounding > 0.0f). This is NOT zero, NOT an implicit flag!
-	DrawFlagsRoundCornersNone   DrawFlags = 256
+	DrawFlagsRoundCornersNone DrawFlags = 256
+	// PathStroke(), AddPolyline(): specify that shape should be closed (Important: this is always == 1 for legacy reason)
+	DrawFlagsClosed             DrawFlags = 512
 	DrawFlagsRoundCornersTop    DrawFlags = 48
 	DrawFlagsRoundCornersBottom DrawFlags = 192
 	DrawFlagsRoundCornersLeft   DrawFlags = 80
@@ -30,6 +29,7 @@ const (
 	// Default to ALL corners if none of the _RoundCornersXX flags are specified.
 	DrawFlagsRoundCornersDefault DrawFlags = 240
 	DrawFlagsRoundCornersMask    DrawFlags = 496
+	DrawFlagsInvalidMask         DrawFlags = 2147483663
 )
 
 // Flags for ImDrawList instance. Those are set automatically by ImGui:: functions from ImGuiIO settings, and generally not manipulated directly.
@@ -88,6 +88,8 @@ const (
 	FontFlagsNoLoadGlyphs FontFlags = 4
 	// [Internal] Disable loading new baked sizes, disable garbage collecting current ones. e.g. if you want to lock a font to a single size. Important: if you use this to preload given sizes, consider the possibility of multiple font density used on Retina display.
 	FontFlagsLockBakedSizes FontFlags = 8
+	// [Internal] Reference size was not set explicitly.
+	FontFlagsImplicitRefSize FontFlags = 16
 )
 
 // original name: ImGuiActivateFlags_
@@ -141,7 +143,7 @@ const (
 	BackendFlagsPlatformHasViewports BackendFlags = 2048
 	// Backend Platform supports calling io.AddMouseViewportEvent() with the viewport under the mouse. IF POSSIBLE, ignore viewports with the ImGuiViewportFlags_NoInputs flag (Win32 backend, GLFW 3.30+ backend can do this, SDL backend cannot). If this cannot be done, Dear ImGui needs to use a flawed heuristic to find the viewport under.
 	BackendFlagsHasMouseHoveredViewport BackendFlags = 4096
-	// Backend Platform supports honoring viewport->ParentViewport/ParentViewportId value, by applying the corresponding parent/child relation at the Platform level.
+	// Backend Platform supports honoring viewport->ParentViewport/ParentViewportId value, by applying the corresponding parent/child relationship at the Platform level. Child windows always appear in front of their parent window.
 	BackendFlagsHasParentViewport BackendFlags = 8192
 )
 
@@ -270,78 +272,80 @@ const (
 	ColScrollbarGrabHovered Col = 16
 	ColScrollbarGrabActive  Col = 17
 	// Checkbox tick and RadioButton circle
-	ColCheckMark        Col = 18
-	ColSliderGrab       Col = 19
-	ColSliderGrabActive Col = 20
-	ColButton           Col = 21
-	ColButtonHovered    Col = 22
-	ColButtonActive     Col = 23
+	ColCheckMark Col = 18
+	// Checkbox background when Selected, otherwise use FrameBg
+	ColCheckboxSelectedBg Col = 19
+	ColSliderGrab         Col = 20
+	ColSliderGrabActive   Col = 21
+	ColButton             Col = 22
+	ColButtonHovered      Col = 23
+	ColButtonActive       Col = 24
 	// Header* colors are used for CollapsingHeader, TreeNode, Selectable, MenuItem
-	ColHeader           Col = 24
-	ColHeaderHovered    Col = 25
-	ColHeaderActive     Col = 26
-	ColSeparator        Col = 27
-	ColSeparatorHovered Col = 28
-	ColSeparatorActive  Col = 29
+	ColHeader           Col = 25
+	ColHeaderHovered    Col = 26
+	ColHeaderActive     Col = 27
+	ColSeparator        Col = 28
+	ColSeparatorHovered Col = 29
+	ColSeparatorActive  Col = 30
 	// Resize grip in lower-right and lower-left corners of windows.
-	ColResizeGrip        Col = 30
-	ColResizeGripHovered Col = 31
-	ColResizeGripActive  Col = 32
+	ColResizeGrip        Col = 31
+	ColResizeGripHovered Col = 32
+	ColResizeGripActive  Col = 33
 	// InputText cursor/caret
-	ColInputTextCursor Col = 33
+	ColInputTextCursor Col = 34
 	// Tab background, when hovered
-	ColTabHovered Col = 34
+	ColTabHovered Col = 35
 	// Tab background, when tab-bar is focused & tab is unselected
-	ColTab Col = 35
+	ColTab Col = 36
 	// Tab background, when tab-bar is focused & tab is selected
-	ColTabSelected Col = 36
+	ColTabSelected Col = 37
 	// Tab horizontal overline, when tab-bar is focused & tab is selected
-	ColTabSelectedOverline Col = 37
+	ColTabSelectedOverline Col = 38
 	// Tab background, when tab-bar is unfocused & tab is unselected
-	ColTabDimmed Col = 38
+	ColTabDimmed Col = 39
 	// Tab background, when tab-bar is unfocused & tab is selected
-	ColTabDimmedSelected Col = 39
+	ColTabDimmedSelected Col = 40
 	//..horizontal overline, when tab-bar is unfocused & tab is selected
-	ColTabDimmedSelectedOverline Col = 40
+	ColTabDimmedSelectedOverline Col = 41
 	// Preview overlay color when about to docking something
-	ColDockingPreview Col = 41
+	ColDockingPreview Col = 42
 	// Background color for empty node (e.g. CentralNode with no window docked into it)
-	ColDockingEmptyBg       Col = 42
-	ColPlotLines            Col = 43
-	ColPlotLinesHovered     Col = 44
-	ColPlotHistogram        Col = 45
-	ColPlotHistogramHovered Col = 46
+	ColDockingEmptyBg       Col = 43
+	ColPlotLines            Col = 44
+	ColPlotLinesHovered     Col = 45
+	ColPlotHistogram        Col = 46
+	ColPlotHistogramHovered Col = 47
 	// Table header background
-	ColTableHeaderBg Col = 47
+	ColTableHeaderBg Col = 48
 	// Table outer and header borders (prefer using Alpha=1.0 here)
-	ColTableBorderStrong Col = 48
+	ColTableBorderStrong Col = 49
 	// Table inner borders (prefer using Alpha=1.0 here)
-	ColTableBorderLight Col = 49
+	ColTableBorderLight Col = 50
 	// Table row background (even rows)
-	ColTableRowBg Col = 50
+	ColTableRowBg Col = 51
 	// Table row background (odd rows)
-	ColTableRowBgAlt Col = 51
+	ColTableRowBgAlt Col = 52
 	// Hyperlink color
-	ColTextLink Col = 52
+	ColTextLink Col = 53
 	// Selected text inside an InputText
-	ColTextSelectedBg Col = 53
+	ColTextSelectedBg Col = 54
 	// Tree node hierarchy outlines when using ImGuiTreeNodeFlags_DrawLines
-	ColTreeLines Col = 54
+	ColTreeLines Col = 55
 	// Rectangle border highlighting a drop target
-	ColDragDropTarget Col = 55
+	ColDragDropTarget Col = 56
 	// Rectangle background highlighting a drop target
-	ColDragDropTargetBg Col = 56
+	ColDragDropTargetBg Col = 57
 	// Unsaved Document marker (in window title and tabs)
-	ColUnsavedMarker Col = 57
+	ColUnsavedMarker Col = 58
 	// Color of keyboard/gamepad navigation cursor/rectangle, when visible
-	ColNavCursor Col = 58
+	ColNavCursor Col = 59
 	// Highlight window when using Ctrl+Tab
-	ColNavWindowingHighlight Col = 59
+	ColNavWindowingHighlight Col = 60
 	// Darken/colorize entire screen behind the Ctrl+Tab window list, when active
-	ColNavWindowingDimBg Col = 60
+	ColNavWindowingDimBg Col = 61
 	// Darken/colorize entire screen behind a modal window, when one is active
-	ColModalWindowDimBg Col = 61
-	ColCOUNT            Col = 62
+	ColModalWindowDimBg Col = 62
+	ColCOUNT            Col = 63
 )
 
 // Flags for ColorEdit3() / ColorEdit4() / ColorPicker3() / ColorPicker4() / ColorButton()
@@ -1074,6 +1078,8 @@ const (
 	ItemStatusFlagsHasClipRect ItemStatusFlags = 512
 	// g.LastItemData.Shortcut valid. Set by SetNextItemShortcut() -> ItemAdd().
 	ItemStatusFlagsHasShortcut ItemStatusFlags = 1024
+	// Similar to ImGuiItemStatusFlags_Edited but bypassing ImGuiItemFlags_NoMarkEdited.
+	ItemStatusFlagsEditedInternal ItemStatusFlags = 2048
 )
 
 // A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.
@@ -1845,21 +1851,23 @@ const (
 	StyleVarTreeLinesSize StyleVar = 33
 	// float     TreeLinesRounding
 	StyleVarTreeLinesRounding StyleVar = 34
+	// float     DragDropTargetRounding
+	StyleVarDragDropTargetRounding StyleVar = 35
 	// ImVec2    ButtonTextAlign
-	StyleVarButtonTextAlign StyleVar = 35
+	StyleVarButtonTextAlign StyleVar = 36
 	// ImVec2    SelectableTextAlign
-	StyleVarSelectableTextAlign StyleVar = 36
+	StyleVarSelectableTextAlign StyleVar = 37
 	// float     SeparatorSize
-	StyleVarSeparatorSize StyleVar = 37
+	StyleVarSeparatorSize StyleVar = 38
 	// float     SeparatorTextBorderSize
-	StyleVarSeparatorTextBorderSize StyleVar = 38
+	StyleVarSeparatorTextBorderSize StyleVar = 39
 	// ImVec2    SeparatorTextAlign
-	StyleVarSeparatorTextAlign StyleVar = 39
+	StyleVarSeparatorTextAlign StyleVar = 40
 	// ImVec2    SeparatorTextPadding
-	StyleVarSeparatorTextPadding StyleVar = 40
+	StyleVarSeparatorTextPadding StyleVar = 41
 	// float     DockingSeparatorSize
-	StyleVarDockingSeparatorSize StyleVar = 41
-	StyleVarCOUNT                StyleVar = 42
+	StyleVarDockingSeparatorSize StyleVar = 42
+	StyleVarCOUNT                StyleVar = 43
 )
 
 // Extend ImGuiTabBarFlags_
@@ -1894,7 +1902,7 @@ const (
 	TabBarFlagsNoTooltip TabBarFlags = 32
 	// Draw selected overline markers over selected tab
 	TabBarFlagsDrawSelectedOverline TabBarFlags = 64
-	// Shrink down tabs when they don't fit, until width is style.TabMinWidthShrink, then enable scrolling buttons.
+	// Shrink down tabs when they don't fit, until width is style.TabMinWidthShrink, then enable scrolling. Setting TabMinWidthShrink to FLT_MAX makes this behave like ImGuiTabBarFlags_FittingPolicyScroll.
 	TabBarFlagsFittingPolicyMixed TabBarFlags = 128
 	// Shrink down tabs when they don't fit
 	TabBarFlagsFittingPolicyShrink TabBarFlags = 256

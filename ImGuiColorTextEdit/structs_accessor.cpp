@@ -6,3 +6,27 @@
 #include "wrapper.h"
 #include "structs_accessor.h"
 
+void wrap_CursorPosition_SetLine(CursorPosition *CursorPositionPtr, int v) { CursorPositionPtr->line = v; }
+void wrap_CursorPosition_SetColumn(CursorPosition *CursorPositionPtr, int v) { CursorPositionPtr->column = v; }
+int wrap_CursorPosition_GetLine(CursorPosition *self) { return self->line; }
+int wrap_CursorPosition_GetColumn(CursorPosition *self) { return self->column; }
+void wrap_CursorSelection_SetStart(CursorSelection *CursorSelectionPtr, CursorPosition v) { CursorSelectionPtr->start = v; }
+void wrap_CursorSelection_SetEnd(CursorSelection *CursorSelectionPtr, CursorPosition v) { CursorSelectionPtr->end = v; }
+CursorPosition_c wrap_CursorSelection_GetStart(CursorSelection *self) { return self->start; }
+CursorPosition_c wrap_CursorSelection_GetEnd(CursorSelection *self) { return self->end; }
+void wrap_Decorator_SetLine(Decorator *DecoratorPtr, int v) { DecoratorPtr->line = v; }
+void wrap_Decorator_SetWidth(Decorator *DecoratorPtr, float v) { DecoratorPtr->width = v; }
+void wrap_Decorator_SetHeight(Decorator *DecoratorPtr, float v) { DecoratorPtr->height = v; }
+void wrap_Decorator_SetGlyphSize(Decorator *DecoratorPtr, ImVec2 v) { DecoratorPtr->glyphSize = v; }
+void wrap_Decorator_SetUserData(Decorator *DecoratorPtr, uintptr_t v) { DecoratorPtr->userData = (void*)v; }
+int wrap_Decorator_GetLine(Decorator *self) { return self->line; }
+float wrap_Decorator_GetWidth(Decorator *self) { return self->width; }
+float wrap_Decorator_GetHeight(Decorator *self) { return self->height; }
+ImVec2 wrap_Decorator_GetGlyphSize(Decorator *self) { return self->glyphSize; }
+uintptr_t wrap_Decorator_GetUserData(Decorator *self) { return (uintptr_t)self->userData; }
+void wrap_Glyph_SetCodepoint(Glyph *GlyphPtr, ImWchar v) { GlyphPtr->codepoint = v; }
+void wrap_Glyph_SetColor(Glyph *GlyphPtr, Color v) { GlyphPtr->color = v; }
+ImWchar wrap_Glyph_GetCodepoint(Glyph *self) { return self->codepoint; }
+Color wrap_Glyph_GetColor(Glyph *self) { return self->color; }
+void wrap_TextDiff_Set_TextEditor(TextDiff *TextDiffPtr, TextEditor v) { TextDiffPtr->_TextEditor = v; }
+TextEditor wrap_TextDiff_Get_TextEditor(TextDiff *self) { return self->_TextEditor; }

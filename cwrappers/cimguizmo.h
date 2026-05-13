@@ -35,6 +35,24 @@ typedef enum {
       WORLD
    }MODE;
 typedef enum {
+      MT_NONE,
+      MT_MOVE_X,
+      MT_MOVE_Y,
+      MT_MOVE_Z,
+      MT_MOVE_YZ,
+      MT_MOVE_ZX,
+      MT_MOVE_XY,
+      MT_MOVE_SCREEN,
+      MT_ROTATE_X,
+      MT_ROTATE_Y,
+      MT_ROTATE_Z,
+      MT_ROTATE_SCREEN,
+      MT_SCALE_X,
+      MT_SCALE_Y,
+      MT_SCALE_Z,
+      MT_SCALE_XYZ
+   }MOVETYPE;
+typedef enum {
       DIRECTION_X,
       DIRECTION_Y,
       DIRECTION_Z,
@@ -74,6 +92,7 @@ struct Style
 typedef ImGuizmo::Style Style;
 typedef ImGuizmo::COLOR COLOR;
 typedef ImGuizmo::MODE MODE;
+typedef ImGuizmo::MOVETYPE MOVETYPE;
 typedef ImGuizmo::OPERATION OPERATION;
 #endif //CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 CIMGUI_API void ImGuizmo_SetDrawlist(ImDrawList* drawlist);
@@ -89,8 +108,11 @@ CIMGUI_API void ImGuizmo_DecomposeMatrixToComponents(const float* matrix,float* 
 CIMGUI_API void ImGuizmo_RecomposeMatrixFromComponents(const float* translation,const float* rotation,const float* scale,float* matrix);
 CIMGUI_API void ImGuizmo_SetRect(float x,float y,float width,float height);
 CIMGUI_API void ImGuizmo_SetOrthographic(bool isOrthographic);
+CIMGUI_API void ImGuizmo_DrawAxes(const float* view,const float* projection,const float* matrices,int matrixCount);
 CIMGUI_API void ImGuizmo_DrawCubes(const float* view,const float* projection,const float* matrices,int matrixCount);
 CIMGUI_API void ImGuizmo_DrawGrid(const float* view,const float* projection,const float* matrix,const float gridSize);
+CIMGUI_API void ImGuizmo_DrawGridCustom(const float* view,const float* projection,const float* matrix,const float gridSize,const float majorStep,const unsigned int subdivision);
+CIMGUI_API void ImGuizmo_DrawGridCustomColor(const float* view,const float* projection,const float* matrix,const float gridSize,const float majorStep,const unsigned int subdivision,const ImU32 majorCol,const ImU32 minorCol,const ImU32 centerCol);
 CIMGUI_API bool ImGuizmo_Manipulate(const float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float* deltaMatrix,const float* snap,const float* localBounds,const float* boundsSnap);
 CIMGUI_API void ImGuizmo_ViewManipulate_Float(float* view,float length,ImVec2_c position,ImVec2_c size,ImU32 backgroundColor);
 CIMGUI_API void ImGuizmo_ViewManipulate_FloatPtr(float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float length,ImVec2_c position,ImVec2_c size,ImU32 backgroundColor);
@@ -106,6 +128,10 @@ CIMGUI_API ImGuiID ImGuizmo_GetID_StrStr(const char* str_id_begin,const char* st
 CIMGUI_API ImGuiID ImGuizmo_GetID_Ptr(const void* ptr_id);
 CIMGUI_API bool ImGuizmo_IsOver_OPERATION(OPERATION op);
 CIMGUI_API void ImGuizmo_SetGizmoSizeClipSpace(float value);
+CIMGUI_API MOVETYPE ImGuizmo_GetActiveHandleType(void);
+CIMGUI_API MOVETYPE ImGuizmo_GetHoveredHandleType(void);
+CIMGUI_API MOVETYPE ImGuizmo_GetActiveMoveType(void);
+CIMGUI_API MOVETYPE ImGuizmo_GetHoveredMoveType(void);
 CIMGUI_API void ImGuizmo_AllowAxisFlip(bool value);
 CIMGUI_API void ImGuizmo_SetAxisLimit(float value);
 CIMGUI_API void ImGuizmo_SetAxisMask(bool x,bool y,bool z);

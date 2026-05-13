@@ -1,1 +1,10 @@
-[]
+{
+  "closeCurlyBracket": "'}'",
+  "closeParenthesis": "')'",
+  "closeSquareBracket": "']'",
+  "doubleQuote": "'\"'",
+  "openCurlyBracket": "'{'",
+  "openParenthesis": "'('",
+  "openSquareBracket": "'['",
+  "singleQuote": "'\\''"
+}

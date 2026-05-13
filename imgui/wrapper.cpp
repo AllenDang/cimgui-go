@@ -107,7 +107,7 @@ ImColor_c wrap_ImColor_HSV(float h,float s,float v) { return ImColor_HSV(h,s,v,1
 void wrap_ImColor_SetHSV(ImColor* self,float h,float s,float v) { ImColor_SetHSV(self,h,s,v,1.0f); }
 void wrap_ImDrawList_AddBezierCubic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,ImU32 col,float thickness) { ImDrawList_AddBezierCubic(self,p1,p2,p3,p4,col,thickness,0); }
 void wrap_ImDrawList_AddBezierQuadratic(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,ImU32 col,float thickness) { ImDrawList_AddBezierQuadratic(self,p1,p2,p3,col,thickness,0); }
-void wrap_ImDrawList_AddCallback(ImDrawList* self,ImDrawCallback callback,uintptr_t userdata) { wrap_ImDrawList_AddCallbackV(self,callback,userdata,0); }
+void wrap_ImDrawList_AddCallback(ImDrawList* self,ImDrawCallback callback) { wrap_ImDrawList_AddCallbackV(self,callback,0,0); }
 void wrap_ImDrawList_AddCircle(ImDrawList* self,const ImVec2 center,float radius,ImU32 col) { ImDrawList_AddCircle(self,center,radius,col,0,1.0f); }
 void wrap_ImDrawList_AddCircleFilled(ImDrawList* self,const ImVec2 center,float radius,ImU32 col) { ImDrawList_AddCircleFilled(self,center,radius,col,0); }
 void wrap_ImDrawList_AddEllipse(ImDrawList* self,const ImVec2 center,const ImVec2 radius,ImU32 col) { ImDrawList_AddEllipse(self,center,radius,col,0.0f,0,1.0f); }
@@ -116,9 +116,12 @@ void wrap_ImDrawList_AddImage(ImDrawList* self,ImTextureRef tex_ref,const ImVec2
 void wrap_ImDrawList_AddImageQuad(ImDrawList* self,ImTextureRef tex_ref,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4) { ImDrawList_AddImageQuad(self,tex_ref,p1,p2,p3,p4,(ImVec2){0,0},(ImVec2){1,0},(ImVec2){1,1},(ImVec2){0,1},4294967295); }
 void wrap_ImDrawList_AddImageRounded(ImDrawList* self,ImTextureRef tex_ref,const ImVec2 p_min,const ImVec2 p_max,const ImVec2 uv_min,const ImVec2 uv_max,ImU32 col,float rounding) { ImDrawList_AddImageRounded(self,tex_ref,p_min,p_max,uv_min,uv_max,col,rounding,0); }
 void wrap_ImDrawList_AddLine(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,ImU32 col) { ImDrawList_AddLine(self,p1,p2,col,1.0f); }
+void wrap_ImDrawList_AddLineH(ImDrawList* self,float min_x,float max_x,float y,ImU32 col) { ImDrawList_AddLineH(self,min_x,max_x,y,col,1.0f); }
+void wrap_ImDrawList_AddLineV(ImDrawList* self,float x,float min_y,float max_y,ImU32 col) { ImDrawList_AddLineV(self,x,min_y,max_y,col,1.0f); }
 void wrap_ImDrawList_AddNgon(ImDrawList* self,const ImVec2 center,float radius,ImU32 col,int num_segments) { ImDrawList_AddNgon(self,center,radius,col,num_segments,1.0f); }
+void wrap_ImDrawList_AddPolyline(ImDrawList* self,const ImVec2* points,int num_points,ImU32 col,float thickness) { ImDrawList_AddPolyline(self,points,num_points,col,thickness,0); }
 void wrap_ImDrawList_AddQuad(ImDrawList* self,const ImVec2 p1,const ImVec2 p2,const ImVec2 p3,const ImVec2 p4,ImU32 col) { ImDrawList_AddQuad(self,p1,p2,p3,p4,col,1.0f); }
-void wrap_ImDrawList_AddRect(ImDrawList* self,const ImVec2 p_min,const ImVec2 p_max,ImU32 col) { ImDrawList_AddRect(self,p_min,p_max,col,0.0f,0,1.0f); }
+void wrap_ImDrawList_AddRect(ImDrawList* self,const ImVec2 p_min,const ImVec2 p_max,ImU32 col) { ImDrawList_AddRect(self,p_min,p_max,col,0.0f,1.0f,0); }
 void wrap_ImDrawList_AddRectFilled(ImDrawList* self,const ImVec2 p_min,const ImVec2 p_max,ImU32 col) { ImDrawList_AddRectFilled(self,p_min,p_max,col,0.0f,0); }
 void wrap_ImDrawList_AddText_FontPtr(ImDrawList* self,ImFont* font,float font_size,const ImVec2 pos,ImU32 col,const char* text_begin) { wrap_ImDrawList_AddText_FontPtrV(self,font,font_size,pos,col,text_begin,0.0f,0); }
 void wrap_ImDrawList_AddText_Vec2(ImDrawList* self,const ImVec2 pos,ImU32 col,const char* text_begin) { wrap_ImDrawList_AddText_Vec2V(self,pos,col,text_begin); }
@@ -128,7 +131,7 @@ void wrap_ImDrawList_PathBezierCubicCurveTo(ImDrawList* self,const ImVec2 p2,con
 void wrap_ImDrawList_PathBezierQuadraticCurveTo(ImDrawList* self,const ImVec2 p2,const ImVec2 p3) { ImDrawList_PathBezierQuadraticCurveTo(self,p2,p3,0); }
 void wrap_ImDrawList_PathEllipticalArcTo(ImDrawList* self,const ImVec2 center,const ImVec2 radius,float rot,float a_min,float a_max) { ImDrawList_PathEllipticalArcTo(self,center,radius,rot,a_min,a_max,0); }
 void wrap_ImDrawList_PathRect(ImDrawList* self,const ImVec2 rect_min,const ImVec2 rect_max) { ImDrawList_PathRect(self,rect_min,rect_max,0.0f,0); }
-void wrap_ImDrawList_PathStroke(ImDrawList* self,ImU32 col) { ImDrawList_PathStroke(self,col,0,1.0f); }
+void wrap_ImDrawList_PathStroke(ImDrawList* self,ImU32 col) { ImDrawList_PathStroke(self,col,1.0f,0); }
 void wrap_ImDrawList_PushClipRect(ImDrawList* self,const ImVec2 clip_rect_min,const ImVec2 clip_rect_max) { ImDrawList_PushClipRect(self,clip_rect_min,clip_rect_max,false); }
 ImFontAtlasRectId wrap_ImFontAtlas_AddCustomRect(ImFontAtlas* self,int width,int height) { return ImFontAtlas_AddCustomRect(self,width,height,0); }
 ImFont* wrap_ImFontAtlas_AddFontDefault(ImFontAtlas* self) { return ImFontAtlas_AddFontDefault(self,0); }

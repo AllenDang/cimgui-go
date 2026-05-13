@@ -2,7 +2,7 @@
 //based on ImGuizmo.h file version 1.92.5 WIP from https://github.com/CedricGuillemet/ImGuizmo
 #include "imgui.h"
 #include "imgui_internal.h"
-#include "./ImGuizmo/ImGuizmo.h"
+#include "./ImGuizmo/src/ImGuizmo.h"
 #include "cimguizmo.h"
 
 
@@ -72,6 +72,10 @@ CIMGUI_API void ImGuizmo_SetOrthographic(bool isOrthographic)
 {
     return ImGuizmo::SetOrthographic(isOrthographic);
 }
+CIMGUI_API void ImGuizmo_DrawAxes(const float* view,const float* projection,const float* matrices,int matrixCount)
+{
+    return ImGuizmo::DrawAxes(view,projection,matrices,matrixCount);
+}
 CIMGUI_API void ImGuizmo_DrawCubes(const float* view,const float* projection,const float* matrices,int matrixCount)
 {
     return ImGuizmo::DrawCubes(view,projection,matrices,matrixCount);
@@ -79,6 +83,14 @@ CIMGUI_API void ImGuizmo_DrawCubes(const float* view,const float* projection,con
 CIMGUI_API void ImGuizmo_DrawGrid(const float* view,const float* projection,const float* matrix,const float gridSize)
 {
     return ImGuizmo::DrawGrid(view,projection,matrix,gridSize);
+}
+CIMGUI_API void ImGuizmo_DrawGridCustom(const float* view,const float* projection,const float* matrix,const float gridSize,const float majorStep,const unsigned int subdivision)
+{
+    return ImGuizmo::DrawGridCustom(view,projection,matrix,gridSize,majorStep,subdivision);
+}
+CIMGUI_API void ImGuizmo_DrawGridCustomColor(const float* view,const float* projection,const float* matrix,const float gridSize,const float majorStep,const unsigned int subdivision,const ImU32 majorCol,const ImU32 minorCol,const ImU32 centerCol)
+{
+    return ImGuizmo::DrawGridCustomColor(view,projection,matrix,gridSize,majorStep,subdivision,majorCol,minorCol,centerCol);
 }
 CIMGUI_API bool ImGuizmo_Manipulate(const float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float* deltaMatrix,const float* snap,const float* localBounds,const float* boundsSnap)
 {
@@ -139,6 +151,22 @@ CIMGUI_API bool ImGuizmo_IsOver_OPERATION(OPERATION op)
 CIMGUI_API void ImGuizmo_SetGizmoSizeClipSpace(float value)
 {
     return ImGuizmo::SetGizmoSizeClipSpace(value);
+}
+CIMGUI_API MOVETYPE ImGuizmo_GetActiveHandleType()
+{
+    return ImGuizmo::GetActiveHandleType();
+}
+CIMGUI_API MOVETYPE ImGuizmo_GetHoveredHandleType()
+{
+    return ImGuizmo::GetHoveredHandleType();
+}
+CIMGUI_API MOVETYPE ImGuizmo_GetActiveMoveType()
+{
+    return ImGuizmo::GetActiveMoveType();
+}
+CIMGUI_API MOVETYPE ImGuizmo_GetHoveredMoveType()
+{
+    return ImGuizmo::GetHoveredMoveType();
 }
 CIMGUI_API void ImGuizmo_AllowAxisFlip(bool value)
 {

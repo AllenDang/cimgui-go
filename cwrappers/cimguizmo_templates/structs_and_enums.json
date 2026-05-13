@@ -1,5 +1,8 @@
 {
   "enum_comments": {
+    "MOVETYPE": {
+      "above": "   // Handle type used by the translate/rotate/scale gizmos."
+    },
     "OPERATION": {
       "above": "   // call it when you want a gizmo\n   // Needs view and projection matrices.\n   // matrix parameter is the source matrix (where will be gizmo be drawn) and might be transformed by the function. Return deltaMatrix is optional\n   // translation is applied in world space"
     }
@@ -108,6 +111,88 @@
         "value": "1"
       }
     ],
+    "MOVETYPE": [
+      {
+        "calc_value": 0,
+        "name": "MT_NONE",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "MT_MOVE_X",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "MT_MOVE_Y",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "MT_MOVE_Z",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "MT_MOVE_YZ",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "MT_MOVE_ZX",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "MT_MOVE_XY",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "MT_MOVE_SCREEN",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "MT_ROTATE_X",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "MT_ROTATE_Y",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "MT_ROTATE_Z",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "MT_ROTATE_SCREEN",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "MT_SCALE_X",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "MT_SCALE_Y",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "MT_SCALE_Z",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "MT_SCALE_XYZ",
+        "value": "15"
+      }
+    ],
     "OPERATION": [
       {
         "calc_value": 1,
@@ -209,10 +294,11 @@
   },
   "enumtypes": [],
   "locations": {
-    "COLOR": "ImGuizmo:269",
-    "MODE": "ImGuizmo:209",
-    "OPERATION": "ImGuizmo:180",
-    "Style": "ImGuizmo:289"
+    "COLOR": "ImGuizmo:306",
+    "MODE": "ImGuizmo:217",
+    "MOVETYPE": "ImGuizmo:264",
+    "OPERATION": "ImGuizmo:188",
+    "Style": "ImGuizmo:326"
   },
   "nonPOD": {
     "ImBitArray": "inherited",
@@ -312,6 +398,7 @@
   "nonPOD_used": {
     "ImVec2": "inherited"
   },
+  "opaque_structs": [],
   "struct_comments": [],
   "structs": {
     "Style": [

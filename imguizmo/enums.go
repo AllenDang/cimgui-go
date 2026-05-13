@@ -42,6 +42,29 @@ const (
 	WORLD MODE = 1
 )
 
+// Handle type used by the translate/rotate/scale gizmos.
+// original name: MOVETYPE
+type MOVETYPE int32
+
+const (
+	MTNONE         MOVETYPE = 0
+	MTMOVEX        MOVETYPE = 1
+	MTMOVEY        MOVETYPE = 2
+	MTMOVEZ        MOVETYPE = 3
+	MTMOVEYZ       MOVETYPE = 4
+	MTMOVEZX       MOVETYPE = 5
+	MTMOVEXY       MOVETYPE = 6
+	MTMOVESCREEN   MOVETYPE = 7
+	MTROTATEX      MOVETYPE = 8
+	MTROTATEY      MOVETYPE = 9
+	MTROTATEZ      MOVETYPE = 10
+	MTROTATESCREEN MOVETYPE = 11
+	MTSCALEX       MOVETYPE = 12
+	MTSCALEY       MOVETYPE = 13
+	MTSCALEZ       MOVETYPE = 14
+	MTSCALEXYZ     MOVETYPE = 15
+)
+
 // call it when you want a gizmo
 // Needs view and projection matrices.
 // matrix parameter is the source matrix (where will be gizmo be drawn) and might be transformed by the function. Return deltaMatrix is optional
