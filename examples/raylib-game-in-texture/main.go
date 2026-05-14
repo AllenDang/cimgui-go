@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/AllenDang/cimgui-go/backend"
-	raylibbackend "github.com/AllenDang/cimgui-go/backend/raylib-backend"
+	"github.com/AllenDang/cimgui-go/backend/raylibbackend"
 	"github.com/AllenDang/cimgui-go/examples/common"
 	"github.com/AllenDang/cimgui-go/imgui"
 	rl "github.com/gen2brain/raylib-go/raylib"
