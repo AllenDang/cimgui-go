@@ -9,27 +9,29 @@ type DrawFlags int32
 
 const (
 	DrawFlagsNone DrawFlags = 0
-	// AddRect(), AddRectFilled(), PathRect(): enable rounding top-left corner only (when rounding > 0.0f, we default to all corners). Was 0x01.
+	// Round top-left corner only (when rounding > 0.0f, we default to all corners).
 	DrawFlagsRoundCornersTopLeft DrawFlags = 16
-	// AddRect(), AddRectFilled(), PathRect(): enable rounding top-right corner only (when rounding > 0.0f, we default to all corners). Was 0x02.
+	// Round top-right corner only (when rounding > 0.0f, we default to all corners).
 	DrawFlagsRoundCornersTopRight DrawFlags = 32
-	// AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-left corner only (when rounding > 0.0f, we default to all corners). Was 0x04.
+	// Round bottom-left corner only (when rounding > 0.0f, we default to all corners).
 	DrawFlagsRoundCornersBottomLeft DrawFlags = 64
-	// AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-right corner only (when rounding > 0.0f, we default to all corners). Wax 0x08.
+	// Round bottom-right corner only (when rounding > 0.0f, we default to all corners).
 	DrawFlagsRoundCornersBottomRight DrawFlags = 128
-	// AddRect(), AddRectFilled(), PathRect(): disable rounding on all corners (when rounding > 0.0f). This is NOT zero, NOT an implicit flag!
+	// Disable rounding even if `float rounding > 0.0f`. This is NOT zero, NOT an implicit flag!
 	DrawFlagsRoundCornersNone DrawFlags = 256
-	// PathStroke(), AddPolyline(): specify that shape should be closed (Important: this is always == 1 for legacy reason)
-	DrawFlagsClosed             DrawFlags = 512
-	DrawFlagsRoundCornersTop    DrawFlags = 48
-	DrawFlagsRoundCornersBottom DrawFlags = 192
-	DrawFlagsRoundCornersLeft   DrawFlags = 80
-	DrawFlagsRoundCornersRight  DrawFlags = 160
-	DrawFlagsRoundCornersAll    DrawFlags = 240
-	// Default to ALL corners if none of the _RoundCornersXX flags are specified.
+	// (Default!!)
+	DrawFlagsRoundCornersAll DrawFlags = 240
+	// Default to ALL corners if none of the _RoundCornersXX flags are specified!
 	DrawFlagsRoundCornersDefault DrawFlags = 240
+	DrawFlagsRoundCornersTop     DrawFlags = 48
+	DrawFlagsRoundCornersBottom  DrawFlags = 192
+	DrawFlagsRoundCornersLeft    DrawFlags = 80
+	DrawFlagsRoundCornersRight   DrawFlags = 160
 	DrawFlagsRoundCornersMask    DrawFlags = 496
-	DrawFlagsInvalidMask         DrawFlags = 2147483663
+	// PathStroke(), AddPolyline(): specify that shape should be closed.
+	DrawFlagsClosed DrawFlags = 512
+	// == 0x8000000F,
+	DrawFlagsInvalidMask DrawFlags = -2147483633
 )
 
 // Flags for ImDrawList instance. Those are set automatically by ImGui:: functions from ImGuiIO settings, and generally not manipulated directly.

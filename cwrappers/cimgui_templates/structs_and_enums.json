@@ -223,39 +223,45 @@
       },
       {
         "calc_value": 16,
-        "comment": "// AddRect(), AddRectFilled(), PathRect(): enable rounding top-left corner only (when rounding > 0.0f, we default to all corners). Was 0x01.",
+        "comment": "// Round top-left corner only (when rounding > 0.0f, we default to all corners).",
         "name": "ImDrawFlags_RoundCornersTopLeft",
         "value": "1 << 4"
       },
       {
         "calc_value": 32,
-        "comment": "// AddRect(), AddRectFilled(), PathRect(): enable rounding top-right corner only (when rounding > 0.0f, we default to all corners). Was 0x02.",
+        "comment": "// Round top-right corner only (when rounding > 0.0f, we default to all corners).",
         "name": "ImDrawFlags_RoundCornersTopRight",
         "value": "1 << 5"
       },
       {
         "calc_value": 64,
-        "comment": "// AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-left corner only (when rounding > 0.0f, we default to all corners). Was 0x04.",
+        "comment": "// Round bottom-left corner only (when rounding > 0.0f, we default to all corners).",
         "name": "ImDrawFlags_RoundCornersBottomLeft",
         "value": "1 << 6"
       },
       {
         "calc_value": 128,
-        "comment": "// AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-right corner only (when rounding > 0.0f, we default to all corners). Wax 0x08.",
+        "comment": "// Round bottom-right corner only (when rounding > 0.0f, we default to all corners).",
         "name": "ImDrawFlags_RoundCornersBottomRight",
         "value": "1 << 7"
       },
       {
         "calc_value": 256,
-        "comment": "// AddRect(), AddRectFilled(), PathRect(): disable rounding on all corners (when rounding > 0.0f). This is NOT zero, NOT an implicit flag!",
+        "comment": "// Disable rounding even if `float rounding > 0.0f`. This is NOT zero, NOT an implicit flag!",
         "name": "ImDrawFlags_RoundCornersNone",
         "value": "1 << 8"
       },
       {
-        "calc_value": 512,
-        "comment": "// PathStroke(), AddPolyline(): specify that shape should be closed (Important: this is always == 1 for legacy reason)",
-        "name": "ImDrawFlags_Closed",
-        "value": "1 << 9"
+        "calc_value": 240,
+        "comment": "// (Default!!)",
+        "name": "ImDrawFlags_RoundCornersAll",
+        "value": "ImDrawFlags_RoundCornersTopLeft | ImDrawFlags_RoundCornersTopRight | ImDrawFlags_RoundCornersBottomLeft | ImDrawFlags_RoundCornersBottomRight"
+      },
+      {
+        "calc_value": 240,
+        "comment": "// Default to ALL corners if none of the _RoundCornersXX flags are specified!",
+        "name": "ImDrawFlags_RoundCornersDefault_",
+        "value": "ImDrawFlags_RoundCornersAll"
       },
       {
         "calc_value": 48,
@@ -278,25 +284,21 @@
         "value": "ImDrawFlags_RoundCornersBottomRight | ImDrawFlags_RoundCornersTopRight"
       },
       {
-        "calc_value": 240,
-        "name": "ImDrawFlags_RoundCornersAll",
-        "value": "ImDrawFlags_RoundCornersTopLeft | ImDrawFlags_RoundCornersTopRight | ImDrawFlags_RoundCornersBottomLeft | ImDrawFlags_RoundCornersBottomRight"
-      },
-      {
-        "calc_value": 240,
-        "comment": "// Default to ALL corners if none of the _RoundCornersXX flags are specified.",
-        "name": "ImDrawFlags_RoundCornersDefault_",
-        "value": "ImDrawFlags_RoundCornersAll"
-      },
-      {
         "calc_value": 496,
         "name": "ImDrawFlags_RoundCornersMask_",
         "value": "ImDrawFlags_RoundCornersAll | ImDrawFlags_RoundCornersNone"
       },
       {
-        "calc_value": 2147483663,
+        "calc_value": 512,
+        "comment": "// PathStroke(), AddPolyline(): specify that shape should be closed.",
+        "name": "ImDrawFlags_Closed",
+        "value": "1 << 9"
+      },
+      {
+        "calc_value": -2147483633,
+        "comment": "// == 0x8000000F,",
         "name": "ImDrawFlags_InvalidMask_",
-        "value": "(ImDrawFlags)0x8000000F"
+        "value": "~0x7FFFFFF0"
       }
     ],
     "ImDrawListFlags_": [
@@ -6356,27 +6358,27 @@
     "ImDrawChannel": "imgui:3355",
     "ImDrawCmd": "imgui:3311",
     "ImDrawCmdHeader": "imgui:3347",
-    "ImDrawData": "imgui:3586",
+    "ImDrawData": "imgui:3590",
     "ImDrawDataBuilder": "imgui_internal:904",
     "ImDrawFlags_": "imgui:3379",
-    "ImDrawList": "imgui:3418",
-    "ImDrawListFlags_": "imgui:3400",
+    "ImDrawList": "imgui:3422",
+    "ImDrawListFlags_": "imgui:3404",
     "ImDrawListSharedData": "imgui_internal:877",
     "ImDrawListSplitter": "imgui:3363",
     "ImDrawTextFlags_": "imgui_internal:446",
     "ImDrawVert": "imgui:3332",
-    "ImFont": "imgui:4014",
-    "ImFontAtlas": "imgui:3814",
+    "ImFont": "imgui:4018",
+    "ImFontAtlas": "imgui:3818",
     "ImFontAtlasBuilder": "imgui_internal:4191",
-    "ImFontAtlasFlags_": "imgui:3787",
+    "ImFontAtlasFlags_": "imgui:3791",
     "ImFontAtlasPostProcessData": "imgui_internal:4164",
-    "ImFontAtlasRect": "imgui:3777",
+    "ImFontAtlasRect": "imgui:3781",
     "ImFontAtlasRectEntry": "imgui_internal:4156",
-    "ImFontBaked": "imgui:3965",
-    "ImFontConfig": "imgui:3696",
-    "ImFontFlags_": "imgui:4000",
-    "ImFontGlyph": "imgui:3739",
-    "ImFontGlyphRangesBuilder": "imgui:3755",
+    "ImFontBaked": "imgui:3969",
+    "ImFontConfig": "imgui:3700",
+    "ImFontFlags_": "imgui:4004",
+    "ImFontGlyph": "imgui:3743",
+    "ImFontGlyphRangesBuilder": "imgui:3759",
     "ImFontLoader": "imgui_internal:4105",
     "ImFontStackData": "imgui_internal:912",
     "ImGuiActivateFlags_": "imgui_internal:1715",
@@ -6480,9 +6482,9 @@
     "ImGuiOldColumns": "imgui_internal:1881",
     "ImGuiOnceUponAFrame": "imgui:2857",
     "ImGuiPayload": "imgui:2822",
-    "ImGuiPlatformIO": "imgui:4203",
-    "ImGuiPlatformImeData": "imgui:4331",
-    "ImGuiPlatformMonitor": "imgui:4321",
+    "ImGuiPlatformIO": "imgui:4207",
+    "ImGuiPlatformImeData": "imgui:4335",
+    "ImGuiPlatformMonitor": "imgui:4325",
     "ImGuiPlotType": "imgui_internal:1168",
     "ImGuiPopupData": "imgui_internal:1500",
     "ImGuiPopupFlags_": "imgui:1388",
@@ -6541,8 +6543,8 @@
     "ImGuiTypingSelectFlags_": "imgui_internal:1814",
     "ImGuiTypingSelectRequest": "imgui_internal:1822",
     "ImGuiTypingSelectState": "imgui_internal:1833",
-    "ImGuiViewport": "imgui:4114",
-    "ImGuiViewportFlags_": "imgui:4086",
+    "ImGuiViewport": "imgui:4118",
+    "ImGuiViewportFlags_": "imgui:4090",
     "ImGuiViewportP": "imgui_internal:2141",
     "ImGuiWindow": "imgui_internal:2876",
     "ImGuiWindowBgClickFlags_": "imgui_internal:1313",
@@ -6555,11 +6557,11 @@
     "ImGuiWindowStackData": "imgui_internal:1453",
     "ImGuiWindowTempData": "imgui_internal:2818",
     "ImRect": "imgui_internal:596",
-    "ImTextureData": "imgui:3651",
-    "ImTextureFormat": "imgui:3619",
-    "ImTextureRect": "imgui:3638",
+    "ImTextureData": "imgui:3655",
+    "ImTextureFormat": "imgui:3623",
+    "ImTextureRect": "imgui:3642",
     "ImTextureRef": "imgui:372",
-    "ImTextureStatus": "imgui:3626",
+    "ImTextureStatus": "imgui:3630",
     "ImVec1": "imgui_internal:570",
     "ImVec2": "imgui:300",
     "ImVec2i": "imgui_internal:578",
