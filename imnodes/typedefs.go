@@ -105,13 +105,13 @@ func (self *MiniMapNodeHoveringCallbackUserData) Handle() (result *C.ImNodesMini
 
 // C is like Handle but returns plain type instead of pointer.
 func (self MiniMapNodeHoveringCallbackUserData) C() (C.ImNodesMiniMapNodeHoveringCallbackUserData, func()) {
-	return (C.ImNodesMiniMapNodeHoveringCallbackUserData)(C.ImNodesMiniMapNodeHoveringCallbackUserData_fromUintptr(C.uintptr_t(self.Data))), func() {}
+	return C.ImNodesMiniMapNodeHoveringCallbackUserData(C.ImNodesMiniMapNodeHoveringCallbackUserData_fromUintptr(C.uintptr_t(self.Data))), func() {}
 }
 
 // NewMiniMapNodeHoveringCallbackUserDataFromC creates MiniMapNodeHoveringCallbackUserData from its C pointer.
 // SRC ~= *C.ImNodesMiniMapNodeHoveringCallbackUserData
 func NewMiniMapNodeHoveringCallbackUserDataFromC[SRC any](cvalue SRC) *MiniMapNodeHoveringCallbackUserData {
-	return &MiniMapNodeHoveringCallbackUserData{Data: (uintptr)(C.ImNodesMiniMapNodeHoveringCallbackUserData_toUintptr(*internal.ReinterpretCast[*C.ImNodesMiniMapNodeHoveringCallbackUserData](cvalue)))}
+	return &MiniMapNodeHoveringCallbackUserData{Data: uintptr(C.ImNodesMiniMapNodeHoveringCallbackUserData_toUintptr(*internal.ReinterpretCast[*C.ImNodesMiniMapNodeHoveringCallbackUserData](cvalue)))}
 }
 
 type Style struct {

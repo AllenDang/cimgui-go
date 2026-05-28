@@ -50,6 +50,7 @@ We support the following backends:
 - [SDL2](./examples/sdl). (SDL 2 + OpenGL)
 - [Ebitengine](./examples/ebiten) (`import "github.com/AllenDang/cimgui-go/backend/ebitenbackend"`).
 - [DRM/EGL](./examples/drm-egl) (`import "github.com/AllenDang/cimgui-go/backend/drmeglbackend"`, Linux only).
+- [RayLib](./examples/raylib) (`import "github.com/AllenDang/cimgui-go/backend/raylibbackend"`).
 
 > [!important]
 > Remember that various solution use different C libraries that can conflict with each other.
