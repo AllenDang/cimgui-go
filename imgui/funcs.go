@@ -279,20 +279,16 @@ func (self *DrawList) AddCircleFilledV(center Vec2, radius float32, col uint32, 
 
 func (self *DrawList) AddConcavePolyFilled(points *Vec2, num_points int32, col uint32) {
 	selfArg, selfFin := self.Handle()
-	pointsArg, pointsFin := internal.Wrap(points)
-	C.ImDrawList_AddConcavePolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2_c](pointsArg), C.int(num_points), C.ImU32(col))
+	C.ImDrawList_AddConcavePolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), (*C.ImVec2_c)(unsafe.Pointer(points)), C.int(num_points), C.ImU32(col))
 
 	selfFin()
-	pointsFin()
 }
 
 func (self *DrawList) AddConvexPolyFilled(points *Vec2, num_points int32, col uint32) {
 	selfArg, selfFin := self.Handle()
-	pointsArg, pointsFin := internal.Wrap(points)
-	C.ImDrawList_AddConvexPolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2_c](pointsArg), C.int(num_points), C.ImU32(col))
+	C.ImDrawList_AddConvexPolyFilled(internal.ReinterpretCast[*C.ImDrawList](selfArg), (*C.ImVec2_c)(unsafe.Pointer(points)), C.int(num_points), C.ImU32(col))
 
 	selfFin()
-	pointsFin()
 }
 
 // This is useful if you need to forcefully create a new draw call (to allow for dependent rendering / blending). Otherwise primitives are merged into the same draw-call as much as possible
@@ -390,11 +386,9 @@ func (self *DrawList) AddNgonFilled(center Vec2, radius float32, col uint32, num
 
 func (self *DrawList) AddPolyline(points *Vec2, num_points int32, col uint32, flags DrawFlags, thickness float32) {
 	selfArg, selfFin := self.Handle()
-	pointsArg, pointsFin := internal.Wrap(points)
-	C.ImDrawList_AddPolyline(internal.ReinterpretCast[*C.ImDrawList](selfArg), internal.ReinterpretCast[*C.ImVec2_c](pointsArg), C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
+	C.ImDrawList_AddPolyline(internal.ReinterpretCast[*C.ImDrawList](selfArg), (*C.ImVec2_c)(unsafe.Pointer(points)), C.int(num_points), C.ImU32(col), C.ImDrawFlags(flags), C.float(thickness))
 
 	selfFin()
-	pointsFin()
 }
 
 // AddQuadV parameter default value hint:
