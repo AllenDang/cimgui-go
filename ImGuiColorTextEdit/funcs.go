@@ -72,19 +72,19 @@ func CodePointIsXidStart(codepoint imgui.Wchar) bool {
 }
 
 func CodePointToLower(codepoint imgui.Wchar) imgui.Wchar {
-	return (imgui.Wchar)(C.CodePoint_toLower(C.ImWchar(codepoint)))
+	return imgui.Wchar(C.CodePoint_toLower(C.ImWchar(codepoint)))
 }
 
 func CodePointToPairCloser(ch imgui.Wchar) imgui.Wchar {
-	return (imgui.Wchar)(C.CodePoint_toPairCloser(C.ImWchar(ch)))
+	return imgui.Wchar(C.CodePoint_toPairCloser(C.ImWchar(ch)))
 }
 
 func CodePointToPairOpener(ch imgui.Wchar) imgui.Wchar {
-	return (imgui.Wchar)(C.CodePoint_toPairOpener(C.ImWchar(ch)))
+	return imgui.Wchar(C.CodePoint_toPairOpener(C.ImWchar(ch)))
 }
 
 func CodePointToUpper(codepoint imgui.Wchar) imgui.Wchar {
-	return (imgui.Wchar)(C.CodePoint_toUpper(C.ImWchar(codepoint)))
+	return imgui.Wchar(C.CodePoint_toUpper(C.ImWchar(codepoint)))
 }
 
 func CodePointWrite(i string, codepoint imgui.Wchar) uint64 {
@@ -1315,7 +1315,7 @@ func (self *Glyph) Codepoint() imgui.Wchar {
 	defer func() {
 		selfFin()
 	}()
-	return (imgui.Wchar)(C.wrap_Glyph_GetCodepoint(internal.ReinterpretCast[*C.Glyph](selfArg)))
+	return imgui.Wchar(C.wrap_Glyph_GetCodepoint(internal.ReinterpretCast[*C.Glyph](selfArg)))
 }
 
 func (self *Glyph) Color() Color {
