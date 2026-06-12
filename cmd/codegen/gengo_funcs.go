@@ -403,6 +403,17 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 			break
 		}
 
+		// cimgui exposes arrays of wrappable values as a "T* X, int num_X"
+		// pair. The default wrappablePtrW uses internal.Wrap, which copies
+		// just the first element, so the C side reads garbage past index 0.
+		// Reinterpret the Go pointer directly as a C array pointer instead.
+		if isWrappableArrayPair(f.ArgsT, i, g.context.preset.WrappableTypes) {
+			wrapper.ArgDef = ""
+			wrapper.ArgDefNoFin = ""
+			wrapper.Finalizer = ""
+			wrapper.VarName = fmt.Sprintf("(%s)(unsafe.Pointer(%s))", wrapper.CType, a.Name)
+		}
+
 		g.shouldGenerate = true
 		if len(decl) > 0 {
 			args = append(args, GoIdentifier(decl))
@@ -411,6 +422,31 @@ func (g *goFuncsGenerator) generateFuncArgs(f FuncDef) (args []GoIdentifier, arg
 	}
 
 	return args, argWrappers
+}
+
+// isWrappableArrayPair reports whether the argument at index i is a pointer
+// to a wrappable type immediately followed by an "int num_<name>" length
+// argument.
+func isWrappableArrayPair(argsT []ArgDef, i int, wrappableTypes map[CIdentifier][3]GoIdentifier) bool {
+	if i+1 >= len(argsT) {
+		return false
+	}
+	a := argsT[i]
+	next := argsT[i+1]
+
+	if !HasSuffix(a.Type, "*") {
+		return false
+	}
+	baseType := TrimSuffix(TrimPrefix(a.Type, "const "), "*")
+	if _, ok := wrappableTypes[baseType]; !ok {
+		return false
+	}
+
+	if next.Type != "int" {
+		return false
+	}
+
+	return string(next.Name) == "num_"+string(a.Name)
 }
 
 // Generate function body
