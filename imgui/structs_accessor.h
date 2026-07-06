@@ -446,6 +446,7 @@ extern void wrap_ImGuiBoxSelectState_SetScrollAccum(ImGuiBoxSelectState *ImGuiBo
 extern void wrap_ImGuiBoxSelectState_SetWindow(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImGuiWindow* v);
 extern void wrap_ImGuiBoxSelectState_SetUnclipMode(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, bool v);
 extern void wrap_ImGuiBoxSelectState_SetUnclipRect(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect_c v);
+extern void wrap_ImGuiBoxSelectState_SetUnclipRects(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect_c* v);
 extern void wrap_ImGuiBoxSelectState_SetBoxSelectRectPrev(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect_c v);
 extern void wrap_ImGuiBoxSelectState_SetBoxSelectRectCurr(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect_c v);
 extern ImGuiID wrap_ImGuiBoxSelectState_GetID(ImGuiBoxSelectState *self);
@@ -461,6 +462,8 @@ extern ImVec2_c wrap_ImGuiBoxSelectState_GetScrollAccum(ImGuiBoxSelectState *sel
 extern ImGuiWindow* wrap_ImGuiBoxSelectState_GetWindow(ImGuiBoxSelectState *self);
 extern bool wrap_ImGuiBoxSelectState_GetUnclipMode(ImGuiBoxSelectState *self);
 extern ImRect_c wrap_ImGuiBoxSelectState_GetUnclipRect(ImGuiBoxSelectState *self);
+extern ImRect_c* wrap_ImGuiBoxSelectState_GetUnclipRects(ImGuiBoxSelectState *self);
+extern ImRect imgui_ImRect_GetAtIdx(ImRect *self, int index);
 extern ImRect_c wrap_ImGuiBoxSelectState_GetBoxSelectRectPrev(ImGuiBoxSelectState *self);
 extern ImRect_c wrap_ImGuiBoxSelectState_GetBoxSelectRectCurr(ImGuiBoxSelectState *self);
 extern void wrap_ImGuiColorMod_SetCol(ImGuiColorMod *ImGuiColorModPtr, ImGuiCol v);
@@ -1219,8 +1222,8 @@ extern void wrap_ImGuiDockNode_SetPos(ImGuiDockNode *ImGuiDockNodePtr, ImVec2_c 
 extern void wrap_ImGuiDockNode_SetSize(ImGuiDockNode *ImGuiDockNodePtr, ImVec2_c v);
 extern void wrap_ImGuiDockNode_SetSizeRef(ImGuiDockNode *ImGuiDockNodePtr, ImVec2_c v);
 extern void wrap_ImGuiDockNode_SetSplitAxis(ImGuiDockNode *ImGuiDockNodePtr, ImGuiAxis v);
-extern void wrap_ImGuiDockNode_SetWindowClass(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindowClass v);
 extern void wrap_ImGuiDockNode_SetLastBgColor(ImGuiDockNode *ImGuiDockNodePtr, ImU32 v);
+extern void wrap_ImGuiDockNode_SetWindowClass(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindowClass v);
 extern void wrap_ImGuiDockNode_SetHostWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v);
 extern void wrap_ImGuiDockNode_SetVisibleWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v);
 extern void wrap_ImGuiDockNode_SetCentralNode(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v);
@@ -1262,8 +1265,8 @@ extern ImVec2_c wrap_ImGuiDockNode_GetPos(ImGuiDockNode *self);
 extern ImVec2_c wrap_ImGuiDockNode_GetSize(ImGuiDockNode *self);
 extern ImVec2_c wrap_ImGuiDockNode_GetSizeRef(ImGuiDockNode *self);
 extern ImGuiAxis wrap_ImGuiDockNode_GetSplitAxis(ImGuiDockNode *self);
-extern ImGuiWindowClass wrap_ImGuiDockNode_GetWindowClass(ImGuiDockNode *self);
 extern ImU32 wrap_ImGuiDockNode_GetLastBgColor(ImGuiDockNode *self);
+extern ImGuiWindowClass wrap_ImGuiDockNode_GetWindowClass(ImGuiDockNode *self);
 extern ImGuiWindow* wrap_ImGuiDockNode_GetHostWindow(ImGuiDockNode *self);
 extern ImGuiWindow* wrap_ImGuiDockNode_GetVisibleWindow(ImGuiDockNode *self);
 extern ImGuiDockNode* wrap_ImGuiDockNode_GetCentralNode(ImGuiDockNode *self);
@@ -1872,7 +1875,6 @@ extern void wrap_ImGuiMultiSelectTempData_SetFocusScopeId(ImGuiMultiSelectTempDa
 extern void wrap_ImGuiMultiSelectTempData_SetFlags(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiMultiSelectFlags v);
 extern void wrap_ImGuiMultiSelectTempData_SetScopeRectMin(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImVec2_c v);
 extern void wrap_ImGuiMultiSelectTempData_SetBackupCursorMaxPos(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImVec2_c v);
-extern void wrap_ImGuiMultiSelectTempData_SetLastSubmittedItem(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiSelectionUserData v);
 extern void wrap_ImGuiMultiSelectTempData_SetBoxSelectId(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiID v);
 extern void wrap_ImGuiMultiSelectTempData_SetKeyMods(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiKeyChord v);
 extern void wrap_ImGuiMultiSelectTempData_SetLoopRequestSetAll(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImS8 v);
@@ -1888,7 +1890,6 @@ extern ImGuiID wrap_ImGuiMultiSelectTempData_GetFocusScopeId(ImGuiMultiSelectTem
 extern ImGuiMultiSelectFlags wrap_ImGuiMultiSelectTempData_GetFlags(ImGuiMultiSelectTempData *self);
 extern ImVec2_c wrap_ImGuiMultiSelectTempData_GetScopeRectMin(ImGuiMultiSelectTempData *self);
 extern ImVec2_c wrap_ImGuiMultiSelectTempData_GetBackupCursorMaxPos(ImGuiMultiSelectTempData *self);
-extern ImGuiSelectionUserData wrap_ImGuiMultiSelectTempData_GetLastSubmittedItem(ImGuiMultiSelectTempData *self);
 extern ImGuiID wrap_ImGuiMultiSelectTempData_GetBoxSelectId(ImGuiMultiSelectTempData *self);
 extern ImGuiKeyChord wrap_ImGuiMultiSelectTempData_GetKeyMods(ImGuiMultiSelectTempData *self);
 extern ImS8 wrap_ImGuiMultiSelectTempData_GetLoopRequestSetAll(ImGuiMultiSelectTempData *self);
@@ -2053,6 +2054,9 @@ extern void wrap_ImGuiPlatformIO_SetPlatform_LocaleDecimalPoint(ImGuiPlatformIO 
 extern void wrap_ImGuiPlatformIO_SetRenderer_TextureMaxWidth(ImGuiPlatformIO *ImGuiPlatformIOPtr, int v);
 extern void wrap_ImGuiPlatformIO_SetRenderer_TextureMaxHeight(ImGuiPlatformIO *ImGuiPlatformIOPtr, int v);
 extern void wrap_ImGuiPlatformIO_SetRenderer_RenderState(ImGuiPlatformIO *ImGuiPlatformIOPtr, uintptr_t v);
+extern void wrap_ImGuiPlatformIO_SetDrawCallback_ResetRenderState(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImDrawCallback v);
+extern void wrap_ImGuiPlatformIO_SetDrawCallback_SetSamplerLinear(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImDrawCallback v);
+extern void wrap_ImGuiPlatformIO_SetDrawCallback_SetSamplerNearest(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImDrawCallback v);
 extern void wrap_ImGuiPlatformIO_SetMonitors(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiPlatformMonitor v);
 extern void wrap_ImGuiPlatformIO_SetTextures(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImTextureDataPtr v);
 extern void wrap_ImGuiPlatformIO_SetViewports(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiViewportPtr v);
@@ -2063,6 +2067,9 @@ extern ImWchar wrap_ImGuiPlatformIO_GetPlatform_LocaleDecimalPoint(ImGuiPlatform
 extern int wrap_ImGuiPlatformIO_GetRenderer_TextureMaxWidth(ImGuiPlatformIO *self);
 extern int wrap_ImGuiPlatformIO_GetRenderer_TextureMaxHeight(ImGuiPlatformIO *self);
 extern uintptr_t wrap_ImGuiPlatformIO_GetRenderer_RenderState(ImGuiPlatformIO *self);
+extern ImDrawCallback wrap_ImGuiPlatformIO_GetDrawCallback_ResetRenderState(ImGuiPlatformIO *self);
+extern ImDrawCallback wrap_ImGuiPlatformIO_GetDrawCallback_SetSamplerLinear(ImGuiPlatformIO *self);
+extern ImDrawCallback wrap_ImGuiPlatformIO_GetDrawCallback_SetSamplerNearest(ImGuiPlatformIO *self);
 extern ImVector_ImGuiPlatformMonitor wrap_ImGuiPlatformIO_GetMonitors(ImGuiPlatformIO *self);
 extern ImVector_ImTextureDataPtr wrap_ImGuiPlatformIO_GetTextures(ImGuiPlatformIO *self);
 extern ImVector_ImGuiViewportPtr wrap_ImGuiPlatformIO_GetViewports(ImGuiPlatformIO *self);
@@ -3209,7 +3216,6 @@ extern ImGuiWindow* wrap_ImGuiWindow_GetNavLastChildNavWindow(ImGuiWindow *self)
 extern ImGuiID* wrap_ImGuiWindow_GetNavLastIds(ImGuiWindow *self);
 extern ImGuiID imgui_ImGuiID_GetAtIdx(ImGuiID *self, int index);
 extern ImRect_c* wrap_ImGuiWindow_GetNavRectRel(ImGuiWindow *self);
-extern ImRect imgui_ImRect_GetAtIdx(ImRect *self, int index);
 extern ImVec2_c* wrap_ImGuiWindow_GetNavPreferredScoringPosRel(ImGuiWindow *self);
 extern ImGuiID wrap_ImGuiWindow_GetNavRootFocusScopeId(ImGuiWindow *self);
 extern int wrap_ImGuiWindow_GetMemoryDrawListIdxCapacity(ImGuiWindow *self);

@@ -443,6 +443,7 @@ void wrap_ImGuiBoxSelectState_SetScrollAccum(ImGuiBoxSelectState *ImGuiBoxSelect
 void wrap_ImGuiBoxSelectState_SetWindow(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImGuiWindow* v) { ImGuiBoxSelectStatePtr->Window = v; }
 void wrap_ImGuiBoxSelectState_SetUnclipMode(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, bool v) { ImGuiBoxSelectStatePtr->UnclipMode = v; }
 void wrap_ImGuiBoxSelectState_SetUnclipRect(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect v) { ImGuiBoxSelectStatePtr->UnclipRect = v; }
+void wrap_ImGuiBoxSelectState_SetUnclipRects(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect* v) { memcpy(ImGuiBoxSelectStatePtr->UnclipRects, v, sizeof(ImRect)*2); }
 void wrap_ImGuiBoxSelectState_SetBoxSelectRectPrev(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect v) { ImGuiBoxSelectStatePtr->BoxSelectRectPrev = v; }
 void wrap_ImGuiBoxSelectState_SetBoxSelectRectCurr(ImGuiBoxSelectState *ImGuiBoxSelectStatePtr, ImRect v) { ImGuiBoxSelectStatePtr->BoxSelectRectCurr = v; }
 ImGuiID wrap_ImGuiBoxSelectState_GetID(ImGuiBoxSelectState *self) { return self->ID; }
@@ -458,6 +459,8 @@ ImVec2_c wrap_ImGuiBoxSelectState_GetScrollAccum(ImGuiBoxSelectState *self) { re
 ImGuiWindow* wrap_ImGuiBoxSelectState_GetWindow(ImGuiBoxSelectState *self) { return self->Window; }
 bool wrap_ImGuiBoxSelectState_GetUnclipMode(ImGuiBoxSelectState *self) { return self->UnclipMode; }
 ImRect_c wrap_ImGuiBoxSelectState_GetUnclipRect(ImGuiBoxSelectState *self) { return self->UnclipRect; }
+ImRect_c* wrap_ImGuiBoxSelectState_GetUnclipRects(ImGuiBoxSelectState *self) { return self->UnclipRects; }
+ImRect imgui_ImRect_GetAtIdx(ImRect *self, int index) { return self[index]; }
 ImRect_c wrap_ImGuiBoxSelectState_GetBoxSelectRectPrev(ImGuiBoxSelectState *self) { return self->BoxSelectRectPrev; }
 ImRect_c wrap_ImGuiBoxSelectState_GetBoxSelectRectCurr(ImGuiBoxSelectState *self) { return self->BoxSelectRectCurr; }
 void wrap_ImGuiColorMod_SetCol(ImGuiColorMod *ImGuiColorModPtr, ImGuiCol v) { ImGuiColorModPtr->Col = v; }
@@ -1216,8 +1219,8 @@ void wrap_ImGuiDockNode_SetPos(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGu
 void wrap_ImGuiDockNode_SetSize(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->Size = v; }
 void wrap_ImGuiDockNode_SetSizeRef(ImGuiDockNode *ImGuiDockNodePtr, ImVec2 v) { ImGuiDockNodePtr->SizeRef = v; }
 void wrap_ImGuiDockNode_SetSplitAxis(ImGuiDockNode *ImGuiDockNodePtr, ImGuiAxis v) { ImGuiDockNodePtr->SplitAxis = v; }
-void wrap_ImGuiDockNode_SetWindowClass(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindowClass v) { ImGuiDockNodePtr->WindowClass = v; }
 void wrap_ImGuiDockNode_SetLastBgColor(ImGuiDockNode *ImGuiDockNodePtr, ImU32 v) { ImGuiDockNodePtr->LastBgColor = v; }
+void wrap_ImGuiDockNode_SetWindowClass(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindowClass v) { ImGuiDockNodePtr->WindowClass = v; }
 void wrap_ImGuiDockNode_SetHostWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v) { ImGuiDockNodePtr->HostWindow = v; }
 void wrap_ImGuiDockNode_SetVisibleWindow(ImGuiDockNode *ImGuiDockNodePtr, ImGuiWindow* v) { ImGuiDockNodePtr->VisibleWindow = v; }
 void wrap_ImGuiDockNode_SetCentralNode(ImGuiDockNode *ImGuiDockNodePtr, ImGuiDockNode* v) { ImGuiDockNodePtr->CentralNode = v; }
@@ -1259,8 +1262,8 @@ ImVec2_c wrap_ImGuiDockNode_GetPos(ImGuiDockNode *self) { return self->Pos; }
 ImVec2_c wrap_ImGuiDockNode_GetSize(ImGuiDockNode *self) { return self->Size; }
 ImVec2_c wrap_ImGuiDockNode_GetSizeRef(ImGuiDockNode *self) { return self->SizeRef; }
 ImGuiAxis wrap_ImGuiDockNode_GetSplitAxis(ImGuiDockNode *self) { return self->SplitAxis; }
-ImGuiWindowClass wrap_ImGuiDockNode_GetWindowClass(ImGuiDockNode *self) { return self->WindowClass; }
 ImU32 wrap_ImGuiDockNode_GetLastBgColor(ImGuiDockNode *self) { return self->LastBgColor; }
+ImGuiWindowClass wrap_ImGuiDockNode_GetWindowClass(ImGuiDockNode *self) { return self->WindowClass; }
 ImGuiWindow* wrap_ImGuiDockNode_GetHostWindow(ImGuiDockNode *self) { return self->HostWindow; }
 ImGuiWindow* wrap_ImGuiDockNode_GetVisibleWindow(ImGuiDockNode *self) { return self->VisibleWindow; }
 ImGuiDockNode* wrap_ImGuiDockNode_GetCentralNode(ImGuiDockNode *self) { return self->CentralNode; }
@@ -1869,7 +1872,6 @@ void wrap_ImGuiMultiSelectTempData_SetFocusScopeId(ImGuiMultiSelectTempData *ImG
 void wrap_ImGuiMultiSelectTempData_SetFlags(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiMultiSelectFlags v) { ImGuiMultiSelectTempDataPtr->Flags = v; }
 void wrap_ImGuiMultiSelectTempData_SetScopeRectMin(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImVec2 v) { ImGuiMultiSelectTempDataPtr->ScopeRectMin = v; }
 void wrap_ImGuiMultiSelectTempData_SetBackupCursorMaxPos(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImVec2 v) { ImGuiMultiSelectTempDataPtr->BackupCursorMaxPos = v; }
-void wrap_ImGuiMultiSelectTempData_SetLastSubmittedItem(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiSelectionUserData v) { ImGuiMultiSelectTempDataPtr->LastSubmittedItem = v; }
 void wrap_ImGuiMultiSelectTempData_SetBoxSelectId(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiID v) { ImGuiMultiSelectTempDataPtr->BoxSelectId = v; }
 void wrap_ImGuiMultiSelectTempData_SetKeyMods(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImGuiKeyChord v) { ImGuiMultiSelectTempDataPtr->KeyMods = v; }
 void wrap_ImGuiMultiSelectTempData_SetLoopRequestSetAll(ImGuiMultiSelectTempData *ImGuiMultiSelectTempDataPtr, ImS8 v) { ImGuiMultiSelectTempDataPtr->LoopRequestSetAll = v; }
@@ -1885,7 +1887,6 @@ ImGuiID wrap_ImGuiMultiSelectTempData_GetFocusScopeId(ImGuiMultiSelectTempData *
 ImGuiMultiSelectFlags wrap_ImGuiMultiSelectTempData_GetFlags(ImGuiMultiSelectTempData *self) { return self->Flags; }
 ImVec2_c wrap_ImGuiMultiSelectTempData_GetScopeRectMin(ImGuiMultiSelectTempData *self) { return self->ScopeRectMin; }
 ImVec2_c wrap_ImGuiMultiSelectTempData_GetBackupCursorMaxPos(ImGuiMultiSelectTempData *self) { return self->BackupCursorMaxPos; }
-ImGuiSelectionUserData wrap_ImGuiMultiSelectTempData_GetLastSubmittedItem(ImGuiMultiSelectTempData *self) { return self->LastSubmittedItem; }
 ImGuiID wrap_ImGuiMultiSelectTempData_GetBoxSelectId(ImGuiMultiSelectTempData *self) { return self->BoxSelectId; }
 ImGuiKeyChord wrap_ImGuiMultiSelectTempData_GetKeyMods(ImGuiMultiSelectTempData *self) { return self->KeyMods; }
 ImS8 wrap_ImGuiMultiSelectTempData_GetLoopRequestSetAll(ImGuiMultiSelectTempData *self) { return self->LoopRequestSetAll; }
@@ -2050,6 +2051,9 @@ void wrap_ImGuiPlatformIO_SetPlatform_LocaleDecimalPoint(ImGuiPlatformIO *ImGuiP
 void wrap_ImGuiPlatformIO_SetRenderer_TextureMaxWidth(ImGuiPlatformIO *ImGuiPlatformIOPtr, int v) { ImGuiPlatformIOPtr->Renderer_TextureMaxWidth = v; }
 void wrap_ImGuiPlatformIO_SetRenderer_TextureMaxHeight(ImGuiPlatformIO *ImGuiPlatformIOPtr, int v) { ImGuiPlatformIOPtr->Renderer_TextureMaxHeight = v; }
 void wrap_ImGuiPlatformIO_SetRenderer_RenderState(ImGuiPlatformIO *ImGuiPlatformIOPtr, uintptr_t v) { ImGuiPlatformIOPtr->Renderer_RenderState = (void*)v; }
+void wrap_ImGuiPlatformIO_SetDrawCallback_ResetRenderState(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImDrawCallback v) { ImGuiPlatformIOPtr->DrawCallback_ResetRenderState = v; }
+void wrap_ImGuiPlatformIO_SetDrawCallback_SetSamplerLinear(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImDrawCallback v) { ImGuiPlatformIOPtr->DrawCallback_SetSamplerLinear = v; }
+void wrap_ImGuiPlatformIO_SetDrawCallback_SetSamplerNearest(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImDrawCallback v) { ImGuiPlatformIOPtr->DrawCallback_SetSamplerNearest = v; }
 void wrap_ImGuiPlatformIO_SetMonitors(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiPlatformMonitor v) { ImGuiPlatformIOPtr->Monitors = v; }
 void wrap_ImGuiPlatformIO_SetTextures(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImTextureDataPtr v) { ImGuiPlatformIOPtr->Textures = v; }
 void wrap_ImGuiPlatformIO_SetViewports(ImGuiPlatformIO *ImGuiPlatformIOPtr, ImVector_ImGuiViewportPtr v) { ImGuiPlatformIOPtr->Viewports = v; }
@@ -2060,6 +2064,9 @@ ImWchar wrap_ImGuiPlatformIO_GetPlatform_LocaleDecimalPoint(ImGuiPlatformIO *sel
 int wrap_ImGuiPlatformIO_GetRenderer_TextureMaxWidth(ImGuiPlatformIO *self) { return self->Renderer_TextureMaxWidth; }
 int wrap_ImGuiPlatformIO_GetRenderer_TextureMaxHeight(ImGuiPlatformIO *self) { return self->Renderer_TextureMaxHeight; }
 uintptr_t wrap_ImGuiPlatformIO_GetRenderer_RenderState(ImGuiPlatformIO *self) { return (uintptr_t)self->Renderer_RenderState; }
+ImDrawCallback wrap_ImGuiPlatformIO_GetDrawCallback_ResetRenderState(ImGuiPlatformIO *self) { return self->DrawCallback_ResetRenderState; }
+ImDrawCallback wrap_ImGuiPlatformIO_GetDrawCallback_SetSamplerLinear(ImGuiPlatformIO *self) { return self->DrawCallback_SetSamplerLinear; }
+ImDrawCallback wrap_ImGuiPlatformIO_GetDrawCallback_SetSamplerNearest(ImGuiPlatformIO *self) { return self->DrawCallback_SetSamplerNearest; }
 ImVector_ImGuiPlatformMonitor wrap_ImGuiPlatformIO_GetMonitors(ImGuiPlatformIO *self) { return self->Monitors; }
 ImVector_ImTextureDataPtr wrap_ImGuiPlatformIO_GetTextures(ImGuiPlatformIO *self) { return self->Textures; }
 ImVector_ImGuiViewportPtr wrap_ImGuiPlatformIO_GetViewports(ImGuiPlatformIO *self) { return self->Viewports; }
@@ -2228,7 +2235,7 @@ void wrap_ImGuiStyle_SetAntiAliasedLinesUseTex(ImGuiStyle *ImGuiStylePtr, bool v
 void wrap_ImGuiStyle_SetAntiAliasedFill(ImGuiStyle *ImGuiStylePtr, bool v) { ImGuiStylePtr->AntiAliasedFill = v; }
 void wrap_ImGuiStyle_SetCurveTessellationTol(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->CurveTessellationTol = v; }
 void wrap_ImGuiStyle_SetCircleTessellationMaxError(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->CircleTessellationMaxError = v; }
-void wrap_ImGuiStyle_SetColors(ImGuiStyle *ImGuiStylePtr, ImVec4* v) { memcpy(ImGuiStylePtr->Colors, v, sizeof(ImVec4)*62); }
+void wrap_ImGuiStyle_SetColors(ImGuiStyle *ImGuiStylePtr, ImVec4* v) { memcpy(ImGuiStylePtr->Colors, v, sizeof(ImVec4)*63); }
 void wrap_ImGuiStyle_SetHoverStationaryDelay(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->HoverStationaryDelay = v; }
 void wrap_ImGuiStyle_SetHoverDelayShort(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->HoverDelayShort = v; }
 void wrap_ImGuiStyle_SetHoverDelayNormal(ImGuiStyle *ImGuiStylePtr, float v) { ImGuiStylePtr->HoverDelayNormal = v; }
@@ -3206,7 +3213,6 @@ ImGuiWindow* wrap_ImGuiWindow_GetNavLastChildNavWindow(ImGuiWindow *self) { retu
 ImGuiID* wrap_ImGuiWindow_GetNavLastIds(ImGuiWindow *self) { return self->NavLastIds; }
 ImGuiID imgui_ImGuiID_GetAtIdx(ImGuiID *self, int index) { return self[index]; }
 ImRect_c* wrap_ImGuiWindow_GetNavRectRel(ImGuiWindow *self) { return self->NavRectRel; }
-ImRect imgui_ImRect_GetAtIdx(ImRect *self, int index) { return self[index]; }
 ImVec2_c* wrap_ImGuiWindow_GetNavPreferredScoringPosRel(ImGuiWindow *self) { return self->NavPreferredScoringPosRel; }
 ImGuiID wrap_ImGuiWindow_GetNavRootFocusScopeId(ImGuiWindow *self) { return self->NavRootFocusScopeId; }
 int wrap_ImGuiWindow_GetMemoryDrawListIdxCapacity(ImGuiWindow *self) { return self->MemoryDrawListIdxCapacity; }

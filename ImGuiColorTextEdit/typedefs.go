@@ -11,6 +11,162 @@ package ImGuiColorTextEdit
 import "C"
 import "github.com/AllenDang/cimgui-go/internal"
 
+type CodePoint struct {
+	CData *C.CodePoint
+}
+
+// Handle returns C version of CodePoint and its finalizer func.
+func (self *CodePoint) Handle() (result *C.CodePoint, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self CodePoint) C() (C.CodePoint, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyCodePoint creates CodePoint with its 0 value.
+func NewEmptyCodePoint() *CodePoint {
+	return &CodePoint{CData: new(C.CodePoint)}
+}
+
+// NewCodePointFromC creates CodePoint from its C pointer.
+// SRC ~= *C.CodePoint
+func NewCodePointFromC[SRC any](cvalue SRC) *CodePoint {
+	return &CodePoint{CData: internal.ReinterpretCast[*C.CodePoint](cvalue)}
+}
+
+type CursorPosition struct {
+	CData *C.CursorPosition
+}
+
+// Handle returns C version of CursorPosition and its finalizer func.
+func (self *CursorPosition) Handle() (result *C.CursorPosition, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self CursorPosition) C() (C.CursorPosition, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyCursorPosition creates CursorPosition with its 0 value.
+func NewEmptyCursorPosition() *CursorPosition {
+	return &CursorPosition{CData: new(C.CursorPosition)}
+}
+
+// NewCursorPositionFromC creates CursorPosition from its C pointer.
+// SRC ~= *C.CursorPosition
+func NewCursorPositionFromC[SRC any](cvalue SRC) *CursorPosition {
+	return &CursorPosition{CData: internal.ReinterpretCast[*C.CursorPosition](cvalue)}
+}
+
+type CursorSelection struct {
+	CData *C.CursorSelection
+}
+
+// Handle returns C version of CursorSelection and its finalizer func.
+func (self *CursorSelection) Handle() (result *C.CursorSelection, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self CursorSelection) C() (C.CursorSelection, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyCursorSelection creates CursorSelection with its 0 value.
+func NewEmptyCursorSelection() *CursorSelection {
+	return &CursorSelection{CData: new(C.CursorSelection)}
+}
+
+// NewCursorSelectionFromC creates CursorSelection from its C pointer.
+// SRC ~= *C.CursorSelection
+func NewCursorSelectionFromC[SRC any](cvalue SRC) *CursorSelection {
+	return &CursorSelection{CData: internal.ReinterpretCast[*C.CursorSelection](cvalue)}
+}
+
+type Decorator struct {
+	CData *C.Decorator
+}
+
+// Handle returns C version of Decorator and its finalizer func.
+func (self *Decorator) Handle() (result *C.Decorator, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self Decorator) C() (C.Decorator, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyDecorator creates Decorator with its 0 value.
+func NewEmptyDecorator() *Decorator {
+	return &Decorator{CData: new(C.Decorator)}
+}
+
+// NewDecoratorFromC creates Decorator from its C pointer.
+// SRC ~= *C.Decorator
+func NewDecoratorFromC[SRC any](cvalue SRC) *Decorator {
+	return &Decorator{CData: internal.ReinterpretCast[*C.Decorator](cvalue)}
+}
+
+type Glyph struct {
+	CData *C.Glyph
+}
+
+// Handle returns C version of Glyph and its finalizer func.
+func (self *Glyph) Handle() (result *C.Glyph, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self Glyph) C() (C.Glyph, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyGlyph creates Glyph with its 0 value.
+func NewEmptyGlyph() *Glyph {
+	return &Glyph{CData: new(C.Glyph)}
+}
+
+// NewGlyphFromC creates Glyph from its C pointer.
+// SRC ~= *C.Glyph
+func NewGlyphFromC[SRC any](cvalue SRC) *Glyph {
+	return &Glyph{CData: internal.ReinterpretCast[*C.Glyph](cvalue)}
+}
+
+type TextDiff struct {
+	CData *C.TextDiff
+}
+
+// Handle returns C version of TextDiff and its finalizer func.
+func (self *TextDiff) Handle() (result *C.TextDiff, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self TextDiff) C() (C.TextDiff, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyTextDiff creates TextDiff with its 0 value.
+func NewEmptyTextDiff() *TextDiff {
+	return &TextDiff{CData: new(C.TextDiff)}
+}
+
+// NewTextDiffFromC creates TextDiff from its C pointer.
+// SRC ~= *C.TextDiff
+func NewTextDiffFromC[SRC any](cvalue SRC) *TextDiff {
+	return &TextDiff{CData: internal.ReinterpretCast[*C.TextDiff](cvalue)}
+}
+
 type TextEditor struct {
 	CData *C.TextEditor
 }
@@ -35,4 +191,30 @@ func NewEmptyTextEditor() *TextEditor {
 // SRC ~= *C.TextEditor
 func NewTextEditorFromC[SRC any](cvalue SRC) *TextEditor {
 	return &TextEditor{CData: internal.ReinterpretCast[*C.TextEditor](cvalue)}
+}
+
+type Trie struct {
+	CData *C.Trie
+}
+
+// Handle returns C version of Trie and its finalizer func.
+func (self *Trie) Handle() (result *C.Trie, fin func()) {
+	return self.CData, func() {}
+}
+
+// C is like Handle but returns plain type instead of pointer.
+func (self Trie) C() (C.Trie, func()) {
+	result, fn := self.Handle()
+	return *result, fn
+}
+
+// NewEmptyTrie creates Trie with its 0 value.
+func NewEmptyTrie() *Trie {
+	return &Trie{CData: new(C.Trie)}
+}
+
+// NewTrieFromC creates Trie from its C pointer.
+// SRC ~= *C.Trie
+func NewTrieFromC[SRC any](cvalue SRC) *Trie {
+	return &Trie{CData: internal.ReinterpretCast[*C.Trie](cvalue)}
 }

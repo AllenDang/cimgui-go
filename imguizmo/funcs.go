@@ -36,6 +36,17 @@ func DecomposeMatrixToComponents(matrix, translation, rotation, scale *float32) 
 	scaleFin()
 }
 
+func DrawAxes(view, projection, matrices *float32, matrixCount int32) {
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matricesArg, matricesFin := internal.WrapNumberPtr[C.float, float32](matrices)
+	C.ImGuizmo_DrawAxes(viewArg, projectionArg, matricesArg, C.int(matrixCount))
+
+	viewFin()
+	projectionFin()
+	matricesFin()
+}
+
 func DrawCubes(view, projection, matrices *float32, matrixCount int32) {
 	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
 	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
@@ -58,8 +69,46 @@ func DrawGrid(view, projection, matrix *float32, gridSize float32) {
 	matrixFin()
 }
 
+func DrawGridCustom(view, projection, matrix *float32, gridSize, majorStep float32, subdivision uint32) {
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
+	C.ImGuizmo_DrawGridCustom(viewArg, projectionArg, matrixArg, C.float(gridSize), C.float(majorStep), C.uint(subdivision))
+
+	viewFin()
+	projectionFin()
+	matrixFin()
+}
+
+func DrawGridCustomColor(view, projection, matrix *float32, gridSize, majorStep float32, subdivision, majorCol, minorCol, centerCol uint32) {
+	viewArg, viewFin := internal.WrapNumberPtr[C.float, float32](view)
+	projectionArg, projectionFin := internal.WrapNumberPtr[C.float, float32](projection)
+	matrixArg, matrixFin := internal.WrapNumberPtr[C.float, float32](matrix)
+	C.ImGuizmo_DrawGridCustomColor(viewArg, projectionArg, matrixArg, C.float(gridSize), C.float(majorStep), C.uint(subdivision), C.ImU32(majorCol), C.ImU32(minorCol), C.ImU32(centerCol))
+
+	viewFin()
+	projectionFin()
+	matrixFin()
+}
+
 func Enable(enable bool) {
 	C.ImGuizmo_Enable(C.bool(enable))
+}
+
+func GetActiveHandleType() MOVETYPE {
+	return MOVETYPE(C.ImGuizmo_GetActiveHandleType())
+}
+
+func GetActiveMoveType() MOVETYPE {
+	return MOVETYPE(C.ImGuizmo_GetActiveMoveType())
+}
+
+func GetHoveredHandleType() MOVETYPE {
+	return MOVETYPE(C.ImGuizmo_GetHoveredHandleType())
+}
+
+func GetHoveredMoveType() MOVETYPE {
+	return MOVETYPE(C.ImGuizmo_GetHoveredMoveType())
 }
 
 func GetIDPtr(ptr_id uintptr) imgui.ID {

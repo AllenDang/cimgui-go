@@ -3,7 +3,7 @@
 //
 // The MIT License(MIT)
 //
-// Copyright(c) 2016-2021 Cedric Guillemet
+// Copyright(c) 2016-2026 Cedric Guillemet and contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -29,10 +29,15 @@
 #define IMAPP_IMPL
 #include "ImApp.h"
 
+#ifdef None
+#undef None
+#endif
+
 #include "ImGuizmo.h"
 #include "ImSequencer.h"
 #include "ImZoomSlider.h"
 #include "ImCurveEdit.h"
+#include "ImVectorEditor.h"
 #include "GraphEditor.h"
 #include "ImLightRig.h"
 #include <cmath>
@@ -42,10 +47,15 @@
 bool useWindow = true;
 int gizmoCount = 1;
 float camDistance = 8.f;
+float camYAngle = 165.f / 180.f * 3.14159f;
+float camXAngle = 32.f / 180.f * 3.14159f;
 static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
 static bool useSnap(false);
 static float snap[3] = { 1.f, 1.f, 1.f };
+static float bounds[] = { -0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f };
+static float boundsSnap[] = { 0.1f, 0.1f, 0.1f };
+static bool boundSizingSnap = false;
 
 float objectMatrix[4][16] = {
   { 1.f, 0.f, 0.f, 0.f,
@@ -75,37 +85,64 @@ static const float identityMatrix[16] =
     0.f, 0.f, 1.f, 0.f,
     0.f, 0.f, 0.f, 1.f };
 
-void Frustum(float left, float right, float bottom, float top, float znear, float zfar, float* m16)
+void Frustum(float left, float right, float bottom, float top, float znear, float zfar, float* m16, bool rightHanded)
 {
-   float temp, temp2, temp3, temp4;
-   temp = 2.0f * znear;
-   temp2 = right - left;
-   temp3 = top - bottom;
-   temp4 = zfar - znear;
+   float temp = 2.0f * znear;
+   float temp2 = right - left;
+   float temp3 = top - bottom;
+   float temp4 = zfar - znear;
+   float sign = rightHanded ? -1.0f : 1.0f;
    m16[0] = temp / temp2;
-   m16[1] = 0.0;
-   m16[2] = 0.0;
-   m16[3] = 0.0;
-   m16[4] = 0.0;
+   m16[1] = 0.0f;
+   m16[2] = 0.0f;
+   m16[3] = 0.0f;
+   m16[4] = 0.0f;
    m16[5] = temp / temp3;
-   m16[6] = 0.0;
-   m16[7] = 0.0;
+   m16[6] = 0.0f;
+   m16[7] = 0.0f;
    m16[8] = (right + left) / temp2;
    m16[9] = (top + bottom) / temp3;
-   m16[10] = (-zfar - znear) / temp4;
-   m16[11] = -1.0f;
-   m16[12] = 0.0;
-   m16[13] = 0.0;
-   m16[14] = (-temp * zfar) / temp4;
-   m16[15] = 0.0;
+   m16[10] = sign * (zfar + znear) / temp4;
+   m16[11] = sign;
+   m16[12] = 0.0f;
+   m16[13] = 0.0f;
+   m16[14] = -(temp * zfar) / temp4;
+   m16[15] = 0.0f;
 }
 
-void Perspective(float fovyInDegrees, float aspectRatio, float znear, float zfar, float* m16)
+void Perspective(float fovyInDegrees, float aspectRatio, float znear, float zfar, float* m16, bool rightHanded = true, bool infiniteFarPlane = false)
 {
-   float ymax, xmax;
-   ymax = znear * tanf(fovyInDegrees * 3.141592f / 180.0f);
-   xmax = ymax * aspectRatio;
-   Frustum(-xmax, xmax, -ymax, ymax, znear, zfar, m16);
+   float ymax = znear * tanf(fovyInDegrees * 3.141592f / 180.0f);
+   float xmax = ymax * aspectRatio;
+   if (infiniteFarPlane)
+   {
+      float sign = rightHanded ? -1.0f : 1.0f;
+      float temp = 2.0f * znear;
+      float temp2 = 2.0f * xmax;
+      float temp3 = 2.0f * ymax;
+      m16[0] = temp / temp2;
+      m16[1] = 0.0f;
+      m16[2] = 0.0f;
+      m16[3] = 0.0f;
+      m16[4] = 0.0f;
+      m16[5] = temp / temp3;
+      m16[6] = 0.0f;
+      m16[7] = 0.0f;
+      m16[8] = 0.0f;
+      m16[9] = 0.0f;
+      m16[10] = sign;
+      m16[11] = sign;
+      m16[12] = 0.0f;
+      m16[13] = 0.0f;
+      // Keep the Z translation term negative for both handedness modes.
+      // Using +2n in LH flips clipping orientation and appears like inverted winding.
+      m16[14] = -temp;
+      m16[15] = 0.0f;
+   }
+   else
+   {
+      Frustum(-xmax, xmax, -ymax, ymax, znear, zfar, m16, rightHanded);
+   }
 }
 
 void Cross(const float* a, const float* b, float* r)
@@ -128,13 +165,22 @@ void Normalize(const float* a, float* r)
    r[2] = a[2] * il;
 }
 
-void LookAt(const float* eye, const float* at, const float* up, float* m16)
+void LookAt(const float* eye, const float* at, const float* up, float* m16, bool rightHanded = true)
 {
    float X[3], Y[3], Z[3], tmp[3];
 
-   tmp[0] = eye[0] - at[0];
-   tmp[1] = eye[1] - at[1];
-   tmp[2] = eye[2] - at[2];
+   if (rightHanded)
+   {
+      tmp[0] = eye[0] - at[0];
+      tmp[1] = eye[1] - at[1];
+      tmp[2] = eye[2] - at[2];
+   }
+   else
+   {
+      tmp[0] = at[0] - eye[0];
+      tmp[1] = at[1] - eye[1];
+      tmp[2] = at[2] - eye[2];
+   }
    Normalize(tmp, Z);
    Normalize(up, Y);
 
@@ -205,27 +251,29 @@ inline void rotationY(const float angle, float* m16)
    m16[15] = 1.0f;
 }
 
-void TransformStart(float* cameraView, float* cameraProjection, float* matrix)
+void TransformStart(float* cameraView, float* cameraProjection, float* matrix, bool rightHanded)
 {
-    static float bounds[] = { -0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f };
-    static float boundsSnap[] = { 0.1f, 0.1f, 0.1f };
-    static bool boundSizing = false;
-    static bool boundSizingSnap = false;
-
     if (ImGui::IsKeyPressed(ImGuiKey_T))
         mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
     if (ImGui::IsKeyPressed(ImGuiKey_E))
         mCurrentGizmoOperation = ImGuizmo::ROTATE;
     if (ImGui::IsKeyPressed(ImGuiKey_R)) // r Key
         mCurrentGizmoOperation = ImGuizmo::SCALE;
-    if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
-        mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+    bool translateActive = (mCurrentGizmoOperation & ImGuizmo::TRANSLATE) != 0;
+    bool rotateActive   = (mCurrentGizmoOperation & ImGuizmo::ROTATE) != 0;
+    bool scaleActive    = (mCurrentGizmoOperation & ImGuizmo::SCALE) != 0;
+    bool boundsActive   = (mCurrentGizmoOperation & ImGuizmo::BOUNDS) != 0;
+    if (ImGui::Checkbox("Translate", &translateActive))
+        mCurrentGizmoOperation = (ImGuizmo::OPERATION)((int)mCurrentGizmoOperation ^ (int)ImGuizmo::TRANSLATE);
     ImGui::SameLine();
-    if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
-        mCurrentGizmoOperation = ImGuizmo::ROTATE;
+    if (ImGui::Checkbox("Rotate", &rotateActive))
+        mCurrentGizmoOperation = (ImGuizmo::OPERATION)((int)mCurrentGizmoOperation ^ (int)ImGuizmo::ROTATE);
     ImGui::SameLine();
-    if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
-        mCurrentGizmoOperation = ImGuizmo::SCALE;
+    if (ImGui::Checkbox("Scale", &scaleActive))
+        mCurrentGizmoOperation = (ImGuizmo::OPERATION)((int)mCurrentGizmoOperation ^ (int)ImGuizmo::SCALE);
+    ImGui::SameLine();
+    if (ImGui::Checkbox("Bounds", &boundsActive))
+        mCurrentGizmoOperation = (ImGuizmo::OPERATION)((int)mCurrentGizmoOperation ^ (int)ImGuizmo::BOUNDS);
     float matrixTranslation[3], matrixRotation[3], matrixScale[3];
     ImGuizmo::DecomposeMatrixToComponents(matrix, matrixTranslation, matrixRotation, matrixScale);
     ImGui::InputFloat3("Tr", matrixTranslation);
@@ -233,7 +281,7 @@ void TransformStart(float* cameraView, float* cameraProjection, float* matrix)
     ImGui::InputFloat3("Sc", matrixScale);
     ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix);
 
-    if (mCurrentGizmoOperation != ImGuizmo::SCALE)
+    if (mCurrentGizmoOperation & (ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE))
     {
         if (ImGui::RadioButton("Local", mCurrentGizmoMode == ImGuizmo::LOCAL))
             mCurrentGizmoMode = ImGuizmo::LOCAL;
@@ -244,19 +292,21 @@ void TransformStart(float* cameraView, float* cameraProjection, float* matrix)
 
     if (ImGui::IsKeyPressed(ImGuiKey_S))
         useSnap = !useSnap;
-    ImGui::Checkbox("##useSnap", &useSnap);
+    ImGui::Checkbox("Use Snap", &useSnap);
     ImGui::SameLine();
-    switch (mCurrentGizmoOperation)
-    {
-    case ImGuizmo::TRANSLATE:
+    if (mCurrentGizmoOperation & ImGuizmo::TRANSLATE)
         ImGui::InputFloat3("Snap", &snap[0]);
-        break;
-    case ImGuizmo::ROTATE:
+    if (mCurrentGizmoOperation & ImGuizmo::ROTATE)
         ImGui::InputFloat("Angle Snap", &snap[0]);
-        break;
-    case ImGuizmo::SCALE:
+    if (mCurrentGizmoOperation & ImGuizmo::SCALE)
         ImGui::InputFloat("Scale Snap", &snap[0]);
-        break;
+    if (mCurrentGizmoOperation & ImGuizmo::BOUNDS)
+    {
+        ImGui::InputFloat3("Bounds Min", &bounds[0]);
+        ImGui::InputFloat3("Bounds Max", &bounds[3]);
+        ImGui::Checkbox("Snap Bounds", &boundSizingSnap);
+        if (boundSizingSnap)
+            ImGui::InputFloat3("Bounds Snap", &boundsSnap[0]);
     }
 
     ImGuiIO& io = ImGui::GetIO();
@@ -287,6 +337,20 @@ void TransformStart(float* cameraView, float* cameraProjection, float* matrix)
     ImGuiWindow* window = ImGui::GetCurrentWindow();
     gizmoWindowFlags = ImGui::IsWindowHovered() && ImGui::IsMouseHoveringRect(window->InnerRect.Min, window->InnerRect.Max) ? ImGuiWindowFlags_NoMove : 0;
 
+    // Drag in empty viewport area to orbit the camera
+    ImGuiIO& ioVP = ImGui::GetIO();
+    if (ImGui::IsWindowHovered() && !ImGuizmo::IsOver() && !ImGuizmo::IsUsingViewManipulate() && ioVP.MouseDown[0])
+    {
+       const float handednessSign = rightHanded ? 1.f : -1.f;
+       camYAngle += ioVP.MouseDelta.x * 0.01f * handednessSign;
+       camXAngle += ioVP.MouseDelta.y * 0.01f;
+       camXAngle = ImClamp(camXAngle, -3.14159f * 0.49f, 3.14159f * 0.49f);
+       float eye[] = { cosf(camYAngle) * cosf(camXAngle) * camDistance, sinf(camXAngle) * camDistance, sinf(camYAngle) * cosf(camXAngle) * camDistance };
+       float at[] = { 0.f, 0.f, 0.f };
+       float up[] = { 0.f, 1.f, 0.f };
+       LookAt(eye, at, up, cameraView, rightHanded);
+    }
+
     ImGuizmo::DrawGrid(cameraView, cameraProjection, identityMatrix, 100.f);
     ImGuizmo::DrawCubes(cameraView, cameraProjection, &objectMatrix[0][0], gizmoCount);
 
@@ -315,7 +379,8 @@ void EditTransform(float* cameraView, float* cameraProjection, float* matrix)
     {
        ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
     }
-    ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation, mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL);
+    const bool hasBounds = (mCurrentGizmoOperation & ImGuizmo::BOUNDS) != 0;
+    ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation, mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, hasBounds ? bounds : NULL, hasBounds && boundSizingSnap ? boundsSnap : NULL);
 }
 
 //
@@ -684,6 +749,273 @@ struct GraphEditorDelegate : public GraphEditor::Delegate
    std::vector<GraphEditor::Link> mLinks = { {0, 0, 1, 0} };
 };
 
+//
+//
+// ImVectorEditor demo
+//
+//
+
+static void SeedVectorEditorPath(ImVectorEditor::Path& path, ImVectorEditor::Editor& editor)
+{
+   path.clear();
+
+   ImVectorEditor::Anchor a;
+   a.position = ImVec2(0.0f, 0.0f);
+   a.handleOut = ImVec2(70.0f, -90.0f);
+   a.hasHandleOut = true;
+
+   ImVectorEditor::Anchor b;
+   b.position = ImVec2(180.0f, 0.0f);
+   b.handleIn = ImVec2(-70.0f, -90.0f);
+   b.handleOut = ImVec2(60.0f, 90.0f);
+   b.hasHandleIn = true;
+   b.hasHandleOut = true;
+   b.handleMode = ImVectorEditor::HandleMode::Free;
+
+   ImVectorEditor::Anchor c;
+   c.position = ImVec2(320.0f, 120.0f);
+   c.handleIn = ImVec2(-60.0f, 90.0f);
+   c.hasHandleIn = true;
+
+   path.anchors = { a, b, c };
+   path.closed = false;
+   editor.ClearSelection();
+}
+
+static void ControlPointShapeCombo(const char* label, ImVectorEditor::ControlPointShape& shape)
+{
+   const char* shapes[] = { "Circle", "Square", "Diamond" };
+   int shapeIndex = static_cast<int>(shape);
+   if (ImGui::Combo(label, &shapeIndex, shapes, IM_ARRAYSIZE(shapes)))
+      shape = static_cast<ImVectorEditor::ControlPointShape>(shapeIndex);
+}
+
+static const char* VectorEditorEditKindName(ImVectorEditor::EditKind kind)
+{
+   switch (kind)
+   {
+   case ImVectorEditor::EditKind::MoveAnchor: return "Move Anchor";
+   case ImVectorEditor::EditKind::MoveHandle: return "Move Handle";
+   case ImVectorEditor::EditKind::AddAnchor: return "Add Anchor";
+   case ImVectorEditor::EditKind::DeleteAnchor: return "Delete Anchor";
+   case ImVectorEditor::EditKind::AddHandle: return "Add Handles";
+   case ImVectorEditor::EditKind::DeleteHandle: return "Delete Handles";
+   case ImVectorEditor::EditKind::ChangePointMode: return "Change Point Mode";
+   case ImVectorEditor::EditKind::PathOperation: return "Path Operation";
+   }
+   return "Edit";
+}
+
+struct VectorEditorUndoDebug : ImVectorEditor::Delegate
+{
+   int editCount = 0;
+   int activeAnchor = -1;
+   const char* activeEdit = "None";
+   const char* lastEdit = "None";
+
+   void BeginEdit(ImVectorEditor::EditKind kind, int anchorIndex) override
+   {
+      activeAnchor = anchorIndex;
+      activeEdit = VectorEditorEditKindName(kind);
+   }
+
+   void EndEdit() override
+   {
+      ++editCount;
+      lastEdit = activeEdit;
+      activeEdit = "None";
+      activeAnchor = -1;
+   }
+};
+
+static ImVec2 VectorEditorPathCenter(const ImVectorEditor::Path& path)
+{
+   if (path.anchors.empty())
+      return ImVec2(0.0f, 0.0f);
+
+   ImVec2 minPos = path.anchors.front().position;
+   ImVec2 maxPos = path.anchors.front().position;
+   for (const ImVectorEditor::Anchor& anchor : path.anchors)
+   {
+      minPos.x = std::min(minPos.x, anchor.position.x);
+      minPos.y = std::min(minPos.y, anchor.position.y);
+      maxPos.x = std::max(maxPos.x, anchor.position.x);
+      maxPos.y = std::max(maxPos.y, anchor.position.y);
+   }
+   return ImVec2((minPos.x + maxPos.x) * 0.5f, (minPos.y + maxPos.y) * 0.5f);
+}
+
+static void ApplyVectorEditorViewResult(const ImVectorEditor::Result& result,
+   ImVectorEditor::Config& config)
+{
+   config.transform.pan.x += result.viewPanDelta.x;
+   config.transform.pan.y += result.viewPanDelta.y;
+
+   if (result.viewZoomFactor != 1.0f)
+   {
+      const float oldZoom = config.transform.zoom;
+      const float newZoom = std::max(0.25f, std::min(oldZoom * result.viewZoomFactor, 4.0f));
+      const float appliedFactor = newZoom / oldZoom;
+      const ImVec2 center = result.viewZoomCenterCanvas;
+      config.transform.pan = ImVec2(
+         center.x - (center.x - config.transform.pan.x) * appliedFactor,
+         center.y - (center.y - config.transform.pan.y) * appliedFactor);
+      config.transform.zoom = newZoom;
+   }
+}
+
+static void ShowVectorEditorDemo()
+{
+   static ImVectorEditor::Editor editor;
+   static ImVectorEditor::Path path;
+   static ImVectorEditor::Config config;
+   static ImVectorEditor::Tool tool = ImVectorEditor::Tool::Select;
+   static VectorEditorUndoDebug undoDebug;
+   static bool initialized = false;
+
+   config.delegate = &undoDebug;
+
+   if (!initialized)
+   {
+      initialized = true;
+      config.transform.pan = ImVec2(80.0f, 90.0f);
+      config.canvasSize = ImVec2(0.0f, 320.0f);
+      SeedVectorEditorPath(path, editor);
+   }
+
+   if (ImGui::RadioButton("Select##VectorEditor", tool == ImVectorEditor::Tool::Select))
+      tool = ImVectorEditor::Tool::Select;
+   ImGui::SameLine();
+   if (ImGui::RadioButton("Pen##VectorEditor", tool == ImVectorEditor::Tool::Pen))
+      tool = ImVectorEditor::Tool::Pen;
+   ImGui::SameLine();
+   if (ImGui::Button("Clear##VectorEditor"))
+   {
+      undoDebug.BeginEdit(ImVectorEditor::EditKind::PathOperation, -1);
+      path.clear();
+      editor.ClearSelection();
+      tool = ImVectorEditor::Tool::Select;
+      undoDebug.EndEdit();
+   }
+   ImGui::SameLine();
+   if (ImGui::Button("Seed##VectorEditor"))
+   {
+      SeedVectorEditorPath(path, editor);
+      tool = ImVectorEditor::Tool::Select;
+   }
+
+   const int selectedAnchor = editor.GetSelectedAnchor();
+   const bool hasSelection = selectedAnchor >= 0 && selectedAnchor < static_cast<int>(path.anchors.size());
+   const ImVectorEditor::HandleMode selectedMode = hasSelection
+      ? path.anchors[selectedAnchor].handleMode
+      : ImVectorEditor::HandleMode::Corner;
+   if (ImGui::RadioButton("Corner##VectorEditor", selectedMode == ImVectorEditor::HandleMode::Corner) && hasSelection)
+   {
+      undoDebug.BeginEdit(path.anchors[selectedAnchor].hasHandleIn || path.anchors[selectedAnchor].hasHandleOut
+         ? ImVectorEditor::EditKind::DeleteHandle
+         : ImVectorEditor::EditKind::ChangePointMode, selectedAnchor);
+      ImVectorEditor::MakeCorner(path.anchors[selectedAnchor]);
+      undoDebug.EndEdit();
+   }
+   ImGui::SameLine();
+   if (ImGui::RadioButton("Aligned##VectorEditor", selectedMode == ImVectorEditor::HandleMode::Aligned) && hasSelection)
+   {
+      undoDebug.BeginEdit(!path.anchors[selectedAnchor].hasHandleIn && !path.anchors[selectedAnchor].hasHandleOut
+         ? ImVectorEditor::EditKind::AddHandle
+         : ImVectorEditor::EditKind::ChangePointMode, selectedAnchor);
+      ImVectorEditor::MakeAligned(path.anchors[selectedAnchor]);
+      undoDebug.EndEdit();
+   }
+   ImGui::SameLine();
+   if (ImGui::RadioButton("Mirrored##VectorEditor", selectedMode == ImVectorEditor::HandleMode::Mirrored) && hasSelection)
+   {
+      undoDebug.BeginEdit(!path.anchors[selectedAnchor].hasHandleIn && !path.anchors[selectedAnchor].hasHandleOut
+         ? ImVectorEditor::EditKind::AddHandle
+         : ImVectorEditor::EditKind::ChangePointMode, selectedAnchor);
+      ImVectorEditor::MakeMirrored(path.anchors[selectedAnchor]);
+      undoDebug.EndEdit();
+   }
+   ImGui::SameLine();
+   if (ImGui::Button("Add Handles##VectorEditor") && hasSelection)
+   {
+      undoDebug.BeginEdit(ImVectorEditor::EditKind::AddHandle, selectedAnchor);
+      ImVectorEditor::AddHandles(path.anchors[selectedAnchor]);
+      undoDebug.EndEdit();
+   }
+   ImGui::SameLine();
+   if (ImGui::Button("Delete Handles##VectorEditor") && hasSelection)
+   {
+      undoDebug.BeginEdit(ImVectorEditor::EditKind::DeleteHandle, selectedAnchor);
+      ImVectorEditor::DeleteHandles(path.anchors[selectedAnchor]);
+      undoDebug.EndEdit();
+   }
+
+   if (ImGui::TreeNodeEx("Path##VectorEditor"))
+   {
+      if (ImGui::Button(path.closed ? "Open Path##VectorEditor" : "Close Path##VectorEditor"))
+      {
+         undoDebug.BeginEdit(ImVectorEditor::EditKind::PathOperation, -1);
+         path.closed = !path.closed;
+         undoDebug.EndEdit();
+      }
+      ImGui::SameLine();
+      if (ImGui::Button("Reverse Path##VectorEditor"))
+      {
+         undoDebug.BeginEdit(ImVectorEditor::EditKind::PathOperation, -1);
+         ImVectorEditor::ReversePath(path);
+         undoDebug.EndEdit();
+      }
+      ImGui::Text("Selected anchor: %d (%d selected)",
+         selectedAnchor, editor.GetSelectedAnchorCount());
+      ImGui::TreePop();
+   }
+
+   if (editor.GetSelectedAnchorCount() == static_cast<int>(path.anchors.size()) && !path.anchors.empty())
+      config.transform.objectPivot = VectorEditorPathCenter(path);
+   else if (hasSelection)
+      config.transform.objectPivot = path.anchors[selectedAnchor].position;
+   else
+      config.transform.objectPivot = VectorEditorPathCenter(path);
+
+   if (ImGui::TreeNodeEx("View##VectorEditor"))
+   {
+      ImGui::DragFloat2("Pan##VectorEditor", &config.transform.pan.x, 1.0f);
+      ImGui::SliderFloat("Zoom##VectorEditor", &config.transform.zoom, 0.25f, 4.0f, "%.2f");
+      ImGui::SliderAngle("Rotation##VectorEditor", &config.transform.objectRotationRadians, -180.0f, 180.0f);
+      ImGui::Text("Rotation pivot: %.1f, %.1f",
+         config.transform.objectPivot.x, config.transform.objectPivot.y);
+      ImGui::TreePop();
+   }
+
+   if (ImGui::TreeNodeEx("Style##VectorEditor"))
+   {
+      ImGui::Checkbox("Show Grid##VectorEditor", &config.showGrid);
+      ImGui::SliderFloat("Grid Step##VectorEditor", &config.style.gridStep, 8.0f, 96.0f, "%.1f");
+      ImGui::SliderFloat("Path Thickness##VectorEditor", &config.style.pathThickness, 1.0f, 8.0f, "%.1f");
+      ImGui::SliderFloat("Handle Line Thickness##VectorEditor", &config.style.handleLineThickness, 0.5f, 4.0f, "%.1f");
+      ImGui::SliderFloat("Anchor Size##VectorEditor", &config.style.anchorRadius, 2.0f, 12.0f, "%.1f");
+      ImGui::SliderFloat("Handle Size##VectorEditor", &config.style.handleRadius, 2.0f, 10.0f, "%.1f");
+      ControlPointShapeCombo("Anchor Shape##VectorEditor", config.style.anchorShape);
+      ControlPointShapeCombo("Handle Shape##VectorEditor", config.style.handleShape);
+      ImGui::SliderFloat("Hit Radius##VectorEditor", &config.style.hitRadius, 4.0f, 20.0f, "%.1f");
+      ImGui::TreePop();
+   }
+
+   config.tool = tool;
+   config.canvasSize.x = ImGui::GetContentRegionAvail().x;
+   const ImVectorEditor::Result result = editor.Draw("##ImVectorEditor", path, config);
+   ApplyVectorEditorViewResult(result, config);
+
+   ImGui::Text("changed=%s committed=%s capture mouse=%s keyboard=%s",
+      result.changed ? "true" : "false",
+      result.committed ? "true" : "false",
+      editor.WantsMouseCapture() ? "true" : "false",
+      editor.WantsKeyboardCapture() ? "true" : "false");
+   ImGui::Text("undo steps=%d last=%s active=%s anchor=%d",
+      undoDebug.editCount, undoDebug.lastEdit, undoDebug.activeEdit, undoDebug.activeAnchor);
+   ImGui::TextWrapped("Select: drag anchors/handles, Shift-click or box-select anchors, Delete removes selection. Mouse wheel zooms, middle mouse pans. Pen: click anchors, click-drag handles, hold Shift while dragging to snap handles to 45 degrees, click first anchor to close.");
+}
+
 
 int main(int, char**)
 {
@@ -745,8 +1077,8 @@ int main(int, char**)
    bool isPerspective = true;
    float fov = 27.f;
    float viewWidth = 10.f; // for orthographic
-   float camYAngle = 165.f / 180.f * 3.14159f;
-   float camXAngle = 32.f / 180.f * 3.14159f;
+   bool infiniteFarPlane = false;
+   int handedness = 0; // 0 = right-handed, 1 = left-handed
 
    bool firstFrame = true;
 
@@ -756,14 +1088,17 @@ int main(int, char**)
       imApp.NewFrame();
 
       ImGuiIO& io = ImGui::GetIO();
+      bool rightHanded = (handedness == 0);
       if (isPerspective)
       {
-         Perspective(fov, io.DisplaySize.x / io.DisplaySize.y, 0.1f, 100.f, cameraProjection);
+         Perspective(fov, io.DisplaySize.x / io.DisplaySize.y, 0.1f, 100.f, cameraProjection, rightHanded, infiniteFarPlane);
       }
       else
       {
          float viewHeight = viewWidth * io.DisplaySize.y / io.DisplaySize.x;
-         OrthoGraphic(-viewWidth, viewWidth, -viewHeight, viewHeight, 1000.f, -1000.f, cameraProjection);
+         float zn = rightHanded ? 1000.f : -1000.f;
+         float zf = rightHanded ? -1000.f : 1000.f;
+         OrthoGraphic(-viewWidth, viewWidth, -viewHeight, viewHeight, zn, zf, cameraProjection);
       }
       ImGuizmo::SetOrthographic(!isPerspective);
       ImGuizmo::BeginFrame();
@@ -773,7 +1108,7 @@ int main(int, char**)
 
       // create a window and insert the inspector
       ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Appearing);
-      ImGui::SetNextWindowSize(ImVec2(320, 340), ImGuiCond_Appearing);
+      ImGui::SetNextWindowSize(ImVec2(320, 500), ImGuiCond_Appearing);
       ImGui::Begin("Editor");
       if (ImGui::RadioButton("Full view", !useWindow)) useWindow = false;
       ImGui::SameLine();
@@ -793,6 +1128,18 @@ int main(int, char**)
          ImGui::SliderFloat("Ortho width", &viewWidth, 1, 20);
       }
       viewDirty |= ImGui::SliderFloat("Distance", &camDistance, 1.f, 10.f);
+      if (ImGui::IsItemHovered() && io.MouseWheel != 0.f)
+      {
+         camDistance = ImClamp(camDistance - io.MouseWheel * 0.5f, 1.f, 10.f);
+         viewDirty = true;
+      }
+      viewDirty |= ImGui::Combo("Handedness", &handedness, "Right-handed\0Left-handed\0");
+      // Recompute rightHanded immediately after combo so the LookAt below uses the new value
+      rightHanded = (handedness == 0);
+      if (isPerspective)
+      {
+         viewDirty |= ImGui::Checkbox("Infinite far plane", &infiniteFarPlane);
+      }
       ImGui::SliderInt("Gizmo count", &gizmoCount, 1, 4);
 
       if (viewDirty || firstFrame)
@@ -800,9 +1147,13 @@ int main(int, char**)
          float eye[] = { cosf(camYAngle) * cosf(camXAngle) * camDistance, sinf(camXAngle) * camDistance, sinf(camYAngle) * cosf(camXAngle) * camDistance };
          float at[] = { 0.f, 0.f, 0.f };
          float up[] = { 0.f, 1.f, 0.f };
-         LookAt(eye, at, up, cameraView);
+         LookAt(eye, at, up, cameraView, rightHanded);
          firstFrame = false;
       }
+      // Also refresh next frame so projection catches up when handedness changed
+      static int prevHandedness = handedness;
+      if (prevHandedness != handedness) { firstFrame = true; }
+      prevHandedness = handedness;
 
       ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
       if (ImGuizmo::IsUsing())
@@ -821,7 +1172,7 @@ int main(int, char**)
       }
       ImGui::Separator();
       
-      TransformStart(cameraView, cameraProjection, objectMatrix[lastUsing]);
+      TransformStart(cameraView, cameraProjection, objectMatrix[lastUsing], rightHanded);
       for (int matId = 0; matId < gizmoCount; matId++)
       {
           ImGuizmo::PushID(matId);
@@ -837,7 +1188,7 @@ int main(int, char**)
 
       ImGui::End();
 
-      ImGui::SetNextWindowPos(ImVec2(10, 350), ImGuiCond_Appearing);
+      ImGui::SetNextWindowPos(ImVec2(10, 500), ImGuiCond_Appearing);
 
       ImGui::SetNextWindowSize(ImVec2(940, 480), ImGuiCond_Appearing);
       ImGui::Begin("Other controls");
@@ -882,6 +1233,10 @@ int main(int, char**)
            ImGui::Text("I am a %s, please edit me", SequencerItemTypeNames[item.mType]);
            // switch (type) ....
          }
+      }
+      if (ImGui::CollapsingHeader("Vector Editor"))
+      {
+         ShowVectorEditorDemo();
       }
 
       // Graph Editor

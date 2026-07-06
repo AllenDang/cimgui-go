@@ -10,11 +10,16 @@
 extern "C" {
 #endif
 
-extern void wrap_TextEditor_Redo(TextEditor* self);
-extern bool wrap_TextEditor_Render(TextEditor* self,const char* aTitle);
-extern void wrap_TextEditor_SelectAllOccurrencesOf(TextEditor* self,const char* aText,int aTextSize);
-extern void wrap_TextEditor_SelectNextOccurrenceOf(TextEditor* self,const char* aText,int aTextSize);
-extern void wrap_TextEditor_Undo(TextEditor* self);
+extern uintptr_t wrap_TextEditor_GetUserData(TextEditor* self,int line);
+extern void wrap_TextEditor_SetUserData(TextEditor* self,int line,uintptr_t data);
+extern void wrap_TextDiff_Render(TextDiff* self,const char* title);
+extern void wrap_TextEditor_Render(TextEditor* self,const char* title);
+extern void wrap_TextEditor_SelectAllOccurrencesOf(TextEditor* self,const std::string_view text);
+extern void wrap_TextEditor_SelectFirstOccurrenceOf(TextEditor* self,const std::string_view text);
+extern void wrap_TextEditor_SelectNextOccurrenceOf(TextEditor* self,const std::string_view text);
+extern void wrap_TextEditor_SelectToBrackets(TextEditor* self);
+extern void wrap_TextEditor_SetChangeCallback(TextEditor* self,std::function_void__ callback);
+extern void wrap_Trie_FindSuggestions(Trie* self,std::vector_std_string* suggestions,const std::string_view searchTerm);
 
 #ifdef __cplusplus
 }

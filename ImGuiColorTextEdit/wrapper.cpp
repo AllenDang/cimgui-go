@@ -4,8 +4,13 @@
 #include "wrapper.h"
 #include "../cwrappers/cimCTE.h"
 
-void wrap_TextEditor_Redo(TextEditor* self) { TextEditor_Redo(self,1); }
-bool wrap_TextEditor_Render(TextEditor* self,const char* aTitle) { return TextEditor_Render(self,aTitle,false,(ImVec2){},false); }
-void wrap_TextEditor_SelectAllOccurrencesOf(TextEditor* self,const char* aText,int aTextSize) { TextEditor_SelectAllOccurrencesOf(self,aText,aTextSize,true); }
-void wrap_TextEditor_SelectNextOccurrenceOf(TextEditor* self,const char* aText,int aTextSize) { TextEditor_SelectNextOccurrenceOf(self,aText,aTextSize,true); }
-void wrap_TextEditor_Undo(TextEditor* self) { TextEditor_Undo(self,1); }
+uintptr_t wrap_TextEditor_GetUserData(TextEditor* self,int line) { return (uintptr_t)TextEditor_GetUserData(self,line); }
+void wrap_TextEditor_SetUserData(TextEditor* self,int line,uintptr_t data) { TextEditor_SetUserData(self,line,(void*)(uintptr_t)data); }
+void wrap_TextDiff_Render(TextDiff* self,const char* title) { TextDiff_Render(self,title,(ImVec2){},false); }
+void wrap_TextEditor_Render(TextEditor* self,const char* title) { TextEditor_Render(self,title,(ImVec2){},false); }
+void wrap_TextEditor_SelectAllOccurrencesOf(TextEditor* self,const std::string_view text) { TextEditor_SelectAllOccurrencesOf(self,text,true,false); }
+void wrap_TextEditor_SelectFirstOccurrenceOf(TextEditor* self,const std::string_view text) { TextEditor_SelectFirstOccurrenceOf(self,text,true,false); }
+void wrap_TextEditor_SelectNextOccurrenceOf(TextEditor* self,const std::string_view text) { TextEditor_SelectNextOccurrenceOf(self,text,true,false); }
+void wrap_TextEditor_SelectToBrackets(TextEditor* self) { TextEditor_SelectToBrackets(self,true); }
+void wrap_TextEditor_SetChangeCallback(TextEditor* self,std::function_void__ callback) { TextEditor_SetChangeCallback(self,callback,0); }
+void wrap_Trie_FindSuggestions(Trie* self,std::vector_std_string* suggestions,const std::string_view searchTerm) { Trie_findSuggestions(self,suggestions,searchTerm,20,2); }

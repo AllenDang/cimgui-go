@@ -189,11 +189,23 @@ void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bo
 
    if (editTransformDecomposition)
    {
-      if (ImGui::IsKeyPressed(90))
+#if IMGUI_VERSION_NUM >= 18700
+      if (ImGui::IsKeyPressed(ImGuiKey_Z))
+#else
+      if (ImGui::IsKeyPressed('Z'))
+#endif
          mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-      if (ImGui::IsKeyPressed(69))
+#if IMGUI_VERSION_NUM >= 18700
+      if (ImGui::IsKeyPressed(ImGuiKey_E))
+#else
+      if (ImGui::IsKeyPressed('E'))
+#endif
          mCurrentGizmoOperation = ImGuizmo::ROTATE;
-      if (ImGui::IsKeyPressed(82)) // r Key
+#if IMGUI_VERSION_NUM >= 18700
+      if (ImGui::IsKeyPressed(ImGuiKey_R))
+#else
+      if (ImGui::IsKeyPressed('R'))
+#endif
          mCurrentGizmoOperation = ImGuizmo::SCALE;
       if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
          mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
@@ -218,9 +230,13 @@ void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bo
          if (ImGui::RadioButton("World", mCurrentGizmoMode == ImGuizmo::WORLD))
             mCurrentGizmoMode = ImGuizmo::WORLD;
       }
-      if (ImGui::IsKeyPressed(83))
+#if IMGUI_VERSION_NUM >= 18700
+      if (ImGui::IsKeyPressed(ImGuiKey_S))
+#else
+      if (ImGui::IsKeyPressed('S'))
+#endif
          useSnap = !useSnap;
-      ImGui::Checkbox("", &useSnap);
+      ImGui::Checkbox("##useSnap", &useSnap);
       ImGui::SameLine();
 
       switch (mCurrentGizmoOperation)
@@ -239,7 +255,7 @@ void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bo
       if (boundSizing)
       {
          ImGui::PushID(3);
-         ImGui::Checkbox("", &boundSizingSnap);
+         ImGui::Checkbox("##boundSizingSnap", &boundSizingSnap);
          ImGui::SameLine();
          ImGui::InputFloat3("Snap", boundsSnap);
          ImGui::PopID();
@@ -251,10 +267,10 @@ void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bo
    float viewManipulateTop = 0;
    if (useWindow)
    {
-      ImGui::SetNextWindowSize(ImVec2(800, 400));
-      ImGui::SetNextWindowPos(ImVec2(400,20));
+      ImGui::SetNextWindowSize(ImVec2(800, 400), ImGuiCond_FirstUseEver);
+      ImGui::SetNextWindowPos(ImVec2(400,20), ImGuiCond_FirstUseEver);
       ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.35f, 0.3f, 0.3f));
-      ImGui::Begin("Gizmo", 0, ImGuiWindowFlags_NoMove);
+      ImGui::Begin("Gizmo", 0);
       ImGuizmo::SetDrawlist();
       float windowWidth = (float)ImGui::GetWindowWidth();
       float windowHeight = (float)ImGui::GetWindowHeight();
@@ -647,7 +663,6 @@ struct GraphEditorDelegate : public GraphEditor::Delegate
    std::vector<GraphEditor::Link> mLinks = { {0, 0, 1, 0} };
 };
 
-
 int main(int, char**)
 {
    ImApp::ImApp imApp;
@@ -731,12 +746,12 @@ int main(int, char**)
       ImGuizmo::SetOrthographic(!isPerspective);
       ImGuizmo::BeginFrame();
 
-      ImGui::SetNextWindowPos(ImVec2(1024, 100));
-      ImGui::SetNextWindowSize(ImVec2(256, 256));
+      ImGui::SetNextWindowPos(ImVec2(1024, 100), ImGuiCond_FirstUseEver);
+      ImGui::SetNextWindowSize(ImVec2(256, 256), ImGuiCond_FirstUseEver);
 
       // create a window and insert the inspector
-      ImGui::SetNextWindowPos(ImVec2(10, 10));
-      ImGui::SetNextWindowSize(ImVec2(320, 340));
+      ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+      ImGui::SetNextWindowSize(ImVec2(320, 340), ImGuiCond_FirstUseEver);
       ImGui::Begin("Editor");
       if (ImGui::RadioButton("Full view", !useWindow)) useWindow = false;
       ImGui::SameLine();
@@ -785,20 +800,21 @@ int main(int, char**)
       ImGui::Separator();
       for (int matId = 0; matId < gizmoCount; matId++)
       {
-         ImGuizmo::SetID(matId);
+         ImGuizmo::PushID(matId);
 
          EditTransform(cameraView, cameraProjection, objectMatrix[matId], lastUsing == matId);
          if (ImGuizmo::IsUsing())
          {
             lastUsing = matId;
          }
+         ImGuizmo::PopID();
       }
 
       ImGui::End();
 
-      ImGui::SetNextWindowPos(ImVec2(10, 350));
+      ImGui::SetNextWindowPos(ImVec2(10, 350), ImGuiCond_FirstUseEver);
 
-      ImGui::SetNextWindowSize(ImVec2(940, 480));
+      ImGui::SetNextWindowSize(ImVec2(940, 480), ImGuiCond_FirstUseEver);
       ImGui::Begin("Other controls");
       if (ImGui::CollapsingHeader("Zoom Slider"))
       {

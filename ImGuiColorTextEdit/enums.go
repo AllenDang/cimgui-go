@@ -3,38 +3,40 @@
 
 package ImGuiColorTextEdit
 
-// original name: LanguageDefinitionId
-type LanguageDefinitionId int32
+// original name: Color
+type Color int32
 
 const (
-	None        LanguageDefinitionId = 0
-	Cpp         LanguageDefinitionId = 1
-	C           LanguageDefinitionId = 2
-	Cs          LanguageDefinitionId = 3
-	Python      LanguageDefinitionId = 4
-	Lua         LanguageDefinitionId = 5
-	Json        LanguageDefinitionId = 6
-	Sql         LanguageDefinitionId = 7
-	AngelScript LanguageDefinitionId = 8
-	Glsl        LanguageDefinitionId = 9
-	Hlsl        LanguageDefinitionId = 10
+	text                      Color = 0
+	keyword                   Color = 1
+	declaration               Color = 2
+	number                    Color = 3
+	string                    Color = 4
+	punctuation               Color = 5
+	preprocessor              Color = 6
+	identifier                Color = 7
+	knownIdentifier           Color = 8
+	comment                   Color = 9
+	background                Color = 10
+	cursor                    Color = 11
+	selection                 Color = 12
+	whitespace                Color = 13
+	matchingBracketBackground Color = 14
+	matchingBracketActive     Color = 15
+	matchingBracketLevel1     Color = 16
+	matchingBracketLevel2     Color = 17
+	matchingBracketLevel3     Color = 18
+	matchingBracketError      Color = 19
+	lineNumber                Color = 20
+	currentLineNumber         Color = 21
+	count                     Color = 22
 )
 
-// original name: PaletteId
-type PaletteId int32
+// original name: Scroll
+type Scroll int32
 
 const (
-	Dark      PaletteId = 0
-	Light     PaletteId = 1
-	Mariana   PaletteId = 2
-	RetroBlue PaletteId = 3
-)
-
-// original name: SetViewAtLineMode
-type SetViewAtLineMode int32
-
-const (
-	FirstVisibleLine SetViewAtLineMode = 0
-	Centered         SetViewAtLineMode = 1
-	LastVisibleLine  SetViewAtLineMode = 2
+	alignTop    Scroll = 0
+	alignMiddle Scroll = 1
+	alignBottom Scroll = 2
 )
