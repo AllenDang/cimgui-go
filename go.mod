@@ -3,7 +3,7 @@ module github.com/AllenDang/cimgui-go
 go 1.24.0
 
 require (
-	github.com/gen2brain/raylib-go/raylib v0.60.0
+	github.com/gen2brain/raylib-go/raylib v0.60.1
 	github.com/hajimehoshi/ebiten/v2 v2.9.9
 	github.com/tthhr/go-drm-egl v1.0.1
 )
