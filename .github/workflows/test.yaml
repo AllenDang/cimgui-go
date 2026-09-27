@@ -41,14 +41,14 @@ jobs:
         run: |
           sudo apt-get --allow-releaseinfo-change update
           sudo apt-get install -y libgtk-3-dev libasound2-dev libxxf86vm-dev libdrm-dev libgbm-dev libegl1-mesa-dev libgles2-mesa-dev pkg-config
-      - name: Set up Go environment
-        uses: actions/setup-go@v7
-        with:
-          go-version-file: 'go.mod'
       - name: Checkout out source code
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: 'recursive'
+      - name: Set up Go environment
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: 'go.mod'
       - name: Run Go test
         run: go test -race -v ./...
