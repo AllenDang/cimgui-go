@@ -219,6 +219,32 @@ extern void closeCallback(GLFWwindow *window);
 extern void keyCallback(int key, int scancode, int action, int mods);
 extern void sizeCallback(int width, int height);
 
+// Manual / secondary window support (does NOT initialize ImGui).
+extern GLFWwindow *igCreateSharedGLFWWindow(const char *title, int width, int height, GLFWwindow *share);
+extern void igGLFWWindow_MakeContextCurrent(GLFWwindow *window);
+extern void igGLFWWindow_DetachCurrentContext();
+extern GLFWwindow *igGLFWWindow_GetCurrentContext();
+extern void igGLFWWindow_SwapBuffers(GLFWwindow *window);
+extern void igGLFWWindow_DestroyWindow(GLFWwindow *window);
+extern void igGLFWWindow_GetFramebufferSize(GLFWwindow *window, int *width, int *height);
+extern void igGLFWWindow_Show(GLFWwindow *window, int value);
+extern void igGLFWWindow_SetAttrib(GLFWwindow *window, int attrib, int value);
+extern int  igGLFWWindow_GetShouldClose(GLFWwindow *window);
+extern GLFWmonitor *igGLFW_GetPrimaryMonitor();
+extern GLFWmonitor **igGLFW_GetMonitors(int *count);
+extern const char *igGLFW_GetMonitorName(GLFWmonitor *monitor);
+extern GLFWmonitor *igGLFWWindow_GetMonitor(GLFWwindow *window);
+extern void igGLFW_GetVideoMode(GLFWmonitor *monitor, int *width, int *height, int *refreshRate);
+extern void igGLFWWindow_SetMonitor(GLFWwindow *window, GLFWmonitor *monitor, int x, int y, int width, int height, int refreshRate);
+extern void igGLFWWindow_SetKeyCallbackEx(GLFWwindow *window);
+extern void igGLFWWindow_SetCloseCallbackEx(GLFWwindow *window);
+extern void igGLFWWindow_SetSizeCallbackEx(GLFWwindow *window);
+
+// Per-window callback dispatchers (implemented in Go).
+extern void goViewportKeyCallback(void *w, int k, int s, int a, int m);
+extern void goViewportCloseCallback(void *w);
+extern void goViewportSizeCallback(void *w, int width, int height);
+
 #ifdef __cplusplus
 }
 #endif

@@ -299,4 +299,47 @@ void igGLFWWindow_SetIcon(GLFWwindow *window, int count, CImage *images) {
 
 void iggImplGlfw_KeyCallback(GLFWwindow* w, int k,int s,int a,int m) { ImGui_ImplGlfw_KeyCallback(w,k,s,a,m); }
 
+GLFWwindow *igCreateSharedGLFWWindow(const char *title, int width, int height, GLFWwindow *share) {
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+    GLFWwindow *prev = glfwGetCurrentContext();
+    GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, share);
+    if (window == NULL) {
+        return NULL;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    glfwMakeContextCurrent(prev);
+    return window;
+}
+
+void igGLFWWindow_MakeContextCurrent(GLFWwindow *window) { glfwMakeContextCurrent(window); }
+void igGLFWWindow_DetachCurrentContext() { glfwMakeContextCurrent(NULL); }
+GLFWwindow *igGLFWWindow_GetCurrentContext() { return glfwGetCurrentContext(); }
+void igGLFWWindow_SwapBuffers(GLFWwindow *window) { glfwSwapBuffers(window); }
+void igGLFWWindow_DestroyWindow(GLFWwindow *window) { glfwDestroyWindow(window); }
+void igGLFWWindow_GetFramebufferSize(GLFWwindow *window, int *width, int *height) { glfwGetFramebufferSize(window, width, height); }
+void igGLFWWindow_Show(GLFWwindow *window, int value) { if (value) glfwShowWindow(window); else glfwHideWindow(window); }
+void igGLFWWindow_SetAttrib(GLFWwindow *window, int attrib, int value) { glfwSetWindowAttrib(window, attrib, value); }
+int igGLFWWindow_GetShouldClose(GLFWwindow *window) { return glfwWindowShouldClose(window); }
+GLFWmonitor *igGLFW_GetPrimaryMonitor() { return glfwGetPrimaryMonitor(); }
+GLFWmonitor **igGLFW_GetMonitors(int *count) { return glfwGetMonitors(count); }
+const char *igGLFW_GetMonitorName(GLFWmonitor *monitor) { return glfwGetMonitorName(monitor); }
+GLFWmonitor *igGLFWWindow_GetMonitor(GLFWwindow *window) { return glfwGetWindowMonitor(window); }
+void igGLFW_GetVideoMode(GLFWmonitor *monitor, int *width, int *height, int *refreshRate) {
+    const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+    if (mode) { *width = mode->width; *height = mode->height; *refreshRate = mode->refreshRate; }
+    else { *width = 0; *height = 0; *refreshRate = 0; }
+}
+void igGLFWWindow_SetMonitor(GLFWwindow *window, GLFWmonitor *monitor, int x, int y, int width, int height, int refreshRate) {
+    glfwSetWindowMonitor(window, monitor, x, y, width, height, refreshRate);
+}
+
+static void viewportKeyCallback(GLFWwindow* w, int k, int s, int a, int m) { goViewportKeyCallback((void*)w, k, s, a, m); }
+static void viewportCloseCallback(GLFWwindow* w) { goViewportCloseCallback((void*)w); }
+static void viewportSizeCallback(GLFWwindow* w, int width, int height) { goViewportSizeCallback((void*)w, width, height); }
+
+void igGLFWWindow_SetKeyCallbackEx(GLFWwindow *window) { glfwSetKeyCallback(window, viewportKeyCallback); }
+void igGLFWWindow_SetCloseCallbackEx(GLFWwindow *window) { glfwSetWindowCloseCallback(window, viewportCloseCallback); }
+void igGLFWWindow_SetSizeCallbackEx(GLFWwindow *window) { glfwSetWindowSizeCallback(window, viewportSizeCallback); }
+
 #endif
