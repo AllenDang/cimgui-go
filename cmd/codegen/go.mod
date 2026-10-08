@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/cosiner/flag v0.5.2
 	github.com/kpango/glg v1.6.15
-	golang.org/x/tools v0.50.0
+	golang.org/x/tools v0.51.0
 	mvdan.cc/gofumpt v0.12.0
 )
 
