@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/gen2brain/raylib-go/raylib v0.60.1
-	github.com/hajimehoshi/ebiten/v2 v2.10.4
+	github.com/hajimehoshi/ebiten/v2 v2.10.5
 	github.com/tthhr/go-drm-egl v1.0.1
 )
 
