@@ -60,7 +60,7 @@ type EbitenBackend struct {
 	inputChars         []rune
 
 	cache         TextureCache
-	renderBuffers renderBuffers  // what Draw renders each draw list into, kept between frames
+	renderBuffers renderBuffers  // reused by Draw between frames
 	ctx           *imgui.Context // imgui context
 }
 

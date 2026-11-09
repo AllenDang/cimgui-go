@@ -43,16 +43,13 @@ func premultiplyPixels(pixels unsafe.Pointer, width, height int) []uint8 {
 	return pix
 }
 
-// renderBuffers holds what render converts each draw list into. The backend
-// keeps one from frame to frame, so that rendering allocates nothing once
-// they have grown.
+// renderBuffers are reused between frames so render doesn't allocate.
 type renderBuffers struct {
-	vertices []ebiten.Vertex // the draw list's vertices
-	scaled   []ebiten.Vertex // the same, texture coordinates scaled to a command's texture
-	indices  []uint16        // the draw list's indices, when they are not 16-bit
+	vertices []ebiten.Vertex
+	scaled   []ebiten.Vertex // vertices with UVs scaled to the texture
+	indices  []uint16        // only used when indices are not 16-bit
 }
 
-// getVertices converts a draw list's vertices into dst, reusing its storage.
 func getVertices(dst []ebiten.Vertex, vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
 	offcol int,
 ) []ebiten.Vertex {
@@ -118,7 +115,6 @@ func lerp(a, b int, t float32) float32 {
 	return float32(a)*(1-t) + float32(b)*t
 }
 
-// vcopy copies v into dst, reusing its storage.
 func vcopy(dst, v []ebiten.Vertex) []ebiten.Vertex {
 	return append(dst[:0], v...)
 }
@@ -150,8 +146,6 @@ func getTexture(pixels unsafe.Pointer, width int32, height int32) *ebiten.Image 
 	return img
 }
 
-// getIndices returns a draw list's indices: ImGui's own memory when they are
-// 16-bit, else converted into dst, reusing its storage.
 func getIndices(dst []uint16, ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 	n := iblen / isize
 	switch isize {
@@ -181,18 +175,30 @@ func getIndices(dst []uint16, ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 func Render(target *ebiten.Image, drawData *imgui.DrawData, txcache TextureCache,
 	dfilter ebiten.Filter,
 ) {
-	new(renderBuffers).render(target, nil, drawData, txcache, dfilter)
+	new(renderBuffers).Render(target, drawData, txcache, dfilter)
 }
 
 // RenderMasked renders the ImGui drawData into the target *ebiten.Image
 func RenderMasked(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
-	new(renderBuffers).render(target, mask, drawData, txcache, dfilter)
+	new(renderBuffers).RenderMasked(target, mask, drawData, txcache, dfilter)
 }
 
-// render renders the ImGui drawData into the target, converting each draw
-// list into bufs, which it grows as needed.
+// Render is like Render, but reuses bufs.
+func (bufs *renderBuffers) Render(target *ebiten.Image, drawData *imgui.DrawData, txcache TextureCache,
+	dfilter ebiten.Filter,
+) {
+	bufs.render(target, nil, drawData, txcache, dfilter)
+}
+
+// RenderMasked is like RenderMasked, but reuses bufs.
+func (bufs *renderBuffers) RenderMasked(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
+	txcache TextureCache, dfilter ebiten.Filter,
+) {
+	bufs.render(target, mask, drawData, txcache, dfilter)
+}
+
 func (bufs *renderBuffers) render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
@@ -225,8 +231,7 @@ func (bufs *renderBuffers) render(target *ebiten.Image, mask *ebiten.Image, draw
 	for _, clist := range drawData.CommandLists() {
 		vertexBuffer, vertexLen := clist.GetVertexBuffer()
 		indexBuffer, indexLen := clist.GetIndexBuffer()
-		// Ebitengine copies vertices and indices when they are drawn, so the
-		// buffers can be reused for the next draw list.
+		// ebiten copies vertices and indices when drawing, so bufs can be reused
 		bufs.vertices = getVertices(bufs.vertices, vertexBuffer, vertexLen, vertexSize, vertexOffsetPos,
 			vertexOffsetUv, vertexOffsetCol)
 		vertices := bufs.vertices
