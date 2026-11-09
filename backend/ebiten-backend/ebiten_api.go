@@ -49,9 +49,9 @@ func (e *EbitenBackend) Draw(screen *ebiten.Image) {
 				e.lmask = ebiten.NewImage(w1, h1)
 			}
 		}
-		RenderMasked(screen, e.lmask, imgui.CurrentDrawData(), e.cache, e.filter)
+		e.renderBuffers.render(screen, e.lmask, imgui.CurrentDrawData(), e.cache, e.filter)
 	} else {
-		Render(screen, imgui.CurrentDrawData(), e.cache, e.filter)
+		e.renderBuffers.render(screen, nil, imgui.CurrentDrawData(), e.cache, e.filter)
 	}
 
 	// render texture cache game textures

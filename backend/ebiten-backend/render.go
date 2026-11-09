@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"image"
 	"slices"
-	"sync"
 	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/backend/ebiten-backend/internal/native"
@@ -44,15 +43,14 @@ func premultiplyPixels(pixels unsafe.Pointer, width, height int) []uint8 {
 	return pix
 }
 
-// renderBuffers holds what render converts each draw list into, kept from
-// frame to frame so that rendering allocates nothing once they have grown.
+// renderBuffers holds what render converts each draw list into. The backend
+// keeps one from frame to frame, so that rendering allocates nothing once
+// they have grown.
 type renderBuffers struct {
 	vertices []ebiten.Vertex // the draw list's vertices
 	scaled   []ebiten.Vertex // the same, texture coordinates scaled to a command's texture
 	indices  []uint16        // the draw list's indices, when they are not 16-bit
 }
-
-var renderBufferPool = sync.Pool{New: func() any { return new(renderBuffers) }}
 
 // getVertices converts a draw list's vertices into dst, reusing its storage.
 func getVertices(dst []ebiten.Vertex, vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
@@ -183,17 +181,19 @@ func getIndices(dst []uint16, ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 func Render(target *ebiten.Image, drawData *imgui.DrawData, txcache TextureCache,
 	dfilter ebiten.Filter,
 ) {
-	render(target, nil, drawData, txcache, dfilter)
+	new(renderBuffers).render(target, nil, drawData, txcache, dfilter)
 }
 
 // RenderMasked renders the ImGui drawData into the target *ebiten.Image
 func RenderMasked(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
-	render(target, mask, drawData, txcache, dfilter)
+	new(renderBuffers).render(target, mask, drawData, txcache, dfilter)
 }
 
-func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
+// render renders the ImGui drawData into the target, converting each draw
+// list into bufs, which it grows as needed.
+func (bufs *renderBuffers) render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
 	targetSize := target.Bounds().Size()
@@ -221,9 +221,6 @@ func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 			Blend: ebiten.BlendSourceOver,
 		}
 	}
-
-	bufs := renderBufferPool.Get().(*renderBuffers)
-	defer renderBufferPool.Put(bufs)
 
 	for _, clist := range drawData.CommandLists() {
 		vertexBuffer, vertexLen := clist.GetVertexBuffer()
