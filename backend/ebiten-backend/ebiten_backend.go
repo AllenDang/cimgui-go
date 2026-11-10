@@ -59,8 +59,9 @@ type EbitenBackend struct {
 	cliptxt            string
 	inputChars         []rune
 
-	cache TextureCache
-	ctx   *imgui.Context // imgui context
+	cache         TextureCache
+	renderBuffers renderBuffers  // reused by Draw between frames
+	ctx           *imgui.Context // imgui context
 }
 
 // this is "pointer" to the first texture used for font atlas texture.

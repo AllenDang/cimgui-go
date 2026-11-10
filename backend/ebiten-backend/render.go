@@ -3,6 +3,7 @@ package ebitenbackend
 import (
 	"fmt"
 	"image"
+	"slices"
 	"unsafe"
 
 	"github.com/AllenDang/cimgui-go/backend/ebiten-backend/internal/native"
@@ -42,23 +43,30 @@ func premultiplyPixels(pixels unsafe.Pointer, width, height int) []uint8 {
 	return pix
 }
 
-func getVertices(vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
+// renderBuffers are reused between frames so render doesn't allocate.
+type renderBuffers struct {
+	vertices []ebiten.Vertex
+	scaled   []ebiten.Vertex // vertices with UVs scaled to the texture
+	indices  []uint16        // only used when indices are not 16-bit
+}
+
+func getVertices(dst []ebiten.Vertex, vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
 	offcol int,
 ) []ebiten.Vertex {
 	if native.SzFloat() == 4 {
-		return getVerticesx32(vbuf, vblen, vsize, offpos, offuv, offcol)
+		return getVerticesx32(dst, vbuf, vblen, vsize, offpos, offuv, offcol)
 	}
 	if native.SzFloat() == 8 {
-		return getVerticesx64(vbuf, vblen, vsize, offpos, offuv, offcol)
+		return getVerticesx64(dst, vbuf, vblen, vsize, offpos, offuv, offcol)
 	}
 	panic("invalid char size")
 }
 
-func getVerticesx32(vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
+func getVerticesx32(dst []ebiten.Vertex, vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
 	offcol int,
 ) []ebiten.Vertex {
 	n := vblen / vsize
-	vertices := make([]ebiten.Vertex, 0, vblen/vsize)
+	vertices := slices.Grow(dst[:0], n)
 	if offpos != 0 || offuv != 8 || offcol != 16 {
 		panic("TODO: invalid vertex layout")
 	}
@@ -79,11 +87,11 @@ func getVerticesx32(vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
 	return vertices
 }
 
-func getVerticesx64(vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
+func getVerticesx64(dst []ebiten.Vertex, vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
 	offcol int,
 ) []ebiten.Vertex {
 	n := vblen / vsize
-	vertices := make([]ebiten.Vertex, 0, vblen/vsize)
+	vertices := slices.Grow(dst[:0], n)
 	if offpos != 0 || offuv != 8 || offcol != 16 {
 		panic("TODO: invalid vertex layout (64)")
 	}
@@ -107,10 +115,8 @@ func lerp(a, b int, t float32) float32 {
 	return float32(a)*(1-t) + float32(b)*t
 }
 
-func vcopy(v []ebiten.Vertex) []ebiten.Vertex {
-	cl := make([]ebiten.Vertex, len(v))
-	copy(cl, v)
-	return cl
+func vcopy(dst, v []ebiten.Vertex) []ebiten.Vertex {
+	return append(dst[:0], v...)
 }
 
 func vmultiply(v, vbuf []ebiten.Vertex, bmin, bmax image.Point) {
@@ -140,7 +146,7 @@ func getTexture(pixels unsafe.Pointer, width int32, height int32) *ebiten.Image 
 	return img
 }
 
-func getIndices(ibuf unsafe.Pointer, iblen, isize int) []uint16 {
+func getIndices(dst []uint16, ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 	n := iblen / isize
 	switch isize {
 	case 2:
@@ -149,13 +155,13 @@ func getIndices(ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 		// https://github.com/golang/go/wiki/cgo#turning-c-arrays-into-go-slices
 		return (*[1 << 28]uint16)(ibuf)[:n:n]
 	case 4:
-		slc := make([]uint16, n)
+		slc := slices.Grow(dst[:0], n)[:n]
 		for i := 0; i < n; i++ {
 			slc[i] = uint16(*(*uint32)(unsafe.Pointer(uintptr(ibuf) + uintptr(i*isize))))
 		}
 		return slc
 	case 8:
-		slc := make([]uint16, n)
+		slc := slices.Grow(dst[:0], n)[:n]
 		for i := 0; i < n; i++ {
 			slc[i] = uint16(*(*uint64)(unsafe.Pointer(uintptr(ibuf) + uintptr(i*isize))))
 		}
@@ -169,17 +175,31 @@ func getIndices(ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 func Render(target *ebiten.Image, drawData *imgui.DrawData, txcache TextureCache,
 	dfilter ebiten.Filter,
 ) {
-	render(target, nil, drawData, txcache, dfilter)
+	new(renderBuffers).Render(target, drawData, txcache, dfilter)
 }
 
 // RenderMasked renders the ImGui drawData into the target *ebiten.Image
 func RenderMasked(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
-	render(target, mask, drawData, txcache, dfilter)
+	new(renderBuffers).RenderMasked(target, mask, drawData, txcache, dfilter)
 }
 
-func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
+// Render is like Render, but reuses bufs.
+func (bufs *renderBuffers) Render(target *ebiten.Image, drawData *imgui.DrawData, txcache TextureCache,
+	dfilter ebiten.Filter,
+) {
+	bufs.render(target, nil, drawData, txcache, dfilter)
+}
+
+// RenderMasked is like RenderMasked, but reuses bufs.
+func (bufs *renderBuffers) RenderMasked(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
+	txcache TextureCache, dfilter ebiten.Filter,
+) {
+	bufs.render(target, mask, drawData, txcache, dfilter)
+}
+
+func (bufs *renderBuffers) render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
 	targetSize := target.Bounds().Size()
@@ -211,10 +231,16 @@ func render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	for _, clist := range drawData.CommandLists() {
 		vertexBuffer, vertexLen := clist.GetVertexBuffer()
 		indexBuffer, indexLen := clist.GetIndexBuffer()
-		vertices := getVertices(vertexBuffer, vertexLen, vertexSize, vertexOffsetPos,
+		// ebiten copies vertices and indices when drawing, so bufs can be reused
+		bufs.vertices = getVertices(bufs.vertices, vertexBuffer, vertexLen, vertexSize, vertexOffsetPos,
 			vertexOffsetUv, vertexOffsetCol)
-		vbuf := vcopy(vertices)
-		indices := getIndices(indexBuffer, indexLen, indexSize)
+		vertices := bufs.vertices
+		bufs.scaled = vcopy(bufs.scaled, vertices)
+		vbuf := bufs.scaled
+		indices := getIndices(bufs.indices, indexBuffer, indexLen, indexSize)
+		if indexSize != 2 {
+			bufs.indices = indices
+		}
 		for _, cmd := range clist.Commands() {
 			idxOffset := int(cmd.IdxOffset())
 
