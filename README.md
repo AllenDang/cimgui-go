@@ -8,7 +8,7 @@
 
 This project aims to generate go wrapper for Dear ImGui.
 
-It comes with [several default backends](supported-backends) implemented.
+It comes with [several default backends](#supported-backends) implemented.
 
 It works on macOS(arm64/x86), windows(x64), Arch Linux (Gnome/KDE) and Fedora Workstation 36+, idealy other linux GUI should works as well. Check out [`examples`](./examples): cd in and `go run .`.
 
