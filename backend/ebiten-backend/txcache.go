@@ -20,16 +20,16 @@ type TextureCache interface {
 }
 
 type textureCache struct {
-	startIndex int
-	cache      map[imgui.TextureID]*ebiten.Image
-	cacheGame  map[imgui.TextureID]ebiten.Game
-	dfilter    ebiten.Filter
+	next      int // above every ID set, so a removed texture's ID isn't reused
+	cache     map[imgui.TextureID]*ebiten.Image
+	cacheGame map[imgui.TextureID]ebiten.Game
+	dfilter   ebiten.Filter
 }
 
 var _ TextureCache = (*textureCache)(nil)
 
 func (c *textureCache) NextId() int {
-	return len(c.cache) + c.startIndex
+	return c.next
 }
 
 func (c *textureCache) UpdateTexture(tex imgui.TextureData) {
@@ -70,6 +70,7 @@ func (c *textureCache) GetGameTexture(id imgui.TextureID) (res ebiten.Game, isGa
 
 func (c *textureCache) SetTexture(id imgui.TextureID, img *ebiten.Image) {
 	c.cache[id] = img
+	c.next = max(c.next, int(id)+1)
 }
 
 func (c *textureCache) SetGameTexture(id imgui.TextureID, img ebiten.Game) {
@@ -89,8 +90,8 @@ func (c *textureCache) RemoveTexture(id imgui.TextureID) {
 
 func NewCache() TextureCache {
 	return &textureCache{
-		startIndex: 2,
-		cache:      make(map[imgui.TextureID]*ebiten.Image),
-		cacheGame:  make(map[imgui.TextureID]ebiten.Game),
+		next:      2,
+		cache:     make(map[imgui.TextureID]*ebiten.Image),
+		cacheGame: make(map[imgui.TextureID]ebiten.Game),
 	}
 }
