@@ -32,22 +32,29 @@ func premultiplyPixels(pixels unsafe.Pointer, width, height int) []uint8 {
 	n := width * height
 	srcPix := (*[1 << 28]uint8)(pixels)[: n*4 : n*4]
 	pix := make([]uint8, n*4)
-	for i := 0; i < n; i++ {
-		alpha := uint16(srcPix[4*i+3])
-		pix[4*i] = uint8((uint16(srcPix[4*i])*alpha + 127) / 255)
-		pix[4*i+1] = uint8((uint16(srcPix[4*i+1])*alpha + 127) / 255)
-		pix[4*i+2] = uint8((uint16(srcPix[4*i+2])*alpha + 127) / 255)
-		pix[4*i+3] = uint8(alpha)
-	}
+	premultiply(pix, srcPix)
 
 	return pix
+}
+
+// premultiply writes the straight-alpha RGBA pixels of src to dst with their
+// alpha premultiplied, as Ebitengine takes them.
+func premultiply(dst, src []uint8) {
+	for i := 0; i+3 < len(src); i += 4 {
+		alpha := uint16(src[i+3])
+		dst[i] = uint8((uint16(src[i])*alpha + 127) / 255)
+		dst[i+1] = uint8((uint16(src[i+1])*alpha + 127) / 255)
+		dst[i+2] = uint8((uint16(src[i+2])*alpha + 127) / 255)
+		dst[i+3] = uint8(alpha)
+	}
 }
 
 // renderBuffers are reused between frames so render doesn't allocate.
 type renderBuffers struct {
 	vertices []ebiten.Vertex
-	scaled   []ebiten.Vertex // vertices with UVs scaled to the texture
-	indices  []uint16        // only used when indices are not 16-bit
+	scaled   []ebiten.Vertex     // vertices with UVs scaled to the texture
+	indices  []uint16            // only used when indices are not 16-bit
+	textures []imgui.TextureData // the draw data's textures
 }
 
 func getVertices(dst []ebiten.Vertex, vbuf unsafe.Pointer, vblen, vsize, offpos, offuv,
@@ -126,26 +133,6 @@ func vmultiply(v, vbuf []ebiten.Vertex, bmin, bmax image.Point) {
 	}
 }
 
-func getTexture(pixels unsafe.Pointer, width int32, height int32) *ebiten.Image {
-	n := int(width * height)
-	srcPix := (*[1 << 28]uint8)(pixels)[: n*4 : n*4]
-	pix := make([]uint8, n*4)
-	// Note: Ebiten expects colors in premultiplied-alpha form.
-	// However, the imgui library exports pixmaps in straight-alpha form.
-	// Also, not doing this modification in-place,
-	// as srcPix points right into an imgui-owned data structure.
-	for i := 0; i < n; i++ {
-		alpha := uint16(srcPix[4*i+3])
-		pix[4*i] = uint8((uint16(srcPix[4*i])*alpha + 127) / 255)
-		pix[4*i+1] = uint8((uint16(srcPix[4*i+1])*alpha + 127) / 255)
-		pix[4*i+2] = uint8((uint16(srcPix[4*i+2])*alpha + 127) / 255)
-		pix[4*i+3] = uint8(alpha)
-	}
-	img := ebiten.NewImage(int(width), int(height))
-	img.WritePixels(pix)
-	return img
-}
-
 func getIndices(dst []uint16, ibuf unsafe.Pointer, iblen, isize int) []uint16 {
 	n := iblen / isize
 	switch isize {
@@ -199,6 +186,25 @@ func (bufs *renderBuffers) RenderMasked(target *ebiten.Image, mask *ebiten.Image
 	bufs.render(target, mask, drawData, txcache, dfilter)
 }
 
+// appendTextures appends the textures drawData refers to, each its own
+// TextureData, to dst and returns it, so the backend can handle the requests
+// of every one; passing the slice back each frame reuses it.
+// DrawData.Textures().Slice() gives only the first one right: its Vector
+// points at one Go value, not at the C list of pointers (see #492).
+func appendTextures(drawData *imgui.DrawData, dst []imgui.TextureData) []imgui.TextureData {
+	data, fin := drawData.Handle()
+	defer fin()
+
+	list := data.Textures
+	if list == nil || list.Size <= 0 || list.Data == nil {
+		return dst
+	}
+	for _, tex := range unsafe.Slice(list.Data, list.Size) {
+		dst = append(dst, imgui.TextureData{CData: tex})
+	}
+	return dst
+}
+
 func (bufs *renderBuffers) render(target *ebiten.Image, mask *ebiten.Image, drawData *imgui.DrawData,
 	txcache TextureCache, dfilter ebiten.Filter,
 ) {
@@ -207,7 +213,8 @@ func (bufs *renderBuffers) render(target *ebiten.Image, mask *ebiten.Image, draw
 		return
 	}
 
-	for _, tex := range drawData.Textures().Slice() {
+	bufs.textures = appendTextures(drawData, bufs.textures[:0])
+	for _, tex := range bufs.textures {
 		txcache.UpdateTexture(tex)
 	}
 

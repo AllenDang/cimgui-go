@@ -1,6 +1,7 @@
 package ebitenbackend
 
 import (
+	"image"
 	"log"
 	"unsafe"
 
@@ -24,6 +25,7 @@ type textureCache struct {
 	cache     map[imgui.TextureID]*ebiten.Image
 	cacheGame map[imgui.TextureID]ebiten.Game
 	dfilter   ebiten.Filter
+	pix       []byte // premultiplied pixels on their way to a texture
 }
 
 var _ TextureCache = (*textureCache)(nil)
@@ -32,24 +34,57 @@ func (c *textureCache) NextId() int {
 	return c.next
 }
 
+// UpdateTexture does what ImGui asks of a texture and tells it when done, as
+// Dear ImGui 1.92 wants: it makes the texture, writes the pixels ImGui changed
+// into it, or frees it.
 func (c *textureCache) UpdateTexture(tex imgui.TextureData) {
 	switch tex.Status() {
-	case imgui.TextureStatusOK:
+	case imgui.TextureStatusOK, imgui.TextureStatusDestroyed:
 		// noop.
 	case imgui.TextureStatusWantCreate:
-		texImage := getTexture(unsafe.Pointer(tex.Pixels()), tex.Width(), tex.Height())
+		w, h := int(tex.Width()), int(tex.Height())
+		texImage := ebiten.NewImage(w, h)
+		c.writePixels(texImage, tex, image.Rect(0, 0, w, h))
 		newID := imgui.TextureID(c.NextId())
 		c.SetTexture(newID, texImage)
 		tex.SetTexID(newID)
 		tex.SetStatus(imgui.TextureStatusOK)
-	case imgui.TextureStatusWantDestroy:
-		c.RemoveTexture(tex.TexID())
 	case imgui.TextureStatusWantUpdates:
-		texImage := getTexture(unsafe.Pointer(tex.Pixels()), tex.Width(), tex.Height())
-		c.SetTexture(tex.TexID(), texImage)
+		r := tex.UpdateRect()
+		x, y := int(r.X()), int(r.Y())
+		c.writePixels(c.GetTexture(tex.TexID()), tex, image.Rect(x, y, x+int(r.W()), y+int(r.H())))
+		tex.SetStatus(imgui.TextureStatusOK)
+	case imgui.TextureStatusWantDestroy:
+		if img, ok := c.cache[tex.TexID()]; ok {
+			img.Deallocate()
+		}
+		c.RemoveTexture(tex.TexID())
+		tex.SetTexID(0) // ImTextureID_Invalid
+		tex.SetStatus(imgui.TextureStatusDestroyed)
 	default:
 		log.Panicf("Unknown texture status: %v", tex.Status())
 	}
+}
+
+// writePixels writes rect of tex's pixels into img: ImGui keeps them in
+// straight alpha, and Ebitengine wants them premultiplied.
+func (c *textureCache) writePixels(img *ebiten.Image, tex imgui.TextureData, rect image.Rectangle) {
+	if rect.Empty() {
+		return
+	}
+	stride := int(tex.Width()) * 4
+	src := unsafe.Slice((*byte)(unsafe.Pointer(tex.Pixels())), stride*int(tex.Height()))
+	n := rect.Dx() * rect.Dy() * 4
+	if cap(c.pix) < n {
+		c.pix = make([]byte, n)
+	}
+	dst := c.pix[:n]
+	row := rect.Dx() * 4
+	for y := rect.Min.Y; y < rect.Max.Y; y++ {
+		at := y*stride + rect.Min.X*4
+		premultiply(dst[(y-rect.Min.Y)*row:], src[at:at+row])
+	}
+	img.SubImage(rect).(*ebiten.Image).WritePixels(dst)
 }
 
 func (c *textureCache) GetTexture(id imgui.TextureID) *ebiten.Image {
