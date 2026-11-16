@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/AllenDang/cimgui-go/imgui"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // The imgui functions that wrap a C pointer in a Go value are called through
@@ -67,5 +68,79 @@ func TestAppendTexturesListsEveryTexture(t *testing.T) {
 	}
 	if n := currentPlatformIO().Textures().Size; int(n) != len(got) {
 		t.Errorf("got %d textures, ImGui lists %d", len(got), n)
+	}
+}
+
+// Render does what ImGui asks of every texture it lists, creating, updating
+// and destroying them, the second one included once the font atlas moves to
+// a new texture: after each frame, a texture ImGui keeps has an image of its
+// size in the cache, a destroyed one has none, and the cache holds nothing
+// else.
+func TestRenderKeepsTheCacheToImGuisTextures(t *testing.T) {
+	ctx := createContext()
+	defer imgui.DestroyContextV(ctx)
+	io := currentIO()
+	io.SetIniFilename("") // no imgui.ini
+	io.SetBackendFlags(io.BackendFlags() | imgui.BackendFlagsRendererHasTextures)
+	io.SetDisplaySize(imgui.Vec2{X: 640, Y: 360})
+
+	cache := NewCache()
+	target := ebiten.NewImage(640, 360)
+	most := 0                               // the most textures listed at once
+	asked := map[imgui.TextureStatus]bool{} // the requests ImGui made
+	frame := func(size float32) {
+		t.Helper()
+		imgui.NewFrame()
+		if size != 0 {
+			imgui.Begin("text")
+			imgui.PushFont(currentFont(), size)
+			imgui.Text("The quick brown fox jumps over the lazy dog")
+			imgui.PopFont()
+			imgui.End()
+		}
+		imgui.Render()
+		for _, tex := range appendTextures(currentDrawData(), nil) {
+			asked[tex.Status()] = true
+		}
+		Render(target, currentDrawData(), cache, ebiten.FilterNearest)
+
+		textures := appendTextures(currentDrawData(), nil)
+		most = max(most, len(textures))
+		kept := 0
+		for _, tex := range textures {
+			switch tex.Status() {
+			case imgui.TextureStatusOK:
+				kept++
+				img := cache.GetTexture(tex.TexID())
+				if img == nil || img.Bounds().Dx() != int(tex.Width()) || img.Bounds().Dy() != int(tex.Height()) {
+					t.Fatalf("texture #%d, kept, has no image of its size in the cache", tex.UniqueID())
+				}
+			case imgui.TextureStatusDestroyed:
+				if tex.TexID() != 0 {
+					t.Fatalf("texture #%d, destroyed, keeps ID %d", tex.UniqueID(), tex.TexID())
+				}
+			default:
+				t.Fatalf("texture #%d still asks for %v after rendering", tex.UniqueID(), tex.Status())
+			}
+		}
+		if n := len(cache.(*textureCache).cache); n != kept {
+			t.Fatalf("the cache holds %d images, ImGui keeps %d textures", n, kept)
+		}
+	}
+
+	frame(40)
+	frame(30) // the same text at another size: new glyphs written into the atlas
+	frame(0)
+	io.Fonts().CompactCache() // drops the unused size, moving the atlas to a new texture
+	for range 10 {
+		frame(0)
+	}
+	if most < 2 {
+		t.Fatalf("the atlas never moved: at most %d textures listed", most)
+	}
+	for _, s := range []imgui.TextureStatus{imgui.TextureStatusWantCreate, imgui.TextureStatusWantUpdates, imgui.TextureStatusWantDestroy} {
+		if !asked[s] {
+			t.Errorf("ImGui never asked for %v", s)
+		}
 	}
 }
