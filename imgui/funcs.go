@@ -15927,7 +15927,7 @@ func (self *DrawData) CmdLists() vectors.Vector[DrawList] {
 	}()
 	return func() vectors.Vector[DrawList] {
 		result := C.wrap_ImDrawData_GetCmdLists(internal.ReinterpretCast[*C.ImDrawData](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewDrawListFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*DrawList](result.Data))
 	}()
 }
 
@@ -15984,7 +15984,7 @@ func (self *DrawData) Textures() vectors.Vector[TextureData] {
 	}()
 	return func() vectors.Vector[TextureData] {
 		result := C.wrap_ImDrawData_GetTextures(internal.ReinterpretCast[*C.ImDrawData](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTextureDataFromC(*result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*TextureData](result.Data))
 	}()
 }
 
@@ -16000,7 +16000,7 @@ func (self *DrawDataBuilder) Layers() [2]vectors.Vector[DrawList] {
 		for i := range result {
 			result[i] = func() vectors.Vector[DrawList] {
 				result := C.imgui_ImVector_ImDrawListPtrPtr_GetAtIdx(resultMirr, C.int(i))
-				return vectors.NewVectorFromC(result.Size, result.Capacity, NewDrawListFromC(*result.Data))
+				return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*DrawList](result.Data))
 			}()
 		}
 
@@ -16016,7 +16016,7 @@ func (self *DrawDataBuilder) LayerData1() vectors.Vector[DrawList] {
 	}()
 	return func() vectors.Vector[DrawList] {
 		result := C.wrap_ImDrawDataBuilder_GetLayerData1(internal.ReinterpretCast[*C.ImDrawDataBuilder](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewDrawListFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*DrawList](result.Data))
 	}()
 }
 
@@ -16578,7 +16578,7 @@ func (self *DrawListSharedData) DrawLists() vectors.Vector[DrawList] {
 	}()
 	return func() vectors.Vector[DrawList] {
 		result := C.wrap_ImDrawListSharedData_GetDrawLists(internal.ReinterpretCast[*C.ImDrawListSharedData](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewDrawListFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*DrawList](result.Data))
 	}()
 }
 
@@ -16891,7 +16891,7 @@ func (self *Font) Sources() vectors.Vector[FontConfig] {
 	}()
 	return func() vectors.Vector[FontConfig] {
 		result := C.wrap_ImFont_GetSources(internal.ReinterpretCast[*C.ImFont](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewFontConfigFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*FontConfig](result.Data))
 	}()
 }
 
@@ -17234,7 +17234,7 @@ func (self *FontAtlas) TexList() vectors.Vector[TextureData] {
 	}()
 	return func() vectors.Vector[TextureData] {
 		result := C.wrap_ImFontAtlas_GetTexList(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTextureDataFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*TextureData](result.Data))
 	}()
 }
 
@@ -17306,7 +17306,7 @@ func (self *FontAtlas) Fonts() vectors.Vector[Font] {
 	}()
 	return func() vectors.Vector[Font] {
 		result := C.wrap_ImFontAtlas_GetFonts(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewFontFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Font](result.Data))
 	}()
 }
 
@@ -17368,7 +17368,7 @@ func (self *FontAtlas) DrawListSharedDatas() vectors.Vector[DrawListSharedData] 
 	}()
 	return func() vectors.Vector[DrawListSharedData] {
 		result := C.wrap_ImFontAtlas_GetDrawListSharedDatas(internal.ReinterpretCast[*C.ImFontAtlas](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewDrawListSharedDataFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*DrawListSharedData](result.Data))
 	}()
 }
 
@@ -22035,7 +22035,7 @@ func (self *Context) FontAtlases() vectors.Vector[FontAtlas] {
 	}()
 	return func() vectors.Vector[FontAtlas] {
 		result := C.wrap_ImGuiContext_GetFontAtlases(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewFontAtlasFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*FontAtlas](result.Data))
 	}()
 }
 
@@ -22194,7 +22194,7 @@ func (self *Context) Windows() vectors.Vector[Window] {
 	}()
 	return func() vectors.Vector[Window] {
 		result := C.wrap_ImGuiContext_GetWindows(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewWindowFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Window](result.Data))
 	}()
 }
 
@@ -22206,7 +22206,7 @@ func (self *Context) WindowsFocusOrder() vectors.Vector[Window] {
 	}()
 	return func() vectors.Vector[Window] {
 		result := C.wrap_ImGuiContext_GetWindowsFocusOrder(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewWindowFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Window](result.Data))
 	}()
 }
 
@@ -22218,7 +22218,7 @@ func (self *Context) WindowsTempSortBuffer() vectors.Vector[Window] {
 	}()
 	return func() vectors.Vector[Window] {
 		result := C.wrap_ImGuiContext_GetWindowsTempSortBuffer(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewWindowFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Window](result.Data))
 	}()
 }
 
@@ -23036,7 +23036,7 @@ func (self *Context) Viewports() vectors.Vector[ViewportP] {
 	}()
 	return func() vectors.Vector[ViewportP] {
 		result := C.wrap_ImGuiContext_GetViewports(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewViewportPFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*ViewportP](result.Data))
 	}()
 }
 
@@ -24600,7 +24600,7 @@ func (self *Context) UserTextures() vectors.Vector[TextureData] {
 	}()
 	return func() vectors.Vector[TextureData] {
 		result := C.wrap_ImGuiContext_GetUserTextures(internal.ReinterpretCast[*C.ImGuiContext](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTextureDataFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*TextureData](result.Data))
 	}()
 }
 
@@ -26150,7 +26150,7 @@ func (self *DockNode) Windows() vectors.Vector[Window] {
 	}()
 	return func() vectors.Vector[Window] {
 		result := C.wrap_ImGuiDockNode_GetWindows(internal.ReinterpretCast[*C.ImGuiDockNode](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewWindowFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Window](result.Data))
 	}()
 }
 
@@ -33194,7 +33194,7 @@ func (self *PlatformIO) Textures() vectors.Vector[TextureData] {
 	}()
 	return func() vectors.Vector[TextureData] {
 		result := C.wrap_ImGuiPlatformIO_GetTextures(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewTextureDataFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*TextureData](result.Data))
 	}()
 }
 
@@ -33206,7 +33206,7 @@ func (self *PlatformIO) Viewports() vectors.Vector[Viewport] {
 	}()
 	return func() vectors.Vector[Viewport] {
 		result := C.wrap_ImGuiPlatformIO_GetViewports(internal.ReinterpretCast[*C.ImGuiPlatformIO](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewViewportFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Viewport](result.Data))
 	}()
 }
 
@@ -44245,7 +44245,7 @@ func (self *WindowTempData) ChildWindows() vectors.Vector[Window] {
 	}()
 	return func() vectors.Vector[Window] {
 		result := C.wrap_ImGuiWindowTempData_GetChildWindows(internal.ReinterpretCast[*C.ImGuiWindowTempData](selfArg))
-		return vectors.NewVectorFromC(result.Size, result.Capacity, NewWindowFromC(result.Data))
+		return vectors.NewVectorFromC(result.Size, result.Capacity, internal.ReinterpretCast[*Window](result.Data))
 	}()
 }
 
